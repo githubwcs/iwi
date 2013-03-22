@@ -191,7 +191,7 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 	struct nl_msg *srf_attrs;
 	int old_argc = argc;
 	unsigned char mac_addr[ETH_ALEN];
-	char *cur_mac, *sptr;
+	char *cur_mac, *sptr = NULL;
 
 	srf_attrs = nlmsg_alloc();
 	if (strcmp(argv[0], "include") == 0)
@@ -207,7 +207,7 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 		__u8 bf_idx;
 
 		argc--;
-		argv++;
+                argv++;
 
 		if (argc < 3)
 			return -EINVAL;
@@ -284,6 +284,9 @@ static void parse_match_filter(char *filter, struct nl_msg *func_attrs, int tx)
 		nl_filt = nla_nest_start(func_attrs,
 					 NL80211_NAN_FUNC_RX_MATCH_FILTER);
 
+	if (!filter)
+		goto out;
+
 	cur_filt = strtok_r(filter, ":", &sptr);
 	while (cur_filt) {
 		if (strcmp(cur_filt, "*") != 0)
@@ -294,6 +297,7 @@ static void parse_match_filter(char *filter, struct nl_msg *func_attrs, int tx)
 		cur_filt = strtok_r(NULL, ":", &sptr);
 	}
 
+out:
 	nla_nest_end(func_attrs, nl_filt);
 }
 
@@ -429,7 +433,6 @@ static int handle_nan_add_func(struct nl80211_state *state,
 
 		if (argc > 1 && strcmp(argv[0], "flw_up_dest") == 0) {
 			unsigned char addr[6];
-
 			argv++;
 			argc--;
 			if (mac_addr_a2n(addr, argv[0]))
