@@ -309,6 +309,65 @@ static void parse_vendor_event(struct nlattr **attrs)
 	iwl_parse_event(vendor_id, attrs);
 	printf("\n");
 }
+static void parse_nan_term(struct nlattr **attrs)
+{
+	struct nlattr *func[NL80211_NAN_FUNC_ATTR_MAX + 1];
+
+	static struct nla_policy
+		nan_func_policy[NL80211_NAN_FUNC_ATTR_MAX + 1] = {
+		[NL80211_NAN_FUNC_TYPE] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_SERVICE_ID] = { },
+		[NL80211_NAN_FUNC_PUBLISH_TYPE] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_PUBLISH_BCAST] = { .type = NLA_FLAG },
+		[NL80211_NAN_FUNC_SUBSCRIBE_ACTIVE] = { .type = NLA_FLAG },
+		[NL80211_NAN_FUNC_FOLLOW_UP_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_FOLLOW_UP_REQ_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_FOLLOW_UP_DEST] = { },
+		[NL80211_NAN_FUNC_CLOSE_RANGE] = { .type = NLA_FLAG },
+		[NL80211_NAN_FUNC_TTL] = { .type = NLA_U32 },
+		[NL80211_NAN_FUNC_SERVICE_INFO] = { },
+		[NL80211_NAN_FUNC_SRF] = { .type = NLA_NESTED },
+		[NL80211_NAN_FUNC_RX_MATCH_FILTER] = { .type = NLA_NESTED },
+		[NL80211_NAN_FUNC_TX_MATCH_FILTER] = { .type = NLA_NESTED },
+		[NL80211_NAN_FUNC_INSTANCE_ID] = { .type = NLA_U8},
+	};
+	if (!attrs[NL80211_ATTR_COOKIE]) {
+		printf("Bad NAN function termination format - cookie is missing\n");
+		return;
+	}
+	if (nla_parse_nested(func, NL80211_NAN_FUNC_ATTR_MAX,
+			     attrs[NL80211_ATTR_NAN_FUNC],
+			     nan_func_policy)) {
+		printf("NAN: failed to parse nan func\n");
+		return;
+	}
+	if (!func[NL80211_NAN_FUNC_INSTANCE_ID]) {
+		printf("Bad NAN function termination format - instance id is missing\n");
+		return;
+	}
+
+	if (!func[NL80211_NAN_FUNC_TERM_REASON]) {
+		printf("Bad NAN function termination format - reason is missing\n");
+		return;
+	}
+	printf("NAN(cookie=0x%" PRIx64
+	       "): Termination event: id = %d, reason = ",
+	       nla_get_u64(attrs[NL80211_ATTR_COOKIE]),
+	       nla_get_u8(func[NL80211_NAN_FUNC_INSTANCE_ID]));
+	switch (nla_get_u8(func[NL80211_NAN_FUNC_TERM_REASON])) {
+	case NL80211_NAN_FUNC_TERM_REASON_USER_REQUEST:
+		printf("user request\n");
+		break;
+	case NL80211_NAN_FUNC_TERM_REASON_TTL_EXPIRED:
+		printf("expired\n");
+		break;
+	case NL80211_NAN_FUNC_TERM_REASON_ERROR:
+		printf("error\n");
+		break;
+	default:
+		printf("unknown\n");
+	}
+}
 
 static int parse_ftm_target(struct nlattr *attr, unsigned char *bssid)
 {
@@ -421,16 +480,35 @@ static void parse_nan_match(struct nlattr **attrs)
 	char macbuf[6*3];
 	__u64 cookie;
 	struct nlattr *match[NL80211_NAN_MATCH_ATTR_MAX + 1];
+	struct nlattr *local_func[NL80211_NAN_FUNC_ATTR_MAX + 1];
+	struct nlattr *peer_func[NL80211_NAN_FUNC_ATTR_MAX + 1];
 	static struct nla_policy
 		nan_match_policy[NL80211_NAN_MATCH_ATTR_MAX + 1] = {
-		[NL80211_NAN_MATCH_FUNC_TYPE] = { .type = NLA_U8 },
-		[NL80211_NAN_MATCH_INSTANCE_ID] = { .type = NLA_U8 },
-		[NL80211_NAN_MATCH_PEER_INSTANCE_ID] = { .type = NLA_U8 },
-		[NL80211_NAN_MATCH_MAC] = { },
-		[NL80211_NAN_MATCH_SERVICE_INFO] = { },
+		[NL80211_NAN_MATCH_FUNC_LOCAL] = { .type = NLA_NESTED },
+		[NL80211_NAN_MATCH_FUNC_PEER] = { .type = NLA_NESTED },
+	};
+
+	static struct nla_policy
+		nan_func_policy[NL80211_NAN_FUNC_ATTR_MAX + 1] = {
+		[NL80211_NAN_FUNC_TYPE] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_SERVICE_ID] = { },
+		[NL80211_NAN_FUNC_PUBLISH_TYPE] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_PUBLISH_BCAST] = { .type = NLA_FLAG },
+		[NL80211_NAN_FUNC_SUBSCRIBE_ACTIVE] = { .type = NLA_FLAG },
+		[NL80211_NAN_FUNC_FOLLOW_UP_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_FOLLOW_UP_REQ_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_FUNC_FOLLOW_UP_DEST] = { },
+		[NL80211_NAN_FUNC_CLOSE_RANGE] = { .type = NLA_FLAG },
+		[NL80211_NAN_FUNC_TTL] = { .type = NLA_U32 },
+		[NL80211_NAN_FUNC_SERVICE_INFO] = { },
+		[NL80211_NAN_FUNC_SRF] = { .type = NLA_NESTED },
+		[NL80211_NAN_FUNC_RX_MATCH_FILTER] = { .type = NLA_NESTED },
+		[NL80211_NAN_FUNC_TX_MATCH_FILTER] = { .type = NLA_NESTED },
+		[NL80211_NAN_FUNC_INSTANCE_ID] = { .type = NLA_U8},
 	};
 
 	cookie = nla_get_u64(attrs[NL80211_ATTR_COOKIE]);
+	mac_addr_n2a(macbuf, nla_data(attrs[NL80211_ATTR_MAC]));
 
 	if (nla_parse_nested(match, NL80211_NAN_MATCH_ATTR_MAX,
 			     attrs[NL80211_ATTR_NAN_MATCH],
@@ -439,53 +517,64 @@ static void parse_nan_match(struct nlattr **attrs)
 		return;
 	}
 
-	if (nla_get_u8(match[NL80211_NAN_MATCH_FUNC_TYPE]) ==
+	if (nla_parse_nested(local_func, NL80211_NAN_FUNC_ATTR_MAX,
+			     match[NL80211_NAN_MATCH_FUNC_LOCAL],
+			     nan_func_policy)) {
+		printf("NAN: failed to parse nan local func\n");
+		return;
+	}
+
+	 if (nla_parse_nested(peer_func, NL80211_NAN_FUNC_ATTR_MAX,
+			      match[NL80211_NAN_MATCH_FUNC_PEER],
+			      nan_func_policy)) {
+		printf("NAN: failed to parse nan local func\n");
+		return;
+	}
+
+	if (nla_get_u8(peer_func[NL80211_NAN_FUNC_TYPE]) ==
 	    NL80211_NAN_FUNC_PUBLISH) {
-		mac_addr_n2a(macbuf, nla_data(match[NL80211_NAN_MATCH_MAC]));
-		printf("NAN(cookie=0x%llx): DiscoveryResult, peer_id = %d, local_id=%d, peer_mac=%s, ",
+		printf("NAN(cookie=0x%llx): DiscoveryResult, peer_id=%d, local_id=%d, peer_mac=%s, ",
 		       cookie,
-		       nla_get_u8(match[NL80211_NAN_MATCH_PEER_INSTANCE_ID]),
-		       nla_get_u8(match[NL80211_NAN_MATCH_INSTANCE_ID]),
+		       nla_get_u8(peer_func[NL80211_NAN_FUNC_INSTANCE_ID]),
+		       nla_get_u8(local_func[NL80211_NAN_FUNC_INSTANCE_ID]),
 		       macbuf);
-		if (match[NL80211_NAN_MATCH_SERVICE_INFO]) {
-			char *info = malloc(nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) + 1);
+		if (peer_func[NL80211_NAN_FUNC_SERVICE_INFO]) {
+			char *info = malloc(nla_len(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]) + 1);
 
 			memset(info, 0,
-			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) +
+			       nla_len(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]) +
 				       1);
 			memcpy(info,
-			       nla_data(match[NL80211_NAN_MATCH_SERVICE_INFO]),
-			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]));
+			       nla_data(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]),
+			       nla_len(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]));
 			printf("info=%s\n", info);
 			free(info);
 		} else {
 			printf("info=N/A\n");
 		}
-	} else if (nla_get_u8(match[NL80211_NAN_MATCH_FUNC_TYPE]) ==
+	} else if (nla_get_u8(peer_func[NL80211_NAN_FUNC_TYPE]) ==
 		   NL80211_NAN_FUNC_SUBSCRIBE) {
-		mac_addr_n2a(macbuf, nla_data(match[NL80211_NAN_MATCH_MAC]));
 		printf("NAN(cookie=0x%llx): Replied, peer_id=%d, local_id=%d, peer_mac=%s\n",
 		       cookie,
-		       nla_get_u8(match[NL80211_NAN_MATCH_PEER_INSTANCE_ID]),
-		       nla_get_u8(match[NL80211_NAN_MATCH_INSTANCE_ID]),
+		       nla_get_u8(peer_func[NL80211_NAN_FUNC_INSTANCE_ID]),
+		       nla_get_u8(local_func[NL80211_NAN_FUNC_INSTANCE_ID]),
 		       macbuf);
-	} else if (nla_get_u8(match[NL80211_NAN_MATCH_FUNC_TYPE]) ==
+	} else if (nla_get_u8(peer_func[NL80211_NAN_FUNC_TYPE]) ==
 		   NL80211_NAN_FUNC_FOLLOW_UP) {
-		mac_addr_n2a(macbuf, nla_data(match[NL80211_NAN_MATCH_MAC]));
 		printf("NAN(cookie=0x%llx): FollowUpReceive, peer_id=%d, local_id=%d, peer_mac=%s, ",
 		       cookie,
-		       nla_get_u8(match[NL80211_NAN_MATCH_PEER_INSTANCE_ID]),
-		       nla_get_u8(match[NL80211_NAN_MATCH_INSTANCE_ID]),
+		       nla_get_u8(peer_func[NL80211_NAN_FUNC_INSTANCE_ID]),
+		       nla_get_u8(local_func[NL80211_NAN_FUNC_INSTANCE_ID]),
 		       macbuf);
-		if (match[NL80211_NAN_MATCH_SERVICE_INFO]) {
-			char *info = malloc(nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) + 1);
+		if (peer_func[NL80211_NAN_FUNC_SERVICE_INFO]) {
+			char *info = malloc(nla_len(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]) + 1);
 
 			memset(info, 0,
-			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) +
+			       nla_len(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]) +
 				       1);
 			memcpy(info,
-			       nla_data(match[NL80211_NAN_MATCH_SERVICE_INFO]),
-			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]));
+			       nla_data(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]),
+			       nla_len(peer_func[NL80211_NAN_FUNC_SERVICE_INFO]));
 			printf("info=%s\n", info);
 			free(info);
 		} else {
@@ -495,6 +584,8 @@ static void parse_nan_match(struct nlattr **attrs)
 		printf("NAN: Malformed event\n");
 	}
 }
+
+
 
 static int print_event(struct nl_msg *msg, void *arg)
 {
@@ -814,39 +905,8 @@ static int print_event(struct nl_msg *msg, void *arg)
 	case NL80211_CMD_MSRMENT_RESPONSE:
 		parse_measurement_response(tb, args);
 		break;
-	case NL80211_CMD_RM_NAN_FUNCTION:
-		if (!tb[NL80211_ATTR_NAN_FUNC_INST_ID]) {
-			printf("Bad NAN function termination format - instance id is missing\n");
-			break;
-		}
-
-		if (!tb[NL80211_ATTR_NAN_FUNC_TERM_REASON]) {
-			printf("Bad NAN function termination format - reason is missing\n");
-			break;
-		}
-
-		if (!tb[NL80211_ATTR_COOKIE]) {
-			printf("Bad NAN function termination format - cookie is missing\n");
-			break;
-		}
-
-		printf("NAN(cookie=0x%" PRIx64
-		       "): Termination event: id = %d, reason = ",
-		       nla_get_u64(tb[NL80211_ATTR_COOKIE]),
-		       nla_get_u8(tb[NL80211_ATTR_NAN_FUNC_INST_ID]));
-		switch (nla_get_u8(tb[NL80211_ATTR_NAN_FUNC_TERM_REASON])) {
-		case NL80211_NAN_FUNC_TERM_REASON_USER_REQUEST:
-			printf("user request\n");
-			break;
-		case NL80211_NAN_FUNC_TERM_REASON_TTL_EXPIRED:
-			printf("expired\n");
-			break;
-		case NL80211_NAN_FUNC_TERM_REASON_ERROR:
-			printf("error\n");
-			break;
-		default:
-			printf("unknown\n");
-		}
+	case NL80211_CMD_DEL_NAN_FUNCTION:
+		parse_nan_term(tb);
 		break;
 	case NL80211_CMD_NAN_MATCH: {
 		parse_nan_match(tb);

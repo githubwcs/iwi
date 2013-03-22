@@ -41,11 +41,15 @@ static int handle_nan_start(struct nl80211_state *state,
 		dual = atoi(argv[0]);
 		argv++;
 		argc--;
-	}
-	if (dual <= NL80211_NAN_BAND_MAX)
+
+		if (dual == 0)
+			return -EINVAL;
+
+		if (dual & ~(NL80211_NAN_BAND_DEFAULT | NL80211_NAN_BAND_2GHZ |
+			    NL80211_NAN_BAND_5GHZ))
+			return -EINVAL;
 		NLA_PUT_U8(msg, NL80211_ATTR_NAN_DUAL, dual);
-	else
-		return -EINVAL;
+	}
 
 	if (argc != 0)
 		return -EINVAL;
@@ -120,7 +124,7 @@ static int handle_nan_rm_func(struct nl80211_state *state,
 nla_put_failure:
 	return -ENOBUFS;
 }
-COMMAND(nan, rm_func, "cookie <cookie>", NL80211_CMD_RM_NAN_FUNCTION, 0,
+COMMAND(nan, rm_func, "cookie <cookie>", NL80211_CMD_DEL_NAN_FUNCTION, 0,
 	CIB_WDEV, handle_nan_rm_func, "");
 
 static int compute_service_id(unsigned char *serv_name,
@@ -163,23 +167,27 @@ static int compute_service_id(unsigned char *serv_name,
 static int print_instance_id_handler(struct nl_msg *msg, void *arg)
 {
 	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+	struct nlattr *func[NL80211_NAN_FUNC_ATTR_MAX +1];
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
 
 	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
 		  genlmsg_attrlen(gnlh, 0), NULL);
-
-	if (!tb[NL80211_ATTR_NAN_FUNC_INST_ID]) {
-		fprintf(stderr, "instance id is missing!\n");
-		return NL_SKIP;
-	}
 
 	if (!tb[NL80211_ATTR_COOKIE]) {
 		fprintf(stderr, "cookie is missing!\n");
 		return NL_SKIP;
 	}
 
-	printf("instance_id: %d, cookie: %llu\n",
-	       nla_get_u8(tb[NL80211_ATTR_NAN_FUNC_INST_ID]),
+	nla_parse_nested(func, NL80211_NAN_FUNC_ATTR_MAX,
+			 tb[NL80211_ATTR_NAN_FUNC],
+			 NULL);
+	if (!func[NL80211_NAN_FUNC_INSTANCE_ID]) {
+		fprintf(stderr, "instance id is missing!\n");
+		return NL_SKIP;
+	}
+
+	printf("instance_id: %d, cookie: %lu\n",
+	       nla_get_u8(func[NL80211_NAN_FUNC_INSTANCE_ID]),
 	       nla_get_u64(tb[NL80211_ATTR_COOKIE]));
 
 	return NL_SKIP;
@@ -190,7 +198,7 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 	struct nl_msg *srf_attrs;
 	int old_argc = argc;
 	unsigned char mac_addr[ETH_ALEN];
-	char *cur_mac, *sptr;
+	char *cur_mac, *sptr = NULL;
 
 	srf_attrs = nlmsg_alloc();
 	if (strcmp(argv[0], "include") == 0)
@@ -205,9 +213,8 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 		size_t srf_len;
 		__u8 bf_idx;
 
-		NLA_PUT_FLAG(srf_attrs, NL80211_NAN_SRF_TYPE_BF);
 		argc--;
-		argv++;
+                argv++;
 
 		if (argc < 3)
 			return -EINVAL;
@@ -231,7 +238,7 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 		cur_mac = strtok_r(argv[0], ";", &sptr);
 		while (cur_mac) {
 			if (mac_addr_a2n(mac_addr, cur_mac)) {
-				printf("mac format error\n");
+				printf("mac format error %s\n", cur_mac);
 				return -EINVAL;
 			}
 
@@ -284,6 +291,9 @@ static void parse_match_filter(char *filter, struct nl_msg *func_attrs, int tx)
 		nl_filt = nla_nest_start(func_attrs,
 					 NL80211_NAN_FUNC_RX_MATCH_FILTER);
 
+	if (!filter)
+		goto out;
+
 	cur_filt = strtok_r(filter, ":", &sptr);
 	while (cur_filt) {
 		if (strcmp(cur_filt, "*") != 0)
@@ -294,6 +304,7 @@ static void parse_match_filter(char *filter, struct nl_msg *func_attrs, int tx)
 		cur_filt = strtok_r(NULL, ":", &sptr);
 	}
 
+out:
 	nla_nest_end(func_attrs, nl_filt);
 }
 
@@ -429,7 +440,6 @@ static int handle_nan_add_func(struct nl80211_state *state,
 
 		if (argc > 1 && strcmp(argv[0], "flw_up_dest") == 0) {
 			unsigned char addr[6];
-
 			argv++;
 			argc--;
 			if (mac_addr_a2n(addr, argv[0]))
