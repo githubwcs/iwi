@@ -163,23 +163,27 @@ static int compute_service_id(unsigned char *serv_name,
 static int print_instance_id_handler(struct nl_msg *msg, void *arg)
 {
 	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+	struct nlattr *func[NL80211_NAN_FUNC_ATTR_MAX +1];
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
 
 	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
 		  genlmsg_attrlen(gnlh, 0), NULL);
-
-	if (!tb[NL80211_ATTR_NAN_FUNC_INST_ID]) {
-		fprintf(stderr, "instance id is missing!\n");
-		return NL_SKIP;
-	}
 
 	if (!tb[NL80211_ATTR_COOKIE]) {
 		fprintf(stderr, "cookie is missing!\n");
 		return NL_SKIP;
 	}
 
+	nla_parse_nested(func, NL80211_NAN_FUNC_ATTR_MAX,
+			 tb[NL80211_ATTR_NAN_FUNC],
+			 NULL);
+	if (!func[NL80211_NAN_FUNC_INSTANCE_ID]) {
+		fprintf(stderr, "instance id is missing!\n");
+		return NL_SKIP;
+	}
+
 	printf("instance_id: %d, cookie: %llu\n",
-	       nla_get_u8(tb[NL80211_ATTR_NAN_FUNC_INST_ID]),
+	       nla_get_u8(func[NL80211_NAN_FUNC_INSTANCE_ID]),
 	       nla_get_u64(tb[NL80211_ATTR_COOKIE]));
 
 	return NL_SKIP;
@@ -205,9 +209,8 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 		size_t srf_len;
 		__u8 bf_idx;
 
-		NLA_PUT_FLAG(srf_attrs, NL80211_NAN_SRF_TYPE_BF);
 		argc--;
-		argv++;
+                argv++;
 
 		if (argc < 3)
 			return -EINVAL;
@@ -231,7 +234,7 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 		cur_mac = strtok_r(argv[0], ";", &sptr);
 		while (cur_mac) {
 			if (mac_addr_a2n(mac_addr, cur_mac)) {
-				printf("mac format error\n");
+				printf("mac format error %s\n", cur_mac);
 				return -EINVAL;
 			}
 
@@ -429,7 +432,6 @@ static int handle_nan_add_func(struct nl80211_state *state,
 
 		if (argc > 1 && strcmp(argv[0], "flw_up_dest") == 0) {
 			unsigned char addr[6];
-
 			argv++;
 			argc--;
 			if (mac_addr_a2n(addr, argv[0]))
