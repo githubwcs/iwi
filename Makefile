@@ -20,6 +20,7 @@ OBJS = iw.o genl.o event.o info.o phy.o \
 OBJS += sections.o
 
 OBJS-$(HWSIM) += hwsim.o
+OBJS-Y += iwl_vendor_cmd.o
 
 OBJS += $(OBJS-y) $(OBJS-Y)
 
