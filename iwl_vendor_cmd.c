@@ -52,3 +52,33 @@ nla_put_failure:
 COMMAND(iwl, dev_tx_power, "[2.4 5.2L 5.2H]",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_dev_tx_power, "");
+
+static int handle_iwl_vendor_set_country(struct nl80211_state *state,
+					 struct nl_cb *cb,
+					 struct nl_msg *msg,
+					 int argc, char **argv,
+					 enum id_input id)
+{
+	struct nlattr *limits;
+
+	if (argc != 1 || strlen(argv[0]) != 2)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_SET_COUNTRY);
+
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!limits)
+		return -ENOBUFS;
+
+	NLA_PUT_STRING(msg, IWL_MVM_VENDOR_ATTR_COUNTRY, argv[0]);
+	nla_nest_end(msg, limits);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, country, "<alpha2>", NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_set_country, "");
