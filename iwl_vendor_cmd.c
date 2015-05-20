@@ -82,3 +82,52 @@ nla_put_failure:
 
 COMMAND(iwl, country, "<alpha2>", NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_set_country, "");
+
+static void parse_tcm_event(struct nlattr *data)
+{
+	struct nlattr *tcm[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	static struct nla_policy tcm_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
+		[IWL_MVM_VENDOR_ATTR_LOW_LATENCY] = { .type = NLA_FLAG },
+		[IWL_MVM_VENDOR_ATTR_VIF_ADDR] = { .type = NLA_UNSPEC },
+		[IWL_MVM_VENDOR_ATTR_VIF_LL] = { .type = NLA_U8 },
+		[IWL_MVM_VENDOR_ATTR_LL] = { .type = NLA_U8 },
+		[IWL_MVM_VENDOR_ATTR_VIF_LOAD] = { .type = NLA_U8 },
+		[IWL_MVM_VENDOR_ATTR_LOAD] = { .type = NLA_U8 },
+	};
+
+	if (nla_parse_nested(tcm, MAX_IWL_MVM_VENDOR_ATTR, data, tcm_policy) ||
+	    !tcm[IWL_MVM_VENDOR_ATTR_LL] || !tcm[IWL_MVM_VENDOR_ATTR_LOAD]) {
+		printf("Ignore invalid TCM data");
+		return;
+	}
+
+	printf(" ==> Intel TCM event: global (qos=%u, load=%u)",
+	       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_LL]),
+	       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_LOAD]));
+
+	if (tcm[IWL_MVM_VENDOR_ATTR_VIF_ADDR] &&
+	    tcm[IWL_MVM_VENDOR_ATTR_VIF_LL] &&
+	    tcm[IWL_MVM_VENDOR_ATTR_VIF_LOAD]) {
+		char addr[3 * ETH_ALEN];
+
+		mac_addr_n2a(addr, nla_data(tcm[IWL_MVM_VENDOR_ATTR_VIF_ADDR]));
+		printf(" vif(%s qos=%u, load=%u)", addr,
+		       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_VIF_LL]),
+		       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_VIF_LOAD]));
+	}
+}
+
+void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs)
+{
+	if (vendor_id != INTEL_OUI)
+		return;
+
+	switch (nla_get_u32(attrs[NL80211_ATTR_VENDOR_SUBCMD])) {
+	case IWL_MVM_VENDOR_CMD_TCM_EVENT:
+		parse_tcm_event(attrs[NL80211_ATTR_VENDOR_DATA]);
+		break;
+	default:
+		break;
+	}
+}
+

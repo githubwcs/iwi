@@ -291,6 +291,22 @@ static void parse_wowlan_wake_event(struct nlattr **attrs)
 		printf("\t* TCP connection ran out of tokens\n");
 }
 
+static void parse_vendor_event(struct nlattr **attrs)
+{
+	__u32 vendor_id, subcmd;
+
+	if (!attrs[NL80211_ATTR_VENDOR_ID] ||
+	    !attrs[NL80211_ATTR_VENDOR_SUBCMD])
+		return;
+
+	vendor_id = nla_get_u32(attrs[NL80211_ATTR_VENDOR_ID]);
+	subcmd = nla_get_u32(attrs[NL80211_ATTR_VENDOR_SUBCMD]);
+	printf("vendor event %.6x:%d", vendor_id, subcmd);
+
+	iwl_parse_event(vendor_id, attrs);
+	printf("\n");
+}
+
 static int print_event(struct nl_msg *msg, void *arg)
 {
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
@@ -572,9 +588,7 @@ static int print_event(struct nl_msg *msg, void *arg)
 		       tb[NL80211_ATTR_ACK] ? "acked" : "no ack");
 		break;
 	case NL80211_CMD_VENDOR:
-		printf("vendor event %.6x:%d\n",
-			nla_get_u32(tb[NL80211_ATTR_VENDOR_ID]),
-			nla_get_u32(tb[NL80211_ATTR_VENDOR_SUBCMD]));
+		parse_vendor_event(tb);
 		if (args->frame && tb[NL80211_ATTR_VENDOR_DATA])
 			iw_hexdump("vendor event",
 				   nla_data(tb[NL80211_ATTR_VENDOR_DATA]),

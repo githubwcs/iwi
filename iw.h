@@ -181,4 +181,6 @@ int parse_sched_scan(struct nl_msg *msg, int *argc, char ***argv);
 DECLARE_SECTION(set);
 DECLARE_SECTION(get);
 
+void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs);
+
 #endif /* __IW_H */
