@@ -13,3 +13,5 @@ teamforge:proj5201:role41616            	TF: iwlwifi: maint-xvt
 teamforge:proj5201:role41617            	TF: iwlwifi: maint-ult
 teamforge:proj5201:role41618            	TF: iwlwifi: taggers
 teamforge:proj5201:role41965            	TF: iwlwifi: restricted-read
+teamforge:proj5201:role42238			TF: iwlwifi: maint-fwbin
+teamforge:proj5201:role41619			TF: iwlwifi: prune-push
