@@ -301,7 +301,7 @@ void register_handler(int (*handler)(struct nl_msg *, void *), void *data)
 	registered_handler_data = data;
 }
 
-static int valid_handler(struct nl_msg *msg, void *arg)
+int valid_handler(struct nl_msg *msg, void *arg)
 {
 	if (registered_handler)
 		return registered_handler(msg, registered_handler_data);

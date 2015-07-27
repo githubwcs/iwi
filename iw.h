@@ -129,6 +129,7 @@ __u32 __do_listen_events(struct nl80211_state *state,
 			 const int n_waits, const __u32 *waits,
 			 struct print_event_args *args);
 
+int valid_handler(struct nl_msg *msg, void *arg);
 void register_handler(int (*handler)(struct nl_msg *, void *), void *data);
 
 int mac_addr_a2n(unsigned char *mac_addr, char *arg);

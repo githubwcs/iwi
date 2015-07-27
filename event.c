@@ -703,6 +703,7 @@ __u32 __do_listen_events(struct nl80211_state *state,
 
 	/* no sequence checking for multicast messages */
 	nl_cb_set(cb, NL_CB_SEQ_CHECK, NL_CB_CUSTOM, no_seq_check, NULL);
+	nl_cb_set(cb, NL_CB_VALID, NL_CB_CUSTOM, valid_handler, NULL);
 
 	if (n_waits && waits) {
 		wait_ev.cmds = waits;
