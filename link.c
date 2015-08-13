@@ -105,7 +105,7 @@ static int handle_scan_for_link(struct nl80211_state *state,
 	if (argc > 0)
 		return 1;
 
-	register_handler( link_bss_handler, &lr);
+	register_handler(link_bss_handler, &lr);
 	return 0;
 }
 
@@ -220,7 +220,7 @@ static int handle_link_sta(struct nl80211_state *state,
 
 	NLA_PUT(msg, NL80211_ATTR_MAC, ETH_ALEN, mac_addr);
 
-	register_handler( print_link_sta, NULL);
+	register_handler(print_link_sta, NULL);
 
 	return 0;
  nla_put_failure:

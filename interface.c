@@ -376,7 +376,7 @@ static int handle_interface_info(struct nl80211_state *state,
 				 int argc, char **argv,
 				 enum id_input id)
 {
-	register_handler( print_iface_handler, NULL);
+	register_handler(print_iface_handler, NULL);
 	return 0;
 }
 TOPLEVEL(info, NULL, NL80211_CMD_GET_INTERFACE, 0, CIB_NETDEV, handle_interface_info,
@@ -441,7 +441,7 @@ static int handle_dev_dump(struct nl80211_state *state,
 			   enum id_input id)
 {
 	dev_dump_wiphy = -1;
-	register_handler( print_iface_handler, &dev_dump_wiphy);
+	register_handler(print_iface_handler, &dev_dump_wiphy);
 	return 0;
 }
 TOPLEVEL(dev, NULL, NL80211_CMD_GET_INTERFACE, NLM_F_DUMP, CIB_NONE, handle_dev_dump,

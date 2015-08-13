@@ -278,8 +278,7 @@ static int handle_coalesce_show(struct nl80211_state *state,
 			      struct nl_msg *msg, int argc, char **argv,
 			      enum id_input id)
 {
-	register_handler(
-		  print_coalesce_handler, NULL);
+	register_handler(print_coalesce_handler, NULL);
 
 	return 0;
 }

@@ -66,8 +66,7 @@ static int handle_hwsim_getps(struct nl80211_state *state,
 
 	nla_nest_end(msg, tmdata);
 
-	register_handler(
-		  print_hwsim_ps_handler, NULL);
+	register_handler(print_hwsim_ps_handler, NULL);
 	return 0;
  nla_put_failure:
 	return -ENOBUFS;
@@ -98,8 +97,7 @@ static int handle_hwsim_setps(struct nl80211_state *state,
 
 	nla_nest_end(msg, tmdata);
 
-	register_handler(
-		  print_hwsim_ps_handler, NULL);
+	register_handler(print_hwsim_ps_handler, NULL);
 	return 0;
  nla_put_failure:
 	return -ENOBUFS;

@@ -112,7 +112,7 @@ static int handle_mpath_get(struct nl80211_state *state,
 
 	NLA_PUT(msg, NL80211_ATTR_MAC, ETH_ALEN, dst);
 
-	register_handler( print_mpath_handler, NULL);
+	register_handler(print_mpath_handler, NULL);
 
 	return 0;
  nla_put_failure:
@@ -161,7 +161,7 @@ static int handle_mpath_set(struct nl80211_state *state,
 	NLA_PUT(msg, NL80211_ATTR_MAC, ETH_ALEN, dst);
 	NLA_PUT(msg, NL80211_ATTR_MPATH_NEXT_HOP, ETH_ALEN, next_hop);
 
-	register_handler( print_mpath_handler, NULL);
+	register_handler(print_mpath_handler, NULL);
 	return 0;
  nla_put_failure:
 	return -ENOBUFS;
@@ -180,7 +180,7 @@ static int handle_mpath_dump(struct nl80211_state *state,
 {
 	printf("DEST ADDR         NEXT HOP          IFACE\tSN\tMETRIC\tQLEN\t"
 	       "EXPTIME\t\tDTIM\tDRET\tFLAGS\n");
-	register_handler( print_mpath_handler, NULL);
+	register_handler(print_mpath_handler, NULL);
 	return 0;
 }
 COMMAND(mpath, dump, NULL,

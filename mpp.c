@@ -58,7 +58,7 @@ static int handle_mpp_get(struct nl80211_state *state,
 
 	NLA_PUT(msg, NL80211_ATTR_MAC, ETH_ALEN, dst);
 
-	register_handler( print_mpp_handler, NULL);
+	register_handler(print_mpp_handler, NULL);
 
 	return 0;
  nla_put_failure:
@@ -74,7 +74,7 @@ static int handle_mpp_dump(struct nl80211_state *state,
 			     enum id_input id)
 {
 	printf("DEST ADDR         PROXY NODE        IFACE\n");
-	register_handler( print_mpp_handler, NULL);
+	register_handler(print_mpp_handler, NULL);
 	return 0;
 }
 COMMAND(mpp, dump, NULL,

@@ -723,9 +723,9 @@ __u32 __do_listen_events(struct nl80211_state *state,
 		wait_ev.cmds = waits;
 		wait_ev.n_cmds = n_waits;
 		wait_ev.pargs = args;
-		register_handler( wait_event, &wait_ev);
+		register_handler(wait_event, &wait_ev);
 	} else
-		register_handler( print_event, args);
+		register_handler(print_event, args);
 
 	wait_ev.cmd = 0;
 

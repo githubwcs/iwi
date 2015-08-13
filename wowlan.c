@@ -474,8 +474,7 @@ static int handle_wowlan_show(struct nl80211_state *state,
 			      struct nl_msg *msg, int argc, char **argv,
 			      enum id_input id)
 {
-	register_handler(
-		  print_wowlan_handler, NULL);
+	register_handler(print_wowlan_handler, NULL);
 
 	return 0;
 }

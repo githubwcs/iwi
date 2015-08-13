@@ -73,8 +73,7 @@ static int get_power_save(struct nl80211_state *state,
 			  int argc, char **argv,
 			  enum id_input id)
 {
-	register_handler(
-		  print_power_save_handler, NULL);
+	register_handler(print_power_save_handler, NULL);
 	return 0;
 }
 

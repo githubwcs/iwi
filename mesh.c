@@ -421,8 +421,7 @@ static int get_interface_meshparam(struct nl80211_state *state,
 			return 2;
 	}
 
-	register_handler(
-		  print_mesh_param_handler, (void *)mdescr);
+	register_handler(print_mesh_param_handler, (void *)mdescr);
 	return 0;
 }
 

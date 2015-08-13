@@ -232,7 +232,7 @@ static int handle_reg_dump(struct nl80211_state *state,
 			   int argc, char **argv,
 			   enum id_input id)
 {
-	register_handler( print_reg_handler, NULL);
+	register_handler(print_reg_handler, NULL);
 	return 0;
 }
 
@@ -247,7 +247,7 @@ static int handle_reg_get(struct nl80211_state *state,
 	err = handle_cmd(state, CIB_NONE, 2, dump_args);
 	/* dump might fail since it's not supported on older kernels */
 	if (err == -EOPNOTSUPP) {
-		register_handler( print_reg_handler,
+		register_handler(print_reg_handler,
 			  NULL);
 		return 0;
 	}

@@ -658,7 +658,7 @@ static int handle_info(struct nl80211_state *state,
 		nlmsg_hdr(msg)->nlmsg_flags |= NLM_F_DUMP;
 	}
 
-	register_handler( print_phy_handler, NULL);
+	register_handler(print_phy_handler, NULL);
 
 	return 0;
 }
@@ -707,7 +707,7 @@ static int handle_features(struct nl80211_state *state, struct nl_msg *msg,
 			   int argc, char **argv, enum id_input id)
 {
 	unsigned long print = argc == 0 || strcmp(argv[0], "-q");
-	register_handler( print_feature_handler, (void *)print);
+	register_handler(print_feature_handler, (void *)print);
 	return 0;
 }
 

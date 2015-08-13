@@ -369,7 +369,7 @@ static int handle_station_get(struct nl80211_state *state,
 
 	NLA_PUT(msg, NL80211_ATTR_MAC, ETH_ALEN, mac_addr);
 
-	register_handler( print_sta_handler, NULL);
+	register_handler(print_sta_handler, NULL);
 
 	return 0;
  nla_put_failure:
@@ -552,7 +552,7 @@ static int handle_station_dump(struct nl80211_state *state,
 			       int argc, char **argv,
 			       enum id_input id)
 {
-	register_handler( print_sta_handler, NULL);
+	register_handler(print_sta_handler, NULL);
 	return 0;
 }
 COMMAND(station, dump, NULL,

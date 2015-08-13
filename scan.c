@@ -1985,7 +1985,7 @@ static int handle_scan_dump(struct nl80211_state *state,
 
 	scan_params.type = PRINT_SCAN;
 
-	register_handler( print_bss_handler,
+	register_handler(print_bss_handler,
 		  &scan_params);
 	return 0;
 }

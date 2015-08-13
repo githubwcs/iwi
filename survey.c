@@ -73,7 +73,7 @@ static int handle_survey_dump(struct nl80211_state *state,
 			      int argc, char **argv,
 			      enum id_input id)
 {
-	register_handler( print_survey_handler, NULL);
+	register_handler(print_survey_handler, NULL);
 	return 0;
 }
 COMMAND(survey, dump, NULL,
