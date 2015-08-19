@@ -15,7 +15,6 @@
 SECTION(iwl);
 
 static int handle_iwl_vendor_dev_tx_power(struct nl80211_state *state,
-					  struct nl_cb *cb,
 					  struct nl_msg *msg,
 					  int argc, char **argv,
 					  enum id_input id)
@@ -54,7 +53,6 @@ COMMAND(iwl, dev_tx_power, "[2.4 5.2L 5.2H]",
 	CIB_NETDEV, handle_iwl_vendor_dev_tx_power, "");
 
 static int handle_iwl_vendor_set_country(struct nl80211_state *state,
-					 struct nl_cb *cb,
 					 struct nl_msg *msg,
 					 int argc, char **argv,
 					 enum id_input id)
