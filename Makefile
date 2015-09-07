@@ -18,7 +18,7 @@ OBJS = iw.o genl.o event.o info.o phy.o \
 	mesh.o mpath.o mpp.o scan.o reg.o version.o \
 	reason.o status.o connect.o link.o offch.o ps.o cqm.o \
 	bitrate.o wowlan.o coalesce.o roc.o p2p.o vendor.o ftm.o \
-	measurements.o ap.o
+	measurements.o ap.o nan.o bf.o
 OBJS += sections.o
 
 OBJS-$(HWSIM) += hwsim.o
@@ -79,7 +79,7 @@ ifeq ($(NLLIBNAME),)
 $(error Cannot find development files for any supported version of libnl)
 endif
 
-LIBS += $(shell $(PKG_CONFIG) --libs $(NLLIBNAME))
+LIBS += $(shell $(PKG_CONFIG) --libs $(NLLIBNAME)) -lcrypto -lssl
 CFLAGS += $(shell $(PKG_CONFIG) --cflags $(NLLIBNAME))
 endif # NO_PKG_CONFIG
 
