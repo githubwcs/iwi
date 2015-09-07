@@ -79,7 +79,7 @@ ifeq ($(NLLIBNAME),)
 $(error Cannot find development files for any supported version of libnl)
 endif
 
-LIBS += $(shell $(PKG_CONFIG) --libs $(NLLIBNAME))
+LIBS += $(shell $(PKG_CONFIG) --libs $(NLLIBNAME)) -lcrypto -lssl
 CFLAGS += $(shell $(PKG_CONFIG) --cflags $(NLLIBNAME))
 endif # NO_PKG_CONFIG
 

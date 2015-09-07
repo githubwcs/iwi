@@ -209,7 +209,6 @@ DECLARE_SECTION(set);
 DECLARE_SECTION(get);
 
 void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs);
-
 void nan_bf(uint8_t idx, uint8_t *bf, uint16_t bf_len, const uint8_t *buf,
 	    size_t len);
 

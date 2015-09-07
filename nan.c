@@ -8,6 +8,7 @@
 #include <netlink/msg.h>
 #include <netlink/attr.h>
 
+#include <openssl/evp.h>
 #include <ctype.h>
 #include <inttypes.h>
 #include "nl80211.h"
