@@ -1,4 +1,3 @@
-#include <net/if.h>
 #include <errno.h>
 #include <string.h>
 #include <stdbool.h>
@@ -559,10 +558,8 @@ static int set_mcast_rate(struct nl80211_state *state,
 	float rate;
 	char *end;
 
-	if (argc != 1) {
-		printf("Invalid parameters!\n");
-		return 2;
-	}
+	if (argc != 1)
+		return 1;
 
 	rate = strtod(argv[0], &end);
 	if (*end != '\0')
