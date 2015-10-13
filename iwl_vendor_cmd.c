@@ -81,6 +81,50 @@ nla_put_failure:
 COMMAND(iwl, country, "<alpha2>", NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_set_country, "");
 
+static int handle_iwl_vendor_set_rxfilter(struct nl80211_state *state,
+					  struct nl_msg *msg,
+					  int argc, char **argv,
+					  enum id_input id)
+{
+	struct nlattr *config;
+	enum iwl_mvm_vendor_rxfilter_flags flag;
+	enum iwl_mvm_vendor_rxfilter_op op;
+
+	if (argc != 2)
+		return 1;
+
+	flag = atoi(argv[0]);
+	if (flag < 0 || flag > 3)
+		return 1;
+
+	if (strcmp(argv[1], "drop") == 0)
+		op = IWL_MVM_VENDOR_RXFILTER_OP_DROP;
+	else if (strcmp(argv[1], "pass") == 0)
+		op = IWL_MVM_VENDOR_RXFILTER_OP_PASS;
+	else
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_RXFILTER);
+
+	config = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!config)
+		return -ENOBUFS;
+
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RXFILTER, 1 << flag);
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RXFILTER_OP, op);
+	nla_nest_end(msg, config);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, rxfilter, "<filter> <pass|drop>", NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_set_rxfilter,
+	"filter: 0=unicast, 1=broadcast, 2=IPv4 multicast, 3=IPv6 multicast");
+
 static void parse_tcm_event(struct nlattr *data)
 {
 	struct nlattr *tcm[MAX_IWL_MVM_VENDOR_ATTR + 1];
