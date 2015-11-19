@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <net/if.h>
 #include <errno.h>
+#include <inttypes.h>
 #include "iw.h"
 
 static int no_seq_check(struct nl_msg *msg, void *arg)
@@ -415,6 +416,86 @@ static void parse_measurement_response(struct nlattr **tb,
 	}
 }
 
+static void parse_nan_match(struct nlattr **attrs)
+{
+	char macbuf[6*3];
+	__u64 cookie;
+	struct nlattr *match[NL80211_NAN_MATCH_ATTR_MAX + 1];
+	static struct nla_policy
+		nan_match_policy[NL80211_NAN_MATCH_ATTR_MAX + 1] = {
+		[NL80211_NAN_MATCH_FUNC_TYPE] = { .type = NLA_U8 },
+		[NL80211_NAN_MATCH_INSTANCE_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_MATCH_PEER_INSTANCE_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_MATCH_MAC] = { },
+		[NL80211_NAN_MATCH_SERVICE_INFO] = { },
+	};
+
+	cookie = nla_get_u64(attrs[NL80211_ATTR_COOKIE]);
+
+	if (nla_parse_nested(match, NL80211_NAN_MATCH_ATTR_MAX,
+			     attrs[NL80211_ATTR_NAN_MATCH],
+			     nan_match_policy)) {
+		printf("NAN: failed to parse nan match event\n");
+		return;
+	}
+
+	if (nla_get_u8(match[NL80211_NAN_MATCH_FUNC_TYPE]) ==
+	    NL80211_NAN_FUNC_PUBLISH) {
+		mac_addr_n2a(macbuf, nla_data(match[NL80211_NAN_MATCH_MAC]));
+		printf("NAN(cookie=0x%llx): DiscoveryResult, peer_id = %d, local_id=%d, peer_mac=%s, ",
+		       cookie,
+		       nla_get_u8(match[NL80211_NAN_MATCH_PEER_INSTANCE_ID]),
+		       nla_get_u8(match[NL80211_NAN_MATCH_INSTANCE_ID]),
+		       macbuf);
+		if (match[NL80211_NAN_MATCH_SERVICE_INFO]) {
+			char *info = malloc(nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) + 1);
+
+			memset(info, 0,
+			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) +
+				       1);
+			memcpy(info,
+			       nla_data(match[NL80211_NAN_MATCH_SERVICE_INFO]),
+			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]));
+			printf("info=%s\n", info);
+			free(info);
+		} else {
+			printf("info=N/A\n");
+		}
+	} else if (nla_get_u8(match[NL80211_NAN_MATCH_FUNC_TYPE]) ==
+		   NL80211_NAN_FUNC_SUBSCRIBE) {
+		mac_addr_n2a(macbuf, nla_data(match[NL80211_NAN_MATCH_MAC]));
+		printf("NAN(cookie=0x%llx): Replied, peer_id=%d, local_id=%d, peer_mac=%s\n",
+		       cookie,
+		       nla_get_u8(match[NL80211_NAN_MATCH_PEER_INSTANCE_ID]),
+		       nla_get_u8(match[NL80211_NAN_MATCH_INSTANCE_ID]),
+		       macbuf);
+	} else if (nla_get_u8(match[NL80211_NAN_MATCH_FUNC_TYPE]) ==
+		   NL80211_NAN_FUNC_FOLLOW_UP) {
+		mac_addr_n2a(macbuf, nla_data(match[NL80211_NAN_MATCH_MAC]));
+		printf("NAN(cookie=0x%llx): FollowUpReceive, peer_id=%d, local_id=%d, peer_mac=%s, ",
+		       cookie,
+		       nla_get_u8(match[NL80211_NAN_MATCH_PEER_INSTANCE_ID]),
+		       nla_get_u8(match[NL80211_NAN_MATCH_INSTANCE_ID]),
+		       macbuf);
+		if (match[NL80211_NAN_MATCH_SERVICE_INFO]) {
+			char *info = malloc(nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) + 1);
+
+			memset(info, 0,
+			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]) +
+				       1);
+			memcpy(info,
+			       nla_data(match[NL80211_NAN_MATCH_SERVICE_INFO]),
+			       nla_len(match[NL80211_NAN_MATCH_SERVICE_INFO]));
+			printf("info=%s\n", info);
+			free(info);
+		} else {
+			printf("info=N/A\n");
+		}
+	} else {
+		printf("NAN: Malformed event\n");
+	}
+}
+
 static int print_event(struct nl_msg *msg, void *arg)
 {
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
@@ -733,6 +814,44 @@ static int print_event(struct nl_msg *msg, void *arg)
 	case NL80211_CMD_MSRMENT_RESPONSE:
 		parse_measurement_response(tb, args);
 		break;
+	case NL80211_CMD_RM_NAN_FUNCTION:
+		if (!tb[NL80211_ATTR_NAN_FUNC_INST_ID]) {
+			printf("Bad NAN function termination format - instance id is missing\n");
+			break;
+		}
+
+		if (!tb[NL80211_ATTR_NAN_FUNC_TERM_REASON]) {
+			printf("Bad NAN function termination format - reason is missing\n");
+			break;
+		}
+
+		if (!tb[NL80211_ATTR_COOKIE]) {
+			printf("Bad NAN function termination format - cookie is missing\n");
+			break;
+		}
+
+		printf("NAN(cookie=0x%" PRIx64
+		       "): Termination event: id = %d, reason = ",
+		       nla_get_u64(tb[NL80211_ATTR_COOKIE]),
+		       nla_get_u8(tb[NL80211_ATTR_NAN_FUNC_INST_ID]));
+		switch (nla_get_u8(tb[NL80211_ATTR_NAN_FUNC_TERM_REASON])) {
+		case NL80211_NAN_FUNC_TERM_REASON_USER_REQUEST:
+			printf("user request\n");
+			break;
+		case NL80211_NAN_FUNC_TERM_REASON_TTL_EXPIRED:
+			printf("expired\n");
+			break;
+		case NL80211_NAN_FUNC_TERM_REASON_ERROR:
+			printf("error\n");
+			break;
+		default:
+			printf("unknown\n");
+		}
+		break;
+	case NL80211_CMD_NAN_MATCH: {
+		parse_nan_match(tb);
+		break;
+	}
 	default:
 		printf("unknown event %d (%s)\n",
 		       gnlh->cmd, command_name(gnlh->cmd));
@@ -805,6 +924,13 @@ int __prepare_listen_events(struct nl80211_state *state)
 	}
 
 	mcid = nl_get_multicast_id(state->nl_sock, "nl80211", "vendor");
+	if (mcid >= 0) {
+		ret = nl_socket_add_membership(state->nl_sock, mcid);
+		if (ret)
+			return ret;
+	}
+
+	mcid = nl_get_multicast_id(state->nl_sock, "nl80211", "nan");
 	if (mcid >= 0) {
 		ret = nl_socket_add_membership(state->nl_sock, mcid);
 		if (ret)
