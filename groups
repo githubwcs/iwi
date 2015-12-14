@@ -1,6 +1,20 @@
 # UUID                                  	Group Name
 #
 global:Registered-Users                 	Registered Users
+teamforge:proj5201:role44397			TF: iwlwifi: tf-admin
+teamforge:proj5201:role41609            	TF: iwlwifi: maint-driver
+teamforge:proj5201:role41610            	TF: iwlwifi: maint-fwutil
+teamforge:proj5201:role41611            	TF: iwlwifi: maint-hostap
 teamforge:proj5201:role41612            	TF: iwlwifi: maint-iw
+teamforge:proj5201:role41613            	TF: iwlwifi: maint-hal
+teamforge:proj5201:role41614            	TF: iwlwifi: maint-pytm
+teamforge:proj5201:role41615            	TF: iwlwifi: maint-tools
+teamforge:proj5201:role41616            	TF: iwlwifi: maint-xvt
+teamforge:proj5201:role41617            	TF: iwlwifi: maint-ult
 teamforge:proj5201:role41618            	TF: iwlwifi: taggers
-teamforge:proj5201:role44397            	TF: iwlwifi: tf-admin
+teamforge:proj5201:role41965            	TF: iwlwifi: restricted-read
+teamforge:proj5201:role42238			TF: iwlwifi: maint-fwbin
+teamforge:proj5201:role41619			TF: iwlwifi: prune-push
+teamforge:proj5201:role42339			TF: iwlwifi: maint-perci
+teamforge:proj5201:role42340			TF: iwlwifi: maint-infra
+teamforge:proj5201:role52497			TF: iwlwifi: perci
