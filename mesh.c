@@ -286,7 +286,6 @@ static const struct mesh_param_descr *find_mesh_param(const char *name)
 			return _mesh_param_descrs + i;
 	}
 
-	print_all_mesh_param_descr();
 	return NULL;
 }
 
@@ -305,8 +304,10 @@ static int set_interface_meshparam(struct nl80211_state *state,
 	if (!container)
 		return -ENOBUFS;
 
-	if (!argc)
+	if (!argc) {
+		print_all_mesh_param_descr();
 		return 1;
+	}
 
 	while (argc) {
 		const char *name;
@@ -334,8 +335,11 @@ static int set_interface_meshparam(struct nl80211_state *state,
 		}
 
 		mdescr = find_mesh_param(name);
-		if (!mdescr)
+		if (!mdescr) {
+			printf("Could not find the parameter %s.\n", name);
+			print_all_mesh_param_descr();
 			return 2;
+		}
 
 		/* Parse the new value */
 		ret = mdescr->parse_fn(value, &any);
@@ -411,13 +415,18 @@ static int get_interface_meshparam(struct nl80211_state *state,
 {
 	const struct mesh_param_descr *mdescr = NULL;
 
-	if (argc > 1)
+	if (argc == 0) {
+		print_all_mesh_param_descr();
 		return 1;
-
-	if (argc == 1) {
+	} else if (argc == 1) {
 		mdescr = find_mesh_param(argv[0]);
-		if (!mdescr)
+		if (!mdescr) {
+			printf("Could not find the parameter %s.\n", argv[0]);
+			print_all_mesh_param_descr();
 			return 2;
+		}
+	} else {
+		return 1;
 	}
 
 	register_handler(print_mesh_param_handler, (void *)mdescr);
@@ -439,12 +448,8 @@ static int join_mesh(struct nl80211_state *state,
 	char *end, *value = NULL, *sptr = NULL;
 	unsigned int i;
 	unsigned long freq = 0;
-	static const struct {
-		const char *name;
-		unsigned int width;
-		int freq1_diff;
-		int chantype; /* for older kernel */
-	} *chanmode_selected = NULL, chanmode[] = {
+	const struct chanmode *chanmode_selected = NULL;
+	static const struct chanmode chanmode[] = {
 		{ .name = "HT20",
 		  .width = NL80211_CHAN_WIDTH_20,
 		  .freq1_diff = 0,
@@ -461,6 +466,10 @@ static int join_mesh(struct nl80211_state *state,
 		  .width = NL80211_CHAN_WIDTH_20_NOHT,
 		  .freq1_diff = 0,
 		  .chantype = NL80211_CHAN_NO_HT },
+		{ .name = "80MHz",
+		  .width = NL80211_CHAN_WIDTH_80,
+		  .freq1_diff = 0,
+		  .chantype = -1 },
 	};
 
 	if (argc < 1)
@@ -497,7 +506,7 @@ static int join_mesh(struct nl80211_state *state,
 			NLA_PUT_U32(msg, NL80211_ATTR_CHANNEL_WIDTH,
 				    chanmode_selected->width);
 			NLA_PUT_U32(msg, NL80211_ATTR_CENTER_FREQ1,
-				    freq + chanmode_selected->freq1_diff);
+				    get_cf1(chanmode_selected, freq));
 			if (chanmode_selected->chantype != -1)
 				NLA_PUT_U32(msg,
 					    NL80211_ATTR_WIPHY_CHANNEL_TYPE,
@@ -599,7 +608,7 @@ static int join_mesh(struct nl80211_state *state,
  nla_put_failure:
 	return -ENOBUFS;
 }
-COMMAND(mesh, join, "<mesh ID> [[freq <freq in MHz> <HT20|HT40+|HT40-|NOHT>]"
+COMMAND(mesh, join, "<mesh ID> [[freq <freq in MHz> <NOHT|HT20|HT40+|HT40-|80MHz>]"
 	" [basic-rates <rate in Mbps,rate2,...>]], [mcast-rate <rate in Mbps>]"
 	" [beacon-interval <time in TUs>] [dtim-period <value>]"
 	" [vendor_sync on|off] [<param>=<value>]*",

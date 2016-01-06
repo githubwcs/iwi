@@ -16,39 +16,6 @@
 
 SECTION(ibss);
 
-struct chanmode {
-	const char *name;
-	unsigned int width;
-	int freq1_diff;
-	int chantype; /* for older kernel */
-};
-
-static int get_cf1(const struct chanmode *chanmode, unsigned long freq)
-{
-	unsigned int cf1 = freq, j;
-	unsigned int vht80[] = { 5180, 5260, 5500, 5580, 5660, 5745 };
-
-	switch (chanmode->width) {
-	case NL80211_CHAN_WIDTH_80:
-	        /* setup center_freq1 */
-		for (j = 0; j < ARRAY_SIZE(vht80); j++) {
-			if (freq >= vht80[j] && freq < vht80[j] + 80)
-				break;
-		}
-
-		if (j == ARRAY_SIZE(vht80))
-			break;
-
-		cf1 = vht80[j] + 30;
-		break;
-	default:
-		cf1 = freq + chanmode->freq1_diff;
-		break;
-	}
-
-	return cf1;
-}
-
 static int join_ibss(struct nl80211_state *state,
 		     struct nl_msg *msg,
 		     int argc, char **argv,
@@ -225,7 +192,7 @@ COMMAND(ibss, leave, NULL,
 	NL80211_CMD_LEAVE_IBSS, 0, CIB_NETDEV, leave_ibss,
 	"Leave the current IBSS cell.");
 COMMAND(ibss, join,
-	"<SSID> <freq in MHz> [HT20|HT40+|HT40-|NOHT|5MHz|10MHz|80MHz] [fixed-freq] [<fixed bssid>] [beacon-interval <TU>]"
+	"<SSID> <freq in MHz> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz] [fixed-freq] [<fixed bssid>] [beacon-interval <TU>]"
 	" [basic-rates <rate in Mbps,rate2,...>] [mcast-rate <rate in Mbps>] "
 	"[key d:0:abcde]",
 	NL80211_CMD_JOIN_IBSS, 0, CIB_NETDEV, join_ibss,
