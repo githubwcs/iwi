@@ -10,6 +10,7 @@
  * Copyright 2008, 2009 Luis R. Rodriguez <lrodriguez@atheros.com>
  * Copyright 2008 Jouni Malinen <jouni.malinen@atheros.com>
  * Copyright 2008 Colin McCabe <colin@cozybit.com>
+ * Copyright 2015-2016	Intel Deutschland GmbH
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -47,6 +48,7 @@
 #define NL80211_MULTICAST_GROUP_REG		"regulatory"
 #define NL80211_MULTICAST_GROUP_MLME		"mlme"
 #define NL80211_MULTICAST_GROUP_VENDOR		"vendor"
+#define NL80211_MULTICAST_GROUP_NAN		"nan"
 #define NL80211_MULTICAST_GROUP_TESTMODE	"testmode"
 
 /**
@@ -328,7 +330,15 @@
  *	partial scan results may be available
  *
  * @NL80211_CMD_START_SCHED_SCAN: start a scheduled scan at certain
- *	intervals, as specified by %NL80211_ATTR_SCHED_SCAN_INTERVAL.
+ *	intervals and certain number of cycles, as specified by
+ *	%NL80211_ATTR_SCHED_SCAN_PLANS. If %NL80211_ATTR_SCHED_SCAN_PLANS is
+ *	not specified and only %NL80211_ATTR_SCHED_SCAN_INTERVAL is specified,
+ *	scheduled scan will run in an infinite loop with the specified interval.
+ *	These attributes are mutually exculsive,
+ *	i.e. NL80211_ATTR_SCHED_SCAN_INTERVAL must not be passed if
+ *	NL80211_ATTR_SCHED_SCAN_PLANS is defined.
+ *	If for some reason scheduled scan is aborted by the driver, all scan
+ *	plans are canceled (including scan plans that did not start yet).
  *	Like with normal scans, if SSIDs (%NL80211_ATTR_SCAN_SSIDS)
  *	are passed, they are used in the probe requests.  For
  *	broadcast, a broadcast SSID must be passed (ie. an empty
@@ -811,6 +821,65 @@
  *	as an event to indicate changes for devices with wiphy-specific regdom
  *	management.
  *
+ * @NL80211_CMD_ABORT_SCAN: Stop an ongoing scan. Returns -ENOENT if a scan is
+ *	not running. The driver indicates the status of the scan through
+ *	cfg80211_scan_done().
+ *
+ * @NL80211_CMD_MSRMENT_REQUEST: Request to perform some type of measurement.
+ *	Request type is given by %NL80211_ATTR_MSRMENT_TYPE. Additional data is
+ *	given according to the request type.
+ *	When called, this operation returns a cookie (%NL80211_ATTR_COOKIE)
+ *	that will be included with any events pertaining to this request.
+ *	In order to abort the request, the socket which sent the request needs
+ *	to be closed. It is strongly recommended that each request will have a
+ *	separate socket.
+ * @NL80211_CMD_MSRMENT_RESPONSE: Reports measurement results in response to a
+ *	previous measurement request. A cookie matching the previous request is
+ *	given by %NL80211_ATTR_COOKIE. Response type is given by
+ *	%NL80211_ATTR_MSRMENT_TYPE. Response status is given by
+ *	%NL80211_ATTR_MSRMENT_STATUS. Additional data is given according to the
+ *	request type.
+ *	This message might be sent multiple times for one response, splitting
+ *	the response into several segments. The @NL80211_ATTR_LAST_MSG flag
+ *	should be set in the last message of the response.
+ * @NL80211_CMD_START_FTM_RESPONDER: Start FTM responder and set its parameters.
+ *	This is supported only on AP interface. FTM responder cannot be stopped
+ *	without removing the interface.
+ *
+ * @NL80211_CMD_START_NAN: Start NAN operation, identified by its
+ *	%NL80211_ATTR_WDEV interface. This interface must have been previously
+ *	created with %NL80211_CMD_NEW_INTERFACE. After it has been started, the
+ *	NAN interface will create or join a cluster. This command must have a
+ *	valid %NL80211_ATTR_NAN_MASTER_PREF attribute and optional
+ *	%NL80211_ATTR_NAN_DUAL attributes.
+ *	After this command NAN functions can be added.
+ * @NL80211_CMD_STOP_NAN: Stop the NAN operation, identified by
+ *	its %NL80211_ATTR_WDEV interface.
+ * @NL80211_CMD_ADD_NAN_FUNCTION: Add a NAN function. The function is defined
+ *	with %NL80211_ATTR_NAN_FUNC nested attribute. When called, this
+ *	operation returns the strictly positive and unique instance id
+ *	(%NL80211_ATTR_NAN_FUNC_INST_ID) and a cookie (%NL80211_ATTR_COOKIE)
+ *	of the function upon success.
+ *	Since instance ID's can be re-used, this cookie is the right
+ *	way to identify the function. This will avoid races when a termination
+ *	event is handled by the user space after it has already added a new
+ *	function that got the same instance id from the kernel as the one
+ *	which just terminated.
+ *	This cookie may be used in NAN events even before the command
+ *	returns, so userspace shouldn't process NAN events until it processes
+ *	the response to this command.
+ * @NL80211_CMD_RM_NAN_FUNCTION: Remove a NAN function by cookie.
+ *	This command is also used as a notification sent when a NAN function is
+ *	terminated. This will contain a %NL80211_ATTR_NAN_FUNC_INST_ID
+ *	and %NL80211_ATTR_COOKIE attributes.
+ * @NL80211_CMD_CHANGE_NAN_CONFIG: Change current NAN configuration. NAN
+ *	must be operational (%NL80211_CMD_START_NAN was executed).
+ *	It must contain at least one of the following attributes:
+ *	%NL80211_ATTR_NAN_MASTER_PREF, %NL80211_ATTR_NAN_DUAL.
+ * @NL80211_CMD_NAN_FUNC_MATCH: Notification sent when a match is reported.
+ *	This will contain a %NL80211_ATTR_NAN_MATCH nested attribute and
+ *	%NL80211_ATTR_COOKIE.
+ *
  * @NL80211_CMD_MAX: highest used command number
  * @__NL80211_CMD_AFTER_LAST: internal use
  */
@@ -996,6 +1065,22 @@ enum nl80211_commands {
 	NL80211_CMD_TDLS_CANCEL_CHANNEL_SWITCH,
 
 	NL80211_CMD_WIPHY_REG_CHANGE,
+
+	NL80211_CMD_ABORT_SCAN,
+
+	NL80211_CMD_MSRMENT_REQUEST,
+	NL80211_CMD_MSRMENT_RESPONSE,
+
+	NL80211_CMD_START_FTM_RESPONDER,
+
+	NL80211_CMD_START_NAN,
+	NL80211_CMD_STOP_NAN,
+	NL80211_CMD_ADD_NAN_FUNCTION,
+	NL80211_CMD_RM_NAN_FUNCTION,
+	NL80211_CMD_CHANGE_NAN_CONFIG,
+	NL80211_CMD_NAN_MATCH,
+
+	NL80211_CMD_GET_FTM_RESPONDER_STATS,
 
 	/* add new commands above here */
 
@@ -1712,6 +1797,8 @@ enum nl80211_commands {
  *	underlying device supports these minimal RRM features:
  *		%NL80211_FEATURE_DS_PARAM_SET_IE_IN_PROBES,
  *		%NL80211_FEATURE_QUIET,
+ *	Or, if global RRM is supported, see:
+ *		%NL80211_EXT_FEATURE_RRM
  *	If this flag is used, driver must add the Power Capabilities IE to the
  *	association request. In addition, it must also set the RRM capability
  *	flag in the association request's Capability Info field.
@@ -1755,11 +1842,64 @@ enum nl80211_commands {
  *	over all channels.
  *
  * @NL80211_ATTR_SCHED_SCAN_DELAY: delay before the first cycle of a
- *	scheduled scan (or a WoWLAN net-detect scan) is started, u32
- *	in seconds.
+ *	scheduled scan is started.  Or the delay before a WoWLAN
+ *	net-detect scan is started, counting from the moment the
+ *	system is suspended.  This value is a u32, in seconds.
 
  * @NL80211_ATTR_REG_INDOOR: flag attribute, if set indicates that the device
  *      is operating in an indoor environment.
+ *
+ * @NL80211_ATTR_MAX_NUM_SCHED_SCAN_PLANS: maximum number of scan plans for
+ *	scheduled scan supported by the device (u32), a wiphy attribute.
+ * @NL80211_ATTR_MAX_SCAN_PLAN_INTERVAL: maximum interval (in seconds) for
+ *	a scan plan (u32), a wiphy attribute.
+ * @NL80211_ATTR_MAX_SCAN_PLAN_ITERATIONS: maximum number of iterations in
+ *	a scan plan (u32), a wiphy attribute.
+ * @NL80211_ATTR_SCHED_SCAN_PLANS: a list of scan plans for scheduled scan.
+ *	Each scan plan defines the number of scan iterations and the interval
+ *	between scans. The last scan plan will always run infinitely,
+ *	thus it must not specify the number of iterations, only the interval
+ *	between scans. The scan plans are executed sequentially.
+ *	Each scan plan is a nested attribute of &enum nl80211_sched_scan_plan.
+ *
+ * @NL80211_ATTR_MSRMENT_TYPE: Type of current measurement request/response.
+ *	(values defined in &enum nl80211_msrment_type).
+ * @NL80211_ATTR_MSRMENT_STATUS: Status of current measurement response.
+ *	(values defined in &enum nl80211_msrment_status)
+ * @NL80211_ATTR_MSRMENT_FTM_REQUEST: Container for data of an FTM measurement
+ *	request (nested. see &enum nl80211_ftm_request)
+ * @NL80211_ATTR_MSRMENT_FTM_RESPONSE: An AP with which a measurement was
+ *	attempted (nested. see &enum nl80211_ftm_response_entry)
+ *	An FTM response consists of series of such messages, where the last
+ *	message is marked with the @NL80211_ATTR_LAST_MSG flag.
+ * @NL80211_ATTR_MSRMENT_FTM_CAPA: FTM initiator capabilities. see
+ *	&enum nl80211_ftm_initiator_capa. Not in use in case FTM is not
+ *	supported. nested.
+ * @NL80211_ATTR_LAST_MSG: Indicates that this message is the last one in the
+ *	series of messages. (flag)
+ *
+ * @NL80211_ATTR_LCI: The content of measurement report IE (Section 8.4.2.21 in
+ *	spec) with type 8 - LCI (Section 8.4.2.21.10)
+ * @NL80211_ATTR_CIVIC: The content of measurement Report IE (Section 8.4.2.21
+ *	in spec) with type 11 - Civic (Section 8.4.2.21.13)
+ *
+ * @NL80211_ATTR_NAN_MASTER_PREF: the master preference to be used by
+ *	&NL80211_CMD_START_NAN and optionally with
+ *	&NL80211_CMD_CHANGE_NAN_CONFIG. Its type is u8 and it can't be 0, 1 or
+ *	255.
+ * @NL80211_ATTR_NAN_DUAL: NAN dual band operation config (see
+ *	&enum nl80211_nan_dual_band_conf). This attribute is used with
+ *	&NL80211_CMD_START_NAN and optionally with
+ *	&NL80211_CMD_CHANGE_NAN_CONFIG.
+ * @NL80211_ATTR_NAN_FUNC: a function that can be added to NAN. See
+ *	&enum nl80211_nan_func_attributes for description of this nested
+ *	attribute.
+ * @NL80211_ATTR_NAN_FUNC_INST_ID: the instance id of a %NL80211_ATTR_NAN_FUNC.
+ *	Its type is u8 and it cannot be 0.
+ * @NL80211_ATTR_NAN_MATCH: used to report a match. This is a nested attribute.
+ *	See &enum nl80211_nan_match_attributes.
+ * @NL80211_ATTR_NAN_FUNC_TERM_REASON: NAN function termination reason.
+ *	See &enum nl80211_nan_func_term_reason.
  *
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
@@ -2130,6 +2270,32 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_REG_INDOOR,
 
+	NL80211_ATTR_MAX_NUM_SCHED_SCAN_PLANS,
+	NL80211_ATTR_MAX_SCAN_PLAN_INTERVAL,
+	NL80211_ATTR_MAX_SCAN_PLAN_ITERATIONS,
+	NL80211_ATTR_SCHED_SCAN_PLANS,
+
+	NL80211_ATTR_MSRMENT_TYPE,
+	NL80211_ATTR_MSRMENT_STATUS,
+
+	NL80211_ATTR_MSRMENT_FTM_REQUEST,
+	NL80211_ATTR_MSRMENT_FTM_RESPONSE,
+	NL80211_ATTR_MSRMENT_FTM_CAPA,
+
+	NL80211_ATTR_LAST_MSG,
+
+	NL80211_ATTR_LCI,
+	NL80211_ATTR_CIVIC,
+
+	NL80211_ATTR_NAN_MASTER_PREF,
+	NL80211_ATTR_NAN_DUAL,
+	NL80211_ATTR_NAN_FUNC,
+	NL80211_ATTR_NAN_FUNC_INST_ID,
+	NL80211_ATTR_NAN_MATCH,
+	NL80211_ATTR_NAN_FUNC_TERM_REASON,
+
+	NL80211_ATTR_FTM_RESPONDER_STATS,
+
 	/* add attributes here, update the policy in nl80211.c */
 
 	__NL80211_ATTR_AFTER_LAST,
@@ -2208,6 +2374,7 @@ enum nl80211_attrs {
  *	commands to create and destroy one
  * @NL80211_IF_TYPE_OCB: Outside Context of a BSS
  *	This mode corresponds to the MIB variable dot11OCBActivated=true
+ * @NL80211_IFTYPE_NAN: NAN device interface type (not a netdev)
  * @NL80211_IFTYPE_MAX: highest interface type number currently defined
  * @NUM_NL80211_IFTYPES: number of defined interface types
  *
@@ -2228,6 +2395,7 @@ enum nl80211_iftype {
 	NL80211_IFTYPE_P2P_GO,
 	NL80211_IFTYPE_P2P_DEVICE,
 	NL80211_IFTYPE_OCB,
+	NL80211_IFTYPE_NAN,
 
 	/* keep last */
 	NUM_NL80211_IFTYPES,
@@ -3364,6 +3532,9 @@ enum nl80211_bss_scan_width {
  *	(not present if no beacon frame has been received yet)
  * @NL80211_BSS_PRESP_DATA: the data in @NL80211_BSS_INFORMATION_ELEMENTS and
  *	@NL80211_BSS_TSF is known to be from a probe response (flag attribute)
+ * @NL80211_BSS_LAST_SEEN_BOOTTIME: CLOCK_BOOTTIME timestamp when this entry
+ *	was last updated by a received frame. The value is expected to be
+ *	accurate to about 10ms. (u64, nanoseconds)
  * @__NL80211_BSS_AFTER_LAST: internal
  * @NL80211_BSS_MAX: highest BSS attribute
  */
@@ -3383,6 +3554,7 @@ enum nl80211_bss {
 	NL80211_BSS_CHAN_WIDTH,
 	NL80211_BSS_BEACON_TSF,
 	NL80211_BSS_PRESP_DATA,
+	NL80211_BSS_LAST_SEEN_BOOTTIME,
 
 	/* keep last */
 	__NL80211_BSS_AFTER_LAST,
@@ -4358,12 +4530,18 @@ enum nl80211_feature_flags {
 /**
  * enum nl80211_ext_feature_index - bit index of extended features.
  * @NL80211_EXT_FEATURE_VHT_IBSS: This driver supports IBSS with VHT datarates.
+ * @NL80211_EXT_FEATURE_RRM: This driver supports RRM. When featured, user can
+ *	can request to use RRM (see %NL80211_ATTR_USE_RRM) with
+ *	%NL80211_CMD_ASSOCIATE and %NL80211_CMD_CONNECT requests, which will set
+ *	the ASSOC_REQ_USE_RRM flag in the association request even if
+ *	NL80211_FEATURE_QUIET is not advertized.
  *
  * @NUM_NL80211_EXT_FEATURES: number of extended features.
  * @MAX_NL80211_EXT_FEATURES: highest extended feature index.
  */
 enum nl80211_ext_feature_index {
 	NL80211_EXT_FEATURE_VHT_IBSS,
+	NL80211_EXT_FEATURE_RRM,
 
 	/* add new features before the definition below */
 	NUM_NL80211_EXT_FEATURES,
@@ -4587,6 +4765,596 @@ enum nl80211_tdls_peer_capability {
 	NL80211_TDLS_PEER_HT = 1<<0,
 	NL80211_TDLS_PEER_VHT = 1<<1,
 	NL80211_TDLS_PEER_WMM = 1<<2,
+};
+
+/**
+ * enum nl80211_sched_scan_plan - scanning plan for scheduled scan
+ * @__NL80211_SCHED_SCAN_PLAN_INVALID: attribute number 0 is reserved
+ * @NL80211_SCHED_SCAN_PLAN_INTERVAL: interval between scan iterations. In
+ *	seconds (u32).
+ * @NL80211_SCHED_SCAN_PLAN_ITERATIONS: number of scan iterations in this
+ *	scan plan (u32). The last scan plan must not specify this attribute
+ *	because it will run infinitely. A value of zero is invalid as it will
+ *	make the scan plan meaningless.
+ * @NL80211_SCHED_SCAN_PLAN_MAX: highest scheduled scan plan attribute number
+ *	currently defined
+ * @__NL80211_SCHED_SCAN_PLAN_AFTER_LAST: internal use
+ */
+enum nl80211_sched_scan_plan {
+	__NL80211_SCHED_SCAN_PLAN_INVALID,
+	NL80211_SCHED_SCAN_PLAN_INTERVAL,
+	NL80211_SCHED_SCAN_PLAN_ITERATIONS,
+
+	/* keep last */
+	__NL80211_SCHED_SCAN_PLAN_AFTER_LAST,
+	NL80211_SCHED_SCAN_PLAN_MAX =
+		__NL80211_SCHED_SCAN_PLAN_AFTER_LAST - 1
+};
+
+/**
+ * enum nl80211_msrment_type - measurement types
+ *
+ * Used to indicate the requested/reported measurement type in
+ * %NL80211_CMD_MSRMENT_REQUEST or %NL80211_CMD_MSRMENT_RESPONSE.
+ *
+ * @NL80211_MSRMENT_TYPE_FTM: Fine Timing Measurement.
+ *	An FTM request should be constructed according to &enum
+ *	nl80211_ftm_request.
+ *	An FTM response is a serie of messages, each meassage including a
+ *	single FTM target, described in &enum nl80211_ftm_target. The last
+ *	message in the serie is marked with the @NL80211_ATTR_LAST_MSG flag.
+ *	Status @NL80211_MSRMENT_STATUS_REFUSED is used if the device is not
+ *	available for FTM operations. Status @NL80211_MSRMENT_STATUS_FAIL is
+ *	used if the device attempted to perform the measurements, but all failed
+ *	for local reasons. In these both cases, no response is included in the
+ *	message. In other cases @NL80211_MSRMENT_STATUS_SUCCESS is used.
+ *	In the latter case, internal status of each target is used to
+ *	indicate the measurement status of each particular target.
+ */
+enum nl80211_msrment_type {
+	NL80211_MSRMENT_TYPE_FTM,
+};
+
+/**
+ * enum nl80211_msrment_status - measurement response status values
+ *
+ * @NL80211_MSRMENT_STATUS_SUCCESS: Measurement performed. This does not mean
+ *	every sub-measurement was successful, but only that as a whole, the
+ *	operation succeeded. More detailed status should reside in the internal
+ *	parts of the response, and according to the measurement type.
+ * @NL80211_MSRMENT_STATUS_REFUSED: Device is refusing to perform the required
+ *	measurement. Note that not every measurement can be performed at every
+ *	given moment in time. See specific measurement details for execution
+ *	conditions.
+ * @NL80211_MSRMENT_STATUS_FAIL: Measurement failed.
+ */
+enum nl80211_msrment_status {
+	NL80211_MSRMENT_STATUS_SUCCESS,
+	NL80211_MSRMENT_STATUS_REFUSED,
+	NL80211_MSRMENT_STATUS_FAIL,
+};
+
+/**
+ * enum nl80211_ftm_preamble - Allowed preamble types to use in FTM frames
+ *
+ * @NL80211_FTM_PREAMBLE_LEGACY: Legacy preamble
+ * @NL80211_FTM_PREAMBLE_HT: HT preamble
+ * @NL80211_FTM_PREAMBLE_VHT: VHT preamble
+ */
+enum nl80211_ftm_preamble {
+	NL80211_FTM_PREAMBLE_LEGACY = 1 << 0,
+	NL80211_FTM_PREAMBLE_HT     = 1 << 1,
+	NL80211_FTM_PREAMBLE_VHT    = 1 << 2
+};
+
+/**
+ * enum nl80211_ftm_bw - Allowed bandwidths to use in FTM frames
+ *
+ * @NL80211_FTM_BW_5: 5Mhz
+ * @NL80211_FTM_BW_10: 10Mhz
+ * @NL80211_FTM_BW_20: 20Mhz
+ * @NL80211_FTM_BW_40: 40Mhz
+ * @NL80211_FTM_BW_80: 80Mhz
+ * @NL80211_FTM_BW_160: 160Mhz
+ */
+enum nl80211_ftm_bw {
+	NL80211_FTM_BW_5   = 1 << 0,
+	NL80211_FTM_BW_10  = 1 << 1,
+	NL80211_FTM_BW_20  = 1 << 2,
+	NL80211_FTM_BW_40  = 1 << 3,
+	NL80211_FTM_BW_80  = 1 << 4,
+	NL80211_FTM_BW_160 = 1 << 5
+};
+
+/**
+ * enum nl80211_ftm_initiator_capa - FTM initiator capabilities
+ *
+ * @NL80211_FTM_CAPA_MAX_2_SIDED: Max number of 2-sided targets allowed by the
+ *	device in an FTM request. (u32)
+ * @NL80211_FTM_CAPA_MAX_TOTAL: Max number of targets (both 1-sided and 2-sided)
+ *	allowed by the device in an FTM request. (u32)
+ * @NL80211_FTM_CAPA_ASAP: Set if ASAP is supported. (flag)
+ * @NL80211_FTM_CAPA_NON_ASAP: Set if non-ASAP is supported. (flag)
+ * @NL80211_FTM_CAPA_REQ_TSF: Set if user can request to report the associated
+ *	AP's TSF. see %NL80211_FTM_REQ_ATTR_REPORT_TSF. (flag)
+ * @NL80211_FTM_CAPA_REQ_LCI: Set if reporting target's LCI is supported. (flag)
+ * @NL80211_FTM_CAPA_REQ_CIVIC: Set if reporting target's CIVIC is supported.
+ *	(flag)
+ * @NL80211_FTM_CAPA_PREAMBLE: supported preambles for FTM frames. bitmap of
+ *	&enum nl80211_ftm_preamble. (u32)
+ * @NL80211_FTM_CAPA_BW: supported bandwidths for FTM frames. bitmap of
+ *	enum nl80211_ftm_bw. (u32)
+ */
+enum nl80211_ftm_initiator_capa {
+	__NL80211_FTM_CAPA_INVALID,
+	NL80211_FTM_CAPA_MAX_2_SIDED,
+	NL80211_FTM_CAPA_MAX_TOTAL,
+	NL80211_FTM_CAPA_ASAP,
+	NL80211_FTM_CAPA_NON_ASAP,
+	NL80211_FTM_CAPA_REQ_TSF,
+	NL80211_FTM_CAPA_REQ_LCI,
+	NL80211_FTM_CAPA_REQ_CIVIC,
+	NL80211_FTM_CAPA_PREAMBLE,
+	NL80211_FTM_CAPA_BW,
+
+	/* keep last */
+	__NL80211_FTM_CAPA_AFTER_LAST,
+	NL80211_FTM_CAPA_MAX = __NL80211_FTM_CAPA_AFTER_LAST - 1
+};
+
+/**
+ * enum nl80211_ftm_target - attributes for an FTM target
+ *
+ * An FTM target is a station with which to perform measurements.
+ *
+ * @__NL80211_FTM_TARGET_ATTR_INVALID: invalid
+ * @NL80211_FTM_TARGET_ATTR_FREQ: Target's frequency (u32)
+ * @NL80211_FTM_TARGET_ATTR_BW: Target's actual channel bandwidth. Only BWs
+ *	supported by the device are allowed. (u8, one of
+ *	&enum nl80211_chan_width)
+ * @NL80211_FTM_TARGET_ATTR_CNTR_FREQ_1: Center freq., 1st segment, if relevant
+ *	(u32)
+ * @NL80211_FTM_TARGET_ATTR_CNTR_FREQ_2: Center freq., 2nd segment, if relevant
+ *	(u32)
+ * @NL80211_FTM_TARGET_ATTR_BSSID: Target's BSSID (6 octets)
+ * @NL80211_FTM_TARGET_ATTR_ONE_SIDED: whether to perform a one-sided (flag set)
+ *	or two-sided (flag clear) measurement. (flag)
+ * @NL80211_FTM_TARGET_ATTR_NUM_OF_BURSTS_EXP: Exponent of 2 of the number of
+ *	measurement iterations. Optional (default: 0). (u8)
+ * @NL80211_FTM_TARGET_ATTR_BURST_PERIOD: Measurement periodicity in units of
+ *	100ms. Ignored if num of bursts exp is 0. (u16)
+ * @NL80211_FTM_TARGET_ATTR_SAMPLES_PER_BURST: Number of measurement frames
+ *	requested per burst. Optional (default: 2) (u8)
+ * @NL80211_FTM_TARGET_ATTR_RETRIES: Number of retries per sample.
+ *	Optional (default: 3). (u8)
+ * @NL80211_FTM_TARGET_ATTR_BURST_DURATION: duration of an rtt burst.
+ *	Valid values are 2-11 and 15. Optional (default: 15) (u8)
+ * @NL80211_FTM_TARGET_ATTR_ASAP: Whether to perform the measurement in ASAP
+ *	mode. Ignored if one-sided. Request will be refused if:
+ *	ASAP requested and %NL80211_FTM_CAPA_ASAP isn't set by the device, or
+ *	non-ASAP requested and %NL80211_FTM_CAPA_NON_ASAP isn't set by the
+ *	device. (flag)
+ * @NL80211_FTM_TARGET_QUERY_LCI: Whether to include an LCI query in the
+ *	request. Request will be refused if %NL80211_FTM_CAPA_REQ_LCI isn't set
+ *	by the device. (flag)
+ * @NL80211_FTM_TARGET_QUERY_CIVIC: Whether to include a CIVIC query in the
+ *	request. Request will be refused if %NL80211_FTM_CAPA_REQ_CIVIC isn't
+ *	set by the device. (flag)
+ * @NL80211_FTM_TARGET_ATTR_COOKIE: Extra data for the use of the invoking
+ *	component. This will be passed back to the caller in the response, along
+ *	with the rest of the request. Optional. (u64)
+ * @NL80211_FTM_TARGET_ATTR_FTM_PREAMBLE: Allowed preamble types to be used for
+ *	FTM frames. Bitfield, as specified in @enum nl80211_ftm_preamble.
+ *	Request will be refused if the supplied bitfield isn't supported in
+ *	%NL80211_FTM_CAPA_PREAMBLE. (u8)
+ * @NL80211_FTM_TARGET_ATTR_FTM_BW: Allowed bandwidths to be used for FTM
+ *	frames. Bitfield, as specified in @enum nl80211_ftm_bw. Request will be
+ *	refused if the supplied bitfield isn't supported in
+ *	%NL80211_FTM_CAPA_BW. (u8)
+ * @__NL80211_FTM_TARGET_ATTR_AFTER_LAST: internal
+ * @NL80211_FTM_TARGET_ATTR_MAX: highest FTM target attribute
+ */
+enum nl80211_ftm_target {
+	__NL80211_FTM_TARGET_ATTR_INVALID,
+	NL80211_FTM_TARGET_ATTR_FREQ,
+	NL80211_FTM_TARGET_ATTR_BW,
+	NL80211_FTM_TARGET_ATTR_CNTR_FREQ_1,
+	NL80211_FTM_TARGET_ATTR_CNTR_FREQ_2,
+	NL80211_FTM_TARGET_ATTR_BSSID,
+	NL80211_FTM_TARGET_ATTR_ONE_SIDED,
+	NL80211_FTM_TARGET_ATTR_NUM_OF_BURSTS_EXP,
+	NL80211_FTM_TARGET_ATTR_BURST_PERIOD,
+	NL80211_FTM_TARGET_ATTR_SAMPLES_PER_BURST,
+	NL80211_FTM_TARGET_ATTR_RETRIES,
+	NL80211_FTM_TARGET_ATTR_BURST_DURATION,
+	NL80211_FTM_TARGET_ATTR_ASAP,
+	NL80211_FTM_TARGET_ATTR_QUERY_LCI,
+	NL80211_FTM_TARGET_ATTR_QUERY_CIVIC,
+	NL80211_FTM_TARGET_ATTR_COOKIE,
+	NL80211_FTM_TARGET_ATTR_FTM_PREAMBLE,
+	NL80211_FTM_TARGET_ATTR_FTM_BW,
+
+	/* keep last */
+	__NL80211_FTM_TARGET_ATTR_AFTER_LAST,
+	NL80211_FTM_TARGET_ATTR_MAX = __NL80211_FTM_TARGET_ATTR_AFTER_LAST - 1
+};
+
+/**
+ * enum nl80211_ftm_request - attributes for an FTM request
+ *
+ * Note: Only a single FTM request can be handled at a time.
+ *
+ * @__NL80211_FTM_REQ_ATTR_INVALID: invalid
+ * @NL80211_FTM_REQ_ATTR_TIMEOUT: Timespan within which measurement should
+ *	complete. Given in tenths of a second. Optional (default: 50). (u8)
+ * @NL80211_FTM_REQ_ATTR_MACADDR_TEMPLATE: Device will use the given template
+ *	(and mask, see ahead) to generate a mac address for identification. This
+ *	attribute sets the fixed part of a randomized mac address. (6 octets)
+ *	The MC bit must be set to 0.
+ * @NL80211_FTM_REQ_ATTR_MACADDR_MASK: Mask for mac address randomization. Bits
+ *	set to 1 shall be copied from %NL80211_FTM_REQ_ATTR_MACADDR_TEMPLATE.
+ *	Bits set to 0 shall be randomized by the device.
+ *	MC bit should not be randomized(set to 1). (6 octets)
+ * @NL80211_FTM_REQ_ATTR_REPORT_TSF: Flag that indicates to use the associated
+ *	AP's TSF in the %NL80211_FTM_RESP_ENTRY_ATTR_TSF field in the response.
+ *	Useful for RRM requests, where an associated AP requires to perform FTM,
+ *	and expects a timestamp in its own TSF. If not set, no tsf value is
+ *	reported in the response. Ignored if no AP is associated.
+ *	Request will be refused if %NL80211_FTM_CAPA_REQ_TSF is not set. (flag)
+ * @NL80211_FTM_REQ_ATTR_TARGETS: List of targets with which to perform
+ *	measurements. Length shall not exceed the value reported for the device
+ *	in %NL80211_FTM_CAPA_MAX_TOTAL. Among these targets, the number
+ *	of 2-sided requests shall not exceed the value reported for the device
+ *	in %NL80211_FTM_CAPA_MAX_2_SIDED.
+ *	(nested. see &enum nl80211_ftm_target)
+ *
+ * @__NL80211_FTM_REQ_ATTR_AFTER_LAST: internal
+ * @NL80211_FTM_REQ_ATTR_MAX: highest FTM request attribute
+ */
+enum nl80211_ftm_request {
+	__NL80211_FTM_REQ_ATTR_INVALID,
+	NL80211_FTM_REQ_ATTR_TIMEOUT,
+	NL80211_FTM_REQ_ATTR_MACADDR_TEMPLATE,
+	NL80211_FTM_REQ_ATTR_MACADDR_MASK,
+	NL80211_FTM_REQ_ATTR_REPORT_TSF,
+	NL80211_FTM_REQ_ATTR_TARGETS,
+
+	/* keep last */
+	__NL80211_FTM_REQ_ATTR_AFTER_LAST,
+	NL80211_FTM_REQ_ATTR_MAX = __NL80211_FTM_REQ_ATTR_AFTER_LAST - 1
+};
+
+/**
+ * enum nl80211_ftm_response_status - status of an FTM measurement attempt
+ *
+ * @NL80211_FTM_RESP_SUCCESS: Successful measurement, given results are valid.
+ * @NL80211_FTM_RESP_TARGET_INCAPAB: Target reported incapable
+ * @NL80211_FTM_RESP_TARGET_BUSY: Target reported busy
+ * @NL80211_FTM_RESP_FAIL: Failed for some other reason.
+ */
+enum nl80211_ftm_response_status {
+	NL80211_FTM_RESP_SUCCESS,
+	NL80211_FTM_RESP_TARGET_INCAPAB,
+	NL80211_FTM_RESP_TARGET_BUSY,
+	NL80211_FTM_RESP_FAIL,
+};
+
+/**
+ * enum nl80211_ftm_response_entry - attributes for an FTM response entry
+ *
+ * An FTM response entry represents a single target with which an FTM
+ *	measurement was attempted.
+ *
+ * @__NL80211_FTM_RESP_ENTRY_ATTR_INVALID: invalid
+ * @NL80211_FTM_RESP_ENTRY_ATTR_STATUS: Status of measurement. (u8, one of
+ *	&enum nl80211_ftm_response_status)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_COMPLETE: Whether this measurement is the last
+ *	one expected for this target. This implies that resources associated
+ *	with this target may be released. (flag)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_TARGET: The corresponding FTM target entry in
+ *	the measurement request. (nested. see &enum nl80211_ftm_target)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_HOST_TIME: Time, given in nanoseconds since
+ *	host boot time(referring to CLOCK_BOOTTIME), in which:
+ *	- in case of error - error was detected
+ *	- in case of success - successful measurement started
+ *	Note that this reported value is an estimation of the actual event time,
+ *	with expected error of up to 20ms off the actual mark. Underlying
+ *	devices must make sure they comply with this limited tolerance. (u64)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_TSF: Same as %NL80211_FTM_RESP_ATTR_HOST_TIME,
+ *	but the value is TSF of the associated AP. Optional - present only if
+ *	%NL80211_FTM_REQ_ATTR_AP_REPORT_TSF was set in the request, and an
+ *	associated AP exists. Also, this value is not an estimation. (u64)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_BURST_INDEX: Ordinal number of currently
+ *	reported measurement iteration. (u8)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_MSRMNT_NUM: Total FTM measurement frames
+ *	attempted. (u32)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_SUCCESS_NUM: Total FTM measurement frames
+ *	attempted. (u32)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_NUM_PER_BURST: Maximum number of FTM frames per
+ *	burst supported by the responder. Applies to 2-sided FTM only. (u8)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_RETRY_DUR: When
+ *	status == NL80211_FTM_RESP_TARGET_BUSY, the initiator may retry after
+ *	this given time. In sec. (u8)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_BURST_DUR: Actual time taken by the FW to finish
+ *	one burst. In usec. (u32)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_NEG_BURST_NUM: Number of bursts allowed by the
+ *	responder. Applies to 2-sided FTM only (u32)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_RSSI: Measured RSSI, given in dBm. Valid values
+ *	range: -128-0. (s8)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_RSSI_SPREAD: The difference between max and min
+ *	measured RSSI values. (u8)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_TX_RATE_INFO: tx Rate-related data. (nested. see
+ *	enum nl80211_rate_info)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_RX_RATE_INFO: rx Rate-related data. (nested. see
+ *	enum nl80211_rate_info)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_RTT: The Round Trip Time that took for the last
+ *	measurement for current target, in psec. (u64)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_RTT_VAR: The variance of the RTT values measured
+ *	for current target, in psec^2. (u64)
+ * @NL80211_FTM_RESP_ENTRY_ATTR_RTT_SPREAD: The difference between max and min
+ *	RTT values measured for the current target in the current session, given
+ *	in psec (u64)
+ */
+enum nl80211_ftm_response_entry {
+	__NL80211_FTM_RESP_ENTRY_ATTR_INVALID,
+	NL80211_FTM_RESP_ENTRY_ATTR_STATUS,
+	NL80211_FTM_RESP_ENTRY_ATTR_COMPLETE,
+	NL80211_FTM_RESP_ENTRY_ATTR_TARGET,
+	NL80211_FTM_RESP_ENTRY_ATTR_HOST_TIME,
+	NL80211_FTM_RESP_ENTRY_ATTR_TSF,
+	NL80211_FTM_RESP_ENTRY_ATTR_BURST_INDEX,
+	NL80211_FTM_RESP_ENTRY_ATTR_MSRMNT_NUM,
+	NL80211_FTM_RESP_ENTRY_ATTR_SUCCESS_NUM,
+	NL80211_FTM_RESP_ENTRY_ATTR_NUM_PER_BURST,
+	NL80211_FTM_RESP_ENTRY_ATTR_RETRY_DUR,
+	NL80211_FTM_RESP_ENTRY_ATTR_BURST_DUR,
+	NL80211_FTM_RESP_ENTRY_ATTR_NEG_BURST_NUM,
+	NL80211_FTM_RESP_ENTRY_ATTR_RSSI,
+	NL80211_FTM_RESP_ENTRY_ATTR_RSSI_SPREAD,
+	NL80211_FTM_RESP_ENTRY_ATTR_TX_RATE_INFO,
+	NL80211_FTM_RESP_ENTRY_ATTR_RX_RATE_INFO,
+	NL80211_FTM_RESP_ENTRY_ATTR_RTT,
+	NL80211_FTM_RESP_ENTRY_ATTR_RTT_VAR,
+	NL80211_FTM_RESP_ENTRY_ATTR_RTT_SPREAD,
+
+	/* keep last */
+	__NL80211_FTM_RESP_ENTRY_ATTR_AFTER_LAST,
+	NL80211_FTM_RESP_ENTRY_ATTR_MAX =
+	__NL80211_FTM_RESP_ENTRY_ATTR_AFTER_LAST - 1,
+};
+
+/**
+ * enum nl80211_ftm_responder_stats - FTM responder statistics
+ *
+ * These attribute types are used with %NL80211_ATTR_FTM_RESPONDER_STATS
+ * when getting FTM responder statistics.
+ *
+ * @__NL80211_FTM_STATS_INVALID: attribute number 0 is reserved
+ * @NL80211_FTM_STATS_SUCCESS_NUM: number of FTM sessions in which all frames
+ *	were ssfully answered (u32)
+ * @NL80211_FTM_STATS_PARTIAL_NUM: number of FTM sessions in which part of the
+ *	frames were successfully answered (u32)
+ * @NL80211_FTM_STATS_FAILED_NUM: number of failed FTM sessions (u32)
+ * @NL80211_FTM_STATS_ASAP_NUM: number of ASAP sessions (u32)
+ * @NL80211_FTM_STATS_NON_ASAP_NUM: number of non-ASAP sessions (u32)
+ * @NL80211_FTM_STATS_TOTAL_DURATION_MSEC: total sessions durations - gives an
+ *	indication of how much time the responder was busy (u64, msec)
+ * @NL80211_FTM_STATS_UNKNOWN_TRIGGERS_NUM: number of unknown FTM triggers -
+ *	triggers from initiators that didn't finish successfully the negotiation
+ *	phase with the responder (u32)
+ * @NL80211_FTM_STATS_RESCHEDULE_REQUESTS_NUM: number of FTM reschedule requests
+ *	- initiator asks for a new scheduling although it already has scheduled
+ *	FTM slot (u32)
+ * @NL80211_FTM_STATS_OUT_OF_WINDOW_TRIGGERS_NUM: number of FTM triggers out of
+ *	scheduled window (u32)
+ * @__NL80211_TXQ_ATTR_AFTER_LAST: Internal
+ * @NL80211_FTM_STATS_MAX: highest possible FTM responder stats attribute
+ */
+enum nl80211_ftm_responder_stats {
+	__NL80211_FTM_STATS_INVALID,
+	NL80211_FTM_STATS_SUCCESS_NUM,
+	NL80211_FTM_STATS_PARTIAL_NUM,
+	NL80211_FTM_STATS_FAILED_NUM,
+	NL80211_FTM_STATS_ASAP_NUM,
+	NL80211_FTM_STATS_NON_ASAP_NUM,
+	NL80211_FTM_STATS_TOTAL_DURATION_MSEC,
+	NL80211_FTM_STATS_UNKNOWN_TRIGGERS_NUM,
+	NL80211_FTM_STATS_RESCHEDULE_REQUESTS_NUM,
+	NL80211_FTM_STATS_OUT_OF_WINDOW_TRIGGERS_NUM,
+
+	/* keep last */
+	__NL80211_FTM_STATS_AFTER_LAST,
+	NL80211_FTM_STATS_MAX = __NL80211_FTM_STATS_AFTER_LAST - 1
+};
+
+/**
+ * enum nl80211_nan_dual_band_conf - NAN dual band configuration
+ *
+ * Defines the NAN dual band mode of operation
+ *
+ * @NL80211_NAN_BAND_DEFAULT: device default mode
+ * @NL80211_NAN_BAND_SINGLE: 2.4GHz only mode
+ * @NL80211_NAN_BAND_DUAL: 2.4GHz and 5.2GHz mode
+  */
+enum nl80211_nan_dual_band_conf {
+	NL80211_NAN_BAND_DEFAULT,
+	NL80211_NAN_BAND_SINGLE,
+	NL80211_NAN_BAND_DUAL,
+
+	/* keep last */
+	__NL80211_NAN_BAND_AFTER_LAST,
+	NL80211_NAN_BAND_MAX =
+	__NL80211_NAN_BAND_AFTER_LAST - 1,
+};
+
+/**
+ * enum nl80211_nan_function_type - NAN function type
+ *
+ * Defines the function type of a NAN function
+ *
+ * @NL80211_NAN_FUNC_PUBLISH: function is publish
+ * @NL80211_NAN_FUNC_SUBSCRIBE: function is subscribe
+ * @NL80211_NAN_FUNC_FOLLOW_UP: function is follow-up
+ */
+enum nl80211_nan_function_type {
+	NL80211_NAN_FUNC_PUBLISH,
+	NL80211_NAN_FUNC_SUBSCRIBE,
+	NL80211_NAN_FUNC_FOLLOW_UP,
+
+	/* keep last */
+	__NL80211_NAN_FUNC_TYPE_AFTER_LAST,
+	NL80211_NAN_FUNC_MAX_TYPE = __NL80211_NAN_FUNC_TYPE_AFTER_LAST - 1,
+};
+
+/**
+ * enum nl80211_nan_publish_type - NAN publish tx type
+ *
+ * Defines how to send publish Service Discovery Frames
+ *
+ * @NL80211_NAN_SOLICITED_PUBLISH: publish function is solicited
+ * @NL80211_NAN_UNSOLICITED_PUBLISH: publish function is unsolicited
+ */
+enum nl80211_nan_publish_type {
+	NL80211_NAN_SOLICITED_PUBLISH = 1 << 0,
+	NL80211_NAN_UNSOLICITED_PUBLISH = 1 << 1,
+};
+
+/**
+ * enum nl80211_nan_func_term_reason - NAN functions termination reason
+ *
+ * Defines termination reasons of a NAN function
+ *
+ * @NL80211_NAN_FUNC_TERM_REASON_USER_REQUEST: requested by user
+ * @NL80211_NAN_FUNC_TERM_REASON_TTL_EXPIRED: timeout
+ * @NL80211_NAN_FUNC_TERM_REASON_ERROR: errored
+ */
+enum nl80211_nan_func_term_reason {
+	NL80211_NAN_FUNC_TERM_REASON_USER_REQUEST,
+	NL80211_NAN_FUNC_TERM_REASON_TTL_EXPIRED,
+	NL80211_NAN_FUNC_TERM_REASON_ERROR,
+};
+
+#define NL80211_NAN_FUNC_SERVICE_ID_LEN 6
+#define NL80211_NAN_FUNC_SERVICE_SPEC_INFO_MAX_LEN 0xff
+#define NL80211_NAN_FUNC_SRF_MAX_LEN 0xff
+
+/**
+ * enum nl80211_nan_func_attributes - NAN function attributes
+ * @__NL80211_NAN_FUNC_INVALID: invalid
+ * @NL80211_NAN_FUNC_TYPE: &enum nl80211_nan_function_type (u8).
+ * @NL80211_NAN_FUNC_SERVICE_ID: 6 bytes of the service ID hash as
+ *	specified in NAN spec. This is a binary attribute.
+ * @NL80211_NAN_FUNC_PUBLISH_TYPE: relevant if the function's type is
+ *	publish. Defines the transmission type for the publish Service Discovery
+ *	Frame, see &enum nl80211_nan_publish_type. Its type is u8.
+ * @NL80211_NAN_FUNC_PUBLISH_BCAST: relevant if the function is a solicited
+ *	publish. Should the solicited publish Service Discovery Frame be sent to
+ *	the NAN Broadcast address. This is a flag.
+ * @NL80211_NAN_FUNC_SUBSCRIBE_ACTIVE: relevant if the function's type is
+ *	subscribe. Is the subscribe active. This is a flag.
+ * @NL80211_NAN_FUNC_FOLLOW_UP_ID: relevant if the function's type is follow up.
+ *	The instance ID for the follow up Service Discovery Frame. This is u8.
+ * @NL80211_NAN_FUNC_FOLLOW_UP_REQ_ID: relevant if the function's type
+ *	is follow up. This is a u8.
+ *	The requestor instance ID for the follow up Service Discovery Frame.
+ * @NL80211_NAN_FUNC_FOLLOW_UP_DEST: the MAC address of the recipient of the
+ *	follow up Service Discovery Frame. This is a binary attribute.
+ * @NL80211_NAN_FUNC_CLOSE_RANGE: is this function limited for devices in a
+ *	close range. The range itself (RSSI) is defined by the device.
+ *	This is a flag.
+ * @NL80211_NAN_FUNC_TTL: number of DWs this function should stay active. 0 is
+ *	equivalent to no TTL at all. This is a u32.
+ * @NL80211_NAN_FUNC_SERVICE_INFO: array of bytes describing the service
+ *	specific info. This is a binary attribute.
+ * @NL80211_NAN_FUNC_SRF: Service Receive Filter. This is a nested attribute.
+ *	See &enum nl80211_nan_srf_attributes.
+ * @NL80211_NAN_FUNC_RX_MATCH_FILTER: Receive Matching filter. This is a nested
+ *	attribute. It is a list of binary values.
+ * @NL80211_NAN_FUNC_TX_MATCH_FILTER: Transmit Matching filter. This is a
+ *	nested attribute. It is a list of binary values.
+ * @NUM_NL80211_NAN_FUNC_ATTR: internal
+ * @NL80211_NAN_FUNC_ATTR_MAX: highest NAN function attribute
+ */
+enum nl80211_nan_func_attributes {
+	__NL80211_NAN_FUNC_INVALID,
+	NL80211_NAN_FUNC_TYPE,
+	NL80211_NAN_FUNC_SERVICE_ID,
+	NL80211_NAN_FUNC_PUBLISH_TYPE,
+	NL80211_NAN_FUNC_PUBLISH_BCAST,
+	NL80211_NAN_FUNC_SUBSCRIBE_ACTIVE,
+	NL80211_NAN_FUNC_FOLLOW_UP_ID,
+	NL80211_NAN_FUNC_FOLLOW_UP_REQ_ID,
+	NL80211_NAN_FUNC_FOLLOW_UP_DEST,
+	NL80211_NAN_FUNC_CLOSE_RANGE,
+	NL80211_NAN_FUNC_TTL,
+	NL80211_NAN_FUNC_SERVICE_INFO,
+	NL80211_NAN_FUNC_SRF,
+	NL80211_NAN_FUNC_RX_MATCH_FILTER,
+	NL80211_NAN_FUNC_TX_MATCH_FILTER,
+
+	/* keep last */
+	NUM_NL80211_NAN_FUNC_ATTR,
+	NL80211_NAN_FUNC_ATTR_MAX = NUM_NL80211_NAN_FUNC_ATTR - 1
+};
+
+/**
+ * enum nl80211_nan_srf_attributes - NAN Service Response filter attributes
+ * @__NL80211_NAN_SRF_INVALID: invalid
+ * @NL80211_NAN_SRF_INCLUDE: true if the include bit of the SRF set.
+ *	This is a flag.
+ * @NL80211_NAN_SRF_TYPE_BF: true if the SRF is a Bloom Filter SRF. If false
+ *	the SRF will be &NL80211_ATTR_MAC_ADDRS. This is a flag.
+ * @NL80211_NAN_SRF_BF: Bloom Filter. Relevant and mandatory if
+ *	&NL80211_NAN_SRF_TYPE_BF is true. This attribute is binary.
+ * @NL80211_NAN_SRF_BF_IDX: index of the Bloom Filter. Relevant and
+ *	mandatory if &NL80211_NAN_SRF_TYPE_BF is true. This is a u8.
+ * @NL80211_NAN_SRF_MAC_ADDRS: list of MAC addresses for the SRF. Relevant and
+ *	mandatory if &NL80211_NAN_SRF_TYPE_BF is false. This is a nested
+ *	attribute. Each nested attribute is a MAC address.
+ * @NUM_NL80211_NAN_SRF_ATTR: internal
+ * @NL80211_NAN_SRF_ATTR_MAX: highest NAN SRF attribute
+ */
+enum nl80211_nan_srf_attributes {
+	__NL80211_NAN_SRF_INVALID,
+	NL80211_NAN_SRF_INCLUDE,
+	NL80211_NAN_SRF_TYPE_BF,
+	NL80211_NAN_SRF_BF,
+	NL80211_NAN_SRF_BF_IDX,
+	NL80211_NAN_SRF_MAC_ADDRS,
+
+	/* keep last */
+	NUM_NL80211_NAN_SRF_ATTR,
+	NL80211_NAN_SRF_ATTR_MAX = NUM_NL80211_NAN_SRF_ATTR - 1,
+};
+
+/**
+ * enum nl80211_nan_match_attributes - NAN match attributes
+ * @__NL80211_NAN_MATCH_INVALID: invalid
+ * @NL80211_NAN_MATCH_FUNC_TYPE: &enum nl80211_nan_function_type (u8). This is
+ *	the type of the function which had a match.
+ * @NL80211_NAN_MATCH_INSTANCE_ID: The instance ID of the local function that
+ *	had a match. This is a u8.
+ * @NL80211_NAN_MATCH_PEER_INSTANCE_ID: The instance ID of the peer's function
+ *	that caused the match. This is a u8.
+ * @NL80211_NAN_MATCH_MAC: The MAC address of the peer. This attribute is
+ *	binary.
+ * @NL80211_NAN_MATCH_SERVICE_INFO: array of bytes describing the peer's
+ *	service specific info. This is a binary attribute.
+ *
+ * @NUM_NL80211_NAN_MATCH_ATTR: internal
+ * @NL80211_NAN_MATCH_ATTR_MAX: highest NAN match attribute
+ */
+enum nl80211_nan_match_attributes {
+	__NL80211_NAN_MATCH_INVALID,
+	NL80211_NAN_MATCH_FUNC_TYPE,
+	NL80211_NAN_MATCH_INSTANCE_ID,
+	NL80211_NAN_MATCH_PEER_INSTANCE_ID,
+	NL80211_NAN_MATCH_MAC,
+	NL80211_NAN_MATCH_SERVICE_INFO,
+
+	/* keep last */
+	NUM_NL80211_NAN_MATCH_ATTR,
+	NL80211_NAN_MATCH_ATTR_MAX = NUM_NL80211_NAN_MATCH_ATTR - 1
 };
 
 #endif /* __LINUX_NL80211_H */
