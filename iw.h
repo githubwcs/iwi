@@ -131,6 +131,7 @@ struct print_event_args {
 	struct timeval ts; /* internal */
 	bool have_ts; /* must be set false */
 	bool frame, time, reltime;
+	bool continue_listening;
 };
 
 __u32 listen_events(struct nl80211_state *state,
@@ -196,5 +197,6 @@ DECLARE_SECTION(set);
 DECLARE_SECTION(get);
 
 void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs);
+enum nl80211_chan_width str_to_bw(char *str);
 
 #endif /* __IW_H */

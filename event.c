@@ -309,6 +309,99 @@ static void parse_vendor_event(struct nlattr **attrs)
 	printf("\n");
 }
 
+static int parse_ftm_target(struct nlattr *attr, unsigned char *bssid)
+{
+	struct nlattr *tb[NL80211_FTM_TARGET_ATTR_MAX + 1];
+
+	if (nla_parse_nested(tb, NL80211_FTM_TARGET_ATTR_MAX, attr, NULL))
+		return -1;
+
+	if (!tb[NL80211_FTM_TARGET_ATTR_BSSID])
+		return -1;
+
+	memcpy(bssid, nla_data(tb[NL80211_FTM_TARGET_ATTR_BSSID]), ETH_ALEN);
+
+	return 0;
+}
+
+/* Speed of light in cm/picosec */
+#define SOL_CM_PSEC 0.02998
+
+static void parse_ftm_results(struct nlattr **attrs, int status,
+			      struct print_event_args *pargs)
+{
+	struct nlattr *tb[NL80211_FTM_RESP_ENTRY_ATTR_MAX + 1];
+	unsigned char bssid[ETH_ALEN];
+	char macbuf[6 * 3];
+	long long int rtt, dist;
+	int err;
+
+	printf("FTM result! Status: %d\n", status);
+
+	if (!pargs)
+		return;
+
+	pargs->continue_listening = 0;
+
+	if (status != NL80211_MSRMENT_STATUS_SUCCESS &&
+	    status != NL80211_MSRMENT_STATUS_TIMEOUT) {
+		printf("Failed to measure, status: %d\n", status);
+		return;
+	}
+
+	if (!attrs[NL80211_ATTR_MSRMENT_FTM_RESPONSE]) {
+		printf("Error parsing FTM response\n");
+		return;
+	}
+
+	err = nla_parse_nested(tb, NL80211_FTM_RESP_ENTRY_ATTR_MAX,
+			       attrs[NL80211_ATTR_MSRMENT_FTM_RESPONSE], NULL);
+
+	if (err ||
+	    !tb[NL80211_FTM_RESP_ENTRY_ATTR_STATUS] ||
+	    !tb[NL80211_FTM_RESP_ENTRY_ATTR_TARGET] ||
+	    !tb[NL80211_FTM_RESP_ENTRY_ATTR_RTT] ||
+	    parse_ftm_target(tb[NL80211_FTM_RESP_ENTRY_ATTR_TARGET] ,bssid)) {
+		printf("Error parsing FTM target\n");
+		return;
+	}
+
+	mac_addr_n2a(macbuf, bssid);
+	rtt = (long long int)nla_get_u64(tb[NL80211_FTM_RESP_ENTRY_ATTR_RTT]);
+	dist = tb[NL80211_FTM_RESP_ENTRY_ATTR_DISTANCE] ?
+	       (long long int)nla_get_u64(tb[NL80211_FTM_RESP_ENTRY_ATTR_DISTANCE]) :
+	       rtt * SOL_CM_PSEC;
+
+	printf("Target: %s, status: %d, rtt: %lld psec, distance: %lld cm\n",
+	       macbuf, nla_get_u8(tb[NL80211_FTM_RESP_ENTRY_ATTR_STATUS]), rtt,
+	       dist);
+
+	pargs->continue_listening = attrs[NL80211_ATTR_LAST_MSG] ? 0 : 1;
+}
+
+static void parse_measurement_response(struct nlattr **tb,
+				       struct print_event_args *pargs)
+{
+	int status;
+
+	if (!tb[NL80211_ATTR_MSRMENT_TYPE] ||
+	    !tb[NL80211_ATTR_MSRMENT_STATUS]) {
+		printf("Measurements: failed to parse event!\n");
+		return;
+	}
+
+	status = nla_get_u8(tb[NL80211_ATTR_MSRMENT_STATUS]);
+
+	switch(nla_get_u32(tb[NL80211_ATTR_MSRMENT_TYPE])) {
+	case NL80211_MSRMENT_TYPE_FTM:
+		parse_ftm_results(tb, status, pargs);
+		break;
+	default:
+		printf("Measurements: type %d is not supported!\n",
+		       nla_get_u32(tb[NL80211_ATTR_MSRMENT_TYPE]));
+	}
+}
+
 static int print_event(struct nl_msg *msg, void *arg)
 {
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
@@ -624,6 +717,9 @@ static int print_event(struct nl_msg *msg, void *arg)
 	case NL80211_CMD_DEL_WIPHY:
 		printf("delete wiphy\n");
 		break;
+	case NL80211_CMD_MSRMENT_RESPONSE:
+		parse_measurement_response(tb, args);
+		break;
 	default:
 		printf("unknown event %d (%s)\n",
 		       gnlh->cmd, command_name(gnlh->cmd));
@@ -731,7 +827,7 @@ __u32 __do_listen_events(struct nl80211_state *state,
 
 	wait_ev.cmd = 0;
 
-	while (!wait_ev.cmd)
+	while (!wait_ev.cmd || (args && args->continue_listening))
 		nl_recvmsgs(state->nl_sock, cb);
 
 	nl_cb_put(cb);

@@ -185,29 +185,14 @@ COMMAND(set, name, "<new name>", NL80211_CMD_SET_WIPHY, 0, CIB_PHY, handle_name,
 
 static int handle_freqs(struct nl_msg *msg, int argc, char **argv)
 {
-	static const struct {
-		const char *name;
-		unsigned int val;
-	} bwmap[] = {
-		{ .name = "20", .val = NL80211_CHAN_WIDTH_20, },
-		{ .name = "40", .val = NL80211_CHAN_WIDTH_40, },
-		{ .name = "80", .val = NL80211_CHAN_WIDTH_80, },
-		{ .name = "80+80", .val = NL80211_CHAN_WIDTH_80P80, },
-		{ .name = "160", .val = NL80211_CHAN_WIDTH_160, },
-	};
 	uint32_t freq;
-	unsigned int i, bwval = NL80211_CHAN_WIDTH_20_NOHT;
+	unsigned int bwval;
 	char *end;
 
 	if (argc < 1)
 		return 1;
 
-	for (i = 0; i < ARRAY_SIZE(bwmap); i++) {
-		if (strcasecmp(bwmap[i].name, argv[0]) == 0) {
-			bwval = bwmap[i].val;
-			break;
-		}
-	}
+	bwval = str_to_bw(argv[0]);
 
 	if (bwval == NL80211_CHAN_WIDTH_20_NOHT)
 		return 1;
