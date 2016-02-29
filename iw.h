@@ -139,6 +139,7 @@ struct print_event_args {
 	struct timeval ts; /* internal */
 	bool have_ts; /* must be set false */
 	bool frame, time, reltime;
+	bool continue_listening;
 };
 
 __u32 listen_events(struct nl80211_state *state,
