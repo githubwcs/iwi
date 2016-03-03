@@ -64,16 +64,16 @@ void parse_tid_stats(struct nlattr *tid_stats_attr)
 		printf("\n\t\t%d", i++);
 		info = stats_info[NL80211_TID_STATS_RX_MSDU];
 		if (info)
-			printf("\t%lld", nla_get_u64(info));
+			printf("\t%llu", (unsigned long long)nla_get_u64(info));
 		info = stats_info[NL80211_TID_STATS_TX_MSDU];
 		if (info)
-			printf("\t%lld", nla_get_u64(info));
+			printf("\t%llu", (unsigned long long)nla_get_u64(info));
 		info = stats_info[NL80211_TID_STATS_TX_MSDU_RETRIES];
 		if (info)
-			printf("\t%lld", nla_get_u64(info));
+			printf("\t%llu", (unsigned long long)nla_get_u64(info));
 		info = stats_info[NL80211_TID_STATS_TX_MSDU_FAILED];
 		if (info)
-			printf("\t\t%lld", nla_get_u64(info));
+			printf("\t\t%llu", (unsigned long long)nla_get_u64(info));
 	}
 }
 
@@ -267,8 +267,8 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		printf("\n\tinactive time:\t%u ms",
 			nla_get_u32(sinfo[NL80211_STA_INFO_INACTIVE_TIME]));
 	if (sinfo[NL80211_STA_INFO_RX_BYTES64])
-		printf("\n\trx bytes:\t%lld",
-		       nla_get_u64(sinfo[NL80211_STA_INFO_RX_BYTES64]));
+		printf("\n\trx bytes:\t%llu",
+		       (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_RX_BYTES64]));
 	else if (sinfo[NL80211_STA_INFO_RX_BYTES])
 		printf("\n\trx bytes:\t%u",
 		       nla_get_u32(sinfo[NL80211_STA_INFO_RX_BYTES]));
@@ -276,8 +276,8 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		printf("\n\trx packets:\t%u",
 			nla_get_u32(sinfo[NL80211_STA_INFO_RX_PACKETS]));
 	if (sinfo[NL80211_STA_INFO_TX_BYTES64])
-		printf("\n\ttx bytes:\t%lld",
-		       nla_get_u64(sinfo[NL80211_STA_INFO_TX_BYTES64]));
+		printf("\n\ttx bytes:\t%llu",
+		       (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_TX_BYTES64]));
 	else if (sinfo[NL80211_STA_INFO_TX_BYTES])
 		printf("\n\ttx bytes:\t%u",
 		       nla_get_u32(sinfo[NL80211_STA_INFO_TX_BYTES]));
@@ -294,11 +294,11 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		printf("\n\tbeacon loss:\t%u",
 		       nla_get_u32(sinfo[NL80211_STA_INFO_BEACON_LOSS]));
 	if (sinfo[NL80211_STA_INFO_BEACON_RX])
-		printf("\n\tbeacon rx:\t%lld",
-		       nla_get_u64(sinfo[NL80211_STA_INFO_BEACON_RX]));
+		printf("\n\tbeacon rx:\t%llu",
+		       (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_BEACON_RX]));
 	if (sinfo[NL80211_STA_INFO_RX_DROP_MISC])
-		printf("\n\trx drop misc:\t%lld",
-		       nla_get_u64(sinfo[NL80211_STA_INFO_RX_DROP_MISC]));
+		printf("\n\trx drop misc:\t%llu",
+		       (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_RX_DROP_MISC]));
 
 	chain = get_chain_signal(sinfo[NL80211_STA_INFO_CHAIN_SIGNAL]);
 	if (sinfo[NL80211_STA_INFO_SIGNAL])
@@ -316,8 +316,8 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		printf("\n\tbeacon signal avg:\t%d dBm",
 		       nla_get_u8(sinfo[NL80211_STA_INFO_BEACON_SIGNAL_AVG]));
 	if (sinfo[NL80211_STA_INFO_T_OFFSET])
-		printf("\n\tToffset:\t%lld us",
-		       nla_get_u64(sinfo[NL80211_STA_INFO_T_OFFSET]));
+		printf("\n\tToffset:\t%llu us",
+		       (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_T_OFFSET]));
 
 	if (sinfo[NL80211_STA_INFO_TX_BITRATE]) {
 		char buf[100];
