@@ -7,6 +7,7 @@
  *
  * Copyright(c) 2012 - 2014 Intel Corporation. All rights reserved.
  * Copyright(c) 2013 - 2015 Intel Mobile Communications GmbH
+ * Copyright(c) 2016 Intel Deutschland GmbH
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of version 2 of the GNU General Public License as
@@ -26,13 +27,14 @@
  * in the file called COPYING.
  *
  * Contact Information:
- *  Intel Linux Wireless <ilw@linux.intel.com>
+ *  Intel Linux Wireless <linuxwifi@intel.com>
  * Intel Corporation, 5200 N.E. Elam Young Parkway, Hillsboro, OR 97124-6497
  *
  * BSD LICENSE
  *
  * Copyright(c) 2012 - 2014 Intel Corporation. All rights reserved.
  * Copyright(c) 2013 - 2015 Intel Mobile Communications GmbH
+ * Copyright(c) 2016 Intel Deutschland GmbH
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -116,6 +118,8 @@
  *	beacon/probe response was received, and contains information from the
  *	beacon/probe response. This event is sent for buckets with report mode
  *	set to %IWL_MVM_VENDOR_GSCAN_REPORT_BUFFER_COMPLETE_RESULTS.
+ * @IWL_MVM_VENDOR_CMD_DBG_COLLECT: collect debug data
+ * @IWL_MVM_VENDOR_CMD_NAN_FAW_CONF: Configure post NAN further availability.
  */
 
 enum iwl_mvm_vendor_cmd {
@@ -144,6 +148,8 @@ enum iwl_mvm_vendor_cmd {
 	IWL_MVM_VENDOR_CMD_GSCAN_SIGNIFICANT_CHANGE_EVENT,
 	IWL_MVM_VENDOR_CMD_RXFILTER,
 	IWL_MVM_VENDOR_CMD_GSCAN_BEACON_EVENT,
+	IWL_MVM_VENDOR_CMD_DBG_COLLECT,
+	IWL_MVM_VENDOR_CMD_NAN_FAW_CONF,
 };
 
 /**
@@ -429,6 +435,10 @@ enum iwl_mvm_vendor_rxfilter_op {
  * @IWL_MVM_VENDOR_ATTR_GSCAN_SIG_CHANGE_RESULTS: array of significant
  *	change results. Each result is a nested attribute of &enum
  *	iwl_mvm_vendor_significant_change_result.
+ * @IWL_MVM_VENDOR_ATTR_NAN_FAW_FREQ: u32 attribute. Frequency (in MHz) to be
+ *	used for NAN further availability.
+ * @IWL_MVM_VENDOR_ATTR_NAN_FAW_SLOTS: u8 attribute. Number of 16TU slots
+ *	the NAN device will be available on it's FAW between DWs.
  *
  * @NUM_IWL_MVM_VENDOR_ATTR: number of vendor attributes
  * @MAX_IWL_MVM_VENDOR_ATTR: highest vendor attribute number
@@ -436,6 +446,8 @@ enum iwl_mvm_vendor_rxfilter_op {
  *      See %iwl_mvm_vendor_rxfilter_flags.
  * @IWL_MVM_VENDOR_ATTR_RXFILTER_OP: u32 attribute.
  *      See %iwl_mvm_vendor_rxfilter_op.
+ * @IWL_MVM_VENDOR_ATTR_DBG_COLLECT_TRIGGER: description of collect debug data
+	trigger.
  */
 enum iwl_mvm_vendor_attr {
 	__IWL_MVM_VENDOR_ATTR_INVALID,
@@ -478,6 +490,9 @@ enum iwl_mvm_vendor_attr {
 	IWL_MVM_VENDOR_ATTR_GSCAN_SIG_CHANGE_RESULTS,
 	IWL_MVM_VENDOR_ATTR_RXFILTER,
 	IWL_MVM_VENDOR_ATTR_RXFILTER_OP,
+	IWL_MVM_VENDOR_ATTR_DBG_COLLECT_TRIGGER,
+	IWL_MVM_VENDOR_ATTR_NAN_FAW_FREQ,
+	IWL_MVM_VENDOR_ATTR_NAN_FAW_SLOTS,
 
 	NUM_IWL_MVM_VENDOR_ATTR,
 	MAX_IWL_MVM_VENDOR_ATTR = NUM_IWL_MVM_VENDOR_ATTR - 1,
