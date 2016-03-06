@@ -173,3 +173,33 @@ void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs)
 	}
 }
 
+static int handle_iwl_vendor_nan_faw_conf(struct nl80211_state *state,
+					  struct nl_msg *msg,
+					  int argc, char **argv,
+					  enum id_input id)
+{
+	struct nlattr *attrs;
+
+	if (argc != 2)
+		return -EINVAL;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_NAN_FAW_CONF);
+
+	attrs = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!attrs)
+		return -ENOBUFS;
+
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_NAN_FAW_SLOTS, atoi(argv[0]));
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_NAN_FAW_FREQ, atoi(argv[1]));
+
+	nla_nest_end(msg, attrs);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, nan_faw, "<slots> <freq>", NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_nan_faw_conf, "");
