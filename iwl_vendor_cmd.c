@@ -14,6 +14,15 @@
 
 SECTION(iwl);
 
+static struct nla_policy iwl_vendor_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
+	[IWL_MVM_VENDOR_ATTR_LOW_LATENCY] = { .type = NLA_FLAG },
+	[IWL_MVM_VENDOR_ATTR_VIF_ADDR] = { .type = NLA_UNSPEC },
+	[IWL_MVM_VENDOR_ATTR_VIF_LL] = { .type = NLA_U8 },
+	[IWL_MVM_VENDOR_ATTR_LL] = { .type = NLA_U8 },
+	[IWL_MVM_VENDOR_ATTR_VIF_LOAD] = { .type = NLA_U8 },
+	[IWL_MVM_VENDOR_ATTR_LOAD] = { .type = NLA_U8 },
+};
+
 static int handle_iwl_vendor_dev_tx_power(struct nl80211_state *state,
 					  struct nl_msg *msg,
 					  int argc, char **argv,
@@ -127,35 +136,27 @@ COMMAND(iwl, rxfilter, "<filter> <pass|drop>", NL80211_CMD_VENDOR, 0,
 
 static void parse_tcm_event(struct nlattr *data)
 {
-	struct nlattr *tcm[MAX_IWL_MVM_VENDOR_ATTR + 1];
-	static struct nla_policy tcm_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
-		[IWL_MVM_VENDOR_ATTR_LOW_LATENCY] = { .type = NLA_FLAG },
-		[IWL_MVM_VENDOR_ATTR_VIF_ADDR] = { .type = NLA_UNSPEC },
-		[IWL_MVM_VENDOR_ATTR_VIF_LL] = { .type = NLA_U8 },
-		[IWL_MVM_VENDOR_ATTR_LL] = { .type = NLA_U8 },
-		[IWL_MVM_VENDOR_ATTR_VIF_LOAD] = { .type = NLA_U8 },
-		[IWL_MVM_VENDOR_ATTR_LOAD] = { .type = NLA_U8 },
-	};
+	struct nlattr *attrs[NUM_IWL_MVM_VENDOR_ATTR];
 
-	if (nla_parse_nested(tcm, MAX_IWL_MVM_VENDOR_ATTR, data, tcm_policy) ||
-	    !tcm[IWL_MVM_VENDOR_ATTR_LL] || !tcm[IWL_MVM_VENDOR_ATTR_LOAD]) {
+	if (nla_parse_nested(attrs, MAX_IWL_MVM_VENDOR_ATTR, data, iwl_vendor_policy) ||
+	    !attrs[IWL_MVM_VENDOR_ATTR_LL] || !attrs[IWL_MVM_VENDOR_ATTR_LOAD]) {
 		printf("Ignore invalid TCM data");
 		return;
 	}
 
 	printf(" ==> Intel TCM event: global (qos=%u, load=%u)",
-	       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_LL]),
-	       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_LOAD]));
+	       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_LL]),
+	       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_LOAD]));
 
-	if (tcm[IWL_MVM_VENDOR_ATTR_VIF_ADDR] &&
-	    tcm[IWL_MVM_VENDOR_ATTR_VIF_LL] &&
-	    tcm[IWL_MVM_VENDOR_ATTR_VIF_LOAD]) {
+	if (attrs[IWL_MVM_VENDOR_ATTR_VIF_ADDR] &&
+	    attrs[IWL_MVM_VENDOR_ATTR_VIF_LL] &&
+	    attrs[IWL_MVM_VENDOR_ATTR_VIF_LOAD]) {
 		char addr[3 * ETH_ALEN];
 
-		mac_addr_n2a(addr, nla_data(tcm[IWL_MVM_VENDOR_ATTR_VIF_ADDR]));
+		mac_addr_n2a(addr, nla_data(attrs[IWL_MVM_VENDOR_ATTR_VIF_ADDR]));
 		printf(" vif(%s qos=%u, load=%u)", addr,
-		       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_VIF_LL]),
-		       nla_get_u8(tcm[IWL_MVM_VENDOR_ATTR_VIF_LOAD]));
+		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_VIF_LL]),
+		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_VIF_LOAD]));
 	}
 }
 
