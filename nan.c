@@ -205,7 +205,6 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 		size_t srf_len;
 		__u8 bf_idx;
 
-		NLA_PUT_FLAG(srf_attrs, NL80211_NAN_SRF_TYPE_BF);
 		argc--;
 		argv++;
 
