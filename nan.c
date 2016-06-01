@@ -499,3 +499,67 @@ COMMAND(nan, add_func,
 	"type <publish|subscribe|followup> [active] [solicited] [unsolicited] [bcast] [close_range] name <name> [info <info>] [flw_up_id <id> flw_up_req_id <id> flw_up_dest <mac>] [ttl <ttl>] [srf <include|exclude> <bf|list> [bf_idx] [bf_len] <mac1;mac2...>] [rx_filter <str1:str2...>] [tx_filter <str1:str2...>]",
 	NL80211_CMD_ADD_NAN_FUNCTION, 0, CIB_WDEV,
 	handle_nan_add_func, "");
+
+static int handle_nan_dp_request(struct nl80211_state *state,
+			    struct nl_msg *msg, int argc, char **argv,
+			    enum id_input id)
+{
+	unsigned char mac_addr[ETH_ALEN];
+
+	if (argc < 2)
+		return -EINVAL;
+
+	if (strcmp(argv[0], "id") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT_U8(msg, NL80211_ATTR_NAN_FUNC_INST_ID, atoi(argv[0]));
+		argv++;
+		argc--;
+	} else if (strcmp(argv[0], "ndp_id") == 0) {
+		__u8 reason = 0;
+
+		argv++;
+		argc--;
+		NLA_PUT_U8(msg, NL80211_ATTR_NAN_NDP_ID, atoi(argv[0]));
+		argv++;
+		argc--;
+		if (strcmp(argv[0], "status") == 0) {
+			argv++;
+			argc--;
+			NLA_PUT_U8(msg, NL80211_ATTR_NAN_DATA_STATUS, atoi(argv[0]));
+			argv++;
+			argc--;
+		}
+
+		if (strcmp(argv[0], "reason") == 0) {
+			argv++;
+			argc--;
+			reason = atoi(argv[0]);
+			argv++;
+			argc--;
+		}
+
+		NLA_PUT_U8(msg, NL80211_ATTR_NAN_DATA_REASON_CODE, reason);
+		
+	}
+
+	if (argc > 1 && strcmp(argv[0], "addr") == 0) {
+		argv++;
+		argc--;
+		if (mac_addr_a2n(mac_addr, argv[0]) < 0)
+			return -EINVAL;
+		nla_put(msg, NL80211_ATTR_MAC, ETH_ALEN, mac_addr);
+		argv++;
+		argc--;
+	}
+
+	if (argc != 0)
+		return -EINVAL;
+
+	return 0;
+nla_put_failure:
+	return -ENOBUFS;
+}
+COMMAND(nan, dp_request, "id <publish_id> addr <peer_mac>",
+	NL80211_CMD_NAN_DATA_REQUEST, 0, CIB_NETDEV, handle_nan_dp_request, "");
+
