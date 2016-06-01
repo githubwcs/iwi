@@ -502,3 +502,97 @@ COMMAND(nan, add_func,
 	"type <publish|subscribe|followup> [active] [solicited] [unsolicited] [bcast] [close_range] name <name> [info <info>] [flw_up_id <id> flw_up_req_id <id> flw_up_dest <mac>] [ttl <ttl>] [srf <include|exclude> <bf|list> [bf_idx] [bf_len] <mac1;mac2...>] [rx_filter <str1:str2...>] [tx_filter <str1:str2...>]",
 	NL80211_CMD_ADD_NAN_FUNCTION, 0, CIB_WDEV,
 	handle_nan_add_func, "");
+
+static int handle_nan_dp_setup(struct nl80211_state *state,
+			    struct nl_msg *msg, int argc, char **argv,
+			    enum id_input id)
+{
+	unsigned char mac_addr[ETH_ALEN];
+	struct nl_msg *dp_attrs = NULL;
+	int ret = -ENOBUFS;
+
+	dp_attrs = nlmsg_alloc();
+	if (!dp_attrs)
+		return -ENOBUFS;
+
+	if (argc < 2)
+		return -EINVAL;
+
+	if (strcmp(argv[0], "id") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_PUBLISH_ID,
+			   atoi(argv[0]));
+		argv++;
+		argc--;
+	} else if (strcmp(argv[0], "ndp_id") == 0) {
+		__u8 reason = 0;
+
+		argv++;
+		argc--;
+		NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_ID, atoi(argv[0]));
+		argv++;
+		argc--;
+		if (strcmp(argv[0], "status") == 0) {
+			argv++;
+			argc--;
+			NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_STATUS,
+				   atoi(argv[0]));
+			argv++;
+			argc--;
+		}
+
+		if (strcmp(argv[0], "reason") == 0) {
+			argv++;
+			argc--;
+			reason = atoi(argv[0]);
+			argv++;
+			argc--;
+		}
+
+		NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_REASON_CODE,
+			   reason);
+	}
+
+	if (argc > 1 && strcmp(argv[0], "addr") == 0) {
+		argv++;
+		argc--;
+		if (mac_addr_a2n(mac_addr, argv[0]) < 0) {
+			ret = -EINVAL;
+			goto nla_put_failure;
+		}
+
+		nla_put(dp_attrs, NL80211_NAN_DATA_PATH_NMI, ETH_ALEN,
+			mac_addr);
+		argv++;
+		argc--;
+	}
+
+	if (argc > 1 && strcmp(argv[0], "info") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT(dp_attrs, NL80211_NAN_DATA_PATH_SSI,
+			strlen(argv[0]), argv[0]);
+		argv++;
+		argc--;
+	}
+
+	if (argc >= 1 && strcmp(argv[0], "confirm_required") == 0) {
+		NLA_PUT_FLAG(dp_attrs, NL80211_NAN_DATA_PATH_CONFIRM_REQUIRED);
+		argv++;
+		argc--;
+	}
+
+	if (argc != 0) {
+		ret = -EINVAL;
+		goto nla_put_failure;
+	}
+	nla_put_nested(msg, NL80211_ATTR_NAN_DATA_PATH, dp_attrs);
+
+	ret = 0;
+nla_put_failure:
+	nlmsg_free(dp_attrs);
+	return ret;
+}
+COMMAND(nan, dp_setup, "id <publish_id> addr <peer_mac>",
+	NL80211_CMD_NAN_DATA_SETUP, 0, CIB_NETDEV, handle_nan_dp_setup, "");
