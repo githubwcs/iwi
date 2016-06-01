@@ -569,7 +569,48 @@ static void parse_nan_match(struct nlattr **attrs)
 	}
 }
 
+static void parse_nan_data_ind(struct nlattr **attrs)
+{
+	char nmi_addr[6*3];
+	char ndi_addr[6*3];
+	char *ssi;
+	int ssi_len;
 
+	struct nlattr *di[NL80211_NAN_DATA_PATH_ATTR_MAX + 1];
+
+	/* policy for NAN data path attirbutes */
+	static struct nla_policy
+	nan_data_path_policy[NL80211_NAN_DATA_PATH_ATTR_MAX + 1] = {
+	[NL80211_NAN_DATA_PATH_ID] = { .type = NLA_U8},
+	[NL80211_NAN_DATA_PATH_STATUS] = { .type = NLA_U8},
+	[NL80211_NAN_DATA_PATH_REASON_CODE] = { .type = NLA_U8},
+	[NL80211_NAN_DATA_PATH_CONFIRM_REQUIRED] = { .type = NLA_FLAG},
+	[NL80211_NAN_DATA_PATH_TYPE] = { .type = NLA_U8},
+	[NL80211_NAN_DATA_PATH_PUBLISH_ID] = { .type = NLA_U8},
+	[NL80211_NAN_DATA_PATH_NDI] = { },
+	[NL80211_NAN_DATA_PATH_NMI] = { },
+	[NL80211_NAN_DATA_PATH_SSI] = { },
+};
+
+	if (nla_parse_nested(di, NL80211_NAN_DATA_PATH_ATTR_MAX,
+			     attrs[NL80211_ATTR_NAN_DATA_PATH],
+			     nan_data_path_policy)) {
+		printf("NAN: failed to parse nan match event\n");
+		return;
+	}
+	mac_addr_n2a(ndi_addr, nla_data(di[NL80211_NAN_DATA_PATH_NDI]));
+	mac_addr_n2a(nmi_addr, nla_data(di[NL80211_NAN_DATA_PATH_NMI]));
+	ssi = di[NL80211_NAN_DATA_PATH_SSI] ?
+		nla_data(di[NL80211_NAN_DATA_PATH_SSI]) : "";
+	ssi_len = di[NL80211_NAN_DATA_PATH_SSI] ?
+		nla_len(di[NL80211_NAN_DATA_PATH_SSI]) : 0;
+
+	printf("nan data indication: type=%d, inst_id=%d, ndp_id=%d, nmi=%s, ndi=%s, ssi=%.*s\n",
+	       nla_get_u8(di[NL80211_NAN_DATA_PATH_TYPE]),
+	       nla_get_u8(di[NL80211_NAN_DATA_PATH_PUBLISH_ID]),
+	       nla_get_u8(di[NL80211_NAN_DATA_PATH_ID]),
+	       nmi_addr, ndi_addr, ssi_len, ssi);
+}
 
 static int print_event(struct nl_msg *msg, void *arg)
 {
@@ -904,6 +945,9 @@ static int print_event(struct nl_msg *msg, void *arg)
 		parse_nan_match(tb);
 		break;
 	}
+	case NL80211_CMD_NAN_DATA_SETUP:
+		parse_nan_data_ind(tb);
+		break;
 	default:
 		printf("unknown event %d (%s)\n",
 		       gnlh->cmd, command_name(gnlh->cmd));
