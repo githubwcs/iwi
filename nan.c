@@ -553,6 +553,12 @@ static int handle_nan_dp_request(struct nl80211_state *state,
 		argc--;
 	}
 
+	if (argc >= 1 && strcmp(argv[0], "confirm_required") == 0) {
+		NLA_PUT_FLAG(msg, NL80211_ATTR_NAN_DATA_CONFIRM_REQUIRED);
+		argv++;
+		argc--;
+	}
+
 	if (argc != 0)
 		return -EINVAL;
 
