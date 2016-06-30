@@ -51,6 +51,22 @@ static int handle_nan_start(struct nl80211_state *state,
 		NLA_PUT_U8(msg, NL80211_ATTR_NAN_DUAL, dual);
 	}
 
+	if (argc > 1 && strcmp(argv[0], "cdw_g") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT_U8(msg, NL80211_ATTR_NAN_CDW_G, atoi(argv[0]));
+		argv++;
+		argc--;
+	}
+
+	if (argc > 1 && strcmp(argv[0], "cdw_a") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT_U8(msg, NL80211_ATTR_NAN_CDW_A, atoi(argv[0]));
+		argv++;
+		argc--;
+	}
+
 	if (argc != 0)
 		return -EINVAL;
 
