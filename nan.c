@@ -62,14 +62,43 @@ static int handle_nan_start(struct nl80211_state *state,
 			return bands;
 
 		NLA_PUT_U32(msg, NL80211_ATTR_BANDS, bands);
-	} else if (argc != 0)
+
+		if (bands & BIT(NL80211_BAND_2GHZ)) {
+			argv++;
+			argc--;
+		}
+
+		if (bands & BIT(NL80211_BAND_5GHZ)) {
+			argv++;
+			argc--;
+		}
+	}
+
+	if (argc > 1 && strcmp(argv[0], "cdw_g") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT_U8(msg, NL80211_ATTR_NAN_CDW_G, atoi(argv[0]));
+		argv++;
+		argc--;
+	}
+
+	if (argc > 1 && strcmp(argv[0], "cdw_a") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT_U8(msg, NL80211_ATTR_NAN_CDW_A, atoi(argv[0]));
+		argv++;
+		argc--;
+	}
+
+	if (argc != 0)
 		return -EINVAL;
 
 	return 0;
 nla_put_failure:
 	return -ENOBUFS;
 }
-COMMAND(nan, start, "pref <pref> [bands [2GHz] [5GHz]]",
+COMMAND(nan, start,
+	"pref <pref> [bands [2GHz] [5GHz]] [cdw_g <val>] [cdw_a <val>]",
 	NL80211_CMD_START_NAN, 0, CIB_WDEV, handle_nan_start, "");
 
 static int handle_nan_stop(struct nl80211_state *state,
