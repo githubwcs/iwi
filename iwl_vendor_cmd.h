@@ -390,13 +390,15 @@ enum iwl_mvm_vendor_significant_change_result {
  * @IWL_MVM_VENDOR_RXFILTER_BCAST: control broadcast Rx filter
  * @IWL_MVM_VENDOR_RXFILTER_MCAST4: control IPv4 multicast Rx filter
  * @IWL_MVM_VENDOR_RXFILTER_MCAST6: control IPv4 multicast Rx filter
+ * @IWL_MVM_VENDOR_RXFILTER_EINVAL: no Rx filter command was set
  *
  */
 enum iwl_mvm_vendor_rxfilter_flags {
-	IWL_MVM_VENDOR_RXFILTER_UNICAST = BIT(0),
-	IWL_MVM_VENDOR_RXFILTER_BCAST = BIT(1),
-	IWL_MVM_VENDOR_RXFILTER_MCAST4 = BIT(2),
-	IWL_MVM_VENDOR_RXFILTER_MCAST6 = BIT(3),
+	IWL_MVM_VENDOR_RXFILTER_UNICAST = 1 << 0,
+	IWL_MVM_VENDOR_RXFILTER_BCAST = 1 << 1,
+	IWL_MVM_VENDOR_RXFILTER_MCAST4 = 1 << 2,
+	IWL_MVM_VENDOR_RXFILTER_MCAST6 = 1 << 3,
+	IWL_MVM_VENDOR_RXFILTER_EINVAL = 1 << 7,
 };
 
 /**
@@ -429,6 +431,8 @@ enum iwl_mvm_vendor_lqm_status {
 
 /**
  * enum iwl_mvm_vendor_lqm_result - the result of a link quality measurement
+ * @IWL_MVM_VENDOR_ATTR_LQM_INVALID: invalid attribute for compatibility
+ *	purpose.
  * @IWL_MVM_VENDOR_ATTR_LQM_ACTIVE_STA_AIR_TIME: the air time for the most
  *	active stations during the measurement. This is a nested attribute
  *	which is an array of u32.
@@ -438,7 +442,7 @@ enum iwl_mvm_vendor_lqm_status {
  * @IWL_MVM_VENDOR_ATTR_LQM_MEAS_TIME: the length (in msec) of the measurement.
  *	This can be shorter than the requested
  *	%IWL_MVM_VENDOR_ATTR_LQM_DURATION in case the measurement was cut
- *	short.
+ *	short. This is a u32.
  * @IWL_MVM_VENDOR_ATTR_LQM_RETRY_LIMIT: the number of frames that were dropped
  *	due to retry limit during the measurement. This is a u32.
  * @IWL_MVM_VENDOR_ATTR_LQM_MEAS_STATUS: the measurement status.
@@ -448,6 +452,7 @@ enum iwl_mvm_vendor_lqm_status {
  *	number.
  */
 enum iwl_mvm_vendor_lqm_result {
+	IWL_MVM_VENDOR_ATTR_LQM_INVALID,
 	IWL_MVM_VENDOR_ATTR_LQM_ACTIVE_STA_AIR_TIME,
 	IWL_MVM_VENDOR_ATTR_LQM_OTHER_STA,
 	IWL_MVM_VENDOR_ATTR_LQM_MEAS_TIME,
@@ -570,6 +575,8 @@ enum iwl_mvm_vendor_lqm_result {
  * @IWL_MVM_VENDOR_ATTR_GSCAN_CACHED_RESULTS: array of gscan cached results.
  *	Each result is a nested attribute of
  *	&enum iwl_mvm_vendor_gscan_cached_scan_res.
+ * @IWL_MVM_VENDOR_ATTR_LAST_MSG: Indicates that this message is the last one
+ *	in the series of messages. (flag)
  *
  */
 enum iwl_mvm_vendor_attr {
@@ -630,6 +637,7 @@ enum iwl_mvm_vendor_attr {
 	IWL_MVM_VENDOR_ATTR_LQM_RESULT,
 	IWL_MVM_VENDOR_ATTR_GSCAN_REPORT_THRESHOLD_NUM,
 	IWL_MVM_VENDOR_ATTR_GSCAN_CACHED_RESULTS,
+	IWL_MVM_VENDOR_ATTR_LAST_MSG,
 
 	NUM_IWL_MVM_VENDOR_ATTR,
 	MAX_IWL_MVM_VENDOR_ATTR = NUM_IWL_MVM_VENDOR_ATTR - 1,
