@@ -889,6 +889,11 @@
  * @NL80211_CMD_NAN_FUNC_MATCH: Notification sent when a match is reported.
  *	This will contain a %NL80211_ATTR_NAN_MATCH nested attribute and
  *	%NL80211_ATTR_COOKIE.
+ * @NL80211_CMD_NAN_DATA_REQUEST: Request NAN data path with a peer.
+ *	This command is sent on NAN data interface.
+ *	%NL80211_ATTR_MAC is the peer address. %NL80211_ATTR_NAN_FUNC_INST_ID
+ *	specified the peer's publish instance_id.
+ *	TODO: attributes for QOS, Security and service specific info.
  *
  * @NL80211_CMD_MAX: highest used command number
  * @__NL80211_CMD_AFTER_LAST: internal use
@@ -1091,6 +1096,8 @@ enum nl80211_commands {
 	NL80211_CMD_NAN_MATCH,
 
 	NL80211_CMD_GET_FTM_RESPONDER_STATS,
+
+	NL80211_CMD_NAN_DATA_SETUP,
 
 	/* add new commands above here */
 
@@ -2376,6 +2383,10 @@ enum nl80211_attrs {
 	NL80211_ATTR_MEASUREMENT_DURATION,
 	NL80211_ATTR_MEASUREMENT_DURATION_MANDATORY,
 
+	NL80211_ATTR_NAN_DATA_PATH,
+	NL80211_ATTR_NAN_CDW_G,
+	NL80211_ATTR_NAN_CDW_A,
+
 	/* add attributes here, update the policy in nl80211.c */
 
 	__NL80211_ATTR_AFTER_LAST,
@@ -2455,6 +2466,7 @@ enum nl80211_attrs {
  * @NL80211_IF_TYPE_OCB: Outside Context of a BSS
  *	This mode corresponds to the MIB variable dot11OCBActivated=true
  * @NL80211_IFTYPE_NAN: NAN device interface type (not a netdev)
+ * @NL80211_IFTYPE_NAN_DATA: NAN data interface
  * @NL80211_IFTYPE_MAX: highest interface type number currently defined
  * @NUM_NL80211_IFTYPES: number of defined interface types
  *
@@ -2476,6 +2488,7 @@ enum nl80211_iftype {
 	NL80211_IFTYPE_P2P_DEVICE,
 	NL80211_IFTYPE_OCB,
 	NL80211_IFTYPE_NAN,
+	NL80211_IFTYPE_NAN_DATA,
 
 	/* keep last */
 	NUM_NL80211_IFTYPES,
@@ -5510,6 +5523,7 @@ enum nl80211_nan_func_attributes {
 	NL80211_NAN_FUNC_TX_MATCH_FILTER,
 	NL80211_NAN_FUNC_INSTANCE_ID,
 	NL80211_NAN_FUNC_TERM_REASON,
+	NL80211_NAN_FUNC_DW_INTERVAL,
 
 	/* keep last */
 	NUM_NL80211_NAN_FUNC_ATTR,
@@ -5564,6 +5578,29 @@ enum nl80211_nan_match_attributes {
 	/* keep last */
 	NUM_NL80211_NAN_MATCH_ATTR,
 	NL80211_NAN_MATCH_ATTR_MAX = NUM_NL80211_NAN_MATCH_ATTR - 1
+};
+
+enum nl80211_nan_data_path_type {
+	NL80211_NAN_DATA_INDICATION_UNICAST,
+	NL80211_NAN_DATA_INDICATION_MCAST,
+};
+
+enum nl80211_nan_data_path_attributes {
+	__NL80211_NAN_DATA_PATH_INVALID,
+
+	NL80211_NAN_DATA_PATH_ID,
+	NL80211_NAN_DATA_PATH_STATUS,
+	NL80211_NAN_DATA_PATH_REASON_CODE,
+	NL80211_NAN_DATA_PATH_CONFIRM_REQUIRED,
+	NL80211_NAN_DATA_PATH_TYPE,
+	NL80211_NAN_DATA_PATH_PUBLISH_ID,
+	NL80211_NAN_DATA_PATH_NDI,
+	NL80211_NAN_DATA_PATH_NMI,
+	NL80211_NAN_DATA_PATH_SSI,
+
+	/* keep last */
+	NUM_NL80211_NAN_DATA_PATH_ATTR,
+	NL80211_NAN_DATA_PATH_ATTR_MAX = NUM_NL80211_NAN_DATA_PATH_ATTR - 1
 };
 
 #endif /* __LINUX_NL80211_H */
