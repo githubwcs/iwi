@@ -54,13 +54,13 @@ static int nl80211_init(struct nl80211_state *state)
 		return -ENOMEM;
 	}
 
-	nl_socket_set_buffer_size(state->nl_sock, 8192, 8192);
-
 	if (genl_connect(state->nl_sock)) {
 		fprintf(stderr, "Failed to connect to generic netlink.\n");
 		err = -ENOLINK;
 		goto out_handle_destroy;
 	}
+
+	nl_socket_set_buffer_size(state->nl_sock, 8192, 8192);
 
 	state->nl80211_id = genl_ctrl_resolve(state->nl_sock, "nl80211");
 	if (state->nl80211_id < 0) {
@@ -516,7 +516,7 @@ int main(int argc, char **argv)
 	const struct cmd *cmd = NULL;
 
 	/* calculate command size including padding */
-	cmd_size = abs((long)&__section_set - (long)&__section_get);
+	cmd_size = labs((long)&__section_set - (long)&__section_get);
 	/* strip off self */
 	argc--;
 	argv0 = *argv++;
@@ -570,11 +570,13 @@ int main(int argc, char **argv)
 		err = __handle_cmd(&nlstate, idby, argc, argv, &cmd);
 	}
 
-	if (err == 1) {
+	if (err == HANDLER_RET_USAGE) {
 		if (cmd)
 			usage_cmd(cmd);
 		else
 			usage(0, NULL);
+	} else if (err == HANDLER_RET_DONE) {
+		err = 0;
 	} else if (err < 0)
 		fprintf(stderr, "command failed: %s (%d)\n", strerror(-err), err);
 

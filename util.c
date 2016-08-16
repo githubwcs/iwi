@@ -149,7 +149,7 @@ const char *iftype_name(enum nl80211_iftype iftype)
 
 static const char *commands[NL80211_CMD_MAX + 1] = {
 /*
- * sed 's/^\tNL80211_CMD_//;t n;d;:n s%^\([^=]*\),.*%\t[NL80211_CMD_\1] = \"\L\1\",%;t;d' nl80211.h
+ * sed 's%^\tNL80211_CMD_%%;t n;d;:n s%^\([^=]*\),.*%\t[NL80211_CMD_\1] = \"\L\1\",%;t;d' nl80211.h | grep -v "reserved"
  */
 	[NL80211_CMD_UNSPEC] = "unspec",
 	[NL80211_CMD_GET_WIPHY] = "get_wiphy",
@@ -264,6 +264,7 @@ static const char *commands[NL80211_CMD_MAX + 1] = {
 	[NL80211_CMD_TDLS_CHANNEL_SWITCH] = "tdls_channel_switch",
 	[NL80211_CMD_TDLS_CANCEL_CHANNEL_SWITCH] = "tdls_cancel_channel_switch",
 	[NL80211_CMD_WIPHY_REG_CHANGE] = "wiphy_reg_change",
+	[NL80211_CMD_ABORT_SCAN] = "abort_scan",
 };
 
 static char cmdbuf[100];
