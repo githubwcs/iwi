@@ -557,23 +557,29 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 		NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_ID, atoi(argv[0]));
 		argv++;
 		argc--;
-		if (strcmp(argv[0], "status") == 0) {
-			argv++;
-			argc--;
-			NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_STATUS,
-				   atoi(argv[0]));
-			argv++;
-			argc--;
-		}
 
-		if (strcmp(argv[0], "reason") == 0) {
+		if (argc >= 1 && strcmp(argv[0], "terminate") == 0) {
+			NLA_PUT_FLAG(dp_attrs, NL80211_NAN_DATA_PATH_TEARDOWN);
 			argv++;
 			argc--;
-			reason = atoi(argv[0]);
-			argv++;
-			argc--;
-		}
+		} else {
+			if (strcmp(argv[0], "status") == 0) {
+				argv++;
+				argc--;
+				NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_STATUS,
+					   atoi(argv[0]));
+				argv++;
+				argc--;
+			}
 
+			if (strcmp(argv[0], "reason") == 0) {
+				argv++;
+				argc--;
+				reason = atoi(argv[0]);
+				argv++;
+				argc--;
+			}
+		}
 		NLA_PUT_U8(dp_attrs, NL80211_NAN_DATA_PATH_REASON_CODE,
 			   reason);
 	}
