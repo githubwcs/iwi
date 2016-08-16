@@ -5583,6 +5583,7 @@ enum nl80211_nan_match_attributes {
 enum nl80211_nan_data_path_type {
 	NL80211_NAN_DATA_INDICATION_UNICAST,
 	NL80211_NAN_DATA_INDICATION_MCAST,
+	NL80211_NAN_DATA_INDICATION_TERM,
 };
 
 enum nl80211_nan_data_path_attributes {
@@ -5597,6 +5598,7 @@ enum nl80211_nan_data_path_attributes {
 	NL80211_NAN_DATA_PATH_NDI,
 	NL80211_NAN_DATA_PATH_NMI,
 	NL80211_NAN_DATA_PATH_SSI,
+	NL80211_NAN_DATA_PATH_TEARDOWN,
 
 	/* keep last */
 	NUM_NL80211_NAN_DATA_PATH_ATTR,
