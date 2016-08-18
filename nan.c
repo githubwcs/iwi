@@ -503,7 +503,7 @@ static int handle_nan_add_func(struct nl80211_state *state,
 	}
 
 	if (type != NL80211_NAN_FUNC_FOLLOW_UP &&
-	    argc > 1 && strcmp(argv[0], "dw_interval")) {
+	    argc > 1 && strcmp(argv[0], "dw_interval") == 0) {
 		argv++;
 		argc--;
 		NLA_PUT_U8(func_attrs,
