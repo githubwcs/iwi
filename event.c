@@ -621,11 +621,19 @@ static void parse_nan_data_ind(struct nlattr **attrs)
 	ssi_len = di[NL80211_NAN_DATA_PATH_SSI] ?
 		nla_len(di[NL80211_NAN_DATA_PATH_SSI]) : 0;
 
-	printf("nan data indication: type=%d, inst_id=%d, ndp_id=%d, nmi=%s, ndi=%s, ssi=%.*s\n",
+	printf("nan data indication: type=%d, inst_id=%d, ndp_id=%d, nmi=%s, ndi=%s, ssi=",
 	       nla_get_u8(di[NL80211_NAN_DATA_PATH_TYPE]),
 	       nla_get_u8(di[NL80211_NAN_DATA_PATH_PUBLISH_ID]),
 	       nla_get_u8(di[NL80211_NAN_DATA_PATH_ID]),
-	       nmi_addr, ndi_addr, ssi_len, ssi);
+	       nmi_addr, ndi_addr);
+	if (!ssi_len) {
+		printf("N/A\n");
+	} else {
+		int i;
+		for (i = 0; i < ssi_len; ++i)
+			printf("%02x", ssi[i]);
+		printf("\n");
+	}
 }
 
 static int print_event(struct nl_msg *msg, void *arg)
