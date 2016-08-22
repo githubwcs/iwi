@@ -494,7 +494,12 @@
  *	This attribute is ignored if driver does not support roam scan.
  *	It is also sent as an event, with the BSSID and response IEs when the
  *	connection is established or failed to be established. This can be
- *	determined by the STATUS_CODE attribute.
+ *	determined by the %NL80211_ATTR_STATUS_CODE attribute (0 = success,
+ *	non-zero = failure). If %NL80211_ATTR_TIMED_OUT is included in the
+ *	event, the connection attempt failed due to not being able to initiate
+ *	authentication/association or not receiving a response from the AP.
+ *	Non-zero %NL80211_ATTR_STATUS_CODE value is indicated in that case as
+ *	well to remain backwards compatible.
  * @NL80211_CMD_ROAM: request that the card roam (currently not implemented),
  *	sent as an event when the card/driver roamed by itself.
  * @NL80211_CMD_DISCONNECT: drop a given connection; also used to notify
@@ -1896,6 +1901,49 @@ enum nl80211_commands {
  *
  * @NL80211_ATTR_PAD: attribute used for padding for 64-bit alignment
  *
+ * @NL80211_ATTR_IFTYPE_EXT_CAPA: Nested attribute of the following attributes:
+ *	%NL80211_ATTR_IFTYPE, %NL80211_ATTR_EXT_CAPA,
+ *	%NL80211_ATTR_EXT_CAPA_MASK, to specify the extended capabilities per
+ *	interface type.
+ *
+ * @NL80211_ATTR_MU_MIMO_GROUP_DATA: array of 24 bytes that defines a MU-MIMO
+ *	groupID for monitor mode.
+ *	The first 8 bytes are a mask that defines the membership in each
+ *	group (there are 64 groups, group 0 and 63 are reserved),
+ *	each bit represents a group and set to 1 for being a member in
+ *	that group and 0 for not being a member.
+ *	The remaining 16 bytes define the position in each group: 2 bits for
+ *	each group.
+ *	(smaller group numbers represented on most significant bits and bigger
+ *	group numbers on least significant bits.)
+ *	This attribute is used only if all interfaces are in monitor mode.
+ *	Set this attribute in order to monitor packets using the given MU-MIMO
+ *	groupID data.
+ *	to turn off that feature set all the bits of the groupID to zero.
+ * @NL80211_ATTR_MU_MIMO_FOLLOW_MAC_ADDR: mac address for the sniffer to follow
+ *	when using MU-MIMO air sniffer.
+ *	to turn that feature off set an invalid mac address
+ *	(e.g. FF:FF:FF:FF:FF:FF)
+ *
+ * @NL80211_ATTR_SCAN_START_TIME_TSF: The time at which the scan was actually
+ *	started (u64). The time is the TSF of the BSS the interface that
+ *	requested the scan is connected to (if available, otherwise this
+ *	attribute must not be included).
+ * @NL80211_ATTR_SCAN_START_TIME_TSF_BSSID: The BSS according to which
+ *	%NL80211_ATTR_SCAN_START_TIME_TSF is set.
+ * @NL80211_ATTR_MEASUREMENT_DURATION: measurement duration in TUs (u16). If
+ *	%NL80211_ATTR_MEASUREMENT_DURATION_MANDATORY is not set, this is the
+ *	maximum measurement duration allowed. This attribute is used with
+ *	measurement requests. It can also be used with %NL80211_CMD_TRIGGER_SCAN
+ *	if the scan is used for beacon report radio measurement.
+ * @NL80211_ATTR_MEASUREMENT_DURATION_MANDATORY: flag attribute that indicates
+ *	that the duration specified with %NL80211_ATTR_MEASUREMENT_DURATION is
+ *	mandatory. If this flag is not set, the duration is the maximum duration
+ *	and the actual measurement duration may be shorter.
+ *
+ * @NL80211_ATTR_MESH_PEER_AID: Association ID for the mesh peer (u16). This is
+ *	used to pull the stored data for mesh peer in power save state.
+ *
  * @NL80211_ATTR_MSRMENT_TYPE: Type of current measurement request/response.
  *	(values defined in &enum nl80211_msrment_type).
  * @NL80211_ATTR_MSRMENT_STATUS: Status of current measurement response.
@@ -1932,40 +1980,8 @@ enum nl80211_commands {
  * @NL80211_ATTR_NAN_MATCH: used to report a match. This is a nested attribute.
  *	See &enum nl80211_nan_match_attributes.
  *
- * @NL80211_ATTR_MU_MIMO_GROUP_DATA: array of 24 bytes that defines a MU-MIMO
- *	groupID for monitor mode.
- *	The first 8 bytes are a mask that defines the membership in each
- *	group (there are 64 groups, group 0 and 63 are reserved),
- *	each bit represents a group and set to 1 for being a member in
- *	that group and 0 for not being a member.
- *	The remaining 16 bytes define the position in each group: 2 bits for
- *	each group.
- *	(smaller group numbers represented on most significant bits and bigger
- *	group numbers on least significant bits.)
- *	This attribute is used only if all interfaces are in monitor mode.
- *	Set this attribute in order to monitor packets using the given MU-MIMO
- *	groupID data.
- *	to turn off that feature set all the bits of the groupID to zero.
- * @NL80211_ATTR_MU_MIMO_FOLLOW_MAC_ADDR: mac address for the sniffer to follow
- *	when using MU-MIMO air sniffer.
- *	to turn that feature off set an invalid mac address
- *	(e.g. FF:FF:FF:FF:FF:FF)
- *
- * @NL80211_ATTR_SCAN_START_TIME_TSF: The time at which the scan was actually
- *	started (u64). The time is the TSF of the BSS the interface that
- *	requested the scan is connected to (if available, otherwise this
- *	attribute must not be included).
- * @NL80211_ATTR_SCAN_START_TIME_TSF_BSSID: The BSS according to which
- *	%NL80211_ATTR_SCAN_START_TIME_TSF is set.
- * @NL80211_ATTR_MEASUREMENT_DURATION: measurement duration in TUs (u16). If
- *	%NL80211_ATTR_MEASUREMENT_DURATION_MANDATORY is not set, this is the
- *	maximum measurement duration allowed. This attribute is used with
- *	measurement requests. It can also be used with %NL80211_CMD_TRIGGER_SCAN
- *	if the scan is used for beacon report radio measurement.
- * @NL80211_ATTR_MEASUREMENT_DURATION_MANDATORY: flag attribute that indicates
- *	that the duration specified with %NL80211_ATTR_MEASUREMENT_DURATION is
- *	mandatory. If this flag is not set, the duration is the maximum duration
- *	and the actual measurement duration may be shorter.
+ * @NL80211_ATTR_PSK: PSK for offloaded 4-Way Handshake. Relevant only
+ *	with %NL80211_CMD_CONNECT (for WPA/WPA2-PSK networks).
  *
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
@@ -2349,6 +2365,10 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_PAD,
 
+	NL80211_ATTR_IFTYPE_EXT_CAPA,
+
+	NL80211_ATTR_MESH_PEER_AID,
+
 	NL80211_ATTR_MSRMENT_TYPE,
 	NL80211_ATTR_MSRMENT_STATUS,
 
@@ -2375,6 +2395,8 @@ enum nl80211_attrs {
 	NL80211_ATTR_SCAN_START_TIME_TSF_BSSID,
 	NL80211_ATTR_MEASUREMENT_DURATION,
 	NL80211_ATTR_MEASUREMENT_DURATION_MANDATORY,
+
+	NL80211_ATTR_PSK,
 
 	/* add attributes here, update the policy in nl80211.c */
 
@@ -4668,6 +4690,9 @@ enum nl80211_feature_flags {
  *	(if available).
  * @NL80211_EXT_FEATURE_SET_SCAN_DWELL: This driver supports configuration of
  *	channel dwell time.
+ * @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA: Device supports
+ *	doing 4-way handshake in station mode (PSK is passed as part
+ *	of the connect command).
  *
  * @NUM_NL80211_EXT_FEATURES: number of extended features.
  * @MAX_NL80211_EXT_FEATURES: highest extended feature index.
@@ -4679,6 +4704,7 @@ enum nl80211_ext_feature_index {
 	NL80211_EXT_FEATURE_SCAN_START_TIME,
 	NL80211_EXT_FEATURE_BSS_PARENT_TSF,
 	NL80211_EXT_FEATURE_SET_SCAN_DWELL,
+	NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA,
 
 	/* add new features before the definition below */
 	NUM_NL80211_EXT_FEATURES,
@@ -5136,6 +5162,7 @@ enum nl80211_ftm_initiator_capa {
  *	frames. Bitfield, as specified in @enum nl80211_ftm_bw. Request will be
  *	refused if the supplied bitfield isn't supported in
  *	%NL80211_FTM_CAPA_BW. (u8)
+ * @NL80211_FTM_TARGET_ATTR_PAD: used for padding, ignore
  * @__NL80211_FTM_TARGET_ATTR_AFTER_LAST: internal
  * @NL80211_FTM_TARGET_ATTR_MAX: highest FTM target attribute
  */
@@ -5158,6 +5185,7 @@ enum nl80211_ftm_target {
 	NL80211_FTM_TARGET_ATTR_COOKIE,
 	NL80211_FTM_TARGET_ATTR_FTM_PREAMBLE,
 	NL80211_FTM_TARGET_ATTR_FTM_BW,
+	NL80211_FTM_TARGET_ATTR_PAD,
 
 	/* keep last */
 	__NL80211_FTM_TARGET_ATTR_AFTER_LAST,
@@ -5301,6 +5329,7 @@ enum nl80211_ftm_response_status {
  * @NL80211_FTM_RESP_ENTRY_ATTR_CIVIC: the CIVIC data buffer of the target. Will
  *	be provided only if available and %NL80211_FTM_TARGET_QUERY_CIVIC was
  *	set in the request.
+ * @NL80211_FTM_RESP_ENTRY_ATTR_PAD: used for padding, ignore
  */
 enum nl80211_ftm_response_entry {
 	__NL80211_FTM_RESP_ENTRY_ATTR_INVALID,
@@ -5328,6 +5357,7 @@ enum nl80211_ftm_response_entry {
 	NL80211_FTM_RESP_ENTRY_ATTR_DISTANCE_SPREAD,
 	NL80211_FTM_RESP_ENTRY_ATTR_LCI,
 	NL80211_FTM_RESP_ENTRY_ATTR_CIVIC,
+	NL80211_FTM_RESP_ENTRY_ATTR_PAD,
 
 	/* keep last */
 	__NL80211_FTM_RESP_ENTRY_ATTR_AFTER_LAST,
@@ -5359,6 +5389,7 @@ enum nl80211_ftm_response_entry {
  *	FTM slot (u32)
  * @NL80211_FTM_STATS_OUT_OF_WINDOW_TRIGGERS_NUM: number of FTM triggers out of
  *	scheduled window (u32)
+ * @NL80211_FTM_STATS_PAD: used for padding, ignore
  * @__NL80211_TXQ_ATTR_AFTER_LAST: Internal
  * @NL80211_FTM_STATS_MAX: highest possible FTM responder stats attribute
  */
@@ -5373,6 +5404,7 @@ enum nl80211_ftm_responder_stats {
 	NL80211_FTM_STATS_UNKNOWN_TRIGGERS_NUM,
 	NL80211_FTM_STATS_RESCHEDULE_REQUESTS_NUM,
 	NL80211_FTM_STATS_OUT_OF_WINDOW_TRIGGERS_NUM,
+	NL80211_FTM_STATS_PAD,
 
 	/* keep last */
 	__NL80211_FTM_STATS_AFTER_LAST,
