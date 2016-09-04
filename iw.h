@@ -199,4 +199,5 @@ DECLARE_SECTION(get);
 void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs);
 enum nl80211_chan_width str_to_bw(char *str);
 
+char *hex2bin(const char *hex, char *buf);
 #endif /* __IW_H */
