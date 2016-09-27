@@ -620,6 +620,30 @@ static void parse_nan_data_ind(struct nlattr **attrs)
 	}
 }
 
+static void parse_nan_range_ind(struct nlattr **attrs)
+{
+	char nmi_addr[6*3];
+	struct nlattr *ri[NL80211_NAN_RANGING_ATTR_MAX + 1];
+
+	/* policy for NAN data path attirbutes */
+	static struct nla_policy
+	nan_data_path_policy[NL80211_NAN_RANGING_ATTR_MAX + 1] = {
+		[NL80211_NAN_RANGING_STATUS] = { .type = NLA_U8},
+		[NL80211_NAN_RANGING_REASON_CODE] = { .type = NLA_U8},
+		[NL80211_NAN_RANGING_NMI] = { },
+	};
+
+	if (nla_parse_nested(ri, NL80211_NAN_RANGING_ATTR_MAX,
+			     attrs[NL80211_ATTR_NAN_RANGING],
+			     nan_data_path_policy)) {
+		printf("NAN: failed to parse nan match event\n");
+		return;
+	}
+	mac_addr_n2a(nmi_addr, nla_data(ri[NL80211_NAN_RANGING_NMI]));
+
+	printf("nan ranging indication: nmi=%s\n", nmi_addr);
+}
+
 static int print_event(struct nl_msg *msg, void *arg)
 {
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
@@ -955,6 +979,9 @@ static int print_event(struct nl_msg *msg, void *arg)
 	}
 	case NL80211_CMD_NAN_DATA_SETUP:
 		parse_nan_data_ind(tb);
+		break;
+	case NL80211_CMD_NAN_RANGE_SETUP:
+		parse_nan_range_ind(tb);
 		break;
 	default:
 		printf("unknown event %d (%s)\n",
