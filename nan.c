@@ -637,3 +637,47 @@ nla_put_failure:
 }
 COMMAND(nan, dp_setup, "id <publish_id> addr <peer_mac>",
 	NL80211_CMD_NAN_DATA_SETUP, 0, CIB_NETDEV, handle_nan_dp_setup, "");
+
+static int handle_nan_ranging_setup(struct nl80211_state *state,
+			    struct nl_msg *msg, int argc, char **argv,
+			    enum id_input id)
+{
+	unsigned char mac_addr[ETH_ALEN];
+	struct nl_msg *ranging_attrs = NULL;
+	int ret = -ENOBUFS;
+
+	ranging_attrs = nlmsg_alloc();
+	if (!ranging_attrs)
+		return -ENOBUFS;
+
+	if (argc < 2)
+		return -EINVAL;
+
+	if (argc > 1 && strcmp(argv[0], "addr") == 0) {
+		argv++;
+		argc--;
+		if (mac_addr_a2n(mac_addr, argv[0]) < 0) {
+			ret = -EINVAL;
+			goto nla_put_failure;
+		}
+
+		nla_put(ranging_attrs, NL80211_NAN_RANGING_NMI, ETH_ALEN,
+			mac_addr);
+		argv++;
+		argc--;
+	}
+
+	if (argc != 0) {
+		ret = -EINVAL;
+		goto nla_put_failure;
+	}
+	nla_put_nested(msg, NL80211_ATTR_NAN_RANGING, ranging_attrs);
+
+	ret = 0;
+nla_put_failure:
+	nlmsg_free(ranging_attrs);
+	return ret;
+}
+COMMAND(nan, ranging_setup, "addr <peer_mac>",
+	NL80211_CMD_NAN_RANGE_SETUP, 0, CIB_WDEV, handle_nan_ranging_setup, "");
+
