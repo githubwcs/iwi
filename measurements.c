@@ -28,6 +28,12 @@ struct ftm_target {
 	char samples_per_burst;
 	char one_sided;
 	char asap;
+	char num_of_bursts_exp;
+	unsigned short burst_period;
+	char retries;
+	char burst_duration;
+	char query_lci;
+	char query_civic;
 };
 
 static int ftm_put_target(struct nl_msg *msg, struct ftm_target *tgt)
@@ -44,7 +50,23 @@ static int ftm_put_target(struct nl_msg *msg, struct ftm_target *tgt)
 			 tgt->center_freq2)) ||
 	    (tgt->samples_per_burst &&
 	     nla_put_u8(msg, NL80211_FTM_TARGET_ATTR_SAMPLES_PER_BURST,
-			tgt->samples_per_burst)))
+			tgt->samples_per_burst)) ||
+	    (tgt->num_of_bursts_exp &&
+	     nla_put_u8(msg, NL80211_FTM_TARGET_ATTR_NUM_OF_BURSTS_EXP,
+			tgt->num_of_bursts_exp)) ||
+	    (tgt->burst_period &&
+	     nla_put_u16(msg, NL80211_FTM_TARGET_ATTR_BURST_PERIOD,
+			 tgt->burst_period)) ||
+	     (tgt->retries &&
+	      nla_put_u8(msg, NL80211_FTM_TARGET_ATTR_RETRIES,
+			 tgt->retries)) ||
+	     (tgt->burst_duration &&
+	      nla_put_u8(msg, NL80211_FTM_TARGET_ATTR_BURST_DURATION,
+			 tgt->burst_duration)) ||
+	     (tgt->query_lci &&
+	      nla_put_flag(msg, NL80211_FTM_TARGET_ATTR_QUERY_LCI)) ||
+	     (tgt->query_civic &&
+	      nla_put_flag(msg, NL80211_FTM_TARGET_ATTR_QUERY_CIVIC)))
 		return -ENOBUFS;
 
 	if (tgt->one_sided) {
@@ -89,6 +111,30 @@ static int parse_ftm_target(char *str, struct ftm_target *target)
 				printf("Invalid cf2 value!\n");
 				return -1;
 			}
+		} else if (strncmp(pos, "bursts_exp=", 11) == 0) {
+			target->num_of_bursts_exp = strtol(pos + 11, &tmp, 10);
+			if (*tmp) {
+				printf("Invalid bursts_exp value!\n");
+				return -1;
+			}
+		} else if (strncmp(pos, "burst_period=", 13) == 0) {
+			target->burst_period= strtol(pos + 13, &tmp, 10);
+			if (*tmp) {
+				printf("Invalid burst_period value!\n");
+				return -1;
+			}
+		} else if (strncmp(pos, "retries=", 8) == 0) {
+			target->retries = strtol(pos + 8, &tmp, 10);
+			if (*tmp) {
+				printf("Invalid retries value!\n");
+				return -1;
+			}
+		} else if (strncmp(pos, "burst_duration=", 15) == 0) {
+			target->burst_duration = strtol(pos + 15, &tmp, 10);
+			if (*tmp) {
+				printf("Invalid burst_duration value!\n");
+				return -1;
+			}
 		} else if (strncmp(pos, "spb=", 4) == 0) {
 			target->samples_per_burst = strtol(pos + 4, &tmp, 10);
 			if (tmp - pos <= 4) {
@@ -99,6 +145,10 @@ static int parse_ftm_target(char *str, struct ftm_target *target)
 			target->one_sided = 1;
 		} else if (strcmp(pos, "asap") == 0) {
 			target->asap = 1;
+		} else if (strcmp(pos, "civic") == 0) {
+			target->query_civic = 1;
+		} else if (strcmp(pos, "lci") == 0) {
+			target->query_lci = 1;
 		} else {
 			printf("Unknown parameter %s\n", pos);
 			return -1;
@@ -232,6 +282,6 @@ COMMAND(measurement, ftm_request, "<config-file>", 0, 0,
 	CIB_NETDEV, handle_ftm_req,
 	"Send an FTM request to the targets supplied in the config file.\n"
 	"Each line in the file represents a target, with the following format:\n"
-	"<bssid> bw=<[20|40|80|80+80|160]> cf=<center_freq> [cf1=<center_freq1>] [cf2=<center_freq2>] [spb=<samples per burst>] [one-sided] [asap]\n");
+	"<bssid> bw=<[20|40|80|80+80|160]> cf=<center_freq> [cf1=<center_freq1>] [cf2=<center_freq2>] [spb=<samples per burst>] [one-sided] [asap] [bursts_exp=<num of bursts exponent>] [burst_period=<burst period>] [retries=<num of retries>] [burst_duration=<burst duration>] [civic] [lci]\n");
 HIDDEN(measurement, ftm_request_send, "<config-file>", NL80211_CMD_MSRMENT_REQUEST, 0,
 	CIB_NETDEV, handle_ftm_req_send);
