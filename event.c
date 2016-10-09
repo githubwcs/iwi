@@ -372,9 +372,22 @@ static void parse_ftm_results(struct nlattr **attrs, int status,
 	       (long long int)nla_get_u64(tb[NL80211_FTM_RESP_ENTRY_ATTR_DISTANCE]) :
 	       rtt * SOL_CM_PSEC;
 
-	printf("Target: %s, status: %d, rtt: %lld psec, distance: %lld cm\n",
+	printf("Target: %s, status: %d, rtt: %lld psec, distance: %lld cm",
 	       macbuf, nla_get_u8(tb[NL80211_FTM_RESP_ENTRY_ATTR_STATUS]), rtt,
 	       dist);
+
+	if (tb[NL80211_FTM_RESP_ENTRY_ATTR_LCI])
+		iw_hexdump("LCI",
+			   nla_data(tb[NL80211_FTM_RESP_ENTRY_ATTR_LCI]),
+			   nla_len(tb[NL80211_FTM_RESP_ENTRY_ATTR_LCI]));
+
+	if (tb[NL80211_FTM_RESP_ENTRY_ATTR_CIVIC])
+		iw_hexdump("Civic",
+			   nla_data(tb[NL80211_FTM_RESP_ENTRY_ATTR_CIVIC]),
+			   nla_len(tb[NL80211_FTM_RESP_ENTRY_ATTR_CIVIC]));
+
+
+	printf("\n");
 
 	pargs->continue_listening = attrs[NL80211_ATTR_LAST_MSG] ? 0 : 1;
 }
