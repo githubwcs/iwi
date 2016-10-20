@@ -38,14 +38,25 @@ static int handle_nan_start(struct nl80211_state *state,
 	if (argc > 1 && strcmp(argv[0], "dual") == 0) {
 		argv++;
 		argc--;
-		dual = atoi(argv[0]);
+		/* Translate 0-to default, 1 to 24GHZ, 2 - dual */
+		switch (atoi(argv[0])) {
+		case 0:
+			dual = NL80211_NAN_BAND_DEFAULT;
+			break;
+		case 1:
+			dual = NL80211_NAN_BAND_2GHZ;
+			break;
+		case 2:
+			dual = NL80211_NAN_BAND_2GHZ | NL80211_NAN_BAND_5GHZ;
+			break;
+		default:
+			return -EINVAL;
+		}
 		argv++;
 		argc--;
 	}
-	if (dual <= NL80211_NAN_BAND_MAX)
-		NLA_PUT_U8(msg, NL80211_ATTR_NAN_DUAL, dual);
-	else
-		return -EINVAL;
+
+	NLA_PUT_U8(msg, NL80211_ATTR_NAN_DUAL, dual);
 
 	if (argc > 1 && strcmp(argv[0], "cdw_g") == 0) {
 		argv++;
@@ -136,7 +147,7 @@ static int handle_nan_rm_func(struct nl80211_state *state,
 nla_put_failure:
 	return -ENOBUFS;
 }
-COMMAND(nan, rm_func, "cookie <cookie>", NL80211_CMD_RM_NAN_FUNCTION, 0,
+COMMAND(nan, rm_func, "cookie <cookie>", NL80211_CMD_DEL_NAN_FUNCTION, 0,
 	CIB_WDEV, handle_nan_rm_func, "");
 
 static int compute_service_id(unsigned char *serv_name,

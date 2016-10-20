@@ -869,7 +869,7 @@ static int print_event(struct nl_msg *msg, void *arg)
 	case NL80211_CMD_DEL_WIPHY:
 		printf("delete wiphy\n");
 		break;
-	case NL80211_CMD_RM_NAN_FUNCTION:
+	case NL80211_CMD_DEL_NAN_FUNCTION:
 		parse_nan_term(tb);
 		break;
 	/*	if (!tb[NL80211_NAN_FUNC_INSTANCE_ID]) {
