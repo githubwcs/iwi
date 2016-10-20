@@ -38,18 +38,25 @@ static int handle_nan_start(struct nl80211_state *state,
 	if (argc > 1 && strcmp(argv[0], "dual") == 0) {
 		argv++;
 		argc--;
-		dual = atoi(argv[0]);
+		/* Translate 0-to default, 1 to 24GHZ, 2 - dual */
+		switch (atoi(argv[0])) {
+		case 0:
+			dual = NL80211_NAN_BAND_DEFAULT;
+			break;
+		case 1:
+			dual = NL80211_NAN_BAND_2GHZ;
+			break;
+		case 2:
+			dual = NL80211_NAN_BAND_2GHZ | NL80211_NAN_BAND_5GHZ;
+			break;
+		default:
+			return -EINVAL;
+		}
 		argv++;
 		argc--;
-
-		if (dual == 0)
-			return -EINVAL;
-
-		if (dual & ~(NL80211_NAN_BAND_DEFAULT | NL80211_NAN_BAND_2GHZ |
-			    NL80211_NAN_BAND_5GHZ))
-			return -EINVAL;
-		NLA_PUT_U8(msg, NL80211_ATTR_NAN_DUAL, dual);
 	}
+
+	NLA_PUT_U8(msg, NL80211_ATTR_NAN_DUAL, dual);
 
 	if (argc > 1 && strcmp(argv[0], "cdw_g") == 0) {
 		argv++;
