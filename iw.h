@@ -201,5 +201,6 @@ enum nl80211_chan_width str_to_bw(char *str);
 void nan_bf(uint8_t idx, uint8_t *bf, uint16_t bf_len, const uint8_t *buf,
 	    size_t len);
 
-char *hex2bin(const char *hex, char *buf);
+char *hex2bin(char *hex, char *buf);
+
 #endif /* __IW_H */
