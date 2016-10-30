@@ -360,7 +360,7 @@ static int hex2byte(char *hex)
 	return (d1 << 4) | d2;
 }
 
-static char *hex2bin(char *hex, char *buf)
+char *hex2bin(char *hex, char *buf)
 {
 	char *result = buf;
 	int d;
