@@ -9,6 +9,8 @@
 #include <netlink/attr.h>
 
 #include <openssl/evp.h>
+#include <openssl/aes.h>
+#include <openssl/hmac.h>
 #include <ctype.h>
 #include <inttypes.h>
 #include "nl80211.h"
@@ -186,6 +188,70 @@ static int compute_service_id(const unsigned char *serv_name,
 	return 0;
 }
 
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || defined(LIBRESSL_VERSION_NUMBER)
+/* Compatibility wrappers for older versions. */
+static HMAC_CTX * HMAC_CTX_new(void)
+{
+	HMAC_CTX *ctx = malloc(sizeof(*ctx));
+	if (ctx)
+		HMAC_CTX_init(ctx);
+	return ctx;
+}
+
+static void HMAC_CTX_free(HMAC_CTX *ctx)
+{
+	if (!ctx)
+		return;
+	HMAC_CTX_cleanup(ctx);
+	free(ctx);
+}
+#endif
+
+static int compute_pmkid(const EVP_MD *type, const unsigned char *key,
+			 unsigned char key_len, const unsigned char *iaddr,
+			 const unsigned char *raddr, unsigned char *serv_id_c,
+			 char *hash)
+{
+	unsigned char md_value[EVP_MAX_MD_SIZE] = {};
+	const char *label = "NAN PMK Name";
+	const unsigned char *addr[4];
+	size_t lens[4];
+	unsigned int mdlen;
+
+	HMAC_CTX *ctx;
+	size_t i;
+	int res;
+
+	addr[0] = (unsigned char *)label;
+	lens[0] = strlen(label);
+	addr[1] = iaddr;
+	lens[1] = ETH_ALEN;
+	addr[2] = raddr;
+	lens[2] = ETH_ALEN;
+	addr[3] = serv_id_c;
+	lens[3] = 6;
+
+	ctx = HMAC_CTX_new();
+	if (!ctx)
+		return 	-1;
+	res = HMAC_Init_ex(ctx,	key, key_len, type, NULL);
+	if (res != 1)
+		goto done;
+
+	for (i = 0; i <	4; i++)
+		HMAC_Update(ctx, addr[i], lens[i]);
+
+	res = HMAC_Final(ctx, md_value, &mdlen);
+	if (!res || mdlen < NL80211_NAN_PMKID_LEN)
+		return -EINVAL;
+
+	memcpy(hash, md_value, NL80211_NAN_PMKID_LEN);
+
+done:
+	HMAC_CTX_free(ctx);
+	return res == 1 ? 0 : -1;
+}
+
 static int print_instance_id_handler(struct nl_msg *msg, void *arg)
 {
 	struct nlattr *tb[NL80211_ATTR_MAX + 1];
@@ -340,6 +406,7 @@ static int handle_nan_add_func(struct nl80211_state *state,
 	struct nl_msg *func_attrs = NULL;
 	int err = 0;
 	__u8 type;
+	unsigned char serv_id_c[6];
 
 	func_attrs = nlmsg_alloc();
 	if (!func_attrs) {
@@ -428,6 +495,7 @@ static int handle_nan_add_func(struct nl80211_state *state,
 
 		NLA_PUT(func_attrs, NL80211_NAN_FUNC_SERVICE_ID, 6,
 			&service_id);
+
 		argv++;
 		argc--;
 	} else {
@@ -530,6 +598,92 @@ static int handle_nan_add_func(struct nl80211_state *state,
 		argc--;
 	}
 
+	if (type == NL80211_NAN_FUNC_PUBLISH && argc && strcmp(argv[0], "sec") == 0) {
+		unsigned int csids[NL80211_NAN_CS_MAX] = {};
+		unsigned char pmk[NL80211_NAN_PMK_LEN];
+		unsigned char raddr[ETH_ALEN];
+		char pmkids[NL80211_NAN_CS_MAX * NL80211_NAN_PMKID_LEN];
+		struct nlattr *nl_sec;
+		unsigned int n_csids;
+		int ret, pmkid;
+
+		argv++;
+		argc--;
+
+		/*[pmkid <PMK> <raddr>] <cipher suite>+ */
+
+		if (argc > 3 && strcmp(argv[0], "pmkid") == 0) {
+			argv++;
+			argc--;
+
+			/* PMK */
+			if (strlen(argv[0]) != (sizeof(pmk) * 2) ||
+			    !hex2bin(argv[0], (char *)pmk))
+				return -EINVAL;
+
+			argv++;
+			argc--;
+
+			/* local NAN management interface address */
+			ret = mac_addr_a2n(raddr, argv[0]);
+			if (ret)
+				return -EINVAL;
+
+			argv++;
+			argc--;
+
+			pmkid = 1;
+		} else {
+			pmkid = 0;
+		}
+
+		if (!argc)
+			return -EINVAL;
+
+		nl_sec = nla_nest_start(func_attrs,
+					NL80211_NAN_FUNC_SEC);
+
+		for (n_csids = 0; argc > 0 && n_csids < NL80211_NAN_CS_MAX;
+		     n_csids++) {
+			unsigned char iaddr[ETH_ALEN] = {
+				0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+			};
+			const EVP_MD *evp_md;
+
+			if (strcmp("SK-128", argv[0]) == 0) {
+				csids[n_csids] = NL80211_NAN_CS_SK_CCM_128;
+				evp_md = EVP_sha256();
+			} else if (strcmp("SK-256", argv[0]) == 0) {
+				csids[n_csids] = NL80211_NAN_CS_SK_GCM_256;
+				evp_md = EVP_sha384();
+			} else {
+				return -EINVAL;
+			}
+
+			argv++;
+			argc--;
+
+			if (!pmkid)
+				continue;
+
+			ret = compute_pmkid(evp_md, pmk, NL80211_NAN_PMK_LEN,
+					    iaddr, raddr, serv_id_c,
+					    &pmkids[n_csids * NL80211_NAN_PMKID_LEN]);
+			if (ret)
+				return -EINVAL;
+		}
+
+		NLA_PUT(func_attrs, NL80211_NAN_SEC_CSIDS,
+			n_csids * sizeof(unsigned int),
+			csids);
+
+		if (pmkid)
+			NLA_PUT(func_attrs, NL80211_NAN_SEC_PMKIDS,
+				n_csids * NL80211_NAN_PMKID_LEN, pmkids);
+
+		nla_nest_end(func_attrs, nl_sec);
+	}
+
 	if (argc != 0)
 		return -EINVAL;
 
@@ -543,7 +697,7 @@ out:
 	return err;
 }
 COMMAND(nan, add_func,
-	"type <publish|subscribe|followup> [active] [solicited] [unsolicited] [bcast] [close_range] name <name> [info <info>] [flw_up_id <id> flw_up_req_id <id> flw_up_dest <mac>] [ttl <ttl>] [srf <include|exclude> <bf|list> [bf_idx] [bf_len] <mac1;mac2...>] [rx_filter <str1:str2...>] [tx_filter <str1:str2...>]",
+	"type <publish|subscribe|followup> [active] [solicited] [unsolicited] [bcast] [close_range] name <name> [info <info>] [flw_up_id <id> flw_up_req_id <id> flw_up_dest <mac>] [ttl <ttl>] [srf <include|exclude> <bf|list> [bf_idx] [bf_len] <mac1;mac2...>] [rx_filter <str1:str2...>] [tx_filter <str1:str2...>] [sec [pmkid <PMK> <raddr>][SK-128|SK-256]",
 	NL80211_CMD_ADD_NAN_FUNCTION, 0, CIB_WDEV,
 	handle_nan_add_func, "");
 
