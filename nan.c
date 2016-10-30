@@ -307,6 +307,9 @@ static void parse_match_filter(char *filter, struct nl_msg *func_attrs, int tx)
 	char *cur_filt, *sptr;
 	int i = 0;
 
+	if (!filter)
+		return;
+
 	if (tx)
 		nl_filt = nla_nest_start(func_attrs,
 					 NL80211_NAN_FUNC_TX_MATCH_FILTER);
