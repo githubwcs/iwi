@@ -5092,9 +5092,24 @@ enum nl80211_nan_func_term_reason {
 	NL80211_NAN_FUNC_TERM_REASON_ERROR,
 };
 
+/**
+ * enum nan_cipher - supported cipher suites
+ * @NL80211_NAN_CS_SK_CCM_128: NAN Symmetric Key using CCM with 128 bit key
+ * @NL80211_NAN_CS_SK_GCM_256: NAN Symmetric Key using GCM with 256 bit key
+ */
+enum nl80211_nan_cipher {
+	NL80211_NAN_CS_SK_CCM_128 = 1,
+	NL80211_NAN_CS_SK_GCM_256 = 2,
+
+	NL80211_NAN_CS_MAX,
+};
+
 #define NL80211_NAN_FUNC_SERVICE_ID_LEN 6
 #define NL80211_NAN_FUNC_SERVICE_SPEC_INFO_MAX_LEN 0xff
 #define NL80211_NAN_FUNC_SRF_MAX_LEN 0xff
+#define NL80211_NAN_FUNC_SERV_NAME_MAX_LEN 255
+#define NL80211_NAN_PMK_LEN 32
+#define NL80211_NAN_PMKID_LEN 16
 
 /**
  * enum nl80211_nan_func_attributes - NAN function attributes
@@ -5134,6 +5149,8 @@ enum nl80211_nan_func_term_reason {
  *	Its type is u8 and it cannot be 0.
  * @NL80211_NAN_FUNC_TERM_REASON: NAN function termination reason.
  *	See &enum nl80211_nan_func_term_reason.
+ * @NL80211_NAN_FUNC_SEC: NAN function security information. This is a nested
+ *      attribute.
  *
  * @NUM_NL80211_NAN_FUNC_ATTR: internal
  * @NL80211_NAN_FUNC_ATTR_MAX: highest NAN function attribute
@@ -5157,6 +5174,7 @@ enum nl80211_nan_func_attributes {
 	NL80211_NAN_FUNC_INSTANCE_ID,
 	NL80211_NAN_FUNC_TERM_REASON,
 	NL80211_NAN_FUNC_DW_INTERVAL,
+	NL80211_NAN_FUNC_SEC,
 
 	/* keep last */
 	NUM_NL80211_NAN_FUNC_ATTR,
@@ -5211,6 +5229,27 @@ enum nl80211_nan_match_attributes {
 	/* keep last */
 	NUM_NL80211_NAN_MATCH_ATTR,
 	NL80211_NAN_MATCH_ATTR_MAX = NUM_NL80211_NAN_MATCH_ATTR - 1
+};
+
+/**
+ * enum nl80211_nan_sec_attributes - NAN security attributes
+ * @__NL80211_NAN_SEC_INVALID: invalid
+ * @NL80211_NAN_SEC_CSIDS: NAN security suite IDs. See %NL80211_NAN_CS_SK_*
+ * @NL80211_NAN_SEC_PMKIDS: PMKIDS associated with the service
+ * @NL80211_NAN_SEC_PMK: Pairwise Master Key.
+ *
+ * @NUM_NL80211_NAN_SEC_ATTR: internal
+ * @NL80211_NAN_SEC_ATTR_MAX: highest NAN security attribute
+ */
+enum nl80211_nan_sec_attributes {
+	__NL80211_NAN_SEC_INVALID,
+	NL80211_NAN_SEC_CSIDS,
+	NL80211_NAN_SEC_PMKIDS,
+	NL80211_NAN_SEC_PMK,
+
+	/* keep last */
+	NUM_NL80211_NAN_SEC_ATTR,
+	NL80211_NAN_SEC_ATTR_MAX = NUM_NL80211_NAN_SEC_ATTR - 1
 };
 
 /*
@@ -5645,6 +5684,8 @@ enum nl80211_nan_data_path_attributes {
 	NL80211_NAN_DATA_PATH_NMI,
 	NL80211_NAN_DATA_PATH_SSI,
 	NL80211_NAN_DATA_PATH_TEARDOWN,
+	NL80211_NAN_DATA_PATH_SEC,
+	NL80211_NAN_DATA_PATH_COOKIE,
 
 	/* keep last */
 	NUM_NL80211_NAN_DATA_PATH_ATTR,
