@@ -221,7 +221,7 @@ static int parse_srf(char **argv, int argc, struct nl_msg *func_attrs)
 	struct nl_msg *srf_attrs;
 	int old_argc = argc;
 	unsigned char mac_addr[ETH_ALEN];
-	char *cur_mac, *sptr;
+	char *cur_mac, *sptr = NULL;
 
 	srf_attrs = nlmsg_alloc();
 	if (strcmp(argv[0], "include") == 0)
@@ -306,6 +306,9 @@ static void parse_match_filter(char *filter, struct nl_msg *func_attrs, int tx)
 	struct nlattr *nl_filt;
 	char *cur_filt, *sptr;
 	int i = 0;
+
+	if (!filter)
+		return;
 
 	if (tx)
 		nl_filt = nla_nest_start(func_attrs,
