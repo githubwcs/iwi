@@ -369,6 +369,68 @@ static void parse_nan_term(struct nlattr **attrs)
 	}
 
 }
+
+static void parse_nan_sec(struct nlattr *sec)
+{
+	struct nlattr *sec_func[NL80211_NAN_SEC_ATTR_MAX + 1];
+	enum nl80211_nan_cipher *csids;
+	unsigned char *pmkids;
+	unsigned int i, n_csids, n_pmkids;
+
+	if (!sec)
+		return;
+
+	if (nla_parse_nested(sec_func, NL80211_NAN_SEC_ATTR_MAX,
+			     sec,
+			     NULL)) {
+		printf("NAN: failed to parse nan security data\n");
+		return;
+	}
+
+	if (!sec_func[NL80211_NAN_SEC_CSIDS]) {
+		printf("NAN: malformed security attribute\n");
+		return;
+	}
+
+	csids = (enum nl80211_nan_cipher *)
+		nla_data(sec_func[NL80211_NAN_SEC_CSIDS]);
+
+	n_csids = nla_len(sec_func[NL80211_NAN_SEC_CSIDS]) /
+		sizeof(unsigned int);
+
+	if (!n_csids) {
+		printf("NAN: missing csids\n");
+		return;
+	}
+
+	printf("nan security: csids: ");
+	for (i = 0; i < n_csids; i++) {
+		if (csids[i] == NL80211_NAN_CS_SK_CCM_128)
+			printf("SK-128, ");
+		else if (csids[i] == NL80211_NAN_CS_SK_GCM_256)
+			printf("SK-256, ");
+		else
+		       printf("invalid cipher suite");
+	}
+
+	if (!sec_func[NL80211_NAN_SEC_PMKIDS]) {
+		printf("\n");
+		return;
+	}
+
+	pmkids = (unsigned char *)
+		nla_data(sec_func[NL80211_NAN_SEC_PMKIDS]);
+
+	n_pmkids = nla_len(sec_func[NL80211_NAN_SEC_PMKIDS]) /
+		NL80211_NAN_PMKID_LEN;
+
+	printf(". n_pmkids: ");
+	for (i = 0; i < n_pmkids; i++)
+		iw_hexdump(" ", &pmkids[i * NL80211_NAN_PMKID_LEN],
+			   NL80211_NAN_PMKID_LEN);
+	printf("\n");
+}
+
 static void parse_nan_match(struct nlattr **attrs)
 {
 	char macbuf[6*3];
@@ -446,6 +508,9 @@ static void parse_nan_match(struct nlattr **attrs)
 		} else {
 			printf("info=N/A\n");
 		}
+
+		parse_nan_sec(peer_func[NL80211_NAN_FUNC_SEC]);
+
 	} else if (nla_get_u8(peer_func[NL80211_NAN_FUNC_TYPE]) ==
 		   NL80211_NAN_FUNC_SUBSCRIBE) {
 		printf("NAN(cookie=0x%llx): Replied, peer_id=%d, local_id=%d, peer_mac=%s\n",
