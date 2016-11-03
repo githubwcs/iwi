@@ -659,27 +659,28 @@ static void parse_nan_data_ind(struct nlattr **attrs)
 	char ndi_addr[6*3];
 	char *ssi;
 	int ssi_len;
-
 	struct nlattr *di[NL80211_NAN_DATA_PATH_ATTR_MAX + 1];
 
 	/* policy for NAN data path attirbutes */
 	static struct nla_policy
 	nan_data_path_policy[NL80211_NAN_DATA_PATH_ATTR_MAX + 1] = {
-	[NL80211_NAN_DATA_PATH_ID] = { .type = NLA_U8},
-	[NL80211_NAN_DATA_PATH_STATUS] = { .type = NLA_U8},
-	[NL80211_NAN_DATA_PATH_REASON_CODE] = { .type = NLA_U8},
-	[NL80211_NAN_DATA_PATH_CONFIRM_REQUIRED] = { .type = NLA_FLAG},
-	[NL80211_NAN_DATA_PATH_TYPE] = { .type = NLA_U8},
-	[NL80211_NAN_DATA_PATH_PUBLISH_ID] = { .type = NLA_U8},
-	[NL80211_NAN_DATA_PATH_NDI] = { },
-	[NL80211_NAN_DATA_PATH_NMI] = { },
-	[NL80211_NAN_DATA_PATH_SSI] = { },
-};
+		[NL80211_NAN_DATA_PATH_ID] = { .type = NLA_U8},
+		[NL80211_NAN_DATA_PATH_STATUS] = { .type = NLA_U8},
+		[NL80211_NAN_DATA_PATH_REASON_CODE] = { .type = NLA_U8},
+		[NL80211_NAN_DATA_PATH_CONFIRM_REQUIRED] = { .type = NLA_FLAG},
+		[NL80211_NAN_DATA_PATH_TYPE] = { .type = NLA_U8},
+		[NL80211_NAN_DATA_PATH_PUBLISH_ID] = { .type = NLA_U8},
+		[NL80211_NAN_DATA_PATH_NDI] = { },
+		[NL80211_NAN_DATA_PATH_NMI] = { },
+		[NL80211_NAN_DATA_PATH_SSI] = { },
+		[NL80211_NAN_DATA_PATH_SEC] = {.type = NLA_NESTED },
+		[NL80211_NAN_DATA_PATH_COOKIE] = { .type = NLA_U64 },
+	};
 
 	if (nla_parse_nested(di, NL80211_NAN_DATA_PATH_ATTR_MAX,
 			     attrs[NL80211_ATTR_NAN_DATA_PATH],
 			     nan_data_path_policy)) {
-		printf("NAN: failed to parse nan match event\n");
+		printf("NAN: failed to parse nan data indication\n");
 		return;
 	}
 	mac_addr_n2a(ndi_addr, nla_data(di[NL80211_NAN_DATA_PATH_NDI]));
@@ -702,6 +703,8 @@ static void parse_nan_data_ind(struct nlattr **attrs)
 			printf("%02x", ssi[i]);
 		printf("\n");
 	}
+
+	parse_nan_sec(di[NL80211_NAN_DATA_PATH_SEC]);
 }
 
 static void parse_nan_range_ind(struct nlattr **attrs)
