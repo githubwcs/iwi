@@ -789,10 +789,62 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 		argc--;
 	}
 
+	if (argc >= 1 && strcmp(argv[0], "sec") == 0) {
+		unsigned int csid;
+		unsigned char pmk[NL80211_NAN_PMK_LEN];
+		struct nlattr *nl_sec;
+
+		argv++;
+		argc--;
+
+		/* <pmk> <csid> [cookie <cookie>] */
+		if (argc < 2)
+			return -EINVAL;
+
+		/* PMK */
+		if (strlen(argv[0]) != (sizeof(pmk) * 2) ||
+		    !hex2bin(argv[0], (char *)pmk))
+			return -EINVAL;
+
+		argv++;
+		argc--;
+
+		if (strcmp("SK-128", argv[0]) == 0)
+			csid = NL80211_NAN_CS_SK_CCM_128;
+		else if (strcmp("SK-256", argv[0]) == 0)
+			csid = NL80211_NAN_CS_SK_GCM_256;
+		else
+			return -EINVAL;
+
+		argv++;
+		argc--;
+
+		nl_sec = nla_nest_start(dp_attrs,
+					NL80211_NAN_DATA_PATH_SEC);
+
+		NLA_PUT(dp_attrs, NL80211_NAN_SEC_CSIDS,
+			sizeof(unsigned int),
+			&csid);
+
+		NLA_PUT(dp_attrs, NL80211_NAN_SEC_PMK,
+			NL80211_NAN_PMK_LEN, pmk);
+
+		nla_nest_end(dp_attrs, nl_sec);
+
+		if (argc >= 1 && strcmp(argv[0], "cookie") == 0) {
+			argv++;
+			argc--;
+			NLA_PUT_U64(dp_attrs, NL80211_NAN_DATA_PATH_COOKIE, atoi(argv[0]));
+			argv++;
+			argc--;
+		}
+	}
+
 	if (argc != 0) {
 		ret = -EINVAL;
 		goto nla_put_failure;
 	}
+
 	nla_put_nested(msg, NL80211_ATTR_NAN_DATA_PATH, dp_attrs);
 
 	ret = 0;
@@ -800,7 +852,7 @@ nla_put_failure:
 	nlmsg_free(dp_attrs);
 	return ret;
 }
-COMMAND(nan, dp_setup, "id <publish_id> addr <peer_mac>",
+COMMAND(nan, dp_setup, "id <publish_id> addr <peer_mac> sec <pmk> <SK-128|SK-256> [cookie <cookie>]",
 	NL80211_CMD_NAN_DATA_SETUP, 0, CIB_NETDEV, handle_nan_dp_setup, "");
 
 static int handle_nan_ranging_setup(struct nl80211_state *state,
