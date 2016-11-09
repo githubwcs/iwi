@@ -196,5 +196,6 @@ void nan_bf(uint8_t idx, uint8_t *bf, uint16_t bf_len, const uint8_t *buf,
 	    size_t len);
 
 char *hex2bin(char *hex, char *buf);
+int nan_sec_test(int argc, char **argv);
 
 #endif /* __IW_H */

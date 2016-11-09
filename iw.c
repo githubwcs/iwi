@@ -532,6 +532,12 @@ int main(int argc, char **argv)
 		return 0;
 	}
 
+	if (argc > 0 && strcmp(*argv, "nan_sec_test") == 0) {
+		argc--;
+		argv++;
+		return nan_sec_test(argc, argv);
+	}
+
 	/* need to treat "help" command specially so it works w/o nl80211 */
 	if (argc == 0 || strcmp(*argv, "help") == 0) {
 		usage(argc - 1, argv + 1);
