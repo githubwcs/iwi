@@ -887,6 +887,13 @@ static int handle_nan_ranging_setup(struct nl80211_state *state,
 			     NL80211_NAN_RANGING_REPORT_REQUIRED);
 	}
 
+	if (argc >= 1 && strcmp(argv[0], "terminate") == 0) {
+		argv++;
+		argc--;
+		NLA_PUT_FLAG(ranging_attrs,
+			     NL80211_NAN_RANGING_TERMINATE);
+	}
+
 	if (argc != 0) {
 		ret = -EINVAL;
 		goto nla_put_failure;
