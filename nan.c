@@ -682,6 +682,19 @@ static int handle_nan_add_func(struct nl80211_state *state,
 		nla_nest_end(func_attrs, nl_sec);
 	}
 
+	if (argc >= 1 && strcmp(argv[0], "data_path_required") == 0) {
+		argc--;
+		argv++;
+		NLA_PUT_FLAG(func_attrs, NL80211_NAN_FUNC_DATA_PATH_REQUIRED);
+	}
+
+	if (argc >= 1 && strcmp(argv[0], "ranging_required") == 0) {
+		argc--;
+		argv++;
+		NLA_PUT_FLAG(func_attrs, NL80211_NAN_FUNC_RANGING_REQUIRED);
+	}
+
+
 	if (argc != 0)
 		return -EINVAL;
 
