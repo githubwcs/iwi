@@ -532,10 +532,13 @@ static void parse_nan_sec(struct nlattr *sec)
 	if (!n_pmkids)
 		return;
 
-	printf(". pmkids:");
-	for (i = 0; i < n_pmkids; i++)
-		iw_hexdump(" ", &pmkids[i * NL80211_NAN_PMKID_LEN],
-			   NL80211_NAN_PMKID_LEN);
+	for (i = 0; i < n_pmkids; i++) {
+		size_t j;
+
+		printf(", pmkid %d: ", i);
+		for (j = 0; j < NL80211_NAN_PMKID_LEN; j++)
+			printf("%02x ", pmkids[(i * NL80211_NAN_PMKID_LEN) + j]);
+	}
 }
 
 static void parse_nan_match(struct nlattr **attrs)
