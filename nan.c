@@ -657,7 +657,7 @@ static int handle_nan_add_func(struct nl80211_state *state,
 				csids[n_csids] = NL80211_NAN_CS_SK_GCM_256;
 				evp_md = EVP_sha384();
 			} else {
-				return -EINVAL;
+				break;
 			}
 
 			argv++;
