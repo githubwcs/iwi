@@ -442,7 +442,7 @@ int parse_keys(struct nl_msg *msg, char **argv, int argc)
 			return -EINVAL;
 		}
 
-		NLA_PUT(msg, NL80211_ATTR_PSK, 32, psk_keybuf);
+		NLA_PUT(msg, NL80211_ATTR_PMK, 32, psk_keybuf);
 		NLA_PUT_U32(msg, NL80211_ATTR_AUTH_TYPE, NL80211_AUTHTYPE_OPEN_SYSTEM);
 
 		argv++;

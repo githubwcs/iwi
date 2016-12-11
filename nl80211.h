@@ -371,7 +371,8 @@
  *	NL80211_CMD_GET_SURVEY and on the "scan" multicast group)
  *
  * @NL80211_CMD_SET_PMKSA: Add a PMKSA cache entry, using %NL80211_ATTR_MAC
- *	(for the BSSID) and %NL80211_ATTR_PMKID.
+ *	(for the BSSID) and %NL80211_ATTR_PMKID. Optionally, %NL80211_ATTR_PMK
+ *	can be used to specify the PMK.
  * @NL80211_CMD_DEL_PMKSA: Delete a PMKSA cache entry, using %NL80211_ATTR_MAC
  *	(for the BSSID) and %NL80211_ATTR_PMKID.
  * @NL80211_CMD_FLUSH_PMKSA: Flush all PMKSA cache entries.
@@ -894,6 +895,13 @@
  * @NL80211_CMD_START_FTM_RESPONDER: Start FTM responder and set its parameters.
  *	This is supported only on AP interface. FTM responder cannot be stopped
  *	without removing the interface.
+ * @NL80211_CMD_SET_PMK: For offloaded 4-Way handshake, set the PMK or PMK-R0
+ *	for the given authenticator address (specified with &NL80211_ATTR_MAC).
+ *	When &NL80211_ATTR_PMKR0_NAME is set, &NL80211_ATTR_PMK specifies the
+ *	PMK-R0, otherwise it specifies the PMK.
+ * @NL80211_CMD_DEL_PMK: For offloaded 4-Way handshake, delete the previously
+ *	configured PMK for the authenticator address identified by
+ *	&NL80211_ATTR_MAC.
  *
  * @NL80211_CMD_MAX: highest used command number
  * @__NL80211_CMD_AFTER_LAST: internal use
@@ -1095,6 +1103,9 @@ enum nl80211_commands {
 
 	NL80211_CMD_START_FTM_RESPONDER,
 	NL80211_CMD_GET_FTM_RESPONDER_STATS,
+
+	NL80211_CMD_SET_PMK,
+	NL80211_CMD_DEL_PMK,
 
 	/* add new commands above here */
 
@@ -1767,7 +1778,9 @@ enum nl80211_commands {
  *
  * @NL80211_ATTR_OPMODE_NOTIF: Operating mode field from Operating Mode
  *	Notification Element based on association request when used with
- *	%NL80211_CMD_NEW_STATION; u8 attribute.
+ *	%NL80211_CMD_NEW_STATION or %NL80211_CMD_SET_STATION (only when
+ *	%NL80211_FEATURE_FULL_AP_CLIENT_STATE is supported, or with TDLS);
+ *	u8 attribute.
  *
  * @NL80211_ATTR_VENDOR_ID: The vendor ID, either a 24-bit OUI or, if
  *	%NL80211_VENDOR_ID_IS_LINUX is set, a special Linux ID (not used yet)
@@ -1985,8 +1998,12 @@ enum nl80211_commands {
  * @NL80211_ATTR_CIVIC: The content of measurement Report IE (Section 8.4.2.21
  *	in spec) with type 11 - Civic (Section 8.4.2.21.13)
  *
- * @NL80211_ATTR_PSK: PSK for offloaded 4-Way Handshake. Relevant only
- *	with %NL80211_CMD_CONNECT (for WPA/WPA2-PSK networks).
+ * @NL80211_ATTR_PMK: PMK for offloaded 4-Way Handshake. Relevant with
+ *	%NL80211_CMD_CONNECT (for WPA/WPA2-PSK networks) when PSK is used, or
+ *	with %NL80211_CMD_SET_PMK when 802.1X authentication is used.
+ *	When &NL80211_ATTR_PMKR0_NAME is specified, this attribute specifies
+ *	the PMK-R0.
+ * @NL80211_ATTR_PMKR0_NAME: PMK-R0 Name for offloaded FT.
  *
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
@@ -2401,7 +2418,8 @@ enum nl80211_attrs {
 	NL80211_ATTR_LCI,
 	NL80211_ATTR_CIVIC,
 
-	NL80211_ATTR_PSK,
+	NL80211_ATTR_PMK,
+	NL80211_ATTR_PMKR0_NAME,
 
 	/* add attributes here, update the policy in nl80211.c */
 
