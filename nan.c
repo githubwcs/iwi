@@ -275,7 +275,7 @@ static int print_instance_id_handler(struct nl_msg *msg, void *arg)
 		return NL_SKIP;
 	}
 
-	printf("instance_id: %d, cookie: %lu\n",
+	printf("instance_id: %d, cookie: %llu\n",
 	       nla_get_u8(func[NL80211_NAN_FUNC_INSTANCE_ID]),
 	       (unsigned long long)nla_get_u64(tb[NL80211_ATTR_COOKIE]));
 
