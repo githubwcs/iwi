@@ -371,8 +371,7 @@
  *	NL80211_CMD_GET_SURVEY and on the "scan" multicast group)
  *
  * @NL80211_CMD_SET_PMKSA: Add a PMKSA cache entry, using %NL80211_ATTR_MAC
- *	(for the BSSID) and %NL80211_ATTR_PMKID. Optionally, %NL80211_ATTR_PMK
- *	can be used to specify the PMK.
+ *	(for the BSSID) and %NL80211_ATTR_PMKID.
  * @NL80211_CMD_DEL_PMKSA: Delete a PMKSA cache entry, using %NL80211_ATTR_MAC
  *	(for the BSSID) and %NL80211_ATTR_PMKID.
  * @NL80211_CMD_FLUSH_PMKSA: Flush all PMKSA cache entries.
@@ -895,6 +894,11 @@
  * @NL80211_CMD_NAN_FUNC_MATCH: Notification sent when a match is reported.
  *	This will contain a %NL80211_ATTR_NAN_MATCH nested attribute and
  *	%NL80211_ATTR_COOKIE.
+ * @NL80211_CMD_NAN_DATA_REQUEST: Request NAN data path with a peer.
+ *	This command is sent on NAN data interface.
+ *	%NL80211_ATTR_MAC is the peer address. %NL80211_ATTR_NAN_FUNC_INST_ID
+ *	specified the peer's publish instance_id.
+ *	TODO: attributes for QOS, Security and service specific info.
  *
  * @NL80211_CMD_UPDATE_CONNECT_PARAMS: Update one or more connect parameters
  *	for subsequent roaming cases if the driver or firmware uses internal
@@ -1140,6 +1144,8 @@ enum nl80211_commands {
 
 	NL80211_CMD_SET_PMK,
 	NL80211_CMD_DEL_PMK,
+	NL80211_CMD_NAN_DATA_SETUP,
+	NL80211_CMD_NAN_RANGE_SETUP,
 
 	/* add new commands above here */
 
@@ -2509,6 +2515,11 @@ enum nl80211_attrs {
 	NL80211_ATTR_PMK,
 	NL80211_ATTR_PMKR0_NAME,
 
+	NL80211_ATTR_NAN_DATA_PATH,
+	NL80211_ATTR_NAN_CDW_G,
+	NL80211_ATTR_NAN_CDW_A,
+	NL80211_ATTR_NAN_RANGING,
+
 	/* add attributes here, update the policy in nl80211.c */
 
 	__NL80211_ATTR_AFTER_LAST,
@@ -2589,6 +2600,7 @@ enum nl80211_attrs {
  * @NL80211_IF_TYPE_OCB: Outside Context of a BSS
  *	This mode corresponds to the MIB variable dot11OCBActivated=true
  * @NL80211_IFTYPE_NAN: NAN device interface type (not a netdev)
+ * @NL80211_IFTYPE_NAN_DATA: NAN data interface
  * @NL80211_IFTYPE_MAX: highest interface type number currently defined
  * @NUM_NL80211_IFTYPES: number of defined interface types
  *
@@ -2610,6 +2622,7 @@ enum nl80211_iftype {
 	NL80211_IFTYPE_P2P_DEVICE,
 	NL80211_IFTYPE_OCB,
 	NL80211_IFTYPE_NAN,
+	NL80211_IFTYPE_NAN_DATA,
 
 	/* keep last */
 	NUM_NL80211_IFTYPES,
@@ -4048,6 +4061,8 @@ enum nl80211_ps_state {
  *	%NL80211_CMD_NOTIFY_CQM. Set to 0 to turn off TX error reporting.
  * @NL80211_ATTR_CQM_BEACON_LOSS_EVENT: flag attribute that's set in a beacon
  *	loss event
+ * @NL80211_ATTR_CQM_RSSI_LEVEL: the RSSI value in dBm that triggered the
+ *	RSSI threshold event.
  * @__NL80211_ATTR_CQM_AFTER_LAST: internal
  * @NL80211_ATTR_CQM_MAX: highest key attribute
  */
@@ -4061,6 +4076,7 @@ enum nl80211_attr_cqm {
 	NL80211_ATTR_CQM_TXE_PKTS,
 	NL80211_ATTR_CQM_TXE_INTVL,
 	NL80211_ATTR_CQM_BEACON_LOSS_EVENT,
+	NL80211_ATTR_CQM_RSSI_LEVEL,
 
 	/* keep last */
 	__NL80211_ATTR_CQM_AFTER_LAST,
@@ -5214,9 +5230,31 @@ enum nl80211_nan_func_term_reason {
 	NL80211_NAN_FUNC_TERM_REASON_ERROR,
 };
 
+/**
+ * enum nan_cipher - supported cipher suites
+ * @NL80211_NAN_CS_SK_CCM_128: NAN Symmetric Key using CCM with 128 bit key
+ * @NL80211_NAN_CS_SK_GCM_256: NAN Symmetric Key using GCM with 256 bit key
+ */
+enum nl80211_nan_cipher {
+	NL80211_NAN_CS_SK_CCM_128 = 1,
+	NL80211_NAN_CS_SK_GCM_256 = 2,
+
+	NL80211_NAN_CS_MAX,
+};
+
+enum nl80211_nan_dp_status
+{
+	NL80211_NAN_DP_STATUS_CONTINUED,
+	NL80211_NAN_DP_STATUS_ACCEPTED,
+	NL80211_NAN_DP_STATUS_REJECTED,
+};
+
 #define NL80211_NAN_FUNC_SERVICE_ID_LEN 6
 #define NL80211_NAN_FUNC_SERVICE_SPEC_INFO_MAX_LEN 0xff
 #define NL80211_NAN_FUNC_SRF_MAX_LEN 0xff
+#define NL80211_NAN_FUNC_SERV_NAME_MAX_LEN 255
+#define NL80211_NAN_PMK_LEN 32
+#define NL80211_NAN_PMKID_LEN 16
 
 /**
  * enum nl80211_nan_func_attributes - NAN function attributes
@@ -5256,6 +5294,8 @@ enum nl80211_nan_func_term_reason {
  *	Its type is u8 and it cannot be 0.
  * @NL80211_NAN_FUNC_TERM_REASON: NAN function termination reason.
  *	See &enum nl80211_nan_func_term_reason.
+ * @NL80211_NAN_FUNC_SEC: NAN function security information. This is a nested
+ *      attribute.
  *
  * @NUM_NL80211_NAN_FUNC_ATTR: internal
  * @NL80211_NAN_FUNC_ATTR_MAX: highest NAN function attribute
@@ -5278,6 +5318,10 @@ enum nl80211_nan_func_attributes {
 	NL80211_NAN_FUNC_TX_MATCH_FILTER,
 	NL80211_NAN_FUNC_INSTANCE_ID,
 	NL80211_NAN_FUNC_TERM_REASON,
+	NL80211_NAN_FUNC_DW_INTERVAL,
+	NL80211_NAN_FUNC_SEC,
+	NL80211_NAN_FUNC_DATA_PATH_REQUIRED,
+	NL80211_NAN_FUNC_RANGING_REQUIRED,
 
 	/* keep last */
 	NUM_NL80211_NAN_FUNC_ATTR,
@@ -5332,6 +5376,27 @@ enum nl80211_nan_match_attributes {
 	/* keep last */
 	NUM_NL80211_NAN_MATCH_ATTR,
 	NL80211_NAN_MATCH_ATTR_MAX = NUM_NL80211_NAN_MATCH_ATTR - 1
+};
+
+/**
+ * enum nl80211_nan_sec_attributes - NAN security attributes
+ * @__NL80211_NAN_SEC_INVALID: invalid
+ * @NL80211_NAN_SEC_CSIDS: NAN security suite IDs. See %NL80211_NAN_CS_SK_*
+ * @NL80211_NAN_SEC_PMKIDS: PMKIDS associated with the service
+ * @NL80211_NAN_SEC_PMK: Pairwise Master Key.
+ *
+ * @NUM_NL80211_NAN_SEC_ATTR: internal
+ * @NL80211_NAN_SEC_ATTR_MAX: highest NAN security attribute
+ */
+enum nl80211_nan_sec_attributes {
+	__NL80211_NAN_SEC_INVALID,
+	NL80211_NAN_SEC_CSIDS,
+	NL80211_NAN_SEC_PMKIDS,
+	NL80211_NAN_SEC_PMK,
+
+	/* keep last */
+	NUM_NL80211_NAN_SEC_ATTR,
+	NL80211_NAN_SEC_ATTR_MAX = NUM_NL80211_NAN_SEC_ATTR - 1
 };
 
 /*
@@ -5746,5 +5811,46 @@ enum nl80211_ftm_responder_stats {
 	__NL80211_FTM_STATS_AFTER_LAST,
 	NL80211_FTM_STATS_MAX = __NL80211_FTM_STATS_AFTER_LAST - 1
 };
+
+enum nl80211_nan_data_path_type {
+	NL80211_NAN_DATA_INDICATION_UNICAST,
+	NL80211_NAN_DATA_INDICATION_MCAST,
+};
+
+enum nl80211_nan_data_path_attributes {
+	__NL80211_NAN_DATA_PATH_INVALID,
+
+	NL80211_NAN_DATA_PATH_ID,
+	NL80211_NAN_DATA_PATH_STATUS,
+	NL80211_NAN_DATA_PATH_REASON_CODE,
+	NL80211_NAN_DATA_PATH_CONFIRM_REQUIRED,
+	NL80211_NAN_DATA_PATH_TYPE,
+	NL80211_NAN_DATA_PATH_PUBLISH_ID,
+	NL80211_NAN_DATA_PATH_NDI,
+	NL80211_NAN_DATA_PATH_NMI,
+	NL80211_NAN_DATA_PATH_SSI,
+	NL80211_NAN_DATA_PATH_TEARDOWN,
+	NL80211_NAN_DATA_PATH_SEC,
+	NL80211_NAN_DATA_PATH_COOKIE,
+
+	/* keep last */
+	NUM_NL80211_NAN_DATA_PATH_ATTR,
+	NL80211_NAN_DATA_PATH_ATTR_MAX = NUM_NL80211_NAN_DATA_PATH_ATTR - 1
+};
+
+enum nl80211_nan_ranging_attributes {
+	__NL80211_NAN_RANGING_INVALID,
+
+	NL80211_NAN_RANGING_STATUS,
+	NL80211_NAN_RANGING_REASON_CODE,
+	NL80211_NAN_RANGING_NMI,
+	NL80211_NAN_RANGING_REPORT_REQUIRED,
+	NL80211_NAN_RANGING_TERMINATE,
+
+	/* keep last */
+	NUM_NL80211_NAN_RANGING_ATTR,
+	NL80211_NAN_RANGING_ATTR_MAX = NUM_NL80211_NAN_RANGING_ATTR - 1
+};
+
 
 #endif /* __LINUX_NL80211_H */
