@@ -66,6 +66,42 @@ COMMAND(iwl, dev_tx_power, "[2.4 5.2L 5.2H]",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_dev_tx_power, "");
 
+static int handle_iwl_vendor_sar_set_profile(struct nl80211_state *state,
+					     struct nl_msg *msg,
+					     int argc, char **argv,
+					     enum id_input id)
+{
+	struct nlattr *limits;
+
+	if (argc != 0 && argc != 2)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_SET_SAR_PROFILE);
+
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!limits)
+		return -ENOBUFS;
+
+	if (argc == 2) {
+		NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_SAR_CHAIN_A_PROFILE,
+			    atoi(argv[0]));
+		NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_SAR_CHAIN_B_PROFILE,
+			    atoi(argv[1]));
+	}
+
+	nla_nest_end(msg, limits);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, sar_set_profile, "[chain_a chain_b]",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_sar_set_profile, "");
+
 static int handle_iwl_vendor_set_country(struct nl80211_state *state,
 					 struct nl_msg *msg,
 					 int argc, char **argv,

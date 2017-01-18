@@ -124,6 +124,8 @@
  *	Must include %IWL_MVM_VENDOR_ATTR_LQM_DURATION and
  *	%IWL_MVM_VENDOR_ATTR_LQM_TIMEOUT. The results will be notified with
  *	this same command.
+ * @IWL_MVM_VENDOR_CMD_SET_SAR_PROFILE: set the NIC's tx power limit
+ *	according to the specified tx power profile.
  */
 
 enum iwl_mvm_vendor_cmd {
@@ -155,6 +157,7 @@ enum iwl_mvm_vendor_cmd {
 	IWL_MVM_VENDOR_CMD_DBG_COLLECT,
 	IWL_MVM_VENDOR_CMD_NAN_FAW_CONF,
 	IWL_MVM_VENDOR_CMD_QUALITY_MEASUREMENTS,
+	IWL_MVM_VENDOR_CMD_SET_SAR_PROFILE,
 };
 
 /**
@@ -579,6 +582,10 @@ enum iwl_mvm_vendor_lqm_result {
  *	&enum iwl_mvm_vendor_gscan_cached_scan_res.
  * @IWL_MVM_VENDOR_ATTR_LAST_MSG: Indicates that this message is the last one
  *	in the series of messages. (flag)
+ * @IWL_MVM_VENDOR_ATTR_SAR_CHAIN_A_PROFILE: SAR table idx for chain A.
+ *	This is a u32.
+ * @IWL_MVM_VENDOR_ATTR_SAR_CHAIN_B_PROFILE: SAR table idx for chain B.
+ *	This is a u32.
  *
  */
 enum iwl_mvm_vendor_attr {
@@ -640,6 +647,8 @@ enum iwl_mvm_vendor_attr {
 	IWL_MVM_VENDOR_ATTR_GSCAN_REPORT_THRESHOLD_NUM,
 	IWL_MVM_VENDOR_ATTR_GSCAN_CACHED_RESULTS,
 	IWL_MVM_VENDOR_ATTR_LAST_MSG,
+	IWL_MVM_VENDOR_ATTR_SAR_CHAIN_A_PROFILE,
+	IWL_MVM_VENDOR_ATTR_SAR_CHAIN_B_PROFILE,
 
 	NUM_IWL_MVM_VENDOR_ATTR,
 	MAX_IWL_MVM_VENDOR_ATTR = NUM_IWL_MVM_VENDOR_ATTR - 1,
