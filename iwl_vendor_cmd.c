@@ -102,6 +102,79 @@ COMMAND(iwl, sar_set_profile, "[chain_a chain_b]",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_sar_set_profile, "");
 
+static struct nlattr *parse_vendor_reply(struct nl_msg *msg)
+{
+	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+	struct genlmsghdr *gnlh = (struct genlmsghdr *)
+		nlmsg_data(nlmsg_hdr(msg));
+
+	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
+	genlmsg_attrlen(gnlh, 0), NULL);
+	return tb[NL80211_ATTR_VENDOR_DATA];
+}
+
+static int print_profile_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	int profs, prof_a, prof_b;
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get sar profiles info");
+		return NL_SKIP;
+	}
+
+	if (!attr[IWL_MVM_VENDOR_ATTR_SAR_ENABLED_PROFILE_NUM] ||
+	    !attr[IWL_MVM_VENDOR_ATTR_SAR_CHAIN_A_PROF_IDX] ||
+	    !attr[IWL_MVM_VENDOR_ATTR_SAR_CHAIN_B_PROF_IDX])
+		return NL_SKIP;
+
+	profs = nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_SAR_ENABLED_PROFILE_NUM]);
+	prof_a =  nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_SAR_CHAIN_A_PROF_IDX]);
+	prof_b =  nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_SAR_CHAIN_B_PROF_IDX]);
+
+	printf("\tNumber of enabled SAR profiles: %d\n", profs);
+	printf("\tCurrent profile in use for chain a: %d\n", prof_a);
+	printf("\tCurrent profile in use for chain_b: %d\n", prof_b);
+
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_sar_get_profile_info(struct nl80211_state *state,
+						  struct nl_msg *msg,
+						  int argc, char **argv,
+						  enum id_input id)
+{
+	struct nlattr *limits;
+	int num;
+
+	if (argc != 0 && argc != 0)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_GET_SAR_PROFILE_INFO);
+
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!limits)
+		return -ENOBUFS;
+
+	nla_nest_end(msg, limits);
+	register_handler(print_profile_handler, &num);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, sar_get_profiles_info, "<param>",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_sar_get_profile_info, "");
+
+
 static int handle_iwl_vendor_set_country(struct nl80211_state *state,
 					 struct nl_msg *msg,
 					 int argc, char **argv,
