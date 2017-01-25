@@ -183,141 +183,193 @@ static int handle_name(struct nl80211_state *state,
 COMMAND(set, name, "<new name>", NL80211_CMD_SET_WIPHY, 0, CIB_PHY, handle_name,
 	"Rename this wireless device.");
 
-static int handle_freqs(struct nl_msg *msg, int argc, char **argv)
-{
-	static const struct {
-		const char *name;
-		unsigned int val;
-	} bwmap[] = {
-		{ .name = "20", .val = NL80211_CHAN_WIDTH_20, },
-		{ .name = "40", .val = NL80211_CHAN_WIDTH_40, },
-		{ .name = "80", .val = NL80211_CHAN_WIDTH_80, },
-		{ .name = "80+80", .val = NL80211_CHAN_WIDTH_80P80, },
-		{ .name = "160", .val = NL80211_CHAN_WIDTH_160, },
-	};
-	uint32_t freq;
-	unsigned int i, bwval = NL80211_CHAN_WIDTH_20_NOHT;
-	char *end;
-
-	if (argc < 1)
-		return 1;
-
-	for (i = 0; i < ARRAY_SIZE(bwmap); i++) {
-		if (strcasecmp(bwmap[i].name, argv[0]) == 0) {
-			bwval = bwmap[i].val;
-			break;
-		}
-	}
-
-	if (bwval == NL80211_CHAN_WIDTH_20_NOHT)
-		return 1;
-
-	NLA_PUT_U32(msg, NL80211_ATTR_CHANNEL_WIDTH, bwval);
-
-	if (argc == 1)
-		return 0;
-
-	/* center freq 1 */
-	if (!*argv[1])
-		return 1;
-	freq = strtoul(argv[1], &end, 10);
-	if (*end)
-		return 1;
-	NLA_PUT_U32(msg, NL80211_ATTR_CENTER_FREQ1, freq);
-
-	if (argc == 2)
-		return 0;
-
-	/* center freq 2 */
-	if (!*argv[2])
-		return 1;
-	freq = strtoul(argv[2], &end, 10);
-	if (*end)
-		return 1;
-	NLA_PUT_U32(msg, NL80211_ATTR_CENTER_FREQ2, freq);
-
-	return 0;
- nla_put_failure:
-	return -ENOBUFS;
-}
-
-static int handle_freqchan(struct nl_msg *msg, bool chan,
-			   int argc, char **argv)
-{
-	char *end;
-	static const struct {
-		const char *name;
-		unsigned int val;
-	} htmap[] = {
-		{ .name = "HT20", .val = NL80211_CHAN_HT20, },
-		{ .name = "HT40+", .val = NL80211_CHAN_HT40PLUS, },
-		{ .name = "HT40-", .val = NL80211_CHAN_HT40MINUS, },
-	};
-	unsigned int htval = NL80211_CHAN_NO_HT;
-	unsigned int freq;
-	unsigned int i;
-
-	if (!argc || argc > 4)
-		return 1;
-
-	if (!*argv[0])
-		return 1;
-	freq = strtoul(argv[0], &end, 10);
-	if (*end)
-		return 1;
-
-	if (chan) {
-		enum nl80211_band band;
-		band = freq <= 14 ? NL80211_BAND_2GHZ : NL80211_BAND_5GHZ;
-		freq = ieee80211_channel_to_frequency(freq, band);
-	}
-
-	NLA_PUT_U32(msg, NL80211_ATTR_WIPHY_FREQ, freq);
-
-	if (argc > 2) {
-		return handle_freqs(msg, argc - 1, argv + 1);
-	} else if (argc == 2) {
-		for (i = 0; i < ARRAY_SIZE(htmap); i++) {
-			if (strcasecmp(htmap[i].name, argv[1]) == 0) {
-				htval = htmap[i].val;
-				break;
-			}
-		}
-		if (htval == NL80211_CHAN_NO_HT)
-			return handle_freqs(msg, argc - 1, argv + 1);
-	}
-
-	NLA_PUT_U32(msg, NL80211_ATTR_WIPHY_CHANNEL_TYPE, htval);
-
-	return 0;
- nla_put_failure:
-	return -ENOBUFS;
-}
-
 static int handle_freq(struct nl80211_state *state, struct nl_msg *msg,
 		       int argc, char **argv,
 		       enum id_input id)
 {
-	return handle_freqchan(msg, false, argc, argv);
+	struct chandef chandef;
+	int res;
+
+	res = parse_freqchan(&chandef, false, argc, argv, NULL);
+	if (res)
+		return res;
+
+	return put_chandef(msg, &chandef);
 }
-COMMAND(set, freq, "<freq> [HT20|HT40+|HT40-]",
+
+COMMAND(set, freq,
+	"<freq> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]\n"
+	"<control freq> [5|10|20|40|80|80+80|160] [<center1_freq> [<center2_freq>]]",
 	NL80211_CMD_SET_WIPHY, 0, CIB_PHY, handle_freq,
 	"Set frequency/channel the hardware is using, including HT\n"
 	"configuration.");
-COMMAND(set, freq, "<freq> [HT20|HT40+|HT40-]\n"
-		   "<control freq> [20|40|80|80+80|160] [<center freq 1>] [<center freq 2>]",
+COMMAND(set, freq,
+	"<freq> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]\n"
+	"<control freq> [5|10|20|40|80|80+80|160] [<center1_freq> [<center2_freq>]]",
 	NL80211_CMD_SET_WIPHY, 0, CIB_NETDEV, handle_freq, NULL);
 
 static int handle_chan(struct nl80211_state *state, struct nl_msg *msg,
 		       int argc, char **argv,
 		       enum id_input id)
 {
-	return handle_freqchan(msg, true, argc, argv);
+	struct chandef chandef;
+	int res;
+
+	res = parse_freqchan(&chandef, true, argc, argv, NULL);
+	if (res)
+		return res;
+
+	return put_chandef(msg, &chandef);
 }
-COMMAND(set, channel, "<channel> [HT20|HT40+|HT40-]",
+COMMAND(set, channel, "<channel> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]",
 	NL80211_CMD_SET_WIPHY, 0, CIB_PHY, handle_chan, NULL);
-COMMAND(set, channel, "<channel> [HT20|HT40+|HT40-]",
+COMMAND(set, channel, "<channel> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]",
 	NL80211_CMD_SET_WIPHY, 0, CIB_NETDEV, handle_chan, NULL);
+
+
+struct cac_event {
+	int ret;
+	uint32_t freq;
+};
+
+static int print_cac_event(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
+	enum nl80211_radar_event event_type;
+	struct cac_event *cac_event = arg;
+	uint32_t freq;
+
+	if (gnlh->cmd != NL80211_CMD_RADAR_DETECT)
+		return NL_SKIP;
+
+	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
+		  genlmsg_attrlen(gnlh, 0), NULL);
+
+	if (!tb[NL80211_ATTR_RADAR_EVENT] || !tb[NL80211_ATTR_WIPHY_FREQ])
+		return NL_SKIP;
+
+	freq = nla_get_u32(tb[NL80211_ATTR_WIPHY_FREQ]);
+	event_type = nla_get_u32(tb[NL80211_ATTR_RADAR_EVENT]);
+	if (freq != cac_event->freq)
+		return NL_SKIP;
+
+	switch (event_type) {
+	case NL80211_RADAR_DETECTED:
+		printf("%d MHz: radar detected\n", freq);
+		break;
+	case NL80211_RADAR_CAC_FINISHED:
+		printf("%d MHz: CAC finished\n", freq);
+		break;
+	case NL80211_RADAR_CAC_ABORTED:
+		printf("%d MHz: CAC was aborted\n", freq);
+		break;
+	case NL80211_RADAR_NOP_FINISHED:
+		printf("%d MHz: NOP finished\n", freq);
+		break;
+	default:
+		printf("%d MHz: unknown radar event\n", freq);
+	}
+	cac_event->ret = 0;
+
+	return NL_SKIP;
+}
+
+static int handle_cac_trigger(struct nl80211_state *state,
+			    struct nl_msg *msg,
+			    int argc, char **argv,
+			    enum id_input id)
+{
+	struct chandef chandef;
+	int res;
+
+	if (argc < 2)
+		return 1;
+
+	if (strcmp(argv[0], "channel") == 0) {
+		res = parse_freqchan(&chandef, true, argc - 1, argv + 1, NULL);
+	} else if (strcmp(argv[0], "freq") == 0) {
+		res = parse_freqchan(&chandef, false, argc - 1, argv + 1, NULL);
+	} else {
+		return 1;
+	}
+
+	if (res)
+		return res;
+
+	return put_chandef(msg, &chandef);
+}
+
+static int no_seq_check(struct nl_msg *msg, void *arg)
+{
+	return NL_OK;
+}
+
+static int handle_cac(struct nl80211_state *state,
+		      struct nl_msg *msg,
+		      int argc, char **argv,
+		      enum id_input id)
+{
+	int err;
+	struct nl_cb *radar_cb;
+	struct chandef chandef;
+	struct cac_event cac_event;
+	char **cac_trigger_argv = NULL;
+
+	radar_cb = nl_cb_alloc(iw_debug ? NL_CB_DEBUG : NL_CB_DEFAULT);
+	if (!radar_cb)
+		return 1;
+
+	if (argc < 3)
+		return 1;
+
+	if (strcmp(argv[2], "channel") == 0) {
+		err = parse_freqchan(&chandef, true, argc - 3, argv + 3, NULL);
+	} else if (strcmp(argv[2], "freq") == 0) {
+		err = parse_freqchan(&chandef, false, argc - 3, argv + 3, NULL);
+	} else {
+		return 1;
+	}
+
+	cac_trigger_argv = calloc(argc + 1, sizeof(char*));
+	if (!cac_trigger_argv)
+		return -ENOMEM;
+
+	cac_trigger_argv[0] = argv[0];
+	cac_trigger_argv[1] = "cac";
+	cac_trigger_argv[2] = "trigger";
+	memcpy(&cac_trigger_argv[3], &argv[2], (argc - 2) * sizeof(char*));
+
+	err = handle_cmd(state, id, argc + 1, cac_trigger_argv);
+	free(cac_trigger_argv);
+	if (err)
+		return err;
+
+	cac_event.ret = 1;
+	cac_event.freq = chandef.control_freq;
+
+	__prepare_listen_events(state);
+	nl_socket_set_cb(state->nl_sock, radar_cb);
+
+	/* need to turn off sequence number checking */
+	nl_cb_set(radar_cb, NL_CB_SEQ_CHECK, NL_CB_CUSTOM, no_seq_check, NULL);
+	nl_cb_set(radar_cb, NL_CB_VALID, NL_CB_CUSTOM, print_cac_event, &cac_event);
+	while (cac_event.ret > 0)
+		nl_recvmsgs(state->nl_sock, radar_cb);
+
+	return 0;
+}
+TOPLEVEL(cac, "channel <channel> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]\n"
+	      "freq <freq> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]\n"
+	      "freq <control freq> [5|10|20|40|80|80+80|160] [<center1_freq> [<center2_freq>]]",
+	 0, 0, CIB_NETDEV, handle_cac, NULL);
+COMMAND(cac, trigger,
+	"channel <channel> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]\n"
+	"freq <frequency> [NOHT|HT20|HT40+|HT40-|5MHz|10MHz|80MHz]\n"
+	"freq <frequency> [5|10|20|40|80|80+80|160] [<center1_freq> [<center2_freq>]]",
+	NL80211_CMD_RADAR_DETECT, 0, CIB_NETDEV, handle_cac_trigger,
+	"Start or trigger a channel availability check (CAC) looking to look for\n"
+	"radars on the given channel.");
 
 static int handle_fragmentation(struct nl80211_state *state,
 				struct nl_msg *msg,
