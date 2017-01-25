@@ -846,25 +846,3 @@ int get_cf1(const struct chanmode *chanmode, unsigned long freq)
 
 	return cf1;
 }
-
-enum nl80211_chan_width str_to_bw(char *str)
-{
-	static const struct {
-		const char *name;
-		unsigned int val;
-	} bwmap[] = {
-		{ .name = "20", .val = NL80211_CHAN_WIDTH_20, },
-		{ .name = "40", .val = NL80211_CHAN_WIDTH_40, },
-		{ .name = "80", .val = NL80211_CHAN_WIDTH_80, },
-		{ .name = "80+80", .val = NL80211_CHAN_WIDTH_80P80, },
-		{ .name = "160", .val = NL80211_CHAN_WIDTH_160, },
-	};
-	unsigned int i;
-
-	for (i = 0; i < ARRAY_SIZE(bwmap); i++) {
-		if (strcasecmp(bwmap[i].name, str) == 0)
-			return bwmap[i].val;
-	}
-
-	return NL80211_CHAN_WIDTH_20_NOHT;
-}
