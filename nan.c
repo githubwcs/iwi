@@ -723,6 +723,8 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 	unsigned char mac_addr[ETH_ALEN];
 	struct nl_msg *dp_attrs = NULL;
 	int ret = -ENOBUFS;
+	__u8 min_slots = 0, max_gap = 0;
+	int qos_required = 0;
 
 	dp_attrs = nlmsg_alloc();
 	if (!dp_attrs)
@@ -871,6 +873,36 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 		}
 	}
 
+	if (argc > 1 && strcmp(argv[0], "max_gap") == 0) {
+		argv++;
+		argc--;
+		max_gap = atoi(argv[0]);
+		qos_required = 1;
+		argv++;
+		argc--;
+	}
+
+	if (argc > 1 && strcmp(argv[0], "min_slots") == 0) {
+		argv++;
+		argc--;
+		min_slots = atoi(argv[0]);
+		qos_required = 1;
+		argv++;
+		argc--;
+	}
+
+	if (qos_required) {
+		struct nlattr *nl_qos;
+
+		nl_qos = nla_nest_start(dp_attrs,
+					NL80211_NAN_DATA_PATH_QOS);
+
+		NLA_PUT_U8(dp_attrs, NL80211_NAN_QOS_MIN_SLOTS, min_slots);
+		NLA_PUT_U8(dp_attrs, NL80211_NAN_QOS_MAX_GAP, max_gap);
+
+		nla_nest_end(dp_attrs, nl_qos);
+	}
+
 	if (argc != 0) {
 		ret = -EINVAL;
 		goto nla_put_failure;
@@ -878,13 +910,12 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 
 done:
 	nla_put_nested(msg, NL80211_ATTR_NAN_DATA_PATH, dp_attrs);
-
 	ret = 0;
 nla_put_failure:
 	nlmsg_free(dp_attrs);
 	return ret;
 }
-COMMAND(nan, dp_setup, "id <publish_id> addr <peer_mac> sec <pmk> <SK-128|SK-256> [cookie <cookie>]",
+COMMAND(nan, dp_setup, "id <publish_id> addr <peer_mac> sec <pmk> <SK-128|SK-256> [cookie <cookie>] [max_gap <max_gap>] [min_slots <min_slots>]",
 	NL80211_CMD_NAN_DATA_SETUP, 0, CIB_NETDEV, handle_nan_dp_setup, "");
 
 static int handle_nan_ranging_setup(struct nl80211_state *state,
