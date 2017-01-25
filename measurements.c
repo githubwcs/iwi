@@ -160,39 +160,12 @@ static int parse_ftm_target(char *str, struct ftm_target *target)
 	return 0;
 }
 
-static int parse_ftm_mac_rand(char *str, __u8 *template, __u8 *mask)
-{
-	int res;
-	char macbuf[6 * 3];
-	char macmask[6 * 3];
-
-	res = sscanf(str, "template=%s mask=%s", macbuf, macmask);
-	if (res != 2)
-		return 0;
-
-	if (mac_addr_a2n(template, macbuf))
-		return -1;
-
-	if (mac_addr_a2n(mask, macmask))
-		return -1;
-
-	/* Don't randomize the MC bit */
-	if (!(mask[0] & 0x01)) {
-		printf("The MC bit must not be randomized");
-		return -1;
-	}
-
-	return 1;
-}
-
-static int parse_ftm_config(const char *conf_file, struct ftm_target **ptargets,
-			    __u8 *template, __u8 *mask)
+static int parse_ftm_config(const char *conf_file, struct ftm_target **ptargets)
 {
 	FILE *input;
 	char line[256];
 	int i, line_num;
 	struct ftm_target *targets = NULL, *tmp;
-	int res, mac_set = 0;
 
 	input = fopen(conf_file, "r");
 	if (!input) {
@@ -205,19 +178,6 @@ static int parse_ftm_config(const char *conf_file, struct ftm_target **ptargets,
 
 		if (strncmp(line, "#", 1) == 0)
 			continue;
-
-		res = parse_ftm_mac_rand(line, template, mask);
-		if (res < 0 || (res > 0 && mac_set)) {
-			printf("Invalid FTM configuration at line %d!\n",
-			       line_num);
-			free(targets);
-			return -1;
-		}
-
-		if (res > 0) {
-			mac_set = 1;
-			continue;
-		}
 
 		if (parse_ftm_target(line, &tgt)) {
 			printf("Invalid FTM configuration at line %d!\n",
@@ -275,16 +235,16 @@ static int handle_ftm_req_send(struct nl80211_state *state, struct nl_msg *msg,
 			       int argc, char **argv, enum id_input id)
 {
 	struct nlattr *nl_ftm_req, *nl_targets, *nl_target;
-	__u8 macaddr[ETH_ALEN] = {0};
+	static const __u8 macaddr[ETH_ALEN] = {0};
 	/* Dont randomize the MC bit */
-	__u8 macaddr_mask[ETH_ALEN] = {0x01, };
+	static const __u8 macaddr_mask[ETH_ALEN] = {0x01, };
 	struct ftm_target *targets;
 	int i, num_targets = 0;
 
 	if (argc != 1)
 		return 1;
 
-	num_targets = parse_ftm_config(argv[0], &targets, macaddr, macaddr_mask);
+	num_targets = parse_ftm_config(argv[0], &targets);
 	if (num_targets <= 0)
 		return 1;
 
@@ -322,8 +282,6 @@ COMMAND(measurement, ftm_request, "<config-file>", 0, 0,
 	CIB_NETDEV, handle_ftm_req,
 	"Send an FTM request to the targets supplied in the config file.\n"
 	"Each line in the file represents a target, with the following format:\n"
-	"<bssid> bw=<[20|40|80|80+80|160]> cf=<center_freq> [cf1=<center_freq1>] [cf2=<center_freq2>] [spb=<samples per burst>] [one-sided] [asap] [bursts_exp=<num of bursts exponent>] [burst_period=<burst period>] [retries=<num of retries>] [burst_duration=<burst duration>] [civic] [lci]\n"
-	"To set the MAC address randomization template and mask, add the line:\n"
-	"template=<mac address template> mask=<mac address mask>");
+	"<bssid> bw=<[20|40|80|80+80|160]> cf=<center_freq> [cf1=<center_freq1>] [cf2=<center_freq2>] [spb=<samples per burst>] [one-sided] [asap] [bursts_exp=<num of bursts exponent>] [burst_period=<burst period>] [retries=<num of retries>] [burst_duration=<burst duration>] [civic] [lci]\n");
 HIDDEN(measurement, ftm_request_send, "<config-file>", NL80211_CMD_MSRMENT_REQUEST, 0,
 	CIB_NETDEV, handle_ftm_req_send);
