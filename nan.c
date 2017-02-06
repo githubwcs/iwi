@@ -751,6 +751,24 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 			NLA_PUT_FLAG(dp_attrs, NL80211_NAN_DATA_PATH_TEARDOWN);
 			argv++;
 			argc--;
+
+			if (argc != 2 || strcmp(argv[0], "addr") != 0) {
+				ret = -EINVAL;
+				goto nla_put_failure;
+			}
+
+			argv++;
+			argc--;
+			if (mac_addr_a2n(mac_addr, argv[0]) < 0) {
+				ret = -EINVAL;
+				goto nla_put_failure;
+			}
+
+			nla_put(dp_attrs, NL80211_NAN_DATA_PATH_NDI,
+				ETH_ALEN, mac_addr);
+			argv++;
+			argc--;
+			goto done;
 		} else {
 			if (strcmp(argv[0], "status") == 0) {
 				argv++;
@@ -858,6 +876,7 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 		goto nla_put_failure;
 	}
 
+done:
 	nla_put_nested(msg, NL80211_ATTR_NAN_DATA_PATH, dp_attrs);
 
 	ret = 0;
