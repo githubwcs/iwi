@@ -697,6 +697,12 @@ static int handle_nan_add_func(struct nl80211_state *state,
 	}
 
 
+	if (argc >= 1 && strcmp(argv[0], "qos_required") == 0) {
+		argc--;
+		argv++;
+		NLA_PUT_FLAG(func_attrs, NL80211_NAN_FUNC_QOS_REQUIRED);
+	}
+
 	if (argc != 0)
 		return -EINVAL;
 
