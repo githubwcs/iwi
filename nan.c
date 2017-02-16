@@ -904,14 +904,12 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 		NLA_PUT_U8(dp_attrs, NL80211_NAN_QOS_MAX_GAP, max_gap);
 
 		nla_nest_end(dp_attrs, nl_qos);
-		printf("andrei\n");
 	}
 
 	if (argc != 0) {
 		ret = -EINVAL;
 		goto nla_put_failure;
 	}
-	printf("andrei2\n");
 	nla_put_nested(msg, NL80211_ATTR_NAN_DATA_PATH, dp_attrs);
 
 	ret = 0;
