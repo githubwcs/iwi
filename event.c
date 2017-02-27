@@ -703,6 +703,7 @@ static void parse_nan_range_ind(struct nlattr **attrs)
 	nan_data_path_policy[NL80211_NAN_RANGING_ATTR_MAX + 1] = {
 		[NL80211_NAN_RANGING_STATUS] = { .type = NLA_U8},
 		[NL80211_NAN_RANGING_REASON_CODE] = { .type = NLA_U8},
+		[NL80211_NAN_RANGING_TYPE] = { .type = NLA_U32},
 		[NL80211_NAN_RANGING_NMI] = { },
 	};
 
@@ -714,7 +715,10 @@ static void parse_nan_range_ind(struct nlattr **attrs)
 	}
 	mac_addr_n2a(nmi_addr, nla_data(ri[NL80211_NAN_RANGING_NMI]));
 
-	printf("nan ranging indication: nmi=%s\n", nmi_addr);
+	printf("nan ranging indication: nmi=%s, type=%u, status=%u\n",
+	       nmi_addr,
+	       nla_get_u32(ri[NL80211_NAN_RANGING_TYPE]),
+	       nla_get_u8(ri[NL80211_NAN_RANGING_STATUS]));
 }
 
 static int print_event(struct nl_msg *msg, void *arg)
