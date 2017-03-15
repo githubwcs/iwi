@@ -636,6 +636,8 @@ static void parse_nan_match(struct nlattr **attrs)
 	} else {
 		printf("NaN: Malformed event\n");
 	}
+
+	printf("\n");
 }
 
 static void parse_nan_data_ind(struct nlattr **attrs)
