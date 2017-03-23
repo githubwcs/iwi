@@ -508,18 +508,17 @@ static void parse_nan_sec(struct nlattr *sec)
 		return;
 	}
 
-	printf(" nan security: csids:");
+	printf("csids: ");
 	for (i = 0; i < n_csids; i++) {
 		if (csids[i] == NL80211_NAN_CS_SK_CCM_128)
-			printf(" SK-128");
+			printf("SK-128, ");
 		else if (csids[i] == NL80211_NAN_CS_SK_GCM_256)
-			printf(" SK-256");
+			printf("SK-256, ");
 		else
 		       printf("invalid cipher suite");
 	}
 
 	if (!sec_func[NL80211_NAN_SEC_PMKIDS]) {
-		printf("\n");
 		return;
 	}
 
@@ -535,9 +534,10 @@ static void parse_nan_sec(struct nlattr *sec)
 	for (i = 0; i < n_pmkids; i++) {
 		size_t j;
 
-		printf(", pmkid %d: ", i);
+		printf("pmkid_%d {", i);
 		for (j = 0; j < NL80211_NAN_PMKID_LEN; j++)
-			printf("%02x ", pmkids[(i * NL80211_NAN_PMKID_LEN) + j]);
+			printf(" %02x", pmkids[(i * NL80211_NAN_PMKID_LEN) + j]);
+		printf("}, ");
 	}
 }
 
@@ -684,15 +684,15 @@ static void parse_nan_data_ind(struct nlattr **attrs)
 	       nla_get_u8(di[NL80211_NAN_DATA_PATH_ID]),
 	       nmi_addr, ndi_addr);
 	if (!ssi_len) {
-		printf("N/A\n");
+		printf("N/A ");
 	} else {
 		int i;
 		for (i = 0; i < ssi_len; ++i)
 			printf("%02x", ssi[i]);
-		printf("\n");
 	}
 
 	parse_nan_sec(di[NL80211_NAN_DATA_PATH_SEC]);
+	printf("\n");
 }
 
 static void parse_nan_range_ind(struct nlattr **attrs)
