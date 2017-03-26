@@ -508,7 +508,7 @@ static void parse_nan_sec(struct nlattr *sec)
 		return;
 	}
 
-	printf("csids: ");
+	printf("csids=");
 	for (i = 0; i < n_csids; i++) {
 		if (csids[i] == NL80211_NAN_CS_SK_CCM_128)
 			printf("SK-128, ");
@@ -534,7 +534,7 @@ static void parse_nan_sec(struct nlattr *sec)
 	for (i = 0; i < n_pmkids; i++) {
 		size_t j;
 
-		printf("pmkid_%d {", i);
+		printf("pmkid_%d={", i);
 		for (j = 0; j < NL80211_NAN_PMKID_LEN; j++)
 			printf(" %02x", pmkids[(i * NL80211_NAN_PMKID_LEN) + j]);
 		printf("}, ");
