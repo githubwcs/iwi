@@ -210,7 +210,7 @@ static void HMAC_CTX_free(HMAC_CTX *ctx)
 static int compute_pmkid(const EVP_MD *type, const unsigned char *key,
 			 unsigned char key_len, const unsigned char *iaddr,
 			 const unsigned char *raddr, unsigned char *serv_id_c,
-			 char *hash)
+			 unsigned char *hash)
 {
 	unsigned char md_value[EVP_MAX_MD_SIZE] = {};
 	const char *label = "NAN PMK Name";
@@ -479,7 +479,6 @@ static int handle_nan_add_func(struct nl80211_state *state,
 	}
 
 	if (argc > 1 && strcmp(argv[0], "name") == 0) {
-		unsigned char serv_id_c[6] = {0};
 		__u64 service_id;
 
 		argv++;
@@ -602,7 +601,7 @@ static int handle_nan_add_func(struct nl80211_state *state,
 		unsigned int csids[NL80211_NAN_CS_MAX] = {};
 		unsigned char pmk[NL80211_NAN_PMK_LEN];
 		unsigned char raddr[ETH_ALEN];
-		char pmkids[NL80211_NAN_CS_MAX * NL80211_NAN_PMKID_LEN];
+		unsigned char pmkids[NL80211_NAN_CS_MAX * NL80211_NAN_PMKID_LEN];
 		struct nlattr *nl_sec;
 		unsigned int n_csids;
 		int ret, pmkid;
