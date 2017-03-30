@@ -177,14 +177,25 @@ COMMAND(nan, rm_func, "cookie <cookie>", NL80211_CMD_DEL_NAN_FUNCTION, 0,
 static int compute_service_id(const unsigned char *serv_name,
 			      unsigned int len, unsigned char *res)
 {
-	size_t size = len;
+	size_t size = len, i;
 	unsigned char md_value[32];
-	int retcode = sha256(serv_name, size, md_value);
+	unsigned char *tmp = malloc(len + 1);
+	int ret;
 
-	if (retcode)
-		return retcode;
+	if (!tmp)
+		return -ENOBUFS;
+
+	for (i = 0; i < size; i++)
+		tmp[i] = tolower(serv_name[i]);
+	tmp[len] = '\0';
+
+	ret = sha256(tmp, size, md_value);
+	free(tmp);
+
+	if (ret)
+		return ret;
+
 	memcpy(res, md_value, 6);
-
 	return 0;
 }
 
