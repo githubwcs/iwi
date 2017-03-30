@@ -26,6 +26,7 @@ static struct nla_policy iwl_vendor_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ1] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ2] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_LQM_RESULT] = { .type = NLA_NESTED },
+	[IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT] = { .type = NLA_NESTED },
 };
 
 static int handle_iwl_vendor_dev_tx_power(struct nl80211_state *state,
@@ -320,6 +321,60 @@ nla_put_failure:
 COMMAND(iwl, lqm, "duration(us) timeout(us)", NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_start_lqm, "");
 
+static int handle_iwl_vendor_neighbor_request(struct nl80211_state *state,
+					      struct nl_msg *msg,
+					      int argc, char **argv,
+					      enum id_input id)
+{
+	struct nlattr *req;
+	char *ssid = NULL;
+	bool lci = false, civic = false;
+	int arg_idx = 0;
+
+	if (argc && strncmp(argv[0], "ssid=", 5) == 0) {
+		ssid = argv[0] + 5;
+		if (strlen(ssid) > 32)
+			return -EINVAL;
+
+		arg_idx++;
+	}
+
+	if (argc > arg_idx && strcmp(argv[arg_idx], "lci") == 0) {
+		lci = true;
+		arg_idx++;
+	}
+
+	if (argc > arg_idx && strcmp(argv[2], "civic") == 0)
+		civic = true;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_REQUEST);
+
+	req = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!req)
+		return -ENOBUFS;
+
+	if (ssid)
+		NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_SSID, strlen(ssid), ssid);
+
+	if (lci)
+		NLA_PUT_FLAG(msg, IWL_MVM_VENDOR_ATTR_NEIGHBOR_LCI);
+
+	if (civic)
+		NLA_PUT_FLAG(msg, IWL_MVM_VENDOR_ATTR_NEIGHBOR_CIVIC);
+
+	nla_nest_end(msg, req);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, neighbor_request, "[ssid=<SSID>] [lci] [civic]",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_neighbor_request,
+	"");
+
 static const char const* width2str[] =
 {
 	[NL80211_CHAN_WIDTH_20_NOHT] = "20noHT",
@@ -387,6 +442,102 @@ static void parse_lqm_event(struct nlattr *data)
 		printf("\tSTA[%d]: %dus\n", i++, nla_get_u32(sta_air_time));
 }
 
+static const char const* phy2str[] =
+{
+	[IWL_MVM_VENDOR_PHY_TYPE_UNSPECIFIED] = "unspecified",
+	[IWL_MVM_VENDOR_PHY_TYPE_DSSS] = "DSSS",
+	[IWL_MVM_VENDOR_PHY_TYPE_OFDM] = "OFDM",
+	[IWL_MVM_VENDOR_PHY_TYPE_HRDSSS] = "HRDSSS",
+	[IWL_MVM_VENDOR_PHY_TYPE_ERP] = "ERP",
+	[IWL_MVM_VENDOR_PHY_TYPE_HT] = "HT",
+	[IWL_MVM_VENDOR_PHY_TYPE_DMG] = "DMG",
+	[IWL_MVM_VENDOR_PHY_TYPE_VHT] = "VHT",
+	[IWL_MVM_VENDOR_PHY_TYPE_TVHT] = "TVHT",
+};
+
+static const char const* vendorwidth2str[] =
+{
+	[IWL_MVM_VENDOR_CHAN_WIDTH_20] = "20MHz",
+	[IWL_MVM_VENDOR_CHAN_WIDTH_40] = "40MHz",
+	[IWL_MVM_VENDOR_CHAN_WIDTH_80] = "80MHz",
+	[IWL_MVM_VENDOR_CHAN_WIDTH_160] = "160MHz",
+	[IWL_MVM_VENDOR_CHAN_WIDTH_80P80] = "80P80MHz",
+};
+
+static void parse_neighbor_report(struct nlattr *data)
+{
+	int tmp, err;
+	struct nlattr *attrs[NUM_IWL_MVM_VENDOR_ATTR];
+	struct nlattr *neighbors;
+	static struct nla_policy neighbor_policy[] = {
+		[IWL_MVM_VENDOR_NEIGHBOR_BSSID] = { .type = NLA_UNSPEC },
+		[IWL_MVM_VENDOR_NEIGHBOR_BSSID_INFO] = { .type = NLA_U32 },
+		[IWL_MVM_VENDOR_NEIGHBOR_OPERATING_CLASS] = { .type = NLA_U8 },
+		[IWL_MVM_VENDOR_NEIGHBOR_CHANNEL] = { .type = NLA_U8 },
+		[IWL_MVM_VENDOR_NEIGHBOR_PHY_TYPE] = { .type = NLA_U8 },
+		[IWL_MVM_VENDOR_NEIGHBOR_CHANNEL_WIDTH] = { .type = NLA_U32 },
+		[IWL_MVM_VENDOR_NEIGHBOR_CENTER_FREQ_IDX_0] = {
+			.type = NLA_U32 },
+		[IWL_MVM_VENDOR_NEIGHBOR_CENTER_FREQ_IDX_1] = {
+			.type = NLA_U32 },
+		[IWL_MVM_VENDOR_NEIGHBOR_LCI] = { .type = NLA_UNSPEC },
+		[IWL_MVM_VENDOR_NEIGHBOR_CIVIC] = { .type = NLA_UNSPEC },
+	};
+
+	if (nla_parse_nested(attrs, MAX_IWL_MVM_VENDOR_ATTR, data,
+			     iwl_vendor_policy)) {
+		printf(" Ignore invalid neighbor report");
+		return;
+	}
+
+	nla_for_each_nested(neighbors,
+			    attrs[IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT], tmp) {
+		struct nlattr *neighbor[NUM_IWL_MVM_VENDOR_NEIGHBOR_REPORT];
+		char addr[3 * ETH_ALEN];
+
+		err = nla_parse_nested(neighbor,
+				       MAX_IWL_MVM_VENDOR_NEIGHBOR_REPORT,
+				       neighbors, neighbor_policy);
+		if (err) {
+			printf("Bad neighbor data");
+			return;
+		}
+
+		mac_addr_n2a(addr,
+			     nla_data(neighbor[IWL_MVM_VENDOR_NEIGHBOR_BSSID]));
+		printf("\nNeighbor %s\n", addr);
+		printf("\tBSS Info: %u\n",
+		       nla_get_u32(neighbor[IWL_MVM_VENDOR_NEIGHBOR_BSSID_INFO]));
+		printf("\tOperating class: %hhu\n",
+		       nla_get_u8(neighbor[IWL_MVM_VENDOR_NEIGHBOR_OPERATING_CLASS]));
+		printf("\tChannel: %hhu\n",
+		       nla_get_u8(neighbor[IWL_MVM_VENDOR_NEIGHBOR_CHANNEL]));
+		printf("\tPHY type: %s\n",
+		       phy2str[nla_get_u8(neighbor[IWL_MVM_VENDOR_NEIGHBOR_PHY_TYPE])]);
+
+		if (neighbor[IWL_MVM_VENDOR_NEIGHBOR_CHANNEL_WIDTH]) {
+			printf("\tChannel width: %s\n",
+			       vendorwidth2str[nla_get_u32(neighbor[IWL_MVM_VENDOR_NEIGHBOR_CHANNEL_WIDTH])]);
+			printf("\tCenter freq 0: %u\n",
+			       nla_get_u32(neighbor[IWL_MVM_VENDOR_NEIGHBOR_CENTER_FREQ_IDX_0]));
+
+			if (neighbor[IWL_MVM_VENDOR_NEIGHBOR_CENTER_FREQ_IDX_1])
+				printf("\tCenter freq 1: %u\n",
+				       nla_get_u32(neighbor[IWL_MVM_VENDOR_NEIGHBOR_CENTER_FREQ_IDX_1]));
+		}
+
+		if (neighbor[IWL_MVM_VENDOR_NEIGHBOR_LCI])
+			iw_hexdump("\tLCI",
+				   nla_data(neighbor[IWL_MVM_VENDOR_NEIGHBOR_LCI]),
+				   nla_len(neighbor[IWL_MVM_VENDOR_NEIGHBOR_LCI]));
+
+		if (neighbor[IWL_MVM_VENDOR_NEIGHBOR_CIVIC])
+			iw_hexdump("\tCIVIC",
+				   nla_data(neighbor[IWL_MVM_VENDOR_NEIGHBOR_CIVIC]),
+				   nla_len(neighbor[IWL_MVM_VENDOR_NEIGHBOR_CIVIC]));
+	}
+}
+
 void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs)
 {
 	if (vendor_id != INTEL_OUI)
@@ -398,6 +549,9 @@ void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs)
 		break;
 	case IWL_MVM_VENDOR_CMD_QUALITY_MEASUREMENTS:
 		parse_lqm_event(attrs[NL80211_ATTR_VENDOR_DATA]);
+		break;
+	case IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_RESPONSE:
+		parse_neighbor_report(attrs[NL80211_ATTR_VENDOR_DATA]);
 		break;
 	default:
 		break;
