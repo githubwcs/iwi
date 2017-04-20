@@ -29,7 +29,7 @@ static int parse_bands(int argc, char **argv)
 		else if (!strcasecmp("5ghz", argv[i]))
 			bands |= BIT(NL80211_BAND_5GHZ);
 		else
-			return -EINVAL;
+			break;
 	}
 
 	return bands;
@@ -137,9 +137,19 @@ static int handle_nan_config(struct nl80211_state *state,
 			return bands;
 
 		NLA_PUT_U32(msg, NL80211_ATTR_BANDS, bands);
-		argv++;
-		argc--;
-	} else if (argc != 0)
+
+		if (bands & BIT(NL80211_BAND_2GHZ)) {
+			argv++;
+			argc--;
+		}
+
+		if (bands & BIT(NL80211_BAND_5GHZ)) {
+			argv++;
+			argc--;
+		}
+	}
+
+	if (argc != 0)
 		return -EINVAL;
 
 	return 0;
