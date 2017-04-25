@@ -815,7 +815,7 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 		}
 
 		if (argc >= 1 && strcmp(argv[0], "update") == 0) {
-			NLA_PUT_FLAG(dp_attrs, NL80211_NAN_DATA_PATH_UPDATE_QOS);
+			NLA_PUT_FLAG(dp_attrs, NL80211_NAN_DATA_PATH_UPDATE);
 			argv++;
 			argc--;
 

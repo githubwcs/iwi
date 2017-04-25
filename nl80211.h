@@ -5294,6 +5294,10 @@ enum nl80211_nan_dp_status
  *	Its type is u8 and it cannot be 0.
  * @NL80211_NAN_FUNC_TERM_REASON: NAN function termination reason.
  *	See &enum nl80211_nan_func_term_reason.
+ * @NL80211_NAN_FUNC_DW_INTERVAL: Indicates the interval between two Discovery
+ *      Windows in which the device supporting the service is awake to transmit
+ *      or receive corresponding the Service Discovery frames. The valid values
+ *      are 0-4, which correspond to the values 1, 2, 4, 8, 16.
  * @NL80211_NAN_FUNC_SEC: NAN function security information. This is a nested
  *      attribute.
  *
@@ -5844,7 +5848,7 @@ enum nl80211_nan_data_path_attributes {
 	NL80211_NAN_DATA_PATH_SEC,
 	NL80211_NAN_DATA_PATH_COOKIE,
 	NL80211_NAN_DATA_PATH_QOS,
-	NL80211_NAN_DATA_PATH_UPDATE_QOS,
+	NL80211_NAN_DATA_PATH_UPDATE,
 	NL80211_NAN_DATA_PATH_UPDATE_ONEWAY,
 
 	/* keep last */
