@@ -508,7 +508,7 @@ static void parse_nan_sec(struct nlattr *sec)
 		return;
 	}
 
-	printf("csids=");
+	printf(", csids=");
 	for (i = 0; i < n_csids; i++) {
 		if (csids[i] == NL80211_NAN_CS_SK_CCM_128)
 			printf("SK-128, ");
