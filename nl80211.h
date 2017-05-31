@@ -387,7 +387,9 @@
  *	are used.  Extra IEs can also be passed from the userspace by
  *	using the %NL80211_ATTR_IE attribute.  The first cycle of the
  *	scheduled scan can be delayed by %NL80211_ATTR_SCHED_SCAN_DELAY
- *	is supplied.
+ *	is supplied. If the device supports multiple concurrent scheduled
+ *	scans, it will allow such when the caller provides the flag attribute
+ *	%NL80211_ATTR_SCHED_SCAN_MULTI to indicate user-space support for it.
  * @NL80211_CMD_STOP_SCHED_SCAN: stop a scheduled scan. Returns -ENOENT if
  *	scheduled scan is not running. The caller may assume that as soon
  *	as the call returns, it is safe to start a new scheduled scan again.
@@ -1281,10 +1283,6 @@ enum nl80211_commands {
  * @NL80211_ATTR_KEY_DEFAULT: Flag attribute indicating the key is default key
  * @NL80211_ATTR_KEY_DEFAULT_MGMT: Flag attribute indicating the key is the
  *	default management key
- * @NL80211_ATTR_CIPHER_SUITES_PAIRWISE: For crypto settings for connect or
- *	other commands, indicates which pairwise cipher suites are used
- * @NL80211_ATTR_CIPHER_SUITE_GROUP: For crypto settings for connect or
- *	other commands, indicates which group cipher suite is used
  *
  * @NL80211_ATTR_BEACON_INTERVAL: beacon interval in TU
  * @NL80211_ATTR_DTIM_PERIOD: DTIM period for beaconing
@@ -1446,12 +1444,15 @@ enum nl80211_commands {
  *	that protected APs should be used. This is also used with NEW_BEACON to
  *	indicate that the BSS is to use protection.
  *
- * @NL80211_ATTR_CIPHERS_PAIRWISE: Used with CONNECT, ASSOCIATE, and NEW_BEACON
- *	to indicate which unicast key ciphers will be used with the connection
- *	(an array of u32).
- * @NL80211_ATTR_CIPHER_GROUP: Used with CONNECT, ASSOCIATE, and NEW_BEACON to
- *	indicate which group key cipher will be used with the connection (a
- *	u32).
+ * @NL80211_ATTR_CIPHER_SUITES_PAIRWISE: Used with CONNECT, ASSOCIATE, and
+ *	NEW_BEACON to indicate which unicast key ciphers will be used with
+ *	the connection (an array of u32).
+ * @NL80211_ATTR_CIPHER_SUITES_GROUP: Used with CONNECT to indicate that the
+ *	connection will use APs that use one of the specified cipher suites as
+ *	the group cipher suite. (an array of u32).
+ *	Also used with ASSOCIATE to indicate the group cipher suite that will be
+ *	used for the association. It is also used with NEW_BEACON to indicate
+ *	which group key cipher will be used by the AP. (u32).
  * @NL80211_ATTR_WPA_VERSIONS: Used with CONNECT, ASSOCIATE, and NEW_BEACON to
  *	indicate which WPA version(s) the AP we want to associate with is using
  *	(a u32 with flags from &enum nl80211_wpa_versions).
@@ -2127,6 +2128,11 @@ enum nl80211_commands {
  * @NL80211_ATTR_PMK: PMK for the PMKSA identified by %NL80211_ATTR_PMKID.
  *	This is used with @NL80211_CMD_SET_PMKSA.
  *
+ * @NL80211_ATTR_SCHED_SCAN_MULTI: flag attribute which user-space shall use to
+ *	indicate that it supports multiple active scheduled scan requests.
+ * @NL80211_ATTR_SCHED_SCAN_MAX_REQS: indicates maximum number of scheduled
+ *	scan request that may be active for the device (u32).
+ *
  * @NL80211_ATTR_MSRMENT_TYPE: Type of current measurement request/response.
  *	(values defined in &enum nl80211_msrment_type).
  * @NL80211_ATTR_MSRMENT_STATUS: Status of current measurement response.
@@ -2160,6 +2166,9 @@ enum nl80211_commands {
  *	driver or is not needed (because roaming used the Fast Transition
  *	protocol). Only valid for roaming in networks that require 802.1X
  *	authentication.
+ * @NL80211_ATTR_HE_CAPABILITY: HE Capability information element (from
+ *	association request when used with NL80211_CMD_NEW_STATION). Can be set
+ *	only if &NL80211_STA_FLAG_WME is set.
  *
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
@@ -2278,7 +2287,7 @@ enum nl80211_attrs {
 	NL80211_ATTR_STATUS_CODE,
 
 	NL80211_ATTR_CIPHER_SUITES_PAIRWISE,
-	NL80211_ATTR_CIPHER_SUITE_GROUP,
+	NL80211_ATTR_CIPHER_SUITES_GROUP,
 	NL80211_ATTR_WPA_VERSIONS,
 	NL80211_ATTR_AKM_SUITES,
 
@@ -2580,6 +2589,9 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_PMK,
 
+	NL80211_ATTR_SCHED_SCAN_MULTI,
+	NL80211_ATTR_SCHED_SCAN_MAX_REQS,
+
 	NL80211_ATTR_FTM_RESPONDER_STATS,
 
 	NL80211_ATTR_MSRMENT_TYPE,
@@ -2597,6 +2609,8 @@ enum nl80211_attrs {
 	NL80211_ATTR_PMKR0_NAME,
 
 	NL80211_ATTR_CONNECTION_AUTHORIZED,
+
+	NL80211_ATTR_HE_CAPABILITY,
 
 	/* add attributes here, update the policy in nl80211.c */
 
@@ -2630,7 +2644,8 @@ enum nl80211_attrs {
 #define NL80211_ATTR_AUTH_TYPE NL80211_ATTR_AUTH_TYPE
 #define NL80211_ATTR_REASON_CODE NL80211_ATTR_REASON_CODE
 #define NL80211_ATTR_CIPHER_SUITES_PAIRWISE NL80211_ATTR_CIPHER_SUITES_PAIRWISE
-#define NL80211_ATTR_CIPHER_SUITE_GROUP NL80211_ATTR_CIPHER_SUITE_GROUP
+#define NL80211_ATTR_CIPHER_SUITE_GROUP NL80211_ATTR_CIPHER_SUITES_GROUP
+#define NL80211_ATTR_CIPHER_SUITES_GROUP NL80211_ATTR_CIPHER_SUITES_GROUP
 #define NL80211_ATTR_WPA_VERSIONS NL80211_ATTR_WPA_VERSIONS
 #define NL80211_ATTR_AKM_SUITES NL80211_ATTR_AKM_SUITES
 #define NL80211_ATTR_KEY NL80211_ATTR_KEY
@@ -2645,7 +2660,8 @@ enum nl80211_attrs {
 #define NL80211_TKIP_DATA_OFFSET_RX_MIC_KEY	24
 #define NL80211_HT_CAPABILITY_LEN		26
 #define NL80211_VHT_CAPABILITY_LEN		12
-
+#define NL80211_HE_MIN_CAPABILITY_LEN           16
+#define NL80211_HE_MAX_CAPABILITY_LEN           51
 #define NL80211_MAX_NR_CIPHER_SUITES		5
 #define NL80211_MAX_NR_AKM_SUITES		2
 
@@ -2791,7 +2807,8 @@ enum nl80211_he_gi {
  * @NL80211_RATE_INFO_HE_RU_ALLOC_106: 106-tone RU allocation
  * @NL80211_RATE_INFO_HE_RU_ALLOC_242: 242-tone RU allocation
  * @NL80211_RATE_INFO_HE_RU_ALLOC_484: 484-tone RU allocation
- * @NL80211_RATE_INFO_HE_RU_ALLOC_969: 969-tone RU allocation
+ * @NL80211_RATE_INFO_HE_RU_ALLOC_996: 996-tone RU allocation
+ * @NL80211_RATE_INFO_HE_RU_ALLOC_2x996: 2x996-tone RU allocation
  */
 enum nl80211_he_ru_alloc {
 	NL80211_RATE_INFO_HE_RU_ALLOC_26,
@@ -2799,7 +2816,8 @@ enum nl80211_he_ru_alloc {
 	NL80211_RATE_INFO_HE_RU_ALLOC_106,
 	NL80211_RATE_INFO_HE_RU_ALLOC_242,
 	NL80211_RATE_INFO_HE_RU_ALLOC_484,
-	NL80211_RATE_INFO_HE_RU_ALLOC_969,
+	NL80211_RATE_INFO_HE_RU_ALLOC_996,
+	NL80211_RATE_INFO_HE_RU_ALLOC_2x996,
 };
 
 /**
@@ -3083,6 +3101,38 @@ enum nl80211_mpath_info {
 };
 
 /**
+ * enum nl80211_band_ift_attr - Interface type data attributes
+ *
+ * @__NL80211_BAND_IFT_ATTR_INVALID: attribute number 0 is reserved
+ * @NL80211_BAND_IFT_ATTR_IFTYPES: nested attribute containing a flag attribute
+ *     for each interface type that supports the band data
+ * @NL80211_BAND_IFT_ATTR_HE_CAP_MAC: HE MAC capabilities as in HE
+ *     capabilities IE
+ * @NL80211_BAND_IFT_ATTR_HE_CAP_PHY: HE PHY capabilities as in HE
+ *     capabilities IE
+ * @NL80211_BAND_IFT_ATTR_HE_CAP_MCS_SET: HE supported NSS/MCS as in HE
+ *     capabilities IE
+ * @NL80211_BAND_IFT_ATTR_HE_CAP_PPE: HE PPE thresholds information as
+ *     defined in HE capabilities IE
+ * @NL80211_BAND_IFT_ATTR_MAX: highest band HE capability attribute currently
+ *     defined
+ * @__NL80211_BAND_IFT_ATTR_AFTER_LAST: internal use
+ */
+enum nl80211_band_ift_attr {
+	__NL80211_BAND_IFT_ATTR_INVALID,
+
+	NL80211_BAND_IFT_ATTR_IFTYPES,
+	NL80211_BAND_IFT_ATTR_HE_CAP_MAC,
+	NL80211_BAND_IFT_ATTR_HE_CAP_PHY,
+	NL80211_BAND_IFT_ATTR_HE_CAP_MCS_SET,
+	NL80211_BAND_IFT_ATTR_HE_CAP_PPE,
+
+	/* keep last */
+	__NL80211_BAND_IFT_ATTR_AFTER_LAST,
+	NL80211_BAND_IFT_ATTR_MAX = __NL80211_BAND_IFT_ATTR_AFTER_LAST - 1
+};
+
+/**
  * enum nl80211_band_attr - band attributes
  * @__NL80211_BAND_ATTR_INVALID: attribute number 0 is reserved
  * @NL80211_BAND_ATTR_FREQS: supported frequencies in this band,
@@ -3097,6 +3147,8 @@ enum nl80211_mpath_info {
  * @NL80211_BAND_ATTR_VHT_MCS_SET: 32-byte attribute containing the MCS set as
  *	defined in 802.11ac
  * @NL80211_BAND_ATTR_VHT_CAPA: VHT capabilities, as in the HT information IE
+ * @NL80211_BAND_ATTR_IFTYPE_DATA: nested array attribute, with each entry using
+ *	attributes from &enum nl80211_band_ift_attr
  * @NL80211_BAND_ATTR_MAX: highest band attribute currently defined
  * @__NL80211_BAND_ATTR_AFTER_LAST: internal use
  */
@@ -3112,6 +3164,7 @@ enum nl80211_band_attr {
 
 	NL80211_BAND_ATTR_VHT_MCS_SET,
 	NL80211_BAND_ATTR_VHT_CAPA,
+	NL80211_BAND_ATTR_IFTYPE_DATA,
 
 	/* keep last */
 	__NL80211_BAND_ATTR_AFTER_LAST,
@@ -3324,6 +3377,7 @@ enum nl80211_reg_rule_attr {
  * @__NL80211_SCHED_SCAN_MATCH_ATTR_INVALID: attribute number 0 is reserved
  * @NL80211_SCHED_SCAN_MATCH_ATTR_SSID: SSID to be used for matching,
  *	only report BSS with matching SSID.
+ *	(This cannot be used together with BSSID.)
  * @NL80211_SCHED_SCAN_MATCH_ATTR_RSSI: RSSI threshold (in dBm) for reporting a
  *	BSS in scan results. Filtering is turned off if not specified. Note that
  *	if this attribute is in a match set of its own, then it is treated as
@@ -3339,6 +3393,8 @@ enum nl80211_reg_rule_attr {
  *	BSS-es in the specified band is to be adjusted before doing
  *	RSSI-based BSS selection. The attribute value is a packed structure
  *	value as specified by &struct nl80211_bss_select_rssi_adjust.
+ * @NL80211_SCHED_SCAN_MATCH_ATTR_BSSID: BSSID to be used for matching
+ *	(this cannot be used together with SSID).
  * @NL80211_SCHED_SCAN_MATCH_ATTR_MAX: highest scheduled scan filter
  *	attribute number currently defined
  * @__NL80211_SCHED_SCAN_MATCH_ATTR_AFTER_LAST: internal use
@@ -3350,6 +3406,7 @@ enum nl80211_sched_scan_match_attr {
 	NL80211_SCHED_SCAN_MATCH_ATTR_RSSI,
 	NL80211_SCHED_SCAN_MATCH_ATTR_RELATIVE_RSSI,
 	NL80211_SCHED_SCAN_MATCH_ATTR_RSSI_ADJUST,
+	NL80211_SCHED_SCAN_MATCH_ATTR_BSSID,
 
 	/* keep last */
 	__NL80211_SCHED_SCAN_MATCH_ATTR_AFTER_LAST,
