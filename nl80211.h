@@ -5038,6 +5038,8 @@ enum nl80211_feature_flags {
  * @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA: Device supports
  *	doing 4-way handshake in station mode (PSK is passed as part
  *	of the connect command).
+ * @NL80211_EXT_FEATURE_OCE: The driver supports Optimized Connectivity
+ *	Experience (OCE)
  *
  * @NUM_NL80211_EXT_FEATURES: number of extended features.
  * @MAX_NL80211_EXT_FEATURES: highest extended feature index.
@@ -5059,6 +5061,7 @@ enum nl80211_ext_feature_index {
 	NL80211_EXT_FEATURE_CQM_RSSI_LIST,
 	NL80211_EXT_FEATURE_FILS_SK_OFFLOAD,
 	NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA,
+	NL80211_EXT_FEATURE_OCE,
 
 	/* add new features before the definition below */
 	NUM_NL80211_EXT_FEATURES,
