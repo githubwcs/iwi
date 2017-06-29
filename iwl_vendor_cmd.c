@@ -179,7 +179,7 @@ nla_put_failure:
 	return -ENOBUFS;
 }
 
-COMMAND(iwl, sar_get_profiles_info, "<param>",
+COMMAND(iwl, sar_get_profiles_info, "",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_sar_get_profile_info, "");
 
