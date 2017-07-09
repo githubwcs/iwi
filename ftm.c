@@ -96,3 +96,52 @@ static int handle_ftm_get_stats(struct nl80211_state *state,
 COMMAND(ftm, get_stats, "",
 	NL80211_CMD_GET_FTM_RESPONDER_STATS, 0, CIB_NETDEV, handle_ftm_get_stats,
 	"Get FTM responder statistics.\n");
+
+static int handle_ftm_start_responder(struct nl80211_state *state,
+				      struct nl_msg *msg, int argc, char **argv,
+				      enum id_input id)
+{
+	int i;
+	char buf[256];
+	bool lci_present = false, civic_present = false;
+
+	for (i = 0; i < argc; i++) {
+		if (strncmp(argv[i], "lci=", 4) == 0) {
+			size_t lci_len = strlen(argv[i] + 4);
+
+			if (lci_present || !lci_len || lci_len % 2 ||
+			    !hex2bin(argv[i] + 4, buf)) {
+				printf("Illegal LCI buffer!\n");
+				return HANDLER_RET_USAGE;
+			}
+
+			lci_present = true;
+			NLA_PUT(msg, NL80211_ATTR_LCI, (lci_len / 2), buf);
+		} else if (strncmp(argv[i], "civic=", 6) == 0) {
+			size_t civic_len = strlen(argv[i] + 6);
+
+			if (civic_present || !civic_len || civic_len % 2 ||
+			    !hex2bin(argv[i] + 6, buf)) {
+				printf("Illegal CIVIC buffer!\n");
+				return HANDLER_RET_USAGE;
+			}
+
+			civic_present = true;
+			NLA_PUT(msg, NL80211_ATTR_CIVIC, (civic_len / 2), buf);
+		} else {
+			printf("Illegal argument: %s\n", argv[i]);
+			return HANDLER_RET_USAGE;
+		}
+	}
+
+	return 0;
+
+nla_put_failure:
+	return -ENOMEM;
+}
+
+COMMAND(ftm, start_responder,
+	"[lci=<lci buffer in hex>] [civic=<civic buffer in hex>]",
+	NL80211_CMD_START_FTM_RESPONDER, 0, CIB_NETDEV,
+	handle_ftm_start_responder,
+	"Start an FTM responder. Needs a running ap interface\n");
