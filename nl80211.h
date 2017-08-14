@@ -911,7 +911,8 @@
  *	has been started, the NAN interface will create or join a
  *	cluster. This command must have a valid
  *	%NL80211_ATTR_NAN_MASTER_PREF attribute and optional
- *	%NL80211_ATTR_BANDS attributes.  If %NL80211_ATTR_BANDS is
+ *	%NL80211_ATTR_BANDS, %NL80211_ATTR_NAN_CDW_2G and
+ *	%NL80211_ATTR_NAN_CDW_5G attributes. If %NL80211_ATTR_BANDS is
  *	omitted or set to 0, it means don't-care and the device will
  *	decide what to use.  After this command NAN functions can be
  *	added.
@@ -939,10 +940,9 @@
  *	configuration. NAN must be operational (%NL80211_CMD_START_NAN
  *	was executed).  It must contain at least one of the following
  *	attributes: %NL80211_ATTR_NAN_MASTER_PREF,
- *	%NL80211_ATTR_BANDS.  If %NL80211_ATTR_BANDS is omitted, the
- *	current configuration is not changed.  If it is present but
- *	set to zero, the configuration is changed to don't-care
- *	(i.e. the device can decide what to do).
+ *	%NL80211_ATTR_BANDS, %NL80211_ATTR_NAN_CDW_2G, %NL80211_ATTR_NAN_CDW_5G.
+ *	If %NL80211_ATTR_BANDS is present but set to zero, the configuration is
+ *	changed to don't-care (i.e. the device can decide what to do).
  * @NL80211_CMD_NAN_FUNC_MATCH: Notification sent when a match is reported.
  *	This will contain a %NL80211_ATTR_NAN_MATCH nested attribute and
  *	%NL80211_ATTR_COOKIE.
@@ -1410,8 +1410,12 @@ enum nl80211_commands {
  *
  * @NL80211_ATTR_USE_MFP: Whether management frame protection (IEEE 802.11w) is
  *	used for the association (&enum nl80211_mfp, represented as a u32);
- *	this attribute can be used
- *	with %NL80211_CMD_ASSOCIATE and %NL80211_CMD_CONNECT requests
+ *	this attribute can be used with %NL80211_CMD_ASSOCIATE and
+ *	%NL80211_CMD_CONNECT requests. %NL80211_MFP_OPTIONAL is not allowed for
+ *	%NL80211_CMD_ASSOCIATE since user space SME is expected and hence, it
+ *	must have decided whether to use management frame protection or not.
+ *	Setting %NL80211_MFP_OPTIONAL with a %NL80211_CMD_CONNECT request will
+ *	let the driver (or the firmware) decide whether to use MFP or not.
  *
  * @NL80211_ATTR_STA_FLAGS2: Attribute containing a
  *	&struct nl80211_sta_flag_update.
@@ -1915,11 +1919,10 @@ enum nl80211_commands {
  *	that configured the indoor setting, and the indoor operation would be
  *	cleared when the socket is closed.
  *	If set during NAN interface creation, the interface will be destroyed
- *	if the socket is closed just like any other interface. Moreover, only
- *	the netlink socket that created the interface will be allowed to add
- *	and remove functions. NAN notifications will be sent in unicast to that
- *	socket. Without this attribute, any socket can add functions and the
- *	notifications will be sent to the %NL80211_MCGRP_NAN multicast group.
+ *	if the socket is closed just like any other interface. Moreover, NAN
+ *	notifications will be sent in unicast to that socket. Without this
+ *	attribute, the notifications will be sent to the %NL80211_MCGRP_NAN
+ *	multicast group.
  *	If set during %NL80211_CMD_ASSOCIATE or %NL80211_CMD_CONNECT the
  *	station will deauthenticate when the socket is closed.
  *
@@ -2169,6 +2172,14 @@ enum nl80211_commands {
  * @NL80211_ATTR_HE_CAPABILITY: HE Capability information element (from
  *	association request when used with NL80211_CMD_NEW_STATION). Can be set
  *	only if &NL80211_STA_FLAG_WME is set.
+ * @NL80211_ATTR_NAN_CDW_2G: defines the NAN device committed DW on 2.4GHz.
+ *      This is a u8, where valid values are 1..5. The device must wake for at
+ *      least every 2^(val-1) DW on 2.4GHz. When using %NL80211_CMD_START_NAN,
+ *      if the attribute is not specified, the default committed DW is 1.
+ * @NL80211_ATTR_NAN_CDW_5G: defines the NAN device committed DW on 5.2GHz.
+ *      This is a u8, where valid values are 0..5. If the value is 0, then there
+ *      are no wake ups on 5.2GHz DWs. When using %NL80211_CMD_START_NAN,
+ *      if the attribute is not specified, the default committed DW is 1.
  *
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
@@ -2612,6 +2623,9 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_HE_CAPABILITY,
 
+	NL80211_ATTR_NAN_CDW_2G,
+	NL80211_ATTR_NAN_CDW_5G,
+
 	/* add attributes here, update the policy in nl80211.c */
 
 	__NL80211_ATTR_AFTER_LAST,
@@ -2664,6 +2678,7 @@ enum nl80211_attrs {
 #define NL80211_HE_MAX_CAPABILITY_LEN           51
 #define NL80211_MAX_NR_CIPHER_SUITES		5
 #define NL80211_MAX_NR_AKM_SUITES		2
+#define NL80211_MAX_NR_NAN_SEC_CTX_IDS		5
 
 #define NL80211_MIN_REMAIN_ON_CHANNEL_TIME	10
 
@@ -4075,10 +4090,12 @@ enum nl80211_key_type {
  * enum nl80211_mfp - Management frame protection state
  * @NL80211_MFP_NO: Management frame protection not used
  * @NL80211_MFP_REQUIRED: Management frame protection required
+ * @NL80211_MFP_OPTIONAL: Management frame is optional
  */
 enum nl80211_mfp {
 	NL80211_MFP_NO,
 	NL80211_MFP_REQUIRED,
+	NL80211_MFP_OPTIONAL,
 };
 
 enum nl80211_wpa_versions {
@@ -5038,6 +5055,15 @@ enum nl80211_feature_flags {
  * @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA: Device supports
  *	doing 4-way handshake in station mode (PSK is passed as part
  *	of the connect command).
+ * @NL80211_EXT_FEATURE_FILS_MAX_CHANNEL_TIME: Driver is capable of overriding
+ *	the max channel attribute in the FILS request params IE with the
+ *	actual dwell time.
+ * @NL80211_EXT_FEATURE_ACCEPT_BCAST_PROBE_RESP: Driver accepts broadcast probe
+ *	response
+ * @NL80211_EXT_FEATURE_OCE_PROBE_REQ_HIGH_TX_RATE: Driver supports sending
+ *	the first probe request in each channel at rate of at least 5.5Mbps.
+ * @NL80211_EXT_FEATURE_OCE_PROBE_REQ_DEFERRAL_SUPPRESSION: Driver supports
+ *	probe request tx deferral and suppression
  *
  * @NUM_NL80211_EXT_FEATURES: number of extended features.
  * @MAX_NL80211_EXT_FEATURES: highest extended feature index.
@@ -5059,6 +5085,10 @@ enum nl80211_ext_feature_index {
 	NL80211_EXT_FEATURE_CQM_RSSI_LIST,
 	NL80211_EXT_FEATURE_FILS_SK_OFFLOAD,
 	NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA,
+	NL80211_EXT_FEATURE_FILS_MAX_CHANNEL_TIME,
+	NL80211_EXT_FEATURE_ACCEPT_BCAST_PROBE_RESP,
+	NL80211_EXT_FEATURE_OCE_PROBE_REQ_HIGH_TX_RATE,
+	NL80211_EXT_FEATURE_OCE_PROBE_REQ_DEFERRAL_SUPPRESSION,
 
 	/* add new features before the definition below */
 	NUM_NL80211_EXT_FEATURES,
@@ -5135,12 +5165,28 @@ enum nl80211_timeout_reason {
  *	locally administered 1, multicast 0) is assumed.
  *	This flag must not be requested when the feature isn't supported, check
  *	the nl80211 feature flags for the device.
+ * @NL80211_SCAN_FLAG_FILS_MAX_CHANNEL_TIME: fill the dwell time in the FILS
+ *	request parameters IE in the probe request
+ * @NL80211_SCAN_FLAG_ACCEPT_BCAST_PROBE_RESP: accept broadcast probe responses
+ * @NL80211_SCAN_FLAG_OCE_PROBE_REQ_HIGH_TX_RATE: send probe request frames at
+ *	rate of at least 5.5M. In case non OCE AP is dicovered in the channel,
+ *	only the first probe req in the channel will be sent in high rate.
+ * @NL80211_SCAN_FLAG_OCE_PROBE_REQ_DEFERRAL_SUPPRESSION: allow probe request
+ *	tx deferral (dot11FILSProbeDelay shall be set to 15ms)
+ *	and suppression (if it has received a broadcast Probe Response frame,
+ *	Beacon frame or FILS Discovery frame from an AP that the STA considers
+ *	a suitable candidate for (re-)association - suitable in terms of
+ *	SSID and/or RSSI
  */
 enum nl80211_scan_flags {
-	NL80211_SCAN_FLAG_LOW_PRIORITY			= 1<<0,
-	NL80211_SCAN_FLAG_FLUSH				= 1<<1,
-	NL80211_SCAN_FLAG_AP				= 1<<2,
-	NL80211_SCAN_FLAG_RANDOM_ADDR			= 1<<3,
+	NL80211_SCAN_FLAG_LOW_PRIORITY				= 1<<0,
+	NL80211_SCAN_FLAG_FLUSH					= 1<<1,
+	NL80211_SCAN_FLAG_AP					= 1<<2,
+	NL80211_SCAN_FLAG_RANDOM_ADDR				= 1<<3,
+	NL80211_SCAN_FLAG_FILS_MAX_CHANNEL_TIME			= 1<<4,
+	NL80211_SCAN_FLAG_ACCEPT_BCAST_PROBE_RESP		= 1<<5,
+	NL80211_SCAN_FLAG_OCE_PROBE_REQ_HIGH_TX_RATE		= 1<<6,
+	NL80211_SCAN_FLAG_OCE_PROBE_REQ_DEFERRAL_SUPPRESSION	= 1<<7,
 };
 
 /**
@@ -5425,6 +5471,74 @@ enum nl80211_nan_func_term_reason {
 #define NL80211_NAN_FUNC_SRF_MAX_LEN 0xff
 
 /**
+ * enum nl80211_nan_sec_ctx_type - NAN security context identifier type
+ * @NL80211_NAN_SEC_CTX_TYPE_PMKID: a 16 octet PMKID identifying the PMK used
+ *	for setting up the secure data path.
+ */
+enum nl80211_nan_sec_ctx_type {
+	NL80211_NAN_SEC_CTX_TYPE_PMKID,
+};
+
+/**
+ * enum nl80211_nan_cs_ids - NAN cipher suite identifiers
+ *
+ * Defines cipher suite identifiers for NAN security association
+ *
+ * @NL80211_NAN_CS_ID_SK_CCM_128: uses CCMP-128 for frame encryption, SHA-256
+ *	for the hash function used in PRF, and HMAC-SHA-256 for KDF.
+ * @NL80211_NAN_CS_ID_SK_GCM_256: uses GCMP-256 for frames encryption, SHA-384
+ *	for the hash function used in PRF, and HMAC-SHA-384 for KDF.
+ */
+enum nl80211_nan_cs_ids {
+	NL80211_NAN_CS_ID_SK_CCM_128 = 1 << 0,
+	NL80211_NAN_CS_ID_SK_GCM_256 = 1 << 1,
+};
+
+/**
+ * enum nl80211_nan_sec_ctx_id - NAN security context identifier
+ * @_NL80211_NAN_SEC_CTX_INVALID: invalid
+ * @NL80211_NAN_SEC_CTX_ID_TYPE: the type of the identifier as specified in
+ *	&enum nl80211_nan_sec_ctx_type.
+ * @NL80211_NAN_SEC_CTX_ID_DATA: the security context identifier data.
+ *
+ * @NUM_NL80211_NAN_SEC_CTX: internal
+ * @NL80211_NAN_SEC_CTX_MAX: highest NAN security context attribute
+ */
+enum nl80211_nan_sec_ctx_id {
+	_NL80211_NAN_SEC_CTX_INVALID,
+	NL80211_NAN_SEC_CTX_ID_TYPE,
+	NL80211_NAN_SEC_CTX_ID_DATA,
+
+	/* keep last */
+	NUM_NL80211_NAN_SEC_CTX,
+	NL80211_NAN_SEC_CTX_MAX = NUM_NL80211_NAN_SEC_CTX - 1
+};
+
+/**
+ * enum nl80211_nan_fsd - NAN further service discovery method
+ * @NL80211_NAN_FSD_FOLLOW_UP: follow up is used for further service discovery.
+ * @NL80211_NAN_FSD_GAS: GAS is used for further service discovery.
+ */
+enum nl80211_nan_fsd {
+	NL80211_NAN_FSD_FOLLOW_UP,
+	NL80211_NAN_FSD_GAS,
+};
+
+/**
+ * enum nl80211_nan_ndp_type - NAN data path type
+ * @NL80211_NAN_NDP_TYPE_UNICAST: unicast data path is required for the service
+ * @NL80211_NAN_NDP_TYPE_MCAST_ONE_TO_MANY: NAN multicat service group (NMSG)
+ *	of type one to many is required for the service.
+ * @NL80211_NAN_NDP_TYPE_MCAST_MANY_TO_MANY: NAN multicat service group (NMSG)
+ *	of type many to many is required for the service.
+ */
+enum nl80211_nan_ndp_type {
+	NL80211_NAN_NDP_TYPE_UNICAST,
+	NL80211_NAN_NDP_TYPE_MCAST_ONE_TO_MANY,
+	NL80211_NAN_NDP_TYPE_MCAST_MANY_TO_MANY,
+};
+
+/**
  * enum nl80211_nan_func_attributes - NAN function attributes
  * @__NL80211_NAN_FUNC_INVALID: invalid
  * @NL80211_NAN_FUNC_TYPE: &enum nl80211_nan_function_type (u8).
@@ -5462,6 +5576,26 @@ enum nl80211_nan_func_term_reason {
  *	Its type is u8 and it cannot be 0.
  * @NL80211_NAN_FUNC_TERM_REASON: NAN function termination reason.
  *	See &enum nl80211_nan_func_term_reason.
+ * @NL80211_NAN_FUNC_SECURITY_CIPHER_SUITES: relevant if the function's type is
+ *	publish. This is a bitmap specifying the cipher suites identifiers of
+ *	the cipher suites supported by the service. See &enum nl80211_nan_cs_ids
+ *	(u32).
+ * @NL80211_NAN_FUNC_SECURITY_CTX_IDS: relevant if the function's type is
+ *	publish and %NL80211_NAN_FUNC_SECURITY_CIPHER_SUITES is set. This is a
+ *	set of security context identifiers that may be used to set up a secured
+ *	data path for the service, each one is a nested attribute,
+ *	see &enum nl80211_nan_sec_ctx_id.
+ * @NL80211_NAN_FUNC_FSD: relevant if the function's type is publish. If further
+ *	service discovery is required for the service, specifies the further
+ *	service discovery method to be used, as specified by
+ *	&enum nl80211_nan_fsd (u32).
+ * @NL80211_NAN_FUNC_NDP_TYPE: relevant if the function's type is publish. If
+ *	NAN data path is required for the service, specifies the required NDP
+ *	type as specified by &enum nl80211_nan_ndp_type (u32).
+ * @NL80211_NAN_FUNC_RANGE_LIMIT_INGRESS: specifies the ingress range limit for
+ *	the service in centimeters (u16).
+ * @NL80211_NAN_FUNC_RANGE_LIMIT_EGRESS: specifies the egress range limit for
+ *	the service in centimeters (u16).
  *
  * @NUM_NL80211_NAN_FUNC_ATTR: internal
  * @NL80211_NAN_FUNC_ATTR_MAX: highest NAN function attribute
@@ -5484,6 +5618,12 @@ enum nl80211_nan_func_attributes {
 	NL80211_NAN_FUNC_TX_MATCH_FILTER,
 	NL80211_NAN_FUNC_INSTANCE_ID,
 	NL80211_NAN_FUNC_TERM_REASON,
+	NL80211_NAN_FUNC_SECURITY_CIPHER_SUITES,
+	NL80211_NAN_FUNC_SECURITY_CTX_IDS,
+	NL80211_NAN_FUNC_FSD,
+	NL80211_NAN_FUNC_NDP_TYPE,
+	NL80211_NAN_FUNC_RANGE_LIMIT_INGRESS,
+	NL80211_NAN_FUNC_RANGE_LIMIT_EGRESS,
 
 	/* keep last */
 	NUM_NL80211_NAN_FUNC_ATTR,
@@ -5526,6 +5666,9 @@ enum nl80211_nan_srf_attributes {
  * @NL80211_NAN_MATCH_FUNC_PEER: the peer function
  *	that caused the match. This is a nested attribute.
  *	See &enum nl80211_nan_func_attributes.
+ * @NL80211_NAN_MATCH_DEVICE_ATTRS: attributes from the service discovery frame
+ *	with information about the peer device (e.g. device capabilities,
+ *	availability attribute etc).
  *
  * @NUM_NL80211_NAN_MATCH_ATTR: internal
  * @NL80211_NAN_MATCH_ATTR_MAX: highest NAN match attribute
@@ -5534,6 +5677,7 @@ enum nl80211_nan_match_attributes {
 	__NL80211_NAN_MATCH_INVALID,
 	NL80211_NAN_MATCH_FUNC_LOCAL,
 	NL80211_NAN_MATCH_FUNC_PEER,
+	NL80211_NAN_MATCH_DEVICE_ATTRS,
 
 	/* keep last */
 	NUM_NL80211_NAN_MATCH_ATTR,
