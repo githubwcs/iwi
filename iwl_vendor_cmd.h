@@ -120,10 +120,6 @@
  *	set to %IWL_MVM_VENDOR_GSCAN_REPORT_BUFFER_COMPLETE_RESULTS.
  * @IWL_MVM_VENDOR_CMD_DBG_COLLECT: collect debug data
  * @IWL_MVM_VENDOR_CMD_NAN_FAW_CONF: Configure post NAN further availability.
- * @IWL_MVM_VENDOR_CMD_QUALITY_MEASUREMENTS: Starts Link Quality Measurements.
- *	Must include %IWL_MVM_VENDOR_ATTR_LQM_DURATION and
- *	%IWL_MVM_VENDOR_ATTR_LQM_TIMEOUT. The results will be notified with
- *	this same command.
  * @IWL_MVM_VENDOR_CMD_SET_SAR_PROFILE: set the NIC's tx power limits
  *	according to the specified tx power profiles. In this command
  *	%IWL_MVM_VENDOR_ATTR_SAR_CHAIN_A_PROFILE and
@@ -137,6 +133,10 @@
  * @IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_RESPONSE: An event that reports a list of
  *	neighbor APs received in a neighbor report response frame. The report is
  *	a nested list of &enum iwl_mvm_vendor_neighbor_report.
+ * @IWL_MVM_VENDOR_CMD_GET_SAR_GEO_PROFILE: get sar geographic profile
+ *	information. This command provides the user with the following
+ *	information: Per band tx power offset for chain A and chain B as well as
+ *	maximum allowed tx power on this band.
  */
 
 enum iwl_mvm_vendor_cmd {
@@ -167,11 +167,11 @@ enum iwl_mvm_vendor_cmd {
 	IWL_MVM_VENDOR_CMD_GSCAN_BEACON_EVENT,
 	IWL_MVM_VENDOR_CMD_DBG_COLLECT,
 	IWL_MVM_VENDOR_CMD_NAN_FAW_CONF,
-	IWL_MVM_VENDOR_CMD_QUALITY_MEASUREMENTS,
 	IWL_MVM_VENDOR_CMD_SET_SAR_PROFILE,
 	IWL_MVM_VENDOR_CMD_GET_SAR_PROFILE_INFO,
 	IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_REQUEST,
 	IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_RESPONSE,
+	IWL_MVM_VENDOR_CMD_GET_SAR_GEO_PROFILE,
 };
 
 /**
@@ -437,57 +437,6 @@ enum iwl_mvm_vendor_rxfilter_op {
 	IWL_MVM_VENDOR_RXFILTER_OP_DROP,
 };
 
-/**
- * enum iwl_mvm_vendor_lqm_status - status of a link quality measurement
- * @IWL_MVM_VENDOR_LQM_STATUS_SUCCESS: measurement succeeded for the
- *	requested time
- * @IWL_MVM_VENDOR_LQM_STATUS_TIMEOUT: measurement succeeded but was stopped
- *	earlier than expected because of a timeout
- * @IWL_MVM_VENDOR_LQM_STATUS_UNBOUND: measurement succeeded but was stopped
- *	earlier than expected because of a deassociation
- * @IWL_MVM_VENDOR_LQM_STATUS_ABORT_CHAN_SWITCH: measurement failed because
- *	of a channel switch
- */
-enum iwl_mvm_vendor_lqm_status {
-	IWL_MVM_VENDOR_LQM_STATUS_SUCCESS,
-	IWL_MVM_VENDOR_LQM_STATUS_TIMEOUT,
-	IWL_MVM_VENDOR_LQM_STATUS_ABORT,
-};
-
-/**
- * enum iwl_mvm_vendor_lqm_result - the result of a link quality measurement
- * @IWL_MVM_VENDOR_ATTR_LQM_INVALID: invalid attribute for compatibility
- *	purpose.
- * @IWL_MVM_VENDOR_ATTR_LQM_ACTIVE_STA_AIR_TIME: the air time for the most
- *	active stations during the measurement. This is a nested attribute
- *	which is an array of u32.
- * @IWL_MVM_VENDOR_ATTR_LQM_OTHER_STA: the air time consumed by the stations
- *	not included in %IWL_MVM_VENDOR_ATTR_LQM_ACTIVE_STA_AIR_TIME. This is a
- *	u32.
- * @IWL_MVM_VENDOR_ATTR_LQM_MEAS_TIME: the length (in msec) of the measurement.
- *	This can be shorter than the requested
- *	%IWL_MVM_VENDOR_ATTR_LQM_DURATION in case the measurement was cut
- *	short. This is a u32.
- * @IWL_MVM_VENDOR_ATTR_LQM_RETRY_LIMIT: the number of frames that were dropped
- *	due to retry limit during the measurement. This is a u32.
- * @IWL_MVM_VENDOR_ATTR_LQM_MEAS_STATUS: the measurement status.
- *	One of &enum iwl_mvm_vendor_lqm_status. This is a u32.
- * @NUM_IWL_MVM_VENDOR_LQM_RESULT: num of link quality measurement attributes
- * @MAX_IWL_MVM_VENDOR_LQM_RESULT: highest link quality measurement attribute
- *	number.
- */
-enum iwl_mvm_vendor_lqm_result {
-	IWL_MVM_VENDOR_ATTR_LQM_INVALID,
-	IWL_MVM_VENDOR_ATTR_LQM_ACTIVE_STA_AIR_TIME,
-	IWL_MVM_VENDOR_ATTR_LQM_OTHER_STA,
-	IWL_MVM_VENDOR_ATTR_LQM_MEAS_TIME,
-	IWL_MVM_VENDOR_ATTR_LQM_RETRY_LIMIT,
-	IWL_MVM_VENDOR_ATTR_LQM_MEAS_STATUS,
-
-	NUM_IWL_MVM_VENDOR_LQM_RESULT,
-	MAX_IWL_MVM_VENDOR_LQM_RESULT = NUM_IWL_MVM_VENDOR_LQM_RESULT - 1,
-};
-
 /*
  * enum iwl_mvm_vendor_nr_chan_width - channel width definitions
  *
@@ -545,7 +494,8 @@ enum iwl_mvm_vendor_phy_type {
  * @IWL_MVM_VENDOR_NEIGHBOR_CIVIC: the CIVIC info of the neighbor AP. Optional.
  *	Binary attribute.
  * @NUM_IWL_MVM_VENDOR_NEIGHBOR_REPORT: num of neighbor report attributes
- * @MAX_IWL_MVM_VENDOR_NEIGHBOR_REPORT: highest neighbor report attribute number.
+ * @MAX_IWL_MVM_VENDOR_NEIGHBOR_REPORT: highest neighbor report attribute
+ *	number.
 
  */
 enum iwl_mvm_vendor_neighbor_report {
@@ -564,6 +514,21 @@ enum iwl_mvm_vendor_neighbor_report {
 	NUM_IWL_MVM_VENDOR_NEIGHBOR_REPORT,
 	MAX_IWL_MVM_VENDOR_NEIGHBOR_REPORT =
 		NUM_IWL_MVM_VENDOR_NEIGHBOR_REPORT - 1,
+};
+
+/**
+ * enum iwl_vendor_sar_per_chain_geo_table - per chain tx power table
+ *
+ * @IWL_VENDOR_SAR_GEO_INVALID: attribute number 0 is reserved.
+ * @IWL_VENDOR_SAR_GEO_CHAIN_A_OFFSET: allowed offset for chain a (u8).
+ * @IWL_VENDOR_SAR_GEO_CHAIN_B_OFFSET: allowed offset for chain b (u8).
+ * @IWL_VENDOR_SAR_GEO_MAX_TXP: maximum allowed tx power (u8).
+ */
+enum iwl_vendor_sar_per_chain_geo_table {
+	IWL_VENDOR_SAR_GEO_INVALID,
+	IWL_VENDOR_SAR_GEO_CHAIN_A_OFFSET,
+	IWL_VENDOR_SAR_GEO_CHAIN_B_OFFSET,
+	IWL_VENDOR_SAR_GEO_MAX_TXP,
 };
 
 /**
@@ -665,14 +630,6 @@ enum iwl_mvm_vendor_neighbor_report {
  *	channel, used for anything but 20 MHz bandwidth.
  * @IWL_MVM_VENDOR_ATTR_CENTER_FREQ2: Center frequency of the second part of
  *	the channel, used only for 80+80 MHz bandwidth.
- * @IWL_MVM_VENDOR_ATTR_LQM_DURATION: the duration in msecs of the Link
- *	Quality Measurement. Required for
- *	&IWL_MVM_VENDOR_CMD_QUALITY_MEASUREMENTS. This is a u32.
- * @IWL_MVM_VENDOR_ATTR_LQM_TIMEOUT: the maximal time in msecs that the
- *	measurement can take. Required for
- *	&IWL_MVM_VENDOR_CMD_QUALITY_MEASUREMENTS. This is a u32.
- * @IWL_MVM_VENDOR_ATTR_LQM_RESULT: result of the measurement. Nested attribute
- *	see &enum iwl_mvm_vendor_lqm_result.
  * @IWL_MVM_VENDOR_ATTR_GSCAN_REPORT_THRESHOLD_NUM: report that scan results
  *	are available when buffer is that much full. In number of scans.
  * @IWL_MVM_VENDOR_ATTR_GSCAN_CACHED_RESULTS: array of gscan cached results.
@@ -694,6 +651,8 @@ enum iwl_mvm_vendor_neighbor_report {
  *	This is a u8.
  * @IWL_MVM_VENDOR_ATTR_SAR_ENABLED_PROFILE_NUM: number of enabled SAR profile
  *	This is a u8.
+ * @IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE: geo profile info.
+ *	see &enum iwl_vendor_sar_per_chain_geo_table.
  *
  */
 enum iwl_mvm_vendor_attr {
@@ -749,9 +708,6 @@ enum iwl_mvm_vendor_attr {
 	IWL_MVM_VENDOR_ATTR_CHANNEL_WIDTH,
 	IWL_MVM_VENDOR_ATTR_CENTER_FREQ1,
 	IWL_MVM_VENDOR_ATTR_CENTER_FREQ2,
-	IWL_MVM_VENDOR_ATTR_LQM_DURATION,
-	IWL_MVM_VENDOR_ATTR_LQM_TIMEOUT,
-	IWL_MVM_VENDOR_ATTR_LQM_RESULT,
 	IWL_MVM_VENDOR_ATTR_GSCAN_REPORT_THRESHOLD_NUM,
 	IWL_MVM_VENDOR_ATTR_GSCAN_CACHED_RESULTS,
 	IWL_MVM_VENDOR_ATTR_LAST_MSG,
@@ -762,6 +718,7 @@ enum iwl_mvm_vendor_attr {
 	IWL_MVM_VENDOR_ATTR_NEIGHBOR_LCI,
 	IWL_MVM_VENDOR_ATTR_NEIGHBOR_CIVIC,
 	IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT,
+	IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE,
 
 	NUM_IWL_MVM_VENDOR_ATTR,
 	MAX_IWL_MVM_VENDOR_ATTR = NUM_IWL_MVM_VENDOR_ATTR - 1,
