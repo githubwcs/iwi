@@ -137,6 +137,15 @@
  *	information. This command provides the user with the following
  *	information: Per band tx power offset for chain A and chain B as well as
  *	maximum allowed tx power on this band.
+ * @IWL_MVM_VENDOR_CMD_TEST_FIPS: request the output of a certain function for
+ *	the specified test vector. The test vector is specified with one of:
+ *	&IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_SHA,
+ *	&IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HMAC, or
+ *	&IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_KDF. Only one test vector shall be
+ *	specified per test command.
+ *	The result output is sent back in &IWL_MVM_VENDOR_ATTR_FIPS_TEST_RESULT
+ *	attribute. In case the function failed to produce an output for the
+ *	requested test vector, &IWL_MVM_VENDOR_ATTR_FIPS_TEST_RESULT is not set.
  */
 
 enum iwl_mvm_vendor_cmd {
@@ -172,6 +181,7 @@ enum iwl_mvm_vendor_cmd {
 	IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_REQUEST,
 	IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_RESPONSE,
 	IWL_MVM_VENDOR_CMD_GET_SAR_GEO_PROFILE,
+	IWL_MVM_VENDOR_CMD_TEST_FIPS,
 };
 
 /**
@@ -532,6 +542,69 @@ enum iwl_vendor_sar_per_chain_geo_table {
 };
 
 /**
+ * enum iwl_vendor_fips_test_vector_sha_type - SHA types for FIPS tests
+ *
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA1: SHA1
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA256: SHA256
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA384: SHA384
+ */
+enum iwl_vendor_fips_test_vector_sha_type {
+	IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA1,
+	IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA256,
+	IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA384,
+};
+
+/**
+ * enum iwl_vendor_fips_test_vector_sha - test vector for SHA tests
+ *
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_SHA_INVALID: attribute number 0 is reserved.
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE: which SHA function to use. One of
+ *	&enum iwl_vendor_fips_test_vector_sha_type.
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_SHA_MSG: the message to generate the digest for.
+ * @NUM_IWL_VENDOR_FIPS_TEST_VECTOR_SHA: number of SHA test vector attributes.
+ * @MAX_IWL_VENDOR_FIPS_TEST_VECTOR_SHA: highest SHA test vector attribute.
+ */
+enum iwl_vendor_fips_test_vector_sha {
+	IWL_VENDOR_FIPS_TEST_VECTOR_SHA_INVALID,
+	IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE,
+	IWL_VENDOR_FIPS_TEST_VECTOR_SHA_MSG,
+
+	NUM_IWL_VENDOR_FIPS_TEST_VECTOR_SHA,
+	MAX_IWL_VENDOR_FIPS_TEST_VECTOR_SHA =
+		NUM_IWL_VENDOR_FIPS_TEST_VECTOR_SHA - 1,
+};
+
+/**
+ * enum iwl_vendor_fips_test_vector_hmac_kdf - test vector for HMAC/KDF tests
+ *
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_INVALID: attribute number 0 is
+ *	reserved.
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_TYPE: which HMAC-SHA function to use.
+ *	One of &enum iwl_vendor_fips_test_vector_sha_type.
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_KEY: key input for the HMAC-SHA
+ *	function.
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_MSG: the message to generate the
+ *	digest for.
+ * @IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_RES_LEN: the requested digest length in
+ *	bytes.
+ * @NUM_IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF: number of HMAC/KDF test vector
+ *	attributes.
+ * @MAX_IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF: highest HMAC/KDF test vector
+ *	attribute.
+ */
+enum iwl_vendor_fips_test_vector_hmac_kdf {
+	IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_INVALID,
+	IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_TYPE,
+	IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_KEY,
+	IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_MSG,
+	IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_RES_LEN,
+
+	NUM_IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF,
+	MAX_IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF =
+		NUM_IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF - 1,
+};
+
+/**
  * enum iwl_mvm_vendor_attr - attributes used in vendor commands
  * @__IWL_MVM_VENDOR_ATTR_INVALID: attribute 0 is invalid
  * @IWL_MVM_VENDOR_ATTR_LOW_LATENCY: low-latency flag attribute
@@ -635,14 +708,6 @@ enum iwl_vendor_sar_per_chain_geo_table {
  * @IWL_MVM_VENDOR_ATTR_GSCAN_CACHED_RESULTS: array of gscan cached results.
  *	Each result is a nested attribute of
  *	&enum iwl_mvm_vendor_gscan_cached_scan_res.
- * @IWL_MVM_VENDOR_ATTR_SSID: SSID (binary attribute, 0..32 octets)
- * @IWL_MVM_VENDOR_ATTR_NEIGHBOR_LCI: Flag attribute specifying that the
- *	neighbor request shall query for LCI information.
- * @IWL_MVM_VENDOR_ATTR_NEIGHBOR_CIVIC: Flag attribute specifying that the
- *	neighbor request shall query for CIVIC information.
- * @IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT: A list of neighbor APs as received in a
- *	neighbor report frame. Each AP is a nested attribute of
- *	&enum iwl_mvm_vendor_neighbor_report.
  * @IWL_MVM_VENDOR_ATTR_LAST_MSG: Indicates that this message is the last one
  *	in the series of messages. (flag)
  * @IWL_MVM_VENDOR_ATTR_SAR_CHAIN_A_PROFILE: SAR table idx for chain A.
@@ -651,8 +716,24 @@ enum iwl_vendor_sar_per_chain_geo_table {
  *	This is a u8.
  * @IWL_MVM_VENDOR_ATTR_SAR_ENABLED_PROFILE_NUM: number of enabled SAR profile
  *	This is a u8.
+ * @IWL_MVM_VENDOR_ATTR_SSID: SSID (binary attribute, 0..32 octets)
+ * @IWL_MVM_VENDOR_ATTR_NEIGHBOR_LCI: Flag attribute specifying that the
+ *	neighbor request shall query for LCI information.
+ * @IWL_MVM_VENDOR_ATTR_NEIGHBOR_CIVIC: Flag attribute specifying that the
+ *	neighbor request shall query for CIVIC information.
+ * @IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT: A list of neighbor APs as received in a
+ *	neighbor report frame. Each AP is a nested attribute of
+ *	&enum iwl_mvm_vendor_neighbor_report.
  * @IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE: geo profile info.
  *	see &enum iwl_vendor_sar_per_chain_geo_table.
+ * @IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_SHA: data vector for FIPS SHA test.
+ *	&enum iwl_vendor_fips_test_vector_sha.
+ * @IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HMAC: data vector for FIPS HMAC test.
+ *	&enum iwl_vendor_fips_test_vector_hmac_kdf.
+ * @IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_KDF: data vector for FIPS KDF test.
+ *	&enum iwl_vendor_fips_test_vector_hmac_kdf.
+ * @IWL_MVM_VENDOR_ATTR_FIPS_TEST_RESULT: FIPS test result. Contains the
+ *	output of the requested function.
  *
  */
 enum iwl_mvm_vendor_attr {
@@ -719,6 +800,10 @@ enum iwl_mvm_vendor_attr {
 	IWL_MVM_VENDOR_ATTR_NEIGHBOR_CIVIC,
 	IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT,
 	IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE,
+	IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_SHA,
+	IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HMAC,
+	IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_KDF,
+	IWL_MVM_VENDOR_ATTR_FIPS_TEST_RESULT,
 
 	NUM_IWL_MVM_VENDOR_ATTR,
 	MAX_IWL_MVM_VENDOR_ATTR = NUM_IWL_MVM_VENDOR_ATTR - 1,
