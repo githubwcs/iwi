@@ -336,6 +336,195 @@ COMMAND(iwl, neighbor_request, "[ssid=<SSID>] [lci] [civic]",
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_neighbor_request,
 	"");
 
+static int iwl_vendor_sha_type(char *arg,
+			       enum iwl_vendor_fips_test_vector_sha_type *type)
+{
+	if (strncmp(arg, "sha1", 4) == 0)
+		*type = IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA1;
+	else if (strncmp(arg, "sha256", 6) == 0)
+		*type = IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA256;
+	else if (strncmp(arg, "sha384", 6) == 0)
+		*type = IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE_SHA384;
+	else
+		return HANDLER_RET_USAGE;
+
+	return 0;
+}
+
+static int iwl_vendor_put_sha_vector(struct nl_msg *msg, int argc, char **argv)
+{
+	struct nlattr *attr;
+	enum iwl_vendor_fips_test_vector_sha_type sha_type;
+	int len, ret;
+	char buf[128];
+
+	/* SHA vector parameters: type (sha1|sha256|sha384), message */
+	if (argc != 2)
+		return -EINVAL;
+
+	attr = nla_nest_start(msg, IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_SHA);
+	if (!attr)
+		return -ENOBUFS;
+
+	ret = iwl_vendor_sha_type(argv[0], &sha_type);
+	if (ret)
+		return ret;
+
+	NLA_PUT_U8(msg, IWL_VENDOR_FIPS_TEST_VECTOR_SHA_TYPE, sha_type);
+
+	len = strlen(argv[1]);
+	if (!len || (len % 2) || len / 2 > (int)sizeof(buf))
+		return -EINVAL;
+
+	if (!hex2bin(argv[1], buf))
+		return -EINVAL;
+
+	NLA_PUT(msg, IWL_VENDOR_FIPS_TEST_VECTOR_SHA_MSG, len / 2, buf);
+
+	nla_nest_end(msg, attr);
+
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+static int iwl_vendor_put_hmac_kdf_vector(struct nl_msg *msg, int argc,
+					  char **argv,
+					  enum iwl_mvm_vendor_attr attr_id)
+{
+	struct nlattr *attr;
+	enum iwl_vendor_fips_test_vector_sha_type sha_type;
+	int len, ret;
+	char buf[256];
+	char *end;
+
+	/*
+	 * HMAC/KDF vector parameters:
+	 * type (sha1|sha256|sha384), result length, key, message
+	 */
+	if (argc != 4)
+		return -EINVAL;
+
+	attr = nla_nest_start(msg, attr_id);
+	if (!attr)
+		return -ENOBUFS;
+
+	ret = iwl_vendor_sha_type(argv[0], &sha_type);
+	if (ret)
+		return ret;
+
+	NLA_PUT_U8(msg, IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_TYPE, sha_type);
+
+	len = strtoul(argv[1], &end, 10);
+	if (*end != '\0' || len % 8)
+		return -EINVAL;
+
+	NLA_PUT_U8(msg, IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_RES_LEN, len / 8);
+
+	len = strlen(argv[2]);
+	if (!len || (len % 2) || len / 2 > (int)sizeof(buf))
+		return -EINVAL;
+
+	if (!hex2bin(argv[2], buf))
+		return -EINVAL;
+
+	NLA_PUT(msg, IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_KEY, len / 2, buf);
+
+	len = strlen(argv[3]);
+	if (!len || (len % 2) || len / 2 > (int)sizeof(buf))
+		return -EINVAL;
+
+	if (!hex2bin(argv[3], buf))
+		return -EINVAL;
+
+	NLA_PUT(msg, IWL_VENDOR_FIPS_TEST_VECTOR_HMAC_KDF_MSG, len / 2, buf);
+
+	nla_nest_end(msg, attr);
+
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+static int print_fips_test_result(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get FIPS test result");
+		return NL_SKIP;
+	}
+
+	if (!attr[IWL_MVM_VENDOR_ATTR_FIPS_TEST_RESULT]) {
+		fprintf(stderr, "FIPS: test failed\n");
+		return NL_SKIP;
+	}
+
+	iw_hexdump("FIPS RESULT",
+		   nla_data(attr[IWL_MVM_VENDOR_ATTR_FIPS_TEST_RESULT]),
+		   nla_len(attr[IWL_MVM_VENDOR_ATTR_FIPS_TEST_RESULT]));
+
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_fips_test(struct nl80211_state *state,
+				       struct nl_msg *msg, int argc,
+				       char **argv, enum id_input id)
+{
+	char *type;
+	int ret;
+	struct nlattr *attr;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_TEST_FIPS);
+
+	if (argc < 2)
+		return -EINVAL;
+
+	attr = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!attr)
+		return -ENOBUFS;
+
+	if (strncmp(argv[0], "type=", 5) != 0)
+		return -EINVAL;
+
+	type = argv[0] + 5;
+	if (strncmp(type, "sha", 3) == 0)
+		ret = iwl_vendor_put_sha_vector(msg, argc - 1, &argv[1]);
+	else if (strncmp(type, "hmac", 4) == 0)
+		ret = iwl_vendor_put_hmac_kdf_vector(msg, argc - 1, &argv[1],
+						     IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HMAC);
+	else if (strncmp(type, "kdf", 3) == 0)
+		ret = iwl_vendor_put_hmac_kdf_vector(msg, argc - 1, &argv[1],
+						     IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_KDF);
+	else
+		return -EINVAL;
+
+	if (ret)
+		return ret;
+
+	nla_nest_end(msg, attr);
+
+	register_handler(print_fips_test_result, NULL);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+COMMAND(iwl, fips_test, "type=<sha|hmac|kdf> <vector parameters>\n"
+	" parameters for SHA test: <sha1|sha256|sha384> <hex encoded message>\n"
+	" parameters for HMAC/KDF tests: <sha1|sha256|sha384> <result length in bits>"
+	" <hex encoded key> <hex encoded message>\n",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_fips_test,
+	"");
+
 static const char const* phy2str[] =
 {
 	[IWL_MVM_VENDOR_PHY_TYPE_UNSPECIFIED] = "unspecified",
