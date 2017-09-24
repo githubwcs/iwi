@@ -448,6 +448,162 @@ nla_put_failure:
 	return -ENOBUFS;
 }
 
+static int iwl_vendor_put_hex_attr(struct nl_msg *msg, char *arg, int attr_id)
+{
+	char buf[256];
+	int len;
+
+	len = strlen(arg);
+	if (!len)
+		return 0;
+
+	if ((len % 2) || len / 2 > (int)sizeof(buf))
+		return -EINVAL;
+
+	if (!hex2bin(arg, buf))
+		return -EINVAL;
+
+	NLA_PUT(msg, attr_id, len / 2, buf);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+#define KEY_128_LEN_BYTES	16
+#define KEY_256_LEN_BYTES	32
+#define CCM_NONCE_LEN		13
+#define GCM_NONCE_LEN		12
+
+static int iwl_vendor_validate_aes_vector(int argc, char **argv)
+{
+	char *key;
+
+	/*
+	 * AES vector parameters:
+	 * <encrypt|decrypt> <key> <payload|ciphertext>
+	 */
+	if (argc != 3)
+		return HANDLER_RET_USAGE;
+
+	key = argv[1];
+
+	if (strlen(key) / 2 != KEY_128_LEN_BYTES &&
+	    strlen(key) / 2 != KEY_256_LEN_BYTES)
+		return HANDLER_RET_USAGE;
+
+	return 0;
+}
+
+static int iwl_vendor_validate_ccm_vector(int argc, char **argv)
+{
+	char *key, *nonce;
+
+	/*
+	 * GCM vector parameters:
+	 * <encrypt|decrypt> <key> <nonce> <AAD> <payload|ciphertext>
+	 */
+	if (argc != 5)
+		return HANDLER_RET_USAGE;
+
+	key = argv[1];
+	nonce = argv[2];
+
+	if ((strlen(key) / 2) != KEY_128_LEN_BYTES ||
+	    (strlen(nonce) / 2) != CCM_NONCE_LEN)
+		return HANDLER_RET_USAGE;
+
+	return 0;
+}
+
+static int iwl_vendor_validate_gcm_vector(int argc, char **argv)
+{
+	char *key, *nonce;
+
+	/*
+	 * GCM vector parameters:
+	 * <encrypt|decrypt> <key> <nonce> <AAD> <payload|ciphertext>
+	 */
+	if (argc != 5)
+		return HANDLER_RET_USAGE;
+
+	key = argv[1];
+	nonce = argv[2];
+
+	if (((strlen(key) / 2) != KEY_128_LEN_BYTES &&
+	     (strlen(key) / 2) != KEY_256_LEN_BYTES) ||
+	    (strlen(nonce) / 2) != GCM_NONCE_LEN)
+		return HANDLER_RET_USAGE;
+
+	return 0;
+}
+
+static int iwl_vendor_put_hw_vector(struct nl_msg *msg, int argc, char **argv,
+				    int attr_id)
+{
+	struct nlattr *attr;
+	int index = 0, ret;
+
+	switch (attr_id) {
+	case IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_AES:
+		ret = iwl_vendor_validate_aes_vector(argc, argv);
+		break;
+	case IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_CCM:
+		ret = iwl_vendor_validate_ccm_vector(argc, argv);
+		break;
+	case IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_GCM:
+		ret = iwl_vendor_validate_gcm_vector(argc, argv);
+		break;
+	default:
+		return -EINVAL;
+	}
+
+	if (ret)
+		return ret;
+
+	attr = nla_nest_start(msg, attr_id);
+	if (!attr)
+		return -ENOBUFS;
+
+	if (strncmp(argv[index], "encrypt", 7) == 0)
+		NLA_PUT_U32(msg, IWL_VENDOR_FIPS_TEST_VECTOR_HW_FLAGS,
+			    IWL_VENDOR_FIPS_TEST_VECTOR_FLAGS_ENCRYPT);
+	else if (strncmp(argv[index], "decrypt", 7) != 0)
+		return HANDLER_RET_USAGE;
+
+	index++;
+
+	ret = iwl_vendor_put_hex_attr(msg, argv[index++],
+				      IWL_VENDOR_FIPS_TEST_VECTOR_HW_KEY);
+	if (ret)
+		return ret;
+
+	if (attr_id == IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_CCM ||
+	    attr_id == IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_GCM) {
+		ret = iwl_vendor_put_hex_attr(msg, argv[index++],
+					      IWL_VENDOR_FIPS_TEST_VECTOR_HW_NONCE);
+		if (ret)
+			return ret;
+
+		ret = iwl_vendor_put_hex_attr(msg, argv[index++],
+					      IWL_VENDOR_FIPS_TEST_VECTOR_HW_AAD);
+		if (ret)
+			return ret;
+	}
+
+	ret = iwl_vendor_put_hex_attr(msg, argv[index],
+				      IWL_VENDOR_FIPS_TEST_VECTOR_HW_PAYLOAD);
+	if (ret)
+		return ret;
+
+	nla_nest_end(msg, attr);
+
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
 static int print_fips_test_result(struct nl_msg *msg, void *arg)
 {
 	struct nlattr *data = parse_vendor_reply(msg);
@@ -504,6 +660,15 @@ static int handle_iwl_vendor_fips_test(struct nl80211_state *state,
 	else if (strncmp(type, "kdf", 3) == 0)
 		ret = iwl_vendor_put_hmac_kdf_vector(msg, argc - 1, &argv[1],
 						     IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_KDF);
+	else if (strncmp(type, "aes", 3) == 0)
+		ret = iwl_vendor_put_hw_vector(msg, argc - 1, &argv[1],
+					       IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_AES);
+	else if (strncmp(type, "ccm", 3) == 0)
+		ret = iwl_vendor_put_hw_vector(msg, argc - 1, &argv[1],
+					       IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_CCM);
+	else if (strncmp(type, "gcm", 3) == 0)
+		ret = iwl_vendor_put_hw_vector(msg, argc - 1, &argv[1],
+					       IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_HW_GCM);
 	else
 		return -EINVAL;
 
@@ -521,7 +686,11 @@ nla_put_failure:
 COMMAND(iwl, fips_test, "type=<sha|hmac|kdf> <vector parameters>\n"
 	" parameters for SHA test: <sha1|sha256|sha384> <hex encoded message>\n"
 	" parameters for HMAC/KDF tests: <sha1|sha256|sha384> <result length in bits>"
-	" <hex encoded key> <hex encoded message>\n",
+	" <hex encoded key> <hex encoded message>\n"
+	" parameters for AES test: <encrypt|decrypt> <hex encoded key>"
+	" <hex encoded payload/ciphertext>\n"
+	" parameters for CCM/GCM tests: <encrypt|decrypt> <hex encoded key>"
+	" <hex encoded nonce> <hex encoded AAD> <hex encoded payload/ciphertext>\n",
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_fips_test,
 	"");
 
