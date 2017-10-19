@@ -571,6 +571,138 @@ static void parse_nan_match(struct nlattr **attrs)
 	printf("\n");
 }
 
+static void parse_nan_sec(struct nlattr *csid_attr, struct nlattr *ctx_attr)
+{
+	unsigned int csid;
+	struct nlattr *nst;
+	int rem_nest;
+
+	if (!csid_attr)
+		return;
+
+	csid = nla_get_u32(csid_attr);
+	if (csid == NL80211_NAN_CS_ID_SK_CCM_128) {
+		printf(", csid=SK-128");
+	} else if (csid == NL80211_NAN_CS_ID_SK_GCM_256) {
+		printf(", csid=SK-256");
+	} else {
+		printf(", csid=unknown");
+		return;
+	}
+
+	if (!ctx_attr)
+		return;
+
+	nla_for_each_nested(nst, ctx_attr, rem_nest) {
+		struct nlattr *ctx[NL80211_NAN_SEC_CTX_MAX + 1];
+
+		if (nla_parse_nested(ctx, NL80211_NAN_SEC_CTX_MAX,
+				     nst, NULL))
+			return;
+
+		if (!ctx[NL80211_NAN_SEC_CTX_ID_TYPE] ||
+		    !ctx[NL80211_NAN_SEC_CTX_ID_DATA])
+			    return;
+
+		printf(", sec_ctx=<%u, %*.s>",
+		       nla_get_u32(ctx[NL80211_NAN_SEC_CTX_ID_TYPE]),
+		       nla_len(ctx[NL80211_NAN_SEC_CTX_ID_DATA]),
+		       (char *)nla_data(ctx[NL80211_NAN_SEC_CTX_ID_DATA]));
+	}
+}
+
+static void parse_nan_ndp(struct nlattr **attrs)
+{
+	struct nlattr *ndp[NL80211_NAN_NDP_MAX + 1];
+	char nmi[3 * ETH_ALEN] = {}, init[3 * ETH_ALEN] = {},
+	     resp[3 * ETH_ALEN]	= {};
+	enum nl80211_nan_ndp_oper oper;
+
+	static struct nla_policy nan_ndp_policy[NL80211_NAN_NDP_MAX + 1] = {
+		[NL80211_NAN_NDP_OPER] = { .type = NLA_U32 },
+		[NL80211_NAN_NDP_PEER_NMI] = { },
+		[NL80211_NAN_NDP_PUB_INST_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_NDP_INIT_NDI] = { },
+		[NL80211_NAN_NDP_RESP_NDI] = { },
+		[NL80211_NAN_NDP_ID] = { .type = NLA_U8 },
+		[NL80211_NAN_NDP_REJECTED] = { .type = NLA_U8},
+		[NL80211_NAN_NDP_REASON] = { .type = NLA_U8},
+		[NL80211_NAN_NDP_QOS_MIN_SLOTS] = { .type = NLA_U8 },
+		[NL80211_NAN_NDP_QOS_MAX_LATENCY] = { .type = NLA_U16 },
+		[NL80211_NAN_NDP_SECURITY_CIPHER_SUITES] = { .type = NLA_U32 },
+		[NL80211_NAN_NDP_SECURITY_CTX_IDS] = { .type = NLA_NESTED },
+		[NL80211_NAN_NDP_SECURITY_PMK] = { },
+		[NL80211_NAN_NDP_SSI] = { .type = NLA_UNSPEC },
+	};
+
+	if (!attrs[NL80211_ATTR_NAN_NDP_PARAMS] ||
+	    nla_parse_nested(ndp, NL80211_NAN_NDP_MAX,
+			     attrs[NL80211_ATTR_NAN_NDP_PARAMS],
+			     nan_ndp_policy))
+		return;
+
+
+	if (!ndp[NL80211_NAN_NDP_OPER] || !ndp[NL80211_NAN_NDP_PEER_NMI] ||
+	    !ndp[NL80211_NAN_NDP_ID] || !ndp[NL80211_NAN_NDP_INIT_NDI])
+		return;
+
+	mac_addr_n2a(nmi, nla_data(ndp[NL80211_NAN_NDP_PEER_NMI]));
+	mac_addr_n2a(init, nla_data(ndp[NL80211_NAN_NDP_INIT_NDI]));
+
+	oper = nla_get_u32(ndp[NL80211_NAN_NDP_OPER]);
+	switch(oper) {
+	case NL80211_NAN_NDP_OPER_REQ:
+	case NL80211_NAN_NDP_OPER_RES:
+	case NL80211_NAN_NDP_OPER_TERM:
+		break;
+	default:
+		return;
+	};
+
+	printf("NAN NDP: peer=%s, oper=%u, ndp_id=%u, initiator=%s",
+	       nmi, oper, nla_get_u8(ndp[NL80211_NAN_NDP_ID]), init);
+	switch(oper) {
+	case NL80211_NAN_NDP_OPER_REQ:
+		if (!ndp[NL80211_NAN_NDP_PUB_INST_ID])
+			return;
+		printf(", pub_inst_id=%u",
+		       nla_get_u8(ndp[NL80211_NAN_NDP_PUB_INST_ID]));
+		break;
+	case NL80211_NAN_NDP_OPER_RES:
+		if (ndp[NL80211_NAN_NDP_REJECTED]) {
+			printf(", rejected, reason=%u",
+			       ndp[NL80211_NAN_NDP_REASON] ?
+			       nla_get_u8(ndp[NL80211_NAN_NDP_REASON]) : 0xff);
+			goto done;
+		} else {
+			mac_addr_n2a(resp, nla_data(ndp[NL80211_NAN_NDP_RESP_NDI]));
+			printf(", accepted, resp=%s", resp);
+		}
+
+		break;
+	case NL80211_NAN_NDP_OPER_TERM:
+	default:
+		goto done;
+	};
+
+	printf(", min_slots=%u",
+	       ndp[NL80211_NAN_NDP_QOS_MIN_SLOTS] ?
+	       nla_get_u8(ndp[NL80211_NAN_NDP_QOS_MIN_SLOTS]) : 0x0);
+
+	printf(", max_latency=%hu",
+	       ndp[NL80211_NAN_NDP_QOS_MAX_LATENCY] ?
+	       nla_get_u16(ndp[NL80211_NAN_NDP_QOS_MAX_LATENCY]) : 0xffff);
+
+	parse_nan_sec(ndp[NL80211_NAN_NDP_SECURITY_CIPHER_SUITES],
+		      ndp[NL80211_NAN_NDP_SECURITY_CTX_IDS]);
+
+	if (ndp[NL80211_NAN_NDP_SSI])
+		printf(", info=%.*s", nla_len(ndp[NL80211_NAN_NDP_SSI]),
+		       (char *)nla_data(ndp[NL80211_NAN_NDP_SSI]));
+done:
+	printf("\n");
+}
+
 static int print_event(struct nl_msg *msg, void *arg)
 {
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
@@ -904,6 +1036,9 @@ static int print_event(struct nl_msg *msg, void *arg)
 		parse_nan_match(tb);
 		break;
 	}
+	case NL80211_CMD_NAN_NDP:
+		parse_nan_ndp(tb);
+		break;
 	default:
 		printf("unknown event %d (%s)\n",
 		       gnlh->cmd, command_name(gnlh->cmd));
