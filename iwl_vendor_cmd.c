@@ -182,6 +182,74 @@ COMMAND(iwl, sar_get_profiles_info, "",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_sar_get_profile_info, "");
 
+static int print_geo_profile_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	struct nlattr *entry[MAX_IWL_MVM_VENDOR_ATTR], *entries;
+	char *bands[] = { "2.4", "5.2" };
+	int profs;
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get SAR geographic profile info");
+		return NL_SKIP;
+	}
+	if (!attr[IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE])
+		return NL_SKIP;
+
+	nla_for_each_nested(entries, attr[IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE], profs) {
+		if (nla_parse_nested(entry, MAX_IWL_MVM_VENDOR_ATTR,
+				     entries, NULL)) {
+			printf("Failed to parse SAR geographic profile data\n");
+			return -EINVAL;
+		}
+		if (entries->nla_type > ARRAY_SIZE(bands)) {
+			printf("Too many nested attributes for SAR GEO profile\n");
+			return -EINVAL;
+		}
+
+		if (!entry[IWL_VENDOR_SAR_GEO_CHAIN_A_OFFSET] ||
+		    !entry[IWL_VENDOR_SAR_GEO_CHAIN_B_OFFSET] ||
+		    !entry[IWL_VENDOR_SAR_GEO_MAX_TXP]) {
+			printf("SAR geographic profile disabled\n");
+		} else {
+			printf("%sGHz\n\tChain A offset: %hhd dBm\n\tChain B offset: %hhd dBm\n\tMax tx power: %hhd dBm\n",
+			       bands[entries->nla_type - 1],
+			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_CHAIN_A_OFFSET]),
+			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_CHAIN_B_OFFSET]),
+			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_MAX_TXP]));
+		}
+	}
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_sar_get_geo_profile(struct nl80211_state *state,
+						 struct nl_msg *msg,
+						 int argc, char **argv,
+						 enum id_input id)
+{
+	int num;
+
+	if (argc != 0)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_GET_SAR_GEO_PROFILE);
+
+	register_handler(print_geo_profile_handler, &num);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, sar_get_geo_profile, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_sar_get_geo_profile, "");
 
 static int handle_iwl_vendor_set_country(struct nl80211_state *state,
 					 struct nl_msg *msg,
