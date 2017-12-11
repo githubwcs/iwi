@@ -173,6 +173,29 @@
  */
 
 /**
+ * DOC: WPA/WPA2 EAPOL handshake offload
+ *
+ * By setting @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_PSK flag drivers
+ * can indicate they support offloading EAPOL handshakes for WPA/WPA2
+ * preshared key authentication. In %NL80211_CMD_CONNECT the preshared
+ * key should be specified using %NL80211_ATTR_PMK. Drivers supporting
+ * this offload may reject the %NL80211_CMD_CONNECT when no preshared
+ * key material is provided, for example when that driver does not
+ * support setting the temporal keys through %CMD_NEW_KEY.
+ *
+ * Similarly @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_1X flag can be
+ * set by drivers indicating offload support of the PTK/GTK EAPOL
+ * handshakes during 802.1X authentication. In order to use the offload
+ * the %NL80211_CMD_CONNECT should have %NL80211_ATTR_WANT_1X_4WAY_HS
+ * attribute flag. Drivers supporting this offload may reject the
+ * %NL80211_CMD_CONNECT when the attribute flag is not present.
+ *
+ * For 802.1X the PMK or PMK-R0 are set by providing %NL80211_ATTR_PMK
+ * using %NL80211_CMD_SET_PMK. For offloaded FT support also
+ * %NL80211_ATTR_PMKR0_NAME must be provided.
+ */
+
+/**
  * DOC: FILS shared key authentication offload
  *
  * FILS shared key authentication offload can be advertized by drivers by
@@ -546,14 +569,14 @@
  *	authentication/association or not receiving a response from the AP.
  *	Non-zero %NL80211_ATTR_STATUS_CODE value is indicated in that case as
  *	well to remain backwards compatible.
- * @NL80211_CMD_ROAM: request that the card roam (currently not implemented),
- *	sent as an event when the card/driver roamed by itself.
- *	When used as an event, and the driver roamed in a network that requires
- *	802.1X authentication, %NL80211_ATTR_CONNECTION_AUTHORIZED should be set
- *	if the 802.1X authentication was done by the driver or if roaming was
- *	done using Fast Transition protocol (in which case 802.1X authentication
- *	is not needed). If %NL80211_ATTR_CONNECTION_AUTHORIZED is not set,
- *	user space is responsible for the 802.1X authentication.
+ *	When establishing a security association, drivers that support 4 way
+ *	handshake offload should send %NL80211_CMD_PORT_AUTHORIZED event when
+ *	the 4 way handshake is completed successfully.
+ * @NL80211_CMD_ROAM: Notification indicating the card/driver roamed by itself.
+ *	When a security association was established with the new AP (e.g. if
+ *	the FT protocol was used for roaming or the driver completed the 4 way
+ *	handshake), this event should be followed by an
+ *	%NL80211_CMD_PORT_AUTHORIZED event.
  * @NL80211_CMD_DISCONNECT: drop a given connection; also used to notify
  *	userspace that a connection was dropped by the AP or due to other
  *	reasons, for this the %NL80211_ATTR_DISCONNECTED_BY_AP and
@@ -953,6 +976,20 @@
  *	does not result in a change for the current association. Currently,
  *	only the %NL80211_ATTR_IE data is used and updated with this command.
  *
+ * @NL80211_CMD_SET_PMK: For offloaded 4-Way handshake, set the PMK or PMK-R0
+ *	for the given authenticator address (specified with &NL80211_ATTR_MAC).
+ *	When &NL80211_ATTR_PMKR0_NAME is set, &NL80211_ATTR_PMK specifies the
+ *	PMK-R0, otherwise it specifies the PMK.
+ * @NL80211_CMD_DEL_PMK: For offloaded 4-Way handshake, delete the previously
+ *	configured PMK for the authenticator address identified by
+ *	&NL80211_ATTR_MAC.
+ * @NL80211_CMD_PORT_AUTHORIZED: An event that indicates that the 4 way
+ *	handshake was completed successfully by the driver. The BSSID is
+ *	specified with &NL80211_ATTR_MAC. Drivers that support 4 way handshake
+ *	offload should send this event after indicating 802.11 association with
+ *	&NL80211_CMD_CONNECT or &NL80211_CMD_ROAM. If the 4 way handshake failed
+ *	&NL80211_CMD_DISCONNECT should be indicated instead.
+ *
  * @NL80211_CMD_MSRMENT_REQUEST: Request to perform some type of measurement.
  *	Request type is given by %NL80211_ATTR_MSRMENT_TYPE. Additional data is
  *	given according to the request type.
@@ -973,13 +1010,16 @@
  * @NL80211_CMD_START_FTM_RESPONDER: Start FTM responder and set its parameters.
  *	This is supported only on AP interface. FTM responder cannot be stopped
  *	without removing the interface.
- * @NL80211_CMD_SET_PMK: For offloaded 4-Way handshake, set the PMK or PMK-R0
- *	for the given authenticator address (specified with &NL80211_ATTR_MAC).
- *	When &NL80211_ATTR_PMKR0_NAME is set, &NL80211_ATTR_PMK specifies the
- *	PMK-R0, otherwise it specifies the PMK.
- * @NL80211_CMD_DEL_PMK: For offloaded 4-Way handshake, delete the previously
- *	configured PMK for the authenticator address identified by
- *	&NL80211_ATTR_MAC.
+ *
+ * @NL80211_CMD_NAN_NDP: Request/Respond/Terminate NAN Data Path (NDP) session
+ *	with a NAN peer. Can also be used as an event to notify about an NDP
+ *	request/response/terminate from a NAN peer. All NDPs are uniquely
+ *	identified by the initiator's NAN Data Interface (NDI) address and an
+ *	NDP identifier pair, so %NL80211_ATTR_NDP_INIT and NL80211_ATTR_NDP_ID
+ *	must be provided in all cases (nested in %NL80211_ATTR_NAN_NDP_PARAMS)
+ *	with the exception that a request to start an NDP with a peer would not
+ *	include these attributes and the NDP identifier would be returned
+ *	(with %NL80211_ATTR_NDP_ID).
  *
  * @NL80211_CMD_MAX: highest used command number
  * @__NL80211_CMD_AFTER_LAST: internal use
@@ -1180,6 +1220,11 @@ enum nl80211_commands {
 
 	NL80211_CMD_UPDATE_CONNECT_PARAMS,
 
+	NL80211_CMD_SET_PMK,
+	NL80211_CMD_DEL_PMK,
+
+	NL80211_CMD_PORT_AUTHORIZED,
+
 	/* let this always be before all commands we haven't upstreamed yet */
 	__NL80211_CMD_NONUPSTREAM_START,
 
@@ -1189,8 +1234,7 @@ enum nl80211_commands {
 	NL80211_CMD_START_FTM_RESPONDER,
 	NL80211_CMD_GET_FTM_RESPONDER_STATS,
 
-	NL80211_CMD_SET_PMK,
-	NL80211_CMD_DEL_PMK,
+	NL80211_CMD_NAN_NDP,
 
 	/* add new commands above here */
 
@@ -2128,13 +2172,22 @@ enum nl80211_commands {
  *	identifying the scope of PMKSAs. This is used with
  *	@NL80211_CMD_SET_PMKSA and @NL80211_CMD_DEL_PMKSA.
  *
- * @NL80211_ATTR_PMK: PMK for the PMKSA identified by %NL80211_ATTR_PMKID.
- *	This is used with @NL80211_CMD_SET_PMKSA.
+ * @NL80211_ATTR_PMK: attribute for passing PMK key material. Used with
+ *	%NL80211_CMD_SET_PMKSA for the PMKSA identified by %NL80211_ATTR_PMKID.
+ *	For %NL80211_CMD_CONNECT it is used to provide PSK for offloading 4-way
+ *	handshake for WPA/WPA2-PSK networks. For 802.1X authentication it is
+ *	used with %NL80211_CMD_SET_PMK. For offloaded FT support this attribute
+ *	specifies the PMK-R0 if NL80211_ATTR_PMKR0_NAME is included as well.
  *
  * @NL80211_ATTR_SCHED_SCAN_MULTI: flag attribute which user-space shall use to
  *	indicate that it supports multiple active scheduled scan requests.
  * @NL80211_ATTR_SCHED_SCAN_MAX_REQS: indicates maximum number of scheduled
  *	scan request that may be active for the device (u32).
+ *
+ * @NL80211_ATTR_WANT_1X_4WAY_HS: flag attribute which user-space can include
+ *	in %NL80211_CMD_CONNECT to indicate that for 802.1X authentication it
+ *	wants to use the supported offload of the 4-way handshake.
+ * @NL80211_ATTR_PMKR0_NAME: PMK-R0 Name for offloaded FT.
  *
  * @NL80211_ATTR_MSRMENT_TYPE: Type of current measurement request/response.
  *	(values defined in &enum nl80211_msrment_type).
@@ -2157,18 +2210,6 @@ enum nl80211_commands {
  * @NL80211_ATTR_CIVIC: The content of measurement Report IE (Section 8.4.2.21
  *	in spec) with type 11 - Civic (Section 8.4.2.21.13)
  *
- * @NL80211_ATTR_PMK: PMK for offloaded 4-Way Handshake. Relevant with
- *	%NL80211_CMD_CONNECT (for WPA/WPA2-PSK networks) when PSK is used, or
- *	with %NL80211_CMD_SET_PMK when 802.1X authentication is used.
- *	When &NL80211_ATTR_PMKR0_NAME is specified, this attribute specifies
- *	the PMK-R0.
- * @NL80211_ATTR_PMKR0_NAME: PMK-R0 Name for offloaded FT.
- *
- * @NL80211_ATTR_CONNECTION_AUTHORIZED: A flag attribute used with
- *	%NL80211_CMD_ROAM to indicate that 802.1X authentication was done by the
- *	driver or is not needed (because roaming used the Fast Transition
- *	protocol). Only valid for roaming in networks that require 802.1X
- *	authentication.
  * @NL80211_ATTR_HE_CAPABILITY: HE Capability information element (from
  *	association request when used with NL80211_CMD_NEW_STATION). Can be set
  *	only if &NL80211_STA_FLAG_WME is set.
@@ -2180,6 +2221,8 @@ enum nl80211_commands {
  *      This is a u8, where valid values are 0..5. If the value is 0, then there
  *      are no wake ups on 5.2GHz DWs. When using %NL80211_CMD_START_NAN,
  *      if the attribute is not specified, the default committed DW is 1.
+ * @NL80211_ATTR_NAN_NDP_PARAMS: NAN Data Path (NDP) parameters. See &enum
+ *      nl80211_nan_ndp_attributes for description of this nested attribute.
  *
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
@@ -2603,6 +2646,9 @@ enum nl80211_attrs {
 	NL80211_ATTR_SCHED_SCAN_MULTI,
 	NL80211_ATTR_SCHED_SCAN_MAX_REQS,
 
+	NL80211_ATTR_WANT_1X_4WAY_HS,
+	NL80211_ATTR_PMKR0_NAME,
+
 	NL80211_ATTR_FTM_RESPONDER_STATS,
 
 	NL80211_ATTR_MSRMENT_TYPE,
@@ -2617,14 +2663,12 @@ enum nl80211_attrs {
 	NL80211_ATTR_LCI,
 	NL80211_ATTR_CIVIC,
 
-	NL80211_ATTR_PMKR0_NAME,
-
-	NL80211_ATTR_CONNECTION_AUTHORIZED,
-
 	NL80211_ATTR_HE_CAPABILITY,
 
 	NL80211_ATTR_NAN_CDW_2G,
 	NL80211_ATTR_NAN_CDW_5G,
+
+	NL80211_ATTR_NAN_NDP_PARAMS,
 
 	/* add attributes here, update the policy in nl80211.c */
 
@@ -2709,6 +2753,7 @@ enum nl80211_attrs {
  * @NL80211_IF_TYPE_OCB: Outside Context of a BSS
  *	This mode corresponds to the MIB variable dot11OCBActivated=true
  * @NL80211_IFTYPE_NAN: NAN device interface type (not a netdev)
+ * @NL80211_IFTYPE_NAN_DATA: NAN data interface
  * @NL80211_IFTYPE_MAX: highest interface type number currently defined
  * @NUM_NL80211_IFTYPES: number of defined interface types
  *
@@ -2730,6 +2775,7 @@ enum nl80211_iftype {
 	NL80211_IFTYPE_P2P_DEVICE,
 	NL80211_IFTYPE_OCB,
 	NL80211_IFTYPE_NAN,
+	NL80211_IFTYPE_NAN_DATA,
 
 	/* keep last */
 	NUM_NL80211_IFTYPES,
@@ -4090,7 +4136,7 @@ enum nl80211_key_type {
  * enum nl80211_mfp - Management frame protection state
  * @NL80211_MFP_NO: Management frame protection not used
  * @NL80211_MFP_REQUIRED: Management frame protection required
- * @NL80211_MFP_OPTIONAL: Management frame is optional
+ * @NL80211_MFP_OPTIONAL: Management frame protection is optional
  */
 enum nl80211_mfp {
 	NL80211_MFP_NO,
@@ -5052,9 +5098,13 @@ enum nl80211_feature_flags {
  *	RSSI threshold values to monitor rather than exactly one threshold.
  * @NL80211_EXT_FEATURE_FILS_SK_OFFLOAD: Driver SME supports FILS shared key
  *	authentication with %NL80211_CMD_CONNECT.
- * @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA: Device supports
- *	doing 4-way handshake in station mode (PSK is passed as part
- *	of the connect command).
+ * @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_PSK: Device wants to do 4-way
+ *	handshake with PSK in station mode (PSK is passed as part of the connect
+ *	and associate commands), doing it in the host might not be supported.
+ * @NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_1X: Device wants to do doing 4-way
+ *	handshake with 802.1X in station mode (will pass EAP frames to the host
+ *	and accept the set_pmk/del_pmk commands), doing it in the host might not
+ *	be supported.
  * @NL80211_EXT_FEATURE_FILS_MAX_CHANNEL_TIME: Driver is capable of overriding
  *	the max channel attribute in the FILS request params IE with the
  *	actual dwell time.
@@ -5064,6 +5114,8 @@ enum nl80211_feature_flags {
  *	the first probe request in each channel at rate of at least 5.5Mbps.
  * @NL80211_EXT_FEATURE_OCE_PROBE_REQ_DEFERRAL_SUPPRESSION: Driver supports
  *	probe request tx deferral and suppression
+ * @NL80211_EXT_FEATURE_MFP_OPTIONAL: Driver supports the %NL80211_MFP_OPTIONAL
+ *	value in %NL80211_ATTR_USE_MFP.
  *
  * @NUM_NL80211_EXT_FEATURES: number of extended features.
  * @MAX_NL80211_EXT_FEATURES: highest extended feature index.
@@ -5084,11 +5136,13 @@ enum nl80211_ext_feature_index {
 	NL80211_EXT_FEATURE_SCHED_SCAN_RELATIVE_RSSI,
 	NL80211_EXT_FEATURE_CQM_RSSI_LIST,
 	NL80211_EXT_FEATURE_FILS_SK_OFFLOAD,
-	NL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA,
+	NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_PSK,
+	NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_1X,
 	NL80211_EXT_FEATURE_FILS_MAX_CHANNEL_TIME,
 	NL80211_EXT_FEATURE_ACCEPT_BCAST_PROBE_RESP,
 	NL80211_EXT_FEATURE_OCE_PROBE_REQ_HIGH_TX_RATE,
 	NL80211_EXT_FEATURE_OCE_PROBE_REQ_DEFERRAL_SUPPRESSION,
+	NL80211_EXT_FEATURE_MFP_OPTIONAL,
 
 	/* add new features before the definition below */
 	NUM_NL80211_EXT_FEATURES,
@@ -6095,6 +6149,90 @@ enum nl80211_ftm_responder_stats {
 	/* keep last */
 	__NL80211_FTM_STATS_AFTER_LAST,
 	NL80211_FTM_STATS_MAX = __NL80211_FTM_STATS_AFTER_LAST - 1
+};
+
+/**
+ * enum nl80211_nan_ndp_oper - NAN Data Path (NDP) operation
+ *
+ * @__NL80211_NAN_NDP_OPER_INVALID: attribute number 0 is reserved
+ * @NL80211_NAN_NDP_OPER_REQ: NAN Data Path request
+ * @NL80211_NAN_NDP_OPER_RES: NAN Data path response
+ * @NL80211_NAN_NDP_OPER_TERM: NAN Data path termination request
+ * @__NL80211_NAN_NDP_OPER_AFTER_LAST: Internal
+ * @NL80211_NAN_NDP_OPER_MAX: highest possible NAN Data Path operation attribute
+ */
+enum nl80211_nan_ndp_oper {
+	__NL80211_NAN_NDP_OPER_INVALID,
+	NL80211_NAN_NDP_OPER_REQ,
+	NL80211_NAN_NDP_OPER_RES,
+	NL80211_NAN_NDP_OPER_TERM,
+
+	/* keep last */
+	__NL80211_NAN_NDP_OPER_AFTER_LAST,
+	NL80211_NAN_NDP_OPER_MAX = __NL80211_NAN_NDP_OPER_AFTER_LAST - 1
+};
+
+#define NL80211_NAN_QOS_MIN_SLOTS_NO_PREF	0x0
+#define NL80211_NAN_QOS_MAX_LATENCY_NO_PREF	0xffff
+
+/**
+ * enum nl80211_nan_ndp_attributes - NAN NDP attributes
+ * @__NL80211_NAN_NDP_INVALID: invalid
+ * @NL80211_NAN_NDP_OPER: The requested operation. Must be one of
+ *     NL80211_NAN_NDP_OPER_REQ, NL80211_NAN_NDP_OPER_RES,
+ *     NL80211_NAN_NDP_OPER_TERM.
+ * @NL80211_NAN_NDP_PEER_NMI: The Peer's NAN Management Interface (NMI) address
+ * @NL80211_NAN_NDP_PUB_INST_ID: The identifier for the instance of the
+ *     publisher function associated with the data path setup request. Required
+ *     for NDP request (u8)
+ * @NL80211_NAN_NDP_INIT_NDI: The initiator's NAN Data Interface (NDI) address
+ * @NL80211_NAN_NDP_RESP_NDI: The responder's NAN Data Interface (NDI) address.
+ *     Required for NDP response.
+ * @NL80211_NAN_NDP_ID: The NDP identifier (u8)
+ * @NL80211_NAN_NDP_REJECTED: FLAG attribute indicating if an NDP request was
+ *     rejected
+ * @NL80211_NAN_NDP_REASON: The reject reason (u8). Required iff
+ *     NL80211_NAN_NDP_REJECTED is set
+ * @NL80211_NAN_NDP_QOS_MIN_SLOTS: The number of minimum further availability
+ *     NAN slots required for each DW interval (u8). Optional for NDP request
+ *     and NDP response
+ * @NL80211_NAN_NDP_QOS_MAX_LATENCY: The maximal number of NAN slots between
+ *     every two non-contiguous NAN Data Link (NDL) Common Resource Blocks
+ *     (CRBs) (u16). Optional for NDP request and NDP response
+ * @NL80211_NAN_NDP_SECURITY_CIPHER_SUITES: A bit specifying the cipher
+ *     suite identifier of the cipher suite requested for the NDP. See &enum
+ *     nl80211_nan_cs_id. Optional for NDP request and NDP response
+ * @NL80211_NAN_NDP_SECURITY_CTX_IDS: This is a set of security context
+ *     identifiers that may be used to set up a secured NDP (each one is a
+ *     nested attribute). see &enum nl80211_nan_sec_ctx_id. Optional for NDP
+ *     request and NDP response.
+ * @NL80211_NAN_NDP_SECURITY_PMK: PMK for the establishing a secure NDP. 32
+ *     octets. Optional for NDP request and NDP response
+ * @NL80211_NAN_NDP_SSI: Opaque Service Specific Information (SSI). Variable
+ *     length. Optional for NDP request or NDP response
+ * @NUM_NL80211_NAN_NDP_ATTR: internal
+ * @NL80211_NAN_NDP_ATTR_MAX: highest NAN NDP attribute
+ */
+enum nl80211_nan_ndp_attributes {
+	__NL80211_NAN_NDP_INVALID,
+	NL80211_NAN_NDP_OPER,
+	NL80211_NAN_NDP_PEER_NMI,
+	NL80211_NAN_NDP_PUB_INST_ID,
+	NL80211_NAN_NDP_INIT_NDI,
+	NL80211_NAN_NDP_RESP_NDI,
+	NL80211_NAN_NDP_ID,
+	NL80211_NAN_NDP_REJECTED,
+	NL80211_NAN_NDP_REASON,
+	NL80211_NAN_NDP_QOS_MIN_SLOTS,
+	NL80211_NAN_NDP_QOS_MAX_LATENCY,
+	NL80211_NAN_NDP_SECURITY_CIPHER_SUITES,
+	NL80211_NAN_NDP_SECURITY_CTX_IDS,
+	NL80211_NAN_NDP_SECURITY_PMK,
+	NL80211_NAN_NDP_SSI,
+
+	/* keep last */
+	NUM_NL80211_NAN_NDP_ATTR,
+	NL80211_NAN_NDP_MAX = NUM_NL80211_NAN_NDP_ATTR - 1
 };
 
 #endif /* __LINUX_NL80211_H */
