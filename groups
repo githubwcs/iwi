@@ -1,7 +1,7 @@
-# UUID                                  	Group Name
+# UUID                        	Group Name
 #
-teamforge:proj5201:role41612            	TF: iwlwifi: maint-iw
-teamforge:proj5201:role41618            	TF: iwlwifi: taggers
-teamforge:proj5201:role44397            	TF: iwlwifi: tf-admin
-teamforge:proj5201:role52497            	TF: iwlwifi: perci
-teamforge:proj_member:proj5201          	TF: Project Member of proj5201 (iwlwifi)
+teamforge:proj5201:role41612  	TF: iwlwifi: maint-iw
+teamforge:proj5201:role41618  	TF: iwlwifi: taggers
+teamforge:proj5201:role44397  	TF: iwlwifi: tf-admin
+teamforge:proj5201:role52497  	TF: iwlwifi: perci
+teamforge:proj_member:proj5201	TF: Project Member of proj5201 (iwlwifi)
