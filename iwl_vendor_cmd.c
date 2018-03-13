@@ -159,7 +159,7 @@ static int handle_iwl_vendor_sar_get_profile_info(struct nl80211_state *state,
 	struct nlattr *limits;
 	int num;
 
-	if (argc != 0 && argc != 0)
+	if (argc != 0)
 		return 1;
 
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
