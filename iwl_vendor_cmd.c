@@ -762,7 +762,7 @@ COMMAND(iwl, fips_test, "type=<sha|hmac|kdf> <vector parameters>\n"
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_fips_test,
 	"");
 
-static const char const* phy2str[] =
+static const char * const phy2str[] =
 {
 	[IWL_MVM_VENDOR_PHY_TYPE_UNSPECIFIED] = "unspecified",
 	[IWL_MVM_VENDOR_PHY_TYPE_DSSS] = "DSSS",
@@ -775,7 +775,7 @@ static const char const* phy2str[] =
 	[IWL_MVM_VENDOR_PHY_TYPE_TVHT] = "TVHT",
 };
 
-static const char const* vendorwidth2str[] =
+static const char * const vendorwidth2str[] =
 {
 	[IWL_MVM_VENDOR_CHAN_WIDTH_20] = "20MHz",
 	[IWL_MVM_VENDOR_CHAN_WIDTH_40] = "40MHz",
