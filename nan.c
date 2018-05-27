@@ -639,7 +639,7 @@ nla_put_failure:
 COMMAND(nan, ndp_req, "peer <NMI> pub_inst_id <publish instance ID> [min_slots <slots>]"
 	"[max_latency <latency>] [sec csid <SK-128|SK-256> pmk <PMK>]"
 	"[ssi <service specific information>]",
-	NL80211_CMD_NAN_NDP, 0, CIB_WDEV, handle_nan_ndp_req, "");
+	NL80211_CMD_NAN_NDP, 0, CIB_NETDEV, handle_nan_ndp_req, "");
 
 static int handle_nan_ndp_resp(struct nl80211_state *state,
 			       struct nl_msg *msg, int argc,
@@ -704,7 +704,7 @@ COMMAND(nan, ndp_resp, "peer <NMI> id <NDP ID> initiator <NDI> "
 	"<accept|reject <reason>> [min_slots <slots>]"
 	"[max_latency <latency>] [sec csid <SK-128|SK-256> pmk <PMK>]"
 	"[ssi <service specific information>]",
-	NL80211_CMD_NAN_NDP, 0, CIB_WDEV, handle_nan_ndp_resp, "");
+	NL80211_CMD_NAN_NDP, 0, CIB_NETDEV, handle_nan_ndp_resp, "");
 
 static int handle_nan_ndp_term(struct nl80211_state *state,
 			       struct nl_msg *msg, int argc, char **argv,
@@ -744,4 +744,4 @@ nla_put_failure:
 	return -ENOBUFS;
 }
 COMMAND(nan, ndp_term, "peer <NMI> id <NDP ID> initiator <NDI>",
-	NL80211_CMD_NAN_NDP, 0, CIB_WDEV, handle_nan_ndp_term, "");
+	NL80211_CMD_NAN_NDP, 0, CIB_NETDEV, handle_nan_ndp_term, "");
