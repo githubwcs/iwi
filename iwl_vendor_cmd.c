@@ -762,6 +762,78 @@ COMMAND(iwl, fips_test, "type=<sha|hmac|kdf> <vector parameters>\n"
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_fips_test,
 	"");
 
+static int handle_iwl_vendor_fmac_connect_params(struct nl80211_state *state,
+						 struct nl_msg *msg,
+						 int argc, char **argv,
+						 enum id_input id)
+{
+	struct nlattr *params, *bssids;
+	int i, arg_idx = 0;
+	int bssids_attr;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_FMAC_CONNECT_PARAMS);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!params)
+		return -ENOBUFS;
+
+	if (argc < 2)
+		goto nest_end;
+
+	if (strncmp(argv[arg_idx], "max_retries", 11) == 0) {
+		int max_retries;
+
+		arg_idx++;
+		max_retries = atoi(argv[arg_idx]);
+		if (max_retries < 0)
+			return -EINVAL;
+
+		NLA_PUT_U32(msg,
+			    IWL_MVM_VENDOR_ATTR_FMAC_CONNECT_PARAMS_MAX_RETRIES,
+			    max_retries);
+		arg_idx++;
+	}
+
+	if (argc < arg_idx + 2)
+		goto nest_end;
+
+	if (strncmp(argv[arg_idx], "whitelist", 9) == 0)
+		bssids_attr = IWL_MVM_VENDOR_ATTR_FMAC_CONNECT_PARAMS_WHITELIST;
+	else if (strncmp(argv[arg_idx], "blacklist", 9) == 0)
+		bssids_attr = IWL_MVM_VENDOR_ATTR_FMAC_CONNECT_PARAMS_BLACKLIST;
+	else
+		return -EINVAL;
+
+	bssids = nla_nest_start(msg, bssids_attr);
+
+	arg_idx++;
+	for (i = 0; arg_idx < argc; i++, arg_idx++) {
+		unsigned char addr[ETH_ALEN];
+		int ret;
+
+		ret = mac_addr_a2n(addr, argv[arg_idx]);
+		if (ret < 0)
+			return -EINVAL;
+
+		NLA_PUT(msg, i + 1, ETH_ALEN, addr);
+	}
+
+	nla_nest_end(msg, bssids);
+nest_end:
+	nla_nest_end(msg, params);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, fmac_connect, "[max_retries <number of retries>]"
+	"[<blacklist|whitelist> <bssid1 bssid2...>]", NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_fmac_connect_params,
+	"Set no parameters to clear previous configurations");
+
 static const char * const phy2str[] =
 {
 	[IWL_MVM_VENDOR_PHY_TYPE_UNSPECIFIED] = "unspecified",
