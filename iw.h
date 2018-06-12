@@ -181,7 +181,7 @@ int parse_hex_mask(char *hexmask, unsigned char **result, size_t *result_len,
 		   unsigned char **mask);
 unsigned char *parse_hex(char *hex, size_t *outlen);
 
-int parse_keys(struct nl_msg *msg, char **argv, int argc);
+int parse_keys(struct nl_msg *msg, char **argv[], int *argc);
 int parse_freqchan(struct chandef *chandef, bool chan, int argc, char **argv, int *parsed);
 enum nl80211_chan_width str_to_bw(const char *str);
 int put_chandef(struct nl_msg *msg, struct chandef *chandef);
