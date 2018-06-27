@@ -296,6 +296,64 @@ static void parse_match_filter(char *filter, struct nl_msg *func_attrs, int tx)
 	nla_nest_end(func_attrs, nl_filt);
 }
 
+static int parse_nan_cipher_suites(char *ciphers, struct nl_msg *func_attrs)
+{
+	char *cipher, *sptr = NULL;
+	unsigned int cs_ids = 0;
+
+	cipher = strtok_r(ciphers, ":", &sptr);
+	while (cipher) {
+		if (strcmp(cipher, "SK-128") == 0)
+			cs_ids |= NL80211_NAN_CS_ID_SK_CCM_128;
+		else if (strcmp(cipher, "SK-256") == 0)
+			cs_ids |= NL80211_NAN_CS_ID_SK_GCM_256;
+		else
+			return -EINVAL;
+
+		cipher = strtok_r(NULL, ":", &sptr);
+	}
+
+	if (nla_put_u32(func_attrs, NL80211_NAN_FUNC_SECURITY_CIPHER_SUITES,
+			cs_ids))
+		return -ENOBUFS;
+
+	return 0;
+}
+
+static int parse_nan_pmkids(char *pmkids, struct nl_msg *func_attrs)
+{
+	struct nlattr *nl_sec_ctx, *attr;
+	char *sec, *sptr = NULL;
+	int i = 0;
+
+	attr = nla_nest_start(func_attrs,
+			      NL80211_NAN_FUNC_SECURITY_CTX_IDS);
+
+	sec = strtok_r(pmkids, ":", &sptr);
+	while (sec) {
+		char pmkid[16];
+
+		if (strlen(sec) != (sizeof(pmkid) * 2) ||
+		    !hex2bin(sec, pmkid))
+			return -EINVAL;
+
+		nl_sec_ctx = nla_nest_start(func_attrs, ++i);
+		if (nla_put_u32(func_attrs, NL80211_NAN_SEC_CTX_ID_TYPE,
+				NL80211_NAN_SEC_CTX_TYPE_PMKID) ||
+		    nla_put(func_attrs, NL80211_NAN_SEC_CTX_ID_DATA,
+			    sizeof(pmkid), pmkid))
+			return -ENOBUFS;
+
+		nla_nest_end(func_attrs, nl_sec_ctx);
+
+		sec = strtok_r(NULL, ":", &sptr);
+	}
+
+	nla_nest_end(func_attrs, attr);
+
+	return 0;
+}
+
 static int handle_nan_add_func(struct nl80211_state *state,
 			       struct nl_msg *msg, int argc, char **argv,
 			       enum id_input id)
@@ -450,6 +508,21 @@ static int handle_nan_add_func(struct nl80211_state *state,
 	}
 
 	if (type != NL80211_NAN_FUNC_FOLLOW_UP &&
+	    argc > 1 && strcmp(argv[0], "dw_interval") == 0) {
+		int val;
+
+		argv++;
+		argc--;
+		val = atoi(argv[0]);
+		if (val < 0 || val > 4)
+			return -EINVAL;
+
+		NLA_PUT_U8(func_attrs, NL80211_NAN_FUNC_AWAKE_DW_INTERVAL, val);
+		argv++;
+		argc--;
+	}
+
+	if (type != NL80211_NAN_FUNC_FOLLOW_UP &&
 	    argc >= 4 && strcmp(argv[0], "srf") == 0) {
 		int res;
 
@@ -483,6 +556,51 @@ static int handle_nan_add_func(struct nl80211_state *state,
 		argc--;
 	}
 
+	if (type == NL80211_NAN_FUNC_PUBLISH && argc) {
+		if (strcmp(argv[0], "ndp") == 0) {
+			argv++;
+			argc--;
+			NLA_PUT_U32(func_attrs, NL80211_NAN_FUNC_NDP_TYPE,
+				    NL80211_NAN_NDP_TYPE_UNICAST);
+		} else if (strcmp(argv[0], "nmsg_one") == 0) {
+			argv++;
+			argc--;
+			NLA_PUT_U32(func_attrs, NL80211_NAN_FUNC_NDP_TYPE,
+				    NL80211_NAN_NDP_TYPE_MCAST_ONE_TO_MANY);
+		} else if (strcmp(argv[0], "nmsg_many") == 0) {
+			argv++;
+			argc--;
+			NLA_PUT_U32(func_attrs, NL80211_NAN_FUNC_NDP_TYPE,
+				    NL80211_NAN_NDP_TYPE_MCAST_MANY_TO_MANY);
+		}
+
+		if (argc > 1 && strcmp(argv[0], "ciphers") == 0) {
+			int res;
+
+			argv++;
+			argc--;
+			res = parse_nan_cipher_suites(argv[0], func_attrs);
+			if (res)
+				return res;
+
+			argv++;
+			argc--;
+		}
+
+		if (argc > 1 && strcmp(argv[0], "pmkid") == 0) {
+			int res;
+
+			argv++;
+			argc--;
+			res = parse_nan_pmkids(argv[0], func_attrs);
+			if (res)
+				return res;
+
+			argv++;
+			argc--;
+		}
+	}
+
 	if (argc != 0)
 		return -EINVAL;
 
@@ -496,7 +614,7 @@ out:
 	return err;
 }
 COMMAND(nan, add_func,
-	"type <publish|subscribe|followup> [active] [solicited] [unsolicited] [bcast] [close_range] name <name> [info <info>] [flw_up_id <id> flw_up_req_id <id> flw_up_dest <mac>] [ttl <ttl>] [srf <include|exclude> <bf|list> [bf_idx] [bf_len] <mac1;mac2...>] [rx_filter <str1:str2...>] [tx_filter <str1:str2...>]",
+	"type <publish|subscribe|followup> [active] [solicited] [unsolicited] [bcast] [close_range] name <name> [info <info>] [flw_up_id <id> flw_up_req_id <id> flw_up_dest <mac>] [ttl <ttl>] [dw_interval <0..4>] [srf <include|exclude> <bf|list> [bf_idx] [bf_len] <mac1;mac2...>] [rx_filter <str1:str2...>] [tx_filter <str1:str2...>] [ndp|nmsg_one|nmsg_many] [ciphers [SK-128][:SK-256]] [pmkid <hex1:hex2...>]",
 	NL80211_CMD_ADD_NAN_FUNCTION, 0, CIB_WDEV,
 	handle_nan_add_func, "");
 
