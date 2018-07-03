@@ -870,6 +870,36 @@ static int handle_nan_dp_setup(struct nl80211_state *state,
 		argc--;
 	}
 
+	if (argc > 1 && strcmp(argv[0], "hexinfo") == 0) {
+		char *buf, *ptr;
+		size_t len;
+
+		argv++;
+		argc--;
+
+		len = strlen(argv[0]);
+		if (len % 2)
+			return -EINVAL;
+
+		len /= 2;
+		buf = malloc(len);
+		if (!buf)
+			return -ENOBUFS;
+
+		ptr = hex2bin(argv[0], buf);
+		argv++;
+		argc--;
+
+		if (ptr)
+			NLA_PUT(dp_attrs, NL80211_NAN_DATA_PATH_SSI,
+				len, ptr);
+
+		free(buf);
+
+		if (!ptr)
+			return -EINVAL;
+	}
+
 	if (argc >= 1 && strcmp(argv[0], "confirm_required") == 0) {
 		NLA_PUT_FLAG(dp_attrs, NL80211_NAN_DATA_PATH_CONFIRM_REQUIRED);
 		argv++;
