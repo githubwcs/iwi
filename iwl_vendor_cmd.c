@@ -834,6 +834,35 @@ COMMAND(iwl, fmac_connect, "[max_retries <number of retries>]"
 	CIB_NETDEV, handle_iwl_vendor_fmac_connect_params,
 	"Set no parameters to clear previous configurations");
 
+static int handle_iwl_vendor_fmac_config(struct nl80211_state *state,
+					 struct nl_msg *msg, int argc,
+					 char **argv, enum id_input id)
+{
+	struct nlattr *attr;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_FMAC_CONFIG);
+
+	if (argc != 1)
+		return -EINVAL;
+
+	attr = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	if (!attr)
+		return -ENOBUFS;
+
+	NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_FMAC_CONFIG_STR, strlen(argv[0]),
+		argv[0]);
+	nla_nest_end(msg, attr);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, fmac_config, "<key>=<value>",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_fmac_config, "");
+
 static const char * const phy2str[] =
 {
 	[IWL_MVM_VENDOR_PHY_TYPE_UNSPECIFIED] = "unspecified",
