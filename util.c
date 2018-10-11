@@ -5,7 +5,7 @@
 #include "iw.h"
 #include "nl80211.h"
 
-void mac_addr_n2a(char *mac_addr, unsigned char *arg)
+void mac_addr_n2a(char *mac_addr, const unsigned char *arg)
 {
 	int i, l;
 
@@ -274,6 +274,10 @@ static const char *commands[NL80211_CMD_MAX + 1] = {
 	[NL80211_CMD_NAN_MATCH] = "nan_match",
 	[NL80211_CMD_SET_MULTICAST_TO_UNICAST] = "set_multicast_to_unicast",
 	[NL80211_CMD_UPDATE_CONNECT_PARAMS] = "update_connect_params",
+	[NL80211_CMD_SET_PMK] = "set_pmk",
+	[NL80211_CMD_DEL_PMK] = "del_pmk",
+	[NL80211_CMD_PORT_AUTHORIZED] = "port_authorized",
+	[NL80211_CMD_RELOAD_REGDB] = "reload_regdb",
 };
 
 static char cmdbuf[100];
@@ -517,12 +521,14 @@ int parse_keys(struct nl_msg *msg, char **argv[], int *argc)
 		switch (strlen(keydata)) {
 		case 10:
 			keydata = hex2bin(keydata, keybuf);
+			/* fall through */
 		case 5:
 			NLA_PUT_U32(msg, NL80211_KEY_CIPHER, 0x000FAC01);
 			keylen = 5;
 			break;
 		case 26:
 			keydata = hex2bin(keydata, keybuf);
+			/* fall through */
 		case 13:
 			NLA_PUT_U32(msg, NL80211_KEY_CIPHER, 0x000FAC05);
 			keylen = 13;
