@@ -104,6 +104,12 @@ static int handle_ftm_start_responder(struct nl80211_state *state,
 	int i;
 	char buf[256];
 	bool lci_present = false, civic_present = false;
+	struct nlattr *ftm = nla_nest_start(msg, NL80211_ATTR_FTM_RESPONDER);
+
+	if (!ftm)
+		return -ENOBUFS;
+
+	nla_put_flag(msg, NL80211_FTM_RESP_ATTR_ENABLED);
 
 	for (i = 0; i < argc; i++) {
 		if (strncmp(argv[i], "lci=", 4) == 0) {
@@ -116,7 +122,8 @@ static int handle_ftm_start_responder(struct nl80211_state *state,
 			}
 
 			lci_present = true;
-			NLA_PUT(msg, NL80211_ATTR_LCI, (lci_len / 2), buf);
+			NLA_PUT(msg, NL80211_FTM_RESP_ATTR_LCI,
+				lci_len / 2, buf);
 		} else if (strncmp(argv[i], "civic=", 6) == 0) {
 			size_t civic_len = strlen(argv[i] + 6);
 
@@ -127,12 +134,15 @@ static int handle_ftm_start_responder(struct nl80211_state *state,
 			}
 
 			civic_present = true;
-			NLA_PUT(msg, NL80211_ATTR_CIVIC, (civic_len / 2), buf);
+			NLA_PUT(msg, NL80211_FTM_RESP_ATTR_CIVICLOC,
+				civic_len / 2, buf);
 		} else {
 			printf("Illegal argument: %s\n", argv[i]);
 			return HANDLER_RET_USAGE;
 		}
 	}
+
+	nla_nest_end(msg, ftm);
 
 	return 0;
 
@@ -142,6 +152,6 @@ nla_put_failure:
 
 COMMAND(ftm, start_responder,
 	"[lci=<lci buffer in hex>] [civic=<civic buffer in hex>]",
-	NL80211_CMD_START_FTM_RESPONDER, 0, CIB_NETDEV,
+	NL80211_CMD_SET_BEACON, 0, CIB_NETDEV,
 	handle_ftm_start_responder,
 	"Start an FTM responder. Needs a running ap interface\n");
