@@ -912,7 +912,7 @@ __u32 __do_listen_events(struct nl80211_state *state,
 
 	wait_ev.cmd = 0;
 
-	while (!wait_ev.cmd || (args && args->continue_listening))
+	while (!wait_ev.cmd)
 		nl_recvmsgs(state->nl_sock, cb);
 
 	nl_cb_put(cb);
