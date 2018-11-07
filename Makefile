@@ -19,7 +19,7 @@ OBJS = iw.o genl.o event.o info.o phy.o \
 	reason.o status.o connect.o link.o offch.o ps.o cqm.o \
 	bitrate.o wowlan.o coalesce.o roc.o p2p.o vendor.o mgmt.o \
 	ap.o sha256.o nan.o bloom.o \
-	measurements.o ftm.o
+	ftm.o
 OBJS += sections.o
 
 OBJS-$(HWSIM) += hwsim.o
