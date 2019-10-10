@@ -373,7 +373,7 @@ static int handle_scan(struct nl80211_state *state,
 	struct nl_msg *ssids = NULL, *freqs = NULL;
 	char *eptr;
 	int err = -ENOBUFS;
-	int i;
+	int i, j;
 	enum {
 		NONE,
 		FREQ,
@@ -419,6 +419,9 @@ static int handle_scan(struct nl80211_state *state,
 				break;
 			} else if (strcmp(argv[i], "ap-force") == 0) {
 				flags |= NL80211_SCAN_FLAG_AP;
+				break;
+			} else if (strcmp(argv[i], "coloc") == 0) {
+				flags |= NL80211_SCAN_FLAG_COLOCATED_6GHZ;
 				break;
 			} else if (strcmp(argv[i], "duration-mandatory") == 0) {
 				duration_mandatory = true;
@@ -514,8 +517,15 @@ static int handle_scan(struct nl80211_state *state,
 	if (!passive)
 		nla_put_nested(msg, NL80211_ATTR_SCAN_SSIDS, ssids);
 
-	if (have_freqs)
-		nla_put_nested(msg, NL80211_ATTR_SCAN_FREQUENCIES, freqs);
+	if (!have_freqs) {
+ 		flags |= NL80211_SCAN_FLAG_COLOCATED_6GHZ;
+		for (j = 0; j <= 14; j++) {
+			int freq = 5945 + j * 80;
+			NLA_PUT_U32(freqs, j, freq);
+		}
+	}
+	nla_put_nested(msg, NL80211_ATTR_SCAN_FREQUENCIES, freqs);
+
 	if (flags)
 		NLA_PUT_U32(msg, NL80211_ATTR_SCAN_FLAGS, flags);
 	if (duration)
@@ -2347,7 +2357,7 @@ COMMAND(scan, dump, "[-u]",
 	NL80211_CMD_GET_SCAN, NLM_F_DUMP, CIB_NETDEV, handle_scan_dump,
 	"Dump the current scan results. If -u is specified, print unknown\n"
 	"data in scan results.");
-COMMAND(scan, trigger, "[freq <freq>*] [duration <dur>] [ies <hex as 00:11:..>] [meshid <meshid>] [lowpri,flush,ap-force,duration-mandatory] [randomise[=<addr>/<mask>]] [ssid <ssid>*|passive]",
+COMMAND(scan, trigger, "[freq <freq>*] [duration <dur>] [ies <hex as 00:11:..>] [meshid <meshid>] [lowpri,flush,ap-force,duration-mandatory,coloc] [randomise[=<addr>/<mask>]] [ssid <ssid>*|passive]",
 	NL80211_CMD_TRIGGER_SCAN, 0, CIB_NETDEV, handle_scan,
 	 "Trigger a scan on the given frequencies with probing for the given\n"
 	 "SSIDs (or wildcard if not given) unless passive scanning is requested.\n"
