@@ -420,6 +420,9 @@ static int handle_scan(struct nl80211_state *state,
 			} else if (strcmp(argv[i], "ap-force") == 0) {
 				flags |= NL80211_SCAN_FLAG_AP;
 				break;
+			} else if (strcmp(argv[i], "coloc") == 0) {
+				flags |= NL80211_SCAN_FLAG_COLOCATED_6GHZ;
+				break;
 			} else if (strcmp(argv[i], "duration-mandatory") == 0) {
 				duration_mandatory = true;
 				break;
@@ -2347,7 +2350,7 @@ COMMAND(scan, dump, "[-u]",
 	NL80211_CMD_GET_SCAN, NLM_F_DUMP, CIB_NETDEV, handle_scan_dump,
 	"Dump the current scan results. If -u is specified, print unknown\n"
 	"data in scan results.");
-COMMAND(scan, trigger, "[freq <freq>*] [duration <dur>] [ies <hex as 00:11:..>] [meshid <meshid>] [lowpri,flush,ap-force,duration-mandatory] [randomise[=<addr>/<mask>]] [ssid <ssid>*|passive]",
+COMMAND(scan, trigger, "[freq <freq>*] [duration <dur>] [ies <hex as 00:11:..>] [meshid <meshid>] [lowpri,flush,ap-force,duration-mandatory,coloc] [randomise[=<addr>/<mask>]] [ssid <ssid>*|passive]",
 	NL80211_CMD_TRIGGER_SCAN, 0, CIB_NETDEV, handle_scan,
 	 "Trigger a scan on the given frequencies with probing for the given\n"
 	 "SSIDs (or wildcard if not given) unless passive scanning is requested.\n"
