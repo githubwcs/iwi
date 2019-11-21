@@ -7,6 +7,7 @@
 #include <netlink/genl/ctrl.h>
 #include <netlink/msg.h>
 #include <netlink/attr.h>
+#include <time.h>
 
 #include "nl80211.h"
 #include "iw.h"
@@ -243,6 +244,18 @@ void parse_bitrate(struct nlattr *bitrate_attr, char *buf, int buflen)
 	if (rinfo[NL80211_RATE_INFO_VHT_NSS])
 		pos += snprintf(pos, buflen - (pos - buf),
 				" VHT-NSS %d", nla_get_u8(rinfo[NL80211_RATE_INFO_VHT_NSS]));
+	if (rinfo[NL80211_RATE_INFO_HE_MCS])
+		pos += snprintf(pos, buflen - (pos - buf),
+				" HE-MCS %d", nla_get_u8(rinfo[NL80211_RATE_INFO_HE_MCS]));
+	if (rinfo[NL80211_RATE_INFO_HE_NSS])
+		pos += snprintf(pos, buflen - (pos - buf),
+				" HE-NSS %d", nla_get_u8(rinfo[NL80211_RATE_INFO_HE_NSS]));
+	if (rinfo[NL80211_RATE_INFO_HE_GI])
+		pos += snprintf(pos, buflen - (pos - buf),
+				" HE-GI %d", nla_get_u8(rinfo[NL80211_RATE_INFO_HE_GI]));
+	if (rinfo[NL80211_RATE_INFO_HE_DCM])
+		pos += snprintf(pos, buflen - (pos - buf),
+				" HE-DCM %d", nla_get_u8(rinfo[NL80211_RATE_INFO_HE_DCM]));
 }
 
 static char *get_chain_signal(struct nlattr *attr_list)
@@ -313,6 +326,12 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		[NL80211_STA_INFO_ACK_SIGNAL_AVG] = { .type = NLA_U8 },
 	};
 	char *chain;
+	struct timeval now;
+	unsigned long long now_ms;
+
+	gettimeofday(&now, NULL);
+	now_ms = now.tv_sec * 1000;
+	now_ms += (now.tv_usec / 1000);
 
 	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
 		  genlmsg_attrlen(gnlh, 0), NULL);
@@ -549,7 +568,7 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		printf("\n\tconnected time:\t%u seconds",
 			nla_get_u32(sinfo[NL80211_STA_INFO_CONNECTED_TIME]));
 
-	printf("\n");
+	printf("\n\tcurrent time:\t%llu ms\n", now_ms);
 	return NL_SKIP;
 }
 
@@ -651,6 +670,8 @@ COMMAND(station, del, "<MAC address> [subtype <subtype>] [reason-code <code>]",
 static const struct cmd *station_set_plink;
 static const struct cmd *station_set_vlan;
 static const struct cmd *station_set_mesh_power_mode;
+static const struct cmd *station_set_airtime_weight;
+static const struct cmd *station_set_txpwr;
 
 static const struct cmd *select_station_cmd(int argc, char **argv)
 {
@@ -662,6 +683,10 @@ static const struct cmd *select_station_cmd(int argc, char **argv)
 		return station_set_vlan;
 	if (strcmp(argv[1], "mesh_power_mode") == 0)
 		return station_set_mesh_power_mode;
+	if (strcmp(argv[1], "airtime_weight") == 0)
+		return station_set_airtime_weight;
+	if (strcmp(argv[1], "txpwr") == 0)
+		return station_set_txpwr;
 	return NULL;
 }
 

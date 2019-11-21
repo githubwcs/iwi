@@ -89,12 +89,12 @@ static void nl80211_cleanup(struct nl80211_state *state)
 
 static int cmd_size;
 
-extern struct cmd __start___cmd;
-extern struct cmd __stop___cmd;
+extern struct cmd *__start___cmd[];
+extern struct cmd *__stop___cmd;
 
-#define for_each_cmd(_cmd)					\
-	for (_cmd = &__start___cmd; _cmd < &__stop___cmd;		\
-	     _cmd = (const struct cmd *)((char *)_cmd + cmd_size))
+#define for_each_cmd(_cmd, i)					\
+	for (i = 0; i < &__stop___cmd - __start___cmd; i++)	\
+		if ((_cmd = __start___cmd[i]))
 
 
 static void __usage_cmd(const struct cmd *cmd, char *indent, bool full)
@@ -192,6 +192,7 @@ static void usage(int argc, char **argv)
 	bool full = argc >= 0;
 	const char *sect_filt = NULL;
 	const char *cmd_filt = NULL;
+	unsigned int i, j;
 
 	if (argc > 0)
 		sect_filt = argv[0];
@@ -203,7 +204,7 @@ static void usage(int argc, char **argv)
 	usage_options();
 	printf("\t--version\tshow version (%s)\n", iw_version);
 	printf("Commands:\n");
-	for_each_cmd(section) {
+	for_each_cmd(section, i) {
 		if (section->parent)
 			continue;
 
@@ -213,7 +214,7 @@ static void usage(int argc, char **argv)
 		if (section->handler && !section->hidden)
 			__usage_cmd(section, "\t", full);
 
-		for_each_cmd(cmd) {
+		for_each_cmd(cmd, j) {
 			if (section != cmd->parent)
 				continue;
 			if (!cmd->handler || cmd->hidden)
@@ -350,7 +351,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 	struct nl_cb *s_cb;
 	struct nl_msg *msg;
 	signed long long devidx = 0;
-	int err, o_argc;
+	int err, o_argc, i;
 	const char *command, *section;
 	char *tmp, **o_argv;
 	enum command_identify_by command_idby = CIB_NONE;
@@ -402,7 +403,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 	argc--;
 	argv++;
 
-	for_each_cmd(sectcmd) {
+	for_each_cmd(sectcmd, i) {
 		if (sectcmd->parent)
 			continue;
 		/* ok ... bit of a hack for the dupe 'info' section */
@@ -420,7 +421,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 	if (argc > 0) {
 		command = *argv;
 
-		for_each_cmd(cmd) {
+		for_each_cmd(cmd, i) {
 			if (!cmd->handler)
 				continue;
 			if (cmd->parent != sectcmd)
@@ -542,6 +543,25 @@ int handle_cmd(struct nl80211_state *state, enum id_input idby,
 	return __handle_cmd(state, idby, argc, argv, NULL);
 }
 
+/*
+ * Unfortunately, I don't know how densely the linker packs the struct cmd.
+ * For example, if you have a 72-byte struct cmd, the linker will pad each
+ * out to 96 bytes before putting them together in the section. There must
+ * be some algorithm, but I haven't found it yet.
+ *
+ * We used to calculate this by taking the (abs value of) the difference
+ * between __section_get and __section_set, but if LTO is enabled then this
+ * stops working because the entries of the "__cmd" section get rearranged
+ * freely by the compiler/linker.
+ *
+ * Fix this by using yet another "__sizer" section that only contains these
+ * two entries - then the (abs value of) the difference between them will
+ * be how they get packed and that can be used to iterate the __cmd section
+ * as well.
+ */
+static struct cmd sizer1 __attribute__((section("__sizer"))) = {};
+static struct cmd sizer2 __attribute__((section("__sizer"))) = {};
+
 int main(int argc, char **argv)
 {
 	struct nl80211_state nlstate;
@@ -549,7 +569,7 @@ int main(int argc, char **argv)
 	const struct cmd *cmd = NULL;
 
 	/* calculate command size including padding */
-	cmd_size = labs((long)&__section_set - (long)&__section_get);
+	cmd_size = labs((long)&sizer2 - (long)&sizer1);
 	/* strip off self */
 	argc--;
 	argv0 = *argv++;

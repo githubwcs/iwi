@@ -355,11 +355,12 @@ int parse_sched_scan(struct nl_msg *msg, int *argc, char ***argv)
 nla_put_failure:
 	if (match)
 		nla_nest_end(msg, match);
+out:
 	nlmsg_free(freqs);
 	nlmsg_free(matchset);
 	nlmsg_free(scan_plans);
+	nlmsg_free(ssids);
 
-out:
 	*argc = c;
 	*argv = v;
 	return err;
@@ -388,7 +389,7 @@ static int handle_scan(struct nl80211_state *state,
 	bool passive = false, have_ssids = false, have_freqs = false;
 	bool duration_mandatory = false;
 	size_t ies_len = 0, meshid_len = 0;
-	unsigned char *ies = NULL, *meshid = NULL, *tmpies;
+	unsigned char *ies = NULL, *meshid = NULL, *tmpies = NULL;
 	unsigned int flags = 0;
 
 	ssids = nlmsg_alloc();
@@ -452,7 +453,8 @@ static int handle_scan(struct nl80211_state *state,
 		case DONE:
 			nlmsg_free(ssids);
 			nlmsg_free(freqs);
-			return 1;
+			err = 1;
+			goto nla_put_failure;
 		case FREQ:
 			freq = strtoul(argv[i], &eptr, 10);
 			if (eptr != argv[i] + strlen(argv[i])) {
@@ -464,6 +466,8 @@ static int handle_scan(struct nl80211_state *state,
 			NLA_PUT_U32(freqs, i, freq);
 			break;
 		case IES:
+			if (ies)
+				free(ies);
 			ies = parse_hex(argv[i], &ies_len);
 			if (!ies)
 				goto nla_put_failure;
@@ -492,24 +496,14 @@ static int handle_scan(struct nl80211_state *state,
 
 	if (ies || meshid) {
 		tmpies = (unsigned char *) malloc(ies_len + meshid_len);
-		if (!tmpies) {
-			free(ies);
-			free(meshid);
+		if (!tmpies)
 			goto nla_put_failure;
-		}
-		if (ies) {
+		if (ies)
 			memcpy(tmpies, ies, ies_len);
-			free(ies);
-		}
-		if (meshid) {
+		if (meshid)
 			memcpy(&tmpies[ies_len], meshid, meshid_len);
-			free(meshid);
-		}
-		if (nla_put(msg, NL80211_ATTR_IE, ies_len + meshid_len, tmpies) < 0) {
-			free(tmpies);
+		if (nla_put(msg, NL80211_ATTR_IE, ies_len + meshid_len, tmpies) < 0)
 			goto nla_put_failure;
-		}
-		free(tmpies);
 	}
 
 	if (!have_ssids)
@@ -539,6 +533,12 @@ static int handle_scan(struct nl80211_state *state,
  nla_put_failure:
 	nlmsg_free(ssids);
 	nlmsg_free(freqs);
+	if (meshid)
+		free(meshid);
+	if (ies)
+		free(ies);
+	if (tmpies)
+		free(tmpies);
 	return err;
 }
 
@@ -1389,7 +1389,7 @@ static void print_tim(const uint8_t type, uint8_t len, const uint8_t *data,
 static void print_ibssatim(const uint8_t type, uint8_t len, const uint8_t *data,
 			   const struct print_ies_data *ie_buffer)
 {
-	printf(" %d TUs", (data[1] << 8) + data[0]);
+	printf(" %d TUs\n", (data[1] << 8) + data[0]);
 }
 
 static void print_vht_capa(const uint8_t type, uint8_t len, const uint8_t *data,
