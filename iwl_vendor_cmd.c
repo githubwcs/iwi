@@ -42,7 +42,7 @@ static int handle_iwl_vendor_dev_tx_power(struct nl80211_state *state,
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_SET_NIC_TXPOWER_LIMIT);
 
-	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!limits)
 		return -ENOBUFS;
 
@@ -82,7 +82,7 @@ static int handle_iwl_vendor_sar_set_profile(struct nl80211_state *state,
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_SET_SAR_PROFILE);
 
-	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!limits)
 		return -ENOBUFS;
 
@@ -166,7 +166,7 @@ static int handle_iwl_vendor_sar_get_profile_info(struct nl80211_state *state,
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_GET_SAR_PROFILE_INFO);
 
-	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!limits)
 		return -ENOBUFS;
 
@@ -265,7 +265,7 @@ static int handle_iwl_vendor_set_country(struct nl80211_state *state,
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_SET_COUNTRY);
 
-	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!limits)
 		return -ENOBUFS;
 
@@ -307,7 +307,7 @@ static int handle_iwl_vendor_set_rxfilter(struct nl80211_state *state,
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_RXFILTER);
 
-	config = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	config = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!config)
 		return -ENOBUFS;
 
@@ -380,7 +380,7 @@ static int handle_iwl_vendor_neighbor_request(struct nl80211_state *state,
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_REQUEST);
 
-	req = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	req = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!req)
 		return -ENOBUFS;
 
@@ -430,7 +430,8 @@ static int iwl_vendor_put_sha_vector(struct nl_msg *msg, int argc, char **argv)
 	if (argc != 2)
 		return -EINVAL;
 
-	attr = nla_nest_start(msg, IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_SHA);
+	attr = nla_nest_start(msg, IWL_MVM_VENDOR_ATTR_FIPS_TEST_VECTOR_SHA |
+			      NLA_F_NESTED);
 	if (!attr)
 		return -ENOBUFS;
 
@@ -474,7 +475,7 @@ static int iwl_vendor_put_hmac_kdf_vector(struct nl_msg *msg, int argc,
 	if (argc != 4)
 		return -EINVAL;
 
-	attr = nla_nest_start(msg, attr_id);
+	attr = nla_nest_start(msg, attr_id | NLA_F_NESTED);
 	if (!attr)
 		return -ENOBUFS;
 
@@ -629,7 +630,7 @@ static int iwl_vendor_put_hw_vector(struct nl_msg *msg, int argc, char **argv,
 	if (ret)
 		return ret;
 
-	attr = nla_nest_start(msg, attr_id);
+	attr = nla_nest_start(msg, attr_id | NLA_F_NESTED);
 	if (!attr)
 		return -ENOBUFS;
 
@@ -712,7 +713,7 @@ static int handle_iwl_vendor_fips_test(struct nl80211_state *state,
 	if (argc < 2)
 		return -EINVAL;
 
-	attr = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	attr = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!attr)
 		return -ENOBUFS;
 
@@ -775,7 +776,7 @@ static int handle_iwl_vendor_fmac_connect_params(struct nl80211_state *state,
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_FMAC_CONNECT_PARAMS);
 
-	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!params)
 		return -ENOBUFS;
 
@@ -806,7 +807,7 @@ static int handle_iwl_vendor_fmac_connect_params(struct nl80211_state *state,
 	else
 		return -EINVAL;
 
-	bssids = nla_nest_start(msg, bssids_attr);
+	bssids = nla_nest_start(msg, bssids_attr | NLA_F_NESTED);
 
 	arg_idx++;
 	for (i = 0; arg_idx < argc; i++, arg_idx++) {
@@ -847,7 +848,7 @@ static int handle_iwl_vendor_fmac_config(struct nl80211_state *state,
 	if (argc != 1)
 		return -EINVAL;
 
-	attr = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA);
+	attr = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
 	if (!attr)
 		return -ENOBUFS;
 
