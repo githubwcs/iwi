@@ -666,6 +666,200 @@ static void parse_nan_match(struct nlattr **attrs)
 	printf("\n");
 }
 
+static void parse_new_peer_candidate(struct nlattr **attrs)
+{
+	char macbuf[ETH_ALEN * 3];
+	int32_t sig_dbm;
+
+	printf("new peer candidate");
+	if (attrs[NL80211_ATTR_MAC]) {
+		mac_addr_n2a(macbuf, nla_data(attrs[NL80211_ATTR_MAC]));
+		printf(" %s", macbuf);
+	}
+	if (attrs[NL80211_ATTR_RX_SIGNAL_DBM]) {
+		sig_dbm = nla_get_u32(attrs[NL80211_ATTR_RX_SIGNAL_DBM]);
+		printf(" %d dBm", sig_dbm);
+	}
+
+	printf("\n");
+}
+
+static void parse_recv_interface(struct nlattr **attrs, int command)
+{
+	switch (command) {
+	case NL80211_CMD_NEW_INTERFACE:
+		printf("new interface");
+		break;
+	case NL80211_CMD_DEL_INTERFACE:
+		printf("del interface");
+		break;
+	case NL80211_CMD_SET_INTERFACE:
+		printf("set interface");
+		break;
+	default:
+		printf("unknown interface command (%i) received\n", command);
+		return;
+	}
+
+	if (attrs[NL80211_ATTR_IFTYPE]) {
+		printf(" type ");
+		switch (nla_get_u32(attrs[NL80211_ATTR_IFTYPE])) {
+		case NL80211_IFTYPE_STATION:
+			printf("station");
+			break;
+		case NL80211_IFTYPE_AP:
+			printf("access point");
+			break;
+		case NL80211_IFTYPE_MESH_POINT:
+			printf("mesh point");
+			break;
+		case NL80211_IFTYPE_ADHOC:
+			printf("IBSS");
+			break;
+		case NL80211_IFTYPE_MONITOR:
+			printf("monitor");
+			break;
+		case NL80211_IFTYPE_AP_VLAN:
+			printf("AP-VLAN");
+			break;
+		case NL80211_IFTYPE_WDS:
+			printf("WDS");
+			break;
+		case NL80211_IFTYPE_P2P_CLIENT:
+			printf("P2P-client");
+			break;
+		case NL80211_IFTYPE_P2P_GO:
+			printf("P2P-GO");
+			break;
+		case NL80211_IFTYPE_P2P_DEVICE:
+			printf("P2P-Device");
+			break;
+		case NL80211_IFTYPE_OCB:
+			printf("OCB");
+			break;
+		case NL80211_IFTYPE_NAN:
+			printf("NAN");
+			break;
+		default:
+			printf("unknown (%d)",
+			       nla_get_u32(attrs[NL80211_ATTR_IFTYPE]));
+			break;
+		}
+	}
+
+	if (attrs[NL80211_ATTR_MESH_ID]) {
+		printf(" meshid ");
+		print_ssid_escaped(nla_len(attrs[NL80211_ATTR_MESH_ID]),
+				   nla_data(attrs[NL80211_ATTR_MESH_ID]));
+	}
+
+	if (attrs[NL80211_ATTR_4ADDR]) {
+		printf(" use 4addr %d", nla_get_u8(attrs[NL80211_ATTR_4ADDR]));
+	}
+
+	printf("\n");
+}
+
+static void parse_sta_opmode_changed(struct nlattr **attrs)
+{
+	char macbuf[ETH_ALEN*3];
+
+	printf("sta opmode changed");
+
+	if (attrs[NL80211_ATTR_MAC]) {
+		mac_addr_n2a(macbuf, nla_data(attrs[NL80211_ATTR_MAC]));
+		printf(" %s", macbuf);
+	}
+
+	if (attrs[NL80211_ATTR_SMPS_MODE])
+		printf(" smps mode %d", nla_get_u8(attrs[NL80211_ATTR_SMPS_MODE]));
+
+	if (attrs[NL80211_ATTR_CHANNEL_WIDTH])
+		printf(" chan width %d", nla_get_u8(attrs[NL80211_ATTR_CHANNEL_WIDTH]));
+
+	if (attrs[NL80211_ATTR_NSS])
+		printf(" nss %d", nla_get_u8(attrs[NL80211_ATTR_NSS]));
+
+	printf("\n");
+}
+
+static void parse_ch_switch_notify(struct nlattr **attrs, int command)
+{
+	switch (command) {
+	case NL80211_CMD_CH_SWITCH_STARTED_NOTIFY:
+		printf("channel switch started");
+		break;
+	case NL80211_CMD_CH_SWITCH_NOTIFY:
+		printf("channel switch");
+		break;
+	default:
+		printf("unknown channel switch command (%i) received\n", command);
+		return;
+	}
+
+	if (attrs[NL80211_ATTR_CH_SWITCH_COUNT])
+		printf(" (count=%d)", nla_get_u32(attrs[NL80211_ATTR_CH_SWITCH_COUNT]));
+
+	if (attrs[NL80211_ATTR_WIPHY_FREQ])
+		printf(" freq=%d", nla_get_u32(attrs[NL80211_ATTR_WIPHY_FREQ]));
+
+	if (attrs[NL80211_ATTR_CHANNEL_WIDTH]) {
+		printf(" width=");
+		switch(nla_get_u32(attrs[NL80211_ATTR_CHANNEL_WIDTH])) {
+		case NL80211_CHAN_WIDTH_20_NOHT:
+		case NL80211_CHAN_WIDTH_20:
+			printf("\"20 MHz\"");
+			break;
+		case NL80211_CHAN_WIDTH_40:
+			printf("\"40 MHz\"");
+			break;
+		case NL80211_CHAN_WIDTH_80:
+			printf("\"80 MHz\"");
+			break;
+		case NL80211_CHAN_WIDTH_80P80:
+			printf("\"80+80 MHz\"");
+			break;
+		case NL80211_CHAN_WIDTH_160:
+			printf("\"160 MHz\"");
+			break;
+		case NL80211_CHAN_WIDTH_5:
+			printf("\"5 MHz\"");
+			break;
+		case NL80211_CHAN_WIDTH_10:
+			printf("\"10 MHz\"");
+			break;
+		default:
+			printf("\"unknown\"");
+		}
+	}
+
+	if (attrs[NL80211_ATTR_WIPHY_CHANNEL_TYPE]) {
+		printf(" type=");
+		switch(nla_get_u32(attrs[NL80211_ATTR_WIPHY_CHANNEL_TYPE])) {
+		case NL80211_CHAN_NO_HT:
+			printf("\"No HT\"");
+			break;
+		case NL80211_CHAN_HT20:
+			printf("\"HT20\"");
+			break;
+		case NL80211_CHAN_HT40MINUS:
+			printf("\"HT40-\"");
+			break;
+		case NL80211_CHAN_HT40PLUS:
+			printf("\"HT40+\"");
+			break;
+		}
+	}
+
+	if (attrs[NL80211_ATTR_CENTER_FREQ1])
+		printf(" freq1=%d", nla_get_u32(attrs[NL80211_ATTR_CENTER_FREQ1]));
+
+	if (attrs[NL80211_ATTR_CENTER_FREQ2])
+		printf(" freq2=%d", nla_get_u32(attrs[NL80211_ATTR_CENTER_FREQ2]));
+
+	printf("\n");
+}
+
 static int print_event(struct nl_msg *msg, void *arg)
 {
 	struct genlmsghdr *gnlh = nlmsg_data(nlmsg_hdr(msg));
@@ -699,8 +893,11 @@ static int print_event(struct nl_msg *msg, void *arg)
 		  genlmsg_attrlen(gnlh, 0), NULL);
 
 	if (tb[NL80211_ATTR_IFINDEX] && tb[NL80211_ATTR_WIPHY]) {
-		if_indextoname(nla_get_u32(tb[NL80211_ATTR_IFINDEX]), ifname);
-		printf("%s (phy #%d): ", ifname, nla_get_u32(tb[NL80211_ATTR_WIPHY]));
+		/* if_indextoname may fails on delete interface/wiphy event */
+		if(if_indextoname(nla_get_u32(tb[NL80211_ATTR_IFINDEX]), ifname))
+			printf("%s (phy #%d): ", ifname, nla_get_u32(tb[NL80211_ATTR_WIPHY]));
+		else
+			printf("phy #%d: ", nla_get_u32(tb[NL80211_ATTR_WIPHY]));
 	} else if (tb[NL80211_ATTR_WDEV] && tb[NL80211_ATTR_WIPHY]) {
 		printf("wdev 0x%llx (phy #%d): ",
 			(unsigned long long)nla_get_u64(tb[NL80211_ATTR_WDEV]),
@@ -922,6 +1119,11 @@ static int print_event(struct nl_msg *msg, void *arg)
 			nla_get_u32(tb[NL80211_ATTR_WIPHY_FREQ]),
 			(unsigned long long)nla_get_u64(tb[NL80211_ATTR_COOKIE]));
 		break;
+	case NL80211_CMD_FRAME_WAIT_CANCEL:
+		printf("frame wait cancel on freq %d (cookie %llx)\n",
+			nla_get_u32(tb[NL80211_ATTR_WIPHY_FREQ]),
+			(unsigned long long)nla_get_u64(tb[NL80211_ATTR_COOKIE]));
+		break;
 	case NL80211_CMD_NOTIFY_CQM:
 		parse_cqm_event(tb);
 		break;
@@ -999,10 +1201,27 @@ static int print_event(struct nl_msg *msg, void *arg)
 	case NL80211_CMD_DEL_NAN_FUNCTION:
 		parse_nan_term(tb);
 		break;
-	case NL80211_CMD_NAN_MATCH: {
+	case NL80211_CMD_NAN_MATCH:
 		parse_nan_match(tb);
 		break;
-	}
+	case NL80211_CMD_NEW_PEER_CANDIDATE:
+		parse_new_peer_candidate(tb);
+		break;
+	case NL80211_CMD_NEW_INTERFACE:
+	case NL80211_CMD_SET_INTERFACE:
+	case NL80211_CMD_DEL_INTERFACE:
+		parse_recv_interface(tb, gnlh->cmd);
+		break;
+	case NL80211_CMD_STA_OPMODE_CHANGED:
+		parse_sta_opmode_changed(tb);
+		break;
+	case NL80211_CMD_STOP_AP:
+		printf("stop ap\n");
+		break;
+	case NL80211_CMD_CH_SWITCH_STARTED_NOTIFY:
+	case NL80211_CMD_CH_SWITCH_NOTIFY:
+		parse_ch_switch_notify(tb, gnlh->cmd);
+		break;
 	default:
 		printf("unknown event %d (%s)\n",
 		       gnlh->cmd, command_name(gnlh->cmd));
