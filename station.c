@@ -256,6 +256,9 @@ void parse_bitrate(struct nlattr *bitrate_attr, char *buf, int buflen)
 	if (rinfo[NL80211_RATE_INFO_HE_DCM])
 		pos += snprintf(pos, buflen - (pos - buf),
 				" HE-DCM %d", nla_get_u8(rinfo[NL80211_RATE_INFO_HE_DCM]));
+	if (rinfo[NL80211_RATE_INFO_HE_RU_ALLOC])
+		pos += snprintf(pos, buflen - (pos - buf),
+				" HE-RU-ALLOC %d", nla_get_u8(rinfo[NL80211_RATE_INFO_HE_RU_ALLOC]));
 }
 
 static char *get_chain_signal(struct nlattr *attr_list)
@@ -322,6 +325,7 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		[NL80211_STA_INFO_TID_STATS] = { .type = NLA_NESTED },
 		[NL80211_STA_INFO_BSS_PARAM] = { .type = NLA_NESTED },
 		[NL80211_STA_INFO_RX_DURATION] = { .type = NLA_U64 },
+		[NL80211_STA_INFO_TX_DURATION] = { .type = NLA_U64 },
 		[NL80211_STA_INFO_ACK_SIGNAL] = {.type = NLA_U8 },
 		[NL80211_STA_INFO_ACK_SIGNAL_AVG] = { .type = NLA_U8 },
 	};
@@ -420,6 +424,10 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		printf("\n\ttx bitrate:\t%s", buf);
 	}
 
+	if (sinfo[NL80211_STA_INFO_TX_DURATION])
+		printf("\n\ttx duration:\t%lld us",
+		       (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_TX_DURATION]));
+
 	if (sinfo[NL80211_STA_INFO_RX_BITRATE]) {
 		char buf[100];
 
@@ -438,6 +446,10 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 	if (sinfo[NL80211_STA_INFO_ACK_SIGNAL_AVG])
 		printf("\n\tavg ack signal:\t%d dBm",
 			(int8_t)nla_get_u8(sinfo[NL80211_STA_INFO_ACK_SIGNAL_AVG]));
+
+	if (sinfo[NL80211_STA_INFO_AIRTIME_WEIGHT]) {
+		printf("\n\tairtime weight: %d", nla_get_u16(sinfo[NL80211_STA_INFO_AIRTIME_WEIGHT]));
+	}
 
 	if (sinfo[NL80211_STA_INFO_EXPECTED_THROUGHPUT]) {
 		uint32_t thr;
@@ -567,6 +579,22 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 	if (sinfo[NL80211_STA_INFO_CONNECTED_TIME])
 		printf("\n\tconnected time:\t%u seconds",
 			nla_get_u32(sinfo[NL80211_STA_INFO_CONNECTED_TIME]));
+	if (sinfo[NL80211_STA_INFO_ASSOC_AT_BOOTTIME]) {
+		unsigned long long bt;
+		struct timespec now_ts;
+		unsigned long long boot_ns;
+		unsigned long long assoc_at_ms;
+
+		clock_gettime(CLOCK_BOOTTIME, &now_ts);
+		boot_ns = now_ts.tv_sec * 1000000000;
+		boot_ns += now_ts.tv_nsec;
+
+		bt = (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_ASSOC_AT_BOOTTIME]);
+		printf("\n\tassociated at [boottime]:\t%llu.%.3llus",
+		       bt/1000000000, (bt%1000000000)/1000000);
+		assoc_at_ms = now_ms - ((boot_ns - bt) / 1000000);
+		printf("\n\tassociated at:\t%llu ms", assoc_at_ms);
+	}
 
 	printf("\n\tcurrent time:\t%llu ms\n", now_ms);
 	return NL_SKIP;
@@ -837,6 +865,120 @@ COMMAND_ALIAS(station, set, "<MAC address> mesh_power_mode "
 	handle_station_set_mesh_power_mode,
 	"Set link-specific mesh power mode for this station",
 	select_station_cmd, station_set_mesh_power_mode);
+
+static int handle_station_set_airtime_weight(struct nl80211_state *state,
+					     struct nl_msg *msg,
+					     int argc, char **argv,
+					     enum id_input id)
+{
+	unsigned char mac_addr[ETH_ALEN];
+	unsigned long airtime_weight = 0;
+	char *err = NULL;
+
+	if (argc < 3)
+		return 1;
+
+	if (mac_addr_a2n(mac_addr, argv[0])) {
+		fprintf(stderr, "invalid mac address\n");
+		return 2;
+	}
+	argc--;
+	argv++;
+
+	if (strcmp("airtime_weight", argv[0]) != 0)
+		return 1;
+	argc--;
+	argv++;
+
+	airtime_weight = strtoul(argv[0], &err, 0);
+	if (err && *err) {
+		fprintf(stderr, "invalid airtime weight\n");
+		return 2;
+	}
+	argc--;
+	argv++;
+
+	if (argc)
+		return 1;
+
+	NLA_PUT(msg, NL80211_ATTR_MAC, ETH_ALEN, mac_addr);
+	NLA_PUT_U16(msg, NL80211_ATTR_AIRTIME_WEIGHT, airtime_weight);
+
+	return 0;
+ nla_put_failure:
+	return -ENOBUFS;
+
+}
+COMMAND_ALIAS(station, set, "<MAC address> airtime_weight <weight>",
+	NL80211_CMD_SET_STATION, 0, CIB_NETDEV, handle_station_set_airtime_weight,
+	"Set airtime weight for this station.",
+	select_station_cmd, station_set_airtime_weight);
+
+static int handle_station_set_txpwr(struct nl80211_state *state,
+				    struct nl_msg *msg,
+				    int argc, char **argv,
+				    enum id_input id)
+{
+	enum nl80211_tx_power_setting type;
+	unsigned char mac_addr[ETH_ALEN];
+	int sta_txpwr = 0;
+	char *err = NULL;
+
+	if (argc != 3 && argc != 4)
+		return 1;
+
+	if (mac_addr_a2n(mac_addr, argv[0])) {
+		fprintf(stderr, "invalid mac address\n");
+		return 2;
+	}
+
+	NLA_PUT(msg, NL80211_ATTR_MAC, ETH_ALEN, mac_addr);
+	argc--;
+	argv++;
+
+	if (strcmp("txpwr", argv[0]) != 0)
+		return 1;
+	argc--;
+	argv++;
+
+	if (!strcmp(argv[0], "auto"))
+		type = NL80211_TX_POWER_AUTOMATIC;
+	else if (!strcmp(argv[0], "limit"))
+		type = NL80211_TX_POWER_LIMITED;
+	else {
+		printf("Invalid parameter: %s\n", argv[0]);
+		return 2;
+	}
+
+	NLA_PUT_U8(msg, NL80211_ATTR_STA_TX_POWER_SETTING, type);
+
+	if (type != NL80211_TX_POWER_AUTOMATIC) {
+		if (argc != 2) {
+			printf("Missing TX power level argument.\n");
+			return 2;
+		}
+
+		argc--;
+		argv++;
+
+		sta_txpwr = strtoul(argv[0], &err, 0);
+		NLA_PUT_U16(msg, NL80211_ATTR_STA_TX_POWER, sta_txpwr);
+	}
+
+	argc--;
+	argv++;
+
+	if (argc)
+		return 1;
+
+	return 0;
+ nla_put_failure:
+	return -ENOBUFS;
+}
+COMMAND_ALIAS(station, set, "<MAC address> txpwr <auto|limit> [<tx power dBm>]",
+	NL80211_CMD_SET_STATION, 0, CIB_NETDEV, handle_station_set_txpwr,
+	"Set Tx power for this station.",
+	select_station_cmd, station_set_txpwr);
 
 static int handle_station_dump(struct nl80211_state *state,
 			       struct nl_msg *msg,
