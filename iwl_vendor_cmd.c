@@ -863,6 +863,108 @@ nla_put_failure:
 COMMAND(iwl, fmac_config, "<key>=<value>",
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_fmac_config, "");
 
+static int handle_iwl_vendor_add_pasn_sta(struct nl80211_state *state,
+					  struct nl_msg *msg, int argc,
+					  char **argv, enum id_input id)
+{
+	struct nlattr *params;
+	unsigned char addr[ETH_ALEN];
+	char *cipher_str;
+	int ret, cipher;
+
+	if (argc < 3)
+		return -EINVAL;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_ADD_PASN_STA);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+	if (!params)
+		return -ENOBUFS;
+
+	ret = mac_addr_a2n(addr, argv[0]);
+	if (ret < 0)
+		return -EINVAL;
+
+	NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_ADDR, ETH_ALEN, addr);
+
+	if (strncmp(argv[1], "cipher=", 7) != 0)
+		return -EINVAL;
+
+	cipher_str = argv[1] + 7;
+	if (strncmp(cipher_str, "ccmp", 4) == 0)
+		cipher = WLAN_CIPHER_SUITE_CCMP;
+	else if (strncmp(cipher_str, "gcmp256", 7) == 0)
+		cipher = WLAN_CIPHER_SUITE_GCMP_256;
+	else if (strncmp(cipher_str, "gcmp", 4) == 0)
+		cipher = WLAN_CIPHER_SUITE_GCMP;
+	else
+		return -EINVAL;
+
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_STA_CIPHER, cipher);
+
+	if (strncmp(argv[2], "hltk=", 5) != 0)
+		return -EINVAL;
+
+	ret = iwl_vendor_put_hex_attr(msg, argv[2] + 5,
+				      IWL_MVM_VENDOR_ATTR_STA_HLTK);
+	if (ret)
+		return ret;
+
+	if (argc == 4 && strncmp(argv[3], "tk=", 3) == 0) {
+		ret = iwl_vendor_put_hex_attr(msg, argv[3] + 3,
+					      IWL_MVM_VENDOR_ATTR_STA_TK);
+		if (ret)
+			return ret;
+	}
+
+	nla_nest_end(msg, params);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, add_pasn_sta, "<mac address> cipher=<ccmp|gcmp|gcmp256> "
+	"hltk=<hex encoded HLTK> [tk=<hex encoded TK>]", NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_add_pasn_sta, "");
+
+static int handle_iwl_vendor_remove_pasn_sta(struct nl80211_state *state,
+					     struct nl_msg *msg, int argc,
+					     char **argv, enum id_input id)
+{
+	struct nlattr *params;
+	unsigned char addr[ETH_ALEN];
+	int ret;
+
+	if (argc != 1)
+		return -EINVAL;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_REMOVE_PASN_STA);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+	if (!params)
+		return -ENOBUFS;
+
+	ret = mac_addr_a2n(addr, argv[0]);
+	if (ret < 0)
+		return -EINVAL;
+
+	NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_ADDR, ETH_ALEN, addr);
+
+	nla_nest_end(msg, params);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, remove_pasn_sta, "<mac address>", NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_remove_pasn_sta, "");
+
 static const char * const phy2str[] =
 {
 	[IWL_MVM_VENDOR_PHY_TYPE_UNSPECIFIED] = "unspecified",
