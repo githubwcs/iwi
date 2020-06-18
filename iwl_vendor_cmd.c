@@ -206,7 +206,7 @@ static int print_geo_profile_handler(struct nl_msg *msg, void *arg)
 			printf("Failed to parse SAR geographic profile data\n");
 			return -EINVAL;
 		}
-		if (nla_type(entries) > ARRAY_SIZE(bands)) {
+		if (nla_type(entries) > (int)ARRAY_SIZE(bands)) {
 			printf("Too many nested attributes for SAR GEO profile\n");
 			return -EINVAL;
 		}
