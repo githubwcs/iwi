@@ -324,7 +324,7 @@ COMMAND(iwl, rxfilter, "<filter> <pass|drop>", NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_set_rxfilter,
 	"filter: 0=unicast, 1=broadcast, 2=IPv4 multicast, 3=IPv6 multicast");
 
-static void parse_tcm_event(struct nlattr *data)
+static void parse_tcm_event(unsigned int id, unsigned int subcmd, struct nlattr *data)
 {
 	struct nlattr *attrs[NUM_IWL_MVM_VENDOR_ATTR];
 
@@ -349,6 +349,8 @@ static void parse_tcm_event(struct nlattr *data)
 		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_VIF_LOAD]));
 	}
 }
+
+VENDOR_EVENT(INTEL_OUI, IWL_MVM_VENDOR_CMD_TCM_EVENT, parse_tcm_event);
 
 static int handle_iwl_vendor_neighbor_request(struct nl80211_state *state,
 					      struct nl_msg *msg,
@@ -987,7 +989,7 @@ static const char * const vendorwidth2str[] =
 	[IWL_MVM_VENDOR_CHAN_WIDTH_80P80] = "80P80MHz",
 };
 
-static void parse_neighbor_report(struct nlattr *data)
+static void parse_neighbor_report(unsigned int id, unsigned int subcmd, struct nlattr *data)
 {
 	int tmp, err;
 	struct nlattr *attrs[NUM_IWL_MVM_VENDOR_ATTR];
@@ -1061,19 +1063,4 @@ static void parse_neighbor_report(struct nlattr *data)
 	}
 }
 
-void iwl_parse_event(__u32 vendor_id, struct nlattr **attrs)
-{
-	if (vendor_id != INTEL_OUI)
-		return;
-
-	switch (nla_get_u32(attrs[NL80211_ATTR_VENDOR_SUBCMD])) {
-	case IWL_MVM_VENDOR_CMD_TCM_EVENT:
-		parse_tcm_event(attrs[NL80211_ATTR_VENDOR_DATA]);
-		break;
-	case IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_RESPONSE:
-		parse_neighbor_report(attrs[NL80211_ATTR_VENDOR_DATA]);
-		break;
-	default:
-		break;
-	}
-}
+VENDOR_EVENT(INTEL_OUI, IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_RESPONSE, parse_neighbor_report);
