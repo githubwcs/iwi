@@ -201,6 +201,8 @@ enum iwl_mvm_vendor_cmd {
 	IWL_MVM_VENDOR_CMD_CSI_EVENT				= 0x24,
 	IWL_MVM_VENDOR_CMD_ADD_PASN_STA				= 0x25,
 	IWL_MVM_VENDOR_CMD_REMOVE_PASN_STA			= 0x26,
+        IWL_MVM_VENDOR_CMD_RFIM_SET_TABLE                       = 0x27,
+        IWL_MVM_VENDOR_CMD_RFIM_GET_TABLE                       = 0x28,
 };
 
 /**
@@ -905,6 +907,10 @@ enum iwl_mvm_vendor_attr {
 	IWL_MVM_VENDOR_ATTR_STA_TK				= 0x4f,
 	IWL_MVM_VENDOR_ATTR_STA_HLTK				= 0x50,
 	IWL_MVM_VENDOR_ATTR_STA_CIPHER				= 0x51,
+        IWL_MVM_VENDOR_ATTR_RFIM_INFO                           = 0x52,
+        IWL_MVM_VENDOR_ATTR_RFIM_FREQ		                = 0x53,
+        IWL_MVM_VENDOR_ATTR_RFIM_CHANNELS	                = 0x54,
+        IWL_MVM_VENDOR_ATTR_RFIM_BANDS		                = 0x55,
 
 	NUM_IWL_MVM_VENDOR_ATTR,
 	MAX_IWL_MVM_VENDOR_ATTR = NUM_IWL_MVM_VENDOR_ATTR - 1,

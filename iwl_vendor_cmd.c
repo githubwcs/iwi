@@ -26,6 +26,11 @@ static struct nla_policy iwl_vendor_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ1] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ2] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT] = { .type = NLA_NESTED },
+	[IWL_MVM_VENDOR_ATTR_RFIM_INFO]       = { .type = NLA_NESTED },
+        [IWL_MVM_VENDOR_ATTR_RFIM_FREQ]       = { .type = NLA_U32 },
+        [IWL_MVM_VENDOR_ATTR_RFIM_BANDS]      = { .type = NLA_U32 },
+        [IWL_MVM_VENDOR_ATTR_RFIM_CHANNELS]   = { .type = NLA_U32 },
+
 };
 
 static int handle_iwl_vendor_dev_tx_power(struct nl80211_state *state,
@@ -65,6 +70,40 @@ nla_put_failure:
 COMMAND(iwl, dev_tx_power, "[2.4 5.2L 5.2H]",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_dev_tx_power, "");
+
+#if 0
+static void print_msg(struct nl_msg *msg)
+{
+	unsigned char *ptr;
+	int i;
+
+	ptr = (unsigned char *)genlmsg_attrdata(nlmsg_data(nlmsg_hdr(msg)), 0);
+	for (i = 0; i < nlmsg_datalen(nlmsg_hdr(msg)); i++) {
+		fprintf(stdout, "%02x ", ptr[i]);
+		if (!((i + 1) % 16) && i)
+			fprintf(stdout, "\n");
+	}
+
+}
+#endif
+
+static struct nlattr *parse_vendor_reply(struct nl_msg *msg)
+{
+	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+	struct genlmsghdr *gnlh = (void *)nlmsg_data(nlmsg_hdr(msg));
+	int i;
+
+	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
+	genlmsg_attrlen(gnlh, 0), NULL);
+
+	for (i = 0; i < MAX_IWL_MVM_VENDOR_ATTR; i++) {
+		if (tb[i]) {
+			fprintf(stderr, "iwl_mvm_parse_vendor_data: i --> attr 0x%x\n", i);
+		}
+	}
+
+	return tb[NL80211_ATTR_VENDOR_DATA];
+}
 
 static int handle_iwl_vendor_sar_set_profile(struct nl80211_state *state,
 					     struct nl_msg *msg,
@@ -109,15 +148,150 @@ COMMAND(iwl, sar_set_profile, "[chain_a chain_b]",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_sar_set_profile, "");
 
-static struct nlattr *parse_vendor_reply(struct nl_msg *msg)
-{
-	struct nlattr *tb[NL80211_ATTR_MAX + 1];
-	struct genlmsghdr *gnlh = (void *)nlmsg_data(nlmsg_hdr(msg));
+/* RFI Mitigation */
 
-	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
-	genlmsg_attrlen(gnlh, 0), NULL);
-	return tb[NL80211_ATTR_VENDOR_DATA];
+#define IWL_RFI_LUT_ENTRY_CHANNELS_NUM 15
+#define IWL_RFI_LUT_SIZE 24
+#define IWL_RFI_LUT_INSTALLED_SIZE 4
+
+#define PHY_BAND_5 (0)
+#define PHY_BAND_6 (2)
+
+struct iwl_rfi_lut_entry {
+	short int freq;
+	char channels[IWL_RFI_LUT_ENTRY_CHANNELS_NUM];
+	char bands[IWL_RFI_LUT_ENTRY_CHANNELS_NUM];
+} __packed;
+
+const struct iwl_rfi_lut_entry iwl_rfi_table[IWL_RFI_LUT_SIZE] = {
+	/* LPDDR4 */
+
+	/* frequency 3733MHz */
+	{223, {114, 116, 118, 120, 122,},
+	      {PHY_BAND_5, PHY_BAND_5, PHY_BAND_5, PHY_BAND_5, PHY_BAND_5,}},
+
+	/* frequency 5200MHz */
+	{312, {36, 38, 40, 42, 50,},
+	       {PHY_BAND_5, PHY_BAND_5, PHY_BAND_5, PHY_BAND_5, PHY_BAND_5,}},
+
+};
+
+
+static int handle_iwl_set_rfim_table(struct nl80211_state *state,
+                                     struct nl_msg *msg,
+                                     int argc, char **argv,
+                                     enum id_input id)
+{
+        struct nlattr *rfim_info, *limits;
+        int i;
+
+	fprintf(stderr, "handle_iwl_set_rfim_table: START\n");
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_RFIM_SET_TABLE);
+
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+        rfim_info = nla_nest_start(msg, IWL_MVM_VENDOR_ATTR_RFIM_INFO | NLA_F_NESTED);
+        if (!rfim_info)
+                return -ENOBUFS;
+
+        for (i = 0; i < IWL_RFI_LUT_INSTALLED_SIZE; i++) {
+                NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RFIM_FREQ, iwl_rfi_table[i].freq);
+                NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_RFIM_CHANNELS,
+                        sizeof(iwl_rfi_table[i].channels), iwl_rfi_table[i].channels);
+                NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_RFIM_BANDS,
+                        sizeof(iwl_rfi_table[i].bands), iwl_rfi_table[i].bands);
+        }
+
+	nla_nest_end(msg, rfim_info);
+	nla_nest_end(msg, limits);
+
+	fprintf(stderr, "handle_iwl_set_rfim_table: DONE\n");
+        return 0;
+
+nla_put_failure:
+        return -ENOBUFS;
 }
+
+COMMAND(iwl, set_rfim_table, "",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_set_rfim_table, "");
+
+static int print_rfim_table_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	int j;
+
+	struct nlattr *attr1;
+	int rem_dvfs_info;
+
+        fprintf(stderr, "print_rfim_table_handler: start\n");
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get nested attr");
+		return NL_SKIP;
+	}
+
+        if (attr[IWL_MVM_VENDOR_ATTR_RFIM_INFO]) {
+                fprintf(stderr, "print_rfim_table_handler: got IWL_MVM_VENDOR_ATTR_RFIM_INFO\n");
+        }
+
+	nla_for_each_nested(attr1, attr[IWL_MVM_VENDOR_ATTR_RFIM_INFO], rem_dvfs_info) {
+		switch (nla_type(attr1)) {
+                case IWL_MVM_VENDOR_ATTR_RFIM_FREQ:
+                        fprintf(stderr, "print_rfim_table_handler: freq = %d\n", nla_get_u32(attr1));
+			break;
+		case IWL_MVM_VENDOR_ATTR_RFIM_CHANNELS: {
+			char *chan = nla_data(attr1);
+
+			fprintf(stderr, "print_rfim_table_handler: chan: ");
+			for (j = 0; j < IWL_RFI_LUT_ENTRY_CHANNELS_NUM; j++)
+				fprintf(stderr, "%d, ", chan[j]);
+			fprintf(stderr, "\n");
+			break;
+		}
+		case IWL_MVM_VENDOR_ATTR_RFIM_BANDS: {
+			char *band = nla_data(attr1);
+
+			fprintf(stderr, "print_rfim_table_handler: band: ");
+			for (j = 0; j < IWL_RFI_LUT_ENTRY_CHANNELS_NUM; j++)
+				fprintf(stderr, "%d, ", band[j]);
+			fprintf(stderr, "\n *** \n");
+			break;
+		}
+		default:
+			fprintf(stderr, "print_rfim_table_handler: invalid attr %d\n", nla_type(attr1));
+ 		}
+	}
+        fprintf(stderr, "print_rfim_table_handler: end\n");
+	return NL_SKIP;
+}
+
+static int handle_iwl_get_rfim_table(struct nl80211_state *state,
+                                     struct nl_msg *msg, int argc,
+                                     char **argv, enum id_input id)
+{
+	int num;
+
+        fprintf(stderr, "handle_iwl_get_rfim_table: start argc %d\n", argc);
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD, IWL_MVM_VENDOR_CMD_RFIM_GET_TABLE);
+
+	register_handler(print_rfim_table_handler, &num);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, get_rfim_table, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_get_rfim_table, "");
 
 static int print_profile_handler(struct nl_msg *msg, void *arg)
 {
@@ -162,6 +336,7 @@ static int handle_iwl_vendor_sar_get_profile_info(struct nl80211_state *state,
 	if (argc != 0)
 		return 1;
 
+        fprintf(stderr, "handle_iwl_vendor_sar_get_profile_info: start\n");
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_GET_SAR_PROFILE_INFO);
