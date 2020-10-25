@@ -474,6 +474,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 	if (!cmd->cmd) {
 		argc = o_argc;
 		argv = o_argv;
+    		fprintf(stderr, "__handle_cmd: HERE1: call handler\n");
 		return cmd->handler(state, NULL, argc, argv, idby);
 	}
 
@@ -508,7 +509,9 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 		break;
 	}
 
+	fprintf(stderr, "__handle_cmd: HERE2: call handler\n");
 	err = cmd->handler(state, msg, argc, argv, idby);
+	fprintf(stderr, "__handle_cmd: HERE2: err %d\n", err);
 	if (err)
 		goto out;
 
@@ -531,6 +534,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 	nl_cb_put(cb);
 	nl_cb_put(s_cb);
 	nlmsg_free(msg);
+	fprintf(stderr, "__handle_cmd: HERE3: err %d\n", err);
 	return err;
  nla_put_failure:
 	fprintf(stderr, "building message failed\n");

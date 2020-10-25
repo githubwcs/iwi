@@ -26,6 +26,15 @@ static struct nla_policy iwl_vendor_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ1] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ2] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_NEIGHBOR_REPORT] = { .type = NLA_NESTED },
+	[IWL_MVM_VENDOR_ATTR_RFIM_INFO]       = { .type = NLA_NESTED },
+        [IWL_MVM_VENDOR_ATTR_RFIM_BAND_INFO]            = { .type = NLA_NESTED },
+        [IWL_MVM_VENDOR_ATTR_RFIM_NUM_DVFS_POINTS]      = { .type = NLA_U32 },
+        [IWL_MVM_VENDOR_ATTR_RFIM_NUM_BANDS]            = { .type = NLA_U32 },
+        [IWL_MVM_VENDOR_ATTR_RFIM_NUM_CHANNELS]         = { .type = NLA_U32 },
+        [IWL_MVM_VENDOR_ATTR_RFIM_FREQ]                 = { .type = NLA_U32 },
+        [IWL_MVM_VENDOR_ATTR_RFIM_BAND]                 = { .type = NLA_U32 },
+        [IWL_MVM_VENDOR_ATTR_RFIM_CHANNEL]              = { .type = NLA_U32 },
+
 };
 
 static int handle_iwl_vendor_dev_tx_power(struct nl80211_state *state,
@@ -65,6 +74,43 @@ nla_put_failure:
 COMMAND(iwl, dev_tx_power, "[2.4 5.2L 5.2H]",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_dev_tx_power, "");
+
+static void print_msg(struct nl_msg *msg)
+{
+	unsigned char *ptr;
+	int i;
+
+	ptr = (unsigned char *)genlmsg_attrdata(nlmsg_data(nlmsg_hdr(msg)), 0);
+	for (i = 0; i < nlmsg_datalen(nlmsg_hdr(msg)); i++) {
+		fprintf(stdout, "%02x ", ptr[i]);
+		if (!((i + 1) % 16) && i)
+			fprintf(stdout, "\n");
+	}
+
+}
+
+
+static struct nlattr *parse_vendor_reply(struct nl_msg *msg)
+{
+	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+	struct genlmsghdr *gnlh = (void *)nlmsg_data(nlmsg_hdr(msg));
+	int i;
+
+	print_msg(msg);
+
+	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
+	genlmsg_attrlen(gnlh, 0), NULL);
+
+	for (i = 0; i < MAX_IWL_MVM_VENDOR_ATTR; i++) {
+		if (tb[i]) {
+			fprintf(stderr, "iwl_mvm_parse_vendor_data: i --> attr 0x%x\n", i);
+		}
+	}
+
+
+	fprintf(stderr, "parse_vendor_reply: %d\n", tb[NL80211_ATTR_VENDOR_DATA]);
+	return tb[NL80211_ATTR_VENDOR_DATA];
+}
 
 static int handle_iwl_vendor_sar_set_profile(struct nl80211_state *state,
 					     struct nl_msg *msg,
@@ -109,6 +155,105 @@ COMMAND(iwl, sar_set_profile, "[chain_a chain_b]",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_sar_set_profile, "");
 
+/**/
+#define WIFI_CHANNELS_MAX 15
+#define DVFS_POINTS_MAX 4
+#define WIFI_BANDS_MAX 2
+
+typedef struct WiFiBandChannelInfo_s
+{
+        int band;
+        int numberOfChannels;
+        int channels[WIFI_CHANNELS_MAX];
+} WiFiBandChannelInfo, * WiFiBandChannelInfoPtr;
+
+typedef struct DdrDvfsPointInfo_s
+{
+        int frequency;
+        int numberOfBands;
+        WiFiBandChannelInfo bandChannelInfo[WIFI_BANDS_MAX];
+} DdrDvfsPointInfo, * DdrDvfsPointInfoPtr;
+
+typedef struct WiFiRfiDdr_s
+{       
+        int numberOfDvfsPoints;
+        DdrDvfsPointInfo dvfsPointsInfo[DVFS_POINTS_MAX];
+} WiFiRfiDdr, * WiFiRfiDdrPtr;
+
+static void iwl_set_rfi_data(WiFiRfiDdr *rfi_data)
+{
+        int i, j, k;
+
+        rfi_data->numberOfDvfsPoints = DVFS_POINTS_MAX;
+
+        for (i = 0; i < DVFS_POINTS_MAX; i++) {
+                rfi_data->dvfsPointsInfo[i].frequency = 200 + 200 * i;
+                rfi_data->dvfsPointsInfo[i].numberOfBands = 2;
+                for (j = 0; j < WIFI_BANDS_MAX; j++) {
+                        rfi_data->dvfsPointsInfo[i].bandChannelInfo[j].band = i + 1;
+                        rfi_data->dvfsPointsInfo[i].bandChannelInfo[j].numberOfChannels = 2;
+                        for (k = 0; k < WIFI_CHANNELS_MAX; k++) {
+                                rfi_data->dvfsPointsInfo[i].bandChannelInfo[j].channels[k] = k;
+                        }
+
+                }
+        }
+}
+
+static int handle_iwl_set_rfim_table(struct nl80211_state *state,
+                                     struct nl_msg *msg,
+                                     int argc, char **argv,
+                                     enum id_input id)
+{
+        WiFiRfiDdr rfi_data;
+        struct nlattr *rfim_info, *dvfs_point_info, *band_info, *limits;
+        int i, j;
+
+        iwl_set_rfi_data(&rfi_data);
+	fprintf(stderr, "handle_iwl_set_rfim_table: NL80211_ATTR_VENDOR_ID %d\n", NL80211_ATTR_VENDOR_ID);
+	fprintf(stderr, "handle_iwl_set_rfim_table: NL80211_ATTR_VENDOR_SUBCMD %d\n", NL80211_ATTR_VENDOR_SUBCMD);
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_RFIM_SET_TABLE);
+
+	limits = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+        rfim_info = nla_nest_start(msg, IWL_MVM_VENDOR_ATTR_RFIM_INFO | NLA_F_NESTED);
+        if (!rfim_info)
+                return -ENOBUFS;
+
+        NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RFIM_NUM_DVFS_POINTS, 4);
+        for (i = 0; i < DVFS_POINTS_MAX; i++) {
+                dvfs_point_info = nla_nest_start(msg, IWL_MVM_VENDOR_ATTR_RFIM_DVFS_POINT_INFO | NLA_F_NESTED);
+                NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RFIM_FREQ, rfi_data.dvfsPointsInfo[i].frequency);
+                NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RFIM_NUM_BANDS, rfi_data.dvfsPointsInfo[i].numberOfBands);
+
+                for (j = 0; j < WIFI_BANDS_MAX; j++) {
+                        band_info = nla_nest_start(msg, IWL_MVM_VENDOR_ATTR_RFIM_BAND_INFO | NLA_F_NESTED);
+
+                        NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RFIM_BAND, rfi_data.dvfsPointsInfo[i].bandChannelInfo[j].band);
+                        NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_RFIM_NUM_CHANNELS,  rfi_data.dvfsPointsInfo[i].bandChannelInfo[j].numberOfChannels);
+                        NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_RFIM_CHANNEL,
+                                rfi_data.dvfsPointsInfo[i].bandChannelInfo[j].numberOfChannels * sizeof(int),
+                                rfi_data.dvfsPointsInfo[i].bandChannelInfo[j].channels);
+                        nla_nest_end(msg, band_info);
+                }
+
+                nla_nest_end(msg, dvfs_point_info);
+        }
+        nla_nest_end(msg, rfim_info);
+	nla_nest_end(msg, limits);
+
+        return 0;
+
+nla_put_failure:
+        return -ENOBUFS;
+}
+
+COMMAND(iwl, set_rfim_table, "set_rfim_table",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_set_rfim_table, "");
+
+#if 0
 static struct nlattr *parse_vendor_reply(struct nl_msg *msg)
 {
 	struct nlattr *tb[NL80211_ATTR_MAX + 1];
@@ -118,6 +263,167 @@ static struct nlattr *parse_vendor_reply(struct nl_msg *msg)
 	genlmsg_attrlen(gnlh, 0), NULL);
 	return tb[NL80211_ATTR_VENDOR_DATA];
 }
+
+#endif
+
+static struct nlattr **iwl_mvm_parse_vendor_data(struct nl_msg *msg)
+{
+	struct nlattr *tb[NL80211_ATTR_MAX + 1];
+	int i, err;
+
+#if 0
+	tb = calloc(MAX_IWL_MVM_VENDOR_ATTR + 1, sizeof(*tb));
+	if (!tb)
+		return NULL;
+#endif
+
+	fprintf(stderr, "iwl_mvm_parse_vendor_data: len = %d\n", nlmsg_datalen(nlmsg_hdr(msg)));
+	err = nla_parse(tb, MAX_IWL_MVM_VENDOR_ATTR,
+			(struct nlattr *)((char *)genlmsg_attrdata(nlmsg_data(nlmsg_hdr(msg)), 0)),// + 32),
+			nlmsg_datalen(nlmsg_hdr(msg)),
+			iwl_vendor_policy);
+	if (err) {
+		fprintf(stderr, "nla_parse error %d\n", err);
+		free(tb);
+		return NULL;
+	}
+	for (i = 0; i < NL80211_ATTR_MAX; i++) {
+		if (tb[i]) {
+			fprintf(stderr, "iwl_mvm_parse_vendor_data: i --> attr 0x%x\n", i);
+		}
+	}
+
+	fprintf(stderr, "iwl_mvm_parse_vendor_data: tb[NL80211_ATTR_VENDOR_DATA] = %d\n", tb[NL80211_ATTR_VENDOR_DATA]);
+	fprintf(stderr, "iwl_mvm_parse_vendor_data end\n");
+	return tb[NL80211_ATTR_VENDOR_DATA];
+}
+
+static int print_rfim_table_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	struct nlattr **tb;
+	int i;
+	unsigned char *ptr;
+
+	struct nlattr *attr1;
+	int rem_dvfs_info;
+
+        fprintf(stderr, "print_rfim_table_handler: start\n");
+
+	print_msg(msg);
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get nested attr");
+		return NL_SKIP;
+	}
+
+        if (attr[IWL_MVM_VENDOR_ATTR_RFIM_INFO]) {
+                fprintf(stderr, "print_rfim_table_handler: got IWL_MVM_VENDOR_ATTR_RFIM_INFO\n");
+        }
+        fprintf(stderr, "print_rfim_table_handler: end\n");
+	return NL_SKIP;
+}
+
+
+static int print_rfim_table_handler2(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = iwl_mvm_parse_vendor_data(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	struct nlattr **tb;
+	int i;
+	unsigned char *ptr;
+
+	struct nlattr *attr1;
+	int rem_dvfs_info;
+
+        fprintf(stderr, "print_rfim_table_handler: start\n");
+
+	print_msg(msg);
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get nested attr");
+		return NL_SKIP;
+	}
+
+        if (attr[IWL_MVM_VENDOR_ATTR_RFIM_INFO]) {
+                fprintf(stderr, "print_rfim_table_handler: got IWL_MVM_VENDOR_ATTR_RFIM_INFO\n");
+        }
+#if 0
+	nla_for_each_nested(attr1, tb[IWL_MVM_VENDOR_ATTR_RFIM_INFO], rem_dvfs_info) {
+		if (nla_type(attr1) == IWL_MVM_VENDOR_ATTR_RFIM_NUM_DVFS_POINTS) {
+			int dvfs_count = nla_get_u32(attr1);
+
+			fprintf(stderr, "print_rfim_table_handler: dvfs_count = %d\n", dvfs_count);
+		}
+
+		if (nla_type(attr1) == IWL_MVM_VENDOR_ATTR_RFIM_DVFS_POINT_INFO) {
+			struct nlattr *attr2;
+			int rem;
+
+			nla_for_each_nested(attr2, attr1, rem) {
+				int bands_count;
+
+				if (nla_type(attr2) == IWL_MVM_VENDOR_ATTR_RFIM_NUM_BANDS) {
+					bands_count = nla_get_u32(attr2);
+
+					fprintf(stderr, "print_rfim_table_handler: bands_count = %d\n", bands_count);
+				} else if (nla_type(attr2) == IWL_MVM_VENDOR_ATTR_RFIM_FREQ) {
+					fprintf(stderr, "print_rfim_table_handler: freq = %d\n", nla_get_u32(attr2));
+				} else if (nla_type(attr2) == IWL_MVM_VENDOR_ATTR_RFIM_BAND_INFO) {
+					struct nlattr *attr3;
+					int rem2;
+
+					nla_for_each_nested(attr3, attr2, rem2) {
+						if (nla_type(attr3) == IWL_MVM_VENDOR_ATTR_RFIM_NUM_CHANNELS) {
+							fprintf(stderr, "print_rfim_table_handler: num_channels = %d\n", nla_get_u32(attr3));
+						} else if (nla_type(attr3) == IWL_MVM_VENDOR_ATTR_RFIM_BAND) {
+							fprintf(stderr, "print_rfim_table_handler: band = %d\n", nla_get_u32(attr3));
+						} else if (nla_type(attr3) == IWL_MVM_VENDOR_ATTR_RFIM_CHANNEL) {
+							int j, *chan = nla_data(attr3);
+
+							for (j = 0; j < 5; j++) {
+								fprintf(stderr, "print_rfim_table_handler: chan[%d] = %d\n", j, chan[j]);
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
+#endif
+        fprintf(stderr, "print_rfim_table_handler: end\n");
+	return NL_SKIP;
+}
+
+static int handle_iwl_get_rfim_table(struct nl80211_state *state,
+                                     struct nl_msg *msg, int argc,
+                                     char **argv, enum id_input id)
+{
+	int num;
+
+        fprintf(stderr, "handle_iwl_get_rfim_table: start argc %d\n", argc);
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD, IWL_MVM_VENDOR_CMD_RFIM_GET_TABLE);
+
+	register_handler(print_rfim_table_handler, &num);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, get_rfim_table, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_get_rfim_table, "");
 
 static int print_profile_handler(struct nl_msg *msg, void *arg)
 {
@@ -162,6 +468,7 @@ static int handle_iwl_vendor_sar_get_profile_info(struct nl80211_state *state,
 	if (argc != 0)
 		return 1;
 
+        fprintf(stderr, "handle_iwl_vendor_sar_get_profile_info: start\n");
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
 	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
 		    IWL_MVM_VENDOR_CMD_GET_SAR_PROFILE_INFO);
