@@ -1032,3 +1032,69 @@ static void parse_neighbor_report(unsigned int id, unsigned int subcmd, struct n
 }
 
 VENDOR_EVENT(INTEL_OUI, IWL_MVM_VENDOR_CMD_NEIGHBOR_REPORT_RESPONSE, parse_neighbor_report);
+
+static int parse_csme_conn_event(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attrs[NUM_IWL_MVM_VENDOR_ATTR];
+	char macbuf[6*3];
+
+	if (nla_parse_nested(attrs, MAX_IWL_MVM_VENDOR_ATTR, data, iwl_vendor_policy) ) {
+		printf("Failed to parse CSME connection info");
+		return EINVAL;
+	}
+
+	printf("Intel CSME connection info event:");
+
+	if (attrs[IWL_MVM_VENDOR_ATTR_AUTH_MODE])
+		printf("\n\tauth mode: %d",
+		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_AUTH_MODE]));
+
+	if (attrs[IWL_MVM_VENDOR_ATTR_SSID])
+	{
+		printf("\n\tSSID: ");
+		print_ssid_escaped(nla_len(attrs[IWL_MVM_VENDOR_ATTR_SSID]),
+				   nla_data(attrs[IWL_MVM_VENDOR_ATTR_SSID]));
+	}
+
+	if (attrs[IWL_MVM_VENDOR_ATTR_STA_CIPHER])
+		printf("\n\tucast cipher: %d",
+		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_STA_CIPHER]));
+
+	if (attrs[IWL_MVM_VENDOR_ATTR_CHANNEL_NUM])
+		printf("\n\tchannel: %d",
+		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_CHANNEL_NUM]));
+
+	if (attrs[IWL_MVM_VENDOR_ATTR_ADDR])
+	{
+		mac_addr_n2a(macbuf, nla_data(attrs[IWL_MVM_VENDOR_ATTR_ADDR]));
+		printf("\n\taddress: %s\n", macbuf);
+	}
+
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_get_csme_conn_info(struct nl80211_state *state,
+						  struct nl_msg *msg,
+						  int argc, char **argv,
+						  enum id_input id)
+{
+	int num;
+
+	if (argc)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_GET_CSME_CONN_INFO);
+
+	register_handler(parse_csme_conn_event, &num);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, get_csme_conn_info, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_get_csme_conn_info, "");
