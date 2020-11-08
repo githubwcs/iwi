@@ -122,20 +122,17 @@ static void parse_cqm_event(struct nlattr **attrs)
 
 	if (cqm[NL80211_ATTR_CQM_RSSI_THRESHOLD_EVENT]) {
 		enum nl80211_cqm_rssi_threshold_event rssi_event;
-		int32_t rssi_level = -1;
 		bool found_one = false;
 
 		rssi_event = nla_get_u32(cqm[NL80211_ATTR_CQM_RSSI_THRESHOLD_EVENT]);
-		if (cqm[NL80211_ATTR_CQM_RSSI_LEVEL])
-			rssi_level = nla_get_u32(cqm[NL80211_ATTR_CQM_RSSI_LEVEL]);
 
 		switch (rssi_event) {
 		case NL80211_CQM_RSSI_THRESHOLD_EVENT_HIGH:
-			printf("RSSI (%i dBm) went above threshold\n", rssi_level);
+			printf("RSSI went above threshold\n");
 			found_one = true;
 			break;
 		case NL80211_CQM_RSSI_THRESHOLD_EVENT_LOW:
-			printf("RSSI (%i dBm) went below threshold\n", rssi_level);
+			printf("RSSI went below threshold\n");
 			found_one = true;
 			break;
 		case NL80211_CQM_RSSI_BEACON_LOSS_EVENT:
@@ -926,7 +923,7 @@ static int print_event(struct nl_msg *msg, void *arg)
 
 	if (tb[NL80211_ATTR_IFINDEX] && tb[NL80211_ATTR_WIPHY]) {
 		/* if_indextoname may fails on delete interface/wiphy event */
-		if (if_indextoname(nla_get_u32(tb[NL80211_ATTR_IFINDEX]), ifname))
+		if(if_indextoname(nla_get_u32(tb[NL80211_ATTR_IFINDEX]), ifname))
 			printf("%s (phy #%d): ", ifname, nla_get_u32(tb[NL80211_ATTR_WIPHY]));
 		else
 			printf("phy #%d: ", nla_get_u32(tb[NL80211_ATTR_WIPHY]));
@@ -979,12 +976,8 @@ static int print_event(struct nl_msg *msg, void *arg)
 	case NL80211_CMD_SCHED_SCAN_RESULTS:
 		printf("got scheduled scan results\n");
 		break;
-	case NL80211_CMD_WIPHY_REG_CHANGE:
 	case NL80211_CMD_REG_CHANGE:
-		if (gnlh->cmd == NL80211_CMD_WIPHY_REG_CHANGE)
-			printf("regulatory domain change (phy): ");
-		else
-			printf("regulatory domain change: ");
+		printf("regulatory domain change: ");
 
 		reg_type = nla_get_u8(tb[NL80211_ATTR_REG_TYPE]);
 
