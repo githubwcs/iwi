@@ -1248,3 +1248,24 @@ COMMAND(iwl, host_assoc, "<SSID> <bssid> <channel> <0|1|2> "
 	"[colloc_info <channel> <colloc_bssid>]",
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_host_assoc,
 	"Set host connection parameters");
+
+static int handle_iwl_vendor_get_ownership(struct nl80211_state *state,
+					   struct nl_msg *msg, int argc,
+					   char **argv, enum id_input id)
+{
+	if (argc)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_HOST_GET_OWNERSHIP);
+
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, get_ownership, NULL,
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_get_ownership,
+	"Ask for ownership on the device");
