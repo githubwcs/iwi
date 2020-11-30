@@ -1269,3 +1269,41 @@ nla_put_failure:
 COMMAND(iwl, get_ownership, NULL,
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_get_ownership,
 	"Ask for ownership on the device");
+
+static int handle_iwl_vendor_set_sw_rfkill_state(struct nl80211_state *state,
+						 struct nl_msg *msg, int argc,
+						 char **argv, enum id_input id)
+{
+	struct nlattr *params;
+	int rfkill_state;
+
+	if (argc != 1)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_HOST_SET_SW_RFKILL_STATE);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+	if (!params)
+		return -ENOBUFS;
+
+	if (strcmp(argv[0], "on") == 0)
+		rfkill_state = IWL_VENDOR_SW_RFKILL_ON;
+	else if (strcmp(argv[0], "off") == 0)
+		rfkill_state = IWL_VENDOR_SW_RFKILL_OFF;
+	else
+		return 1;
+
+	NLA_PUT_U8(msg, IWL_MVM_VENDOR_ATTR_SW_RFKILL_STATE, rfkill_state);
+	nla_nest_end(msg, params);
+
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, set_sw_rfkill_state, "<on|off",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_set_sw_rfkill_state,
+	"Set SW RF Kill state");
