@@ -935,6 +935,46 @@ nla_put_failure:
 COMMAND(iwl, remove_pasn_sta, "<mac address>", NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_remove_pasn_sta, "");
 
+static int handle_iwl_time_sync_msmt_enable(struct nl80211_state *state,
+					    struct nl_msg *msg, int argc,
+					    char **argv, enum id_input id)
+{
+	struct nlattr *params;
+	unsigned char addr[ETH_ALEN];
+	int protocol;
+	int ret;
+
+	if (argc != 2)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_TIME_SYNC_MEASUREMENT_CONFIG);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+	if (!params)
+		return -ENOBUFS;
+
+	protocol = atoi(argv[0]);
+
+	ret = mac_addr_a2n(addr, argv[1]);
+	if (ret < 0)
+		return 1;
+
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_TIME_SYNC_PROTOCOL_TYPE, protocol);
+	NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_ADDR, ETH_ALEN, addr);
+
+	nla_nest_end(msg, params);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, time_sync_msmt_enable, "<protocol TM or FTM> [1|2] <mac address>",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV,
+	handle_iwl_time_sync_msmt_enable, "Enable TM [1] or FTM [2] protocol for time synchronization");
+
 static const char * const phy2str[] =
 {
 	[IWL_MVM_VENDOR_PHY_TYPE_UNSPECIFIED] = "unspecified",
