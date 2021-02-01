@@ -37,6 +37,10 @@ enum nlmsgerr_attrs {
 #define ETH_ALEN 6
 #define VHT_MUMIMO_GROUP_LEN 24
 
+#define WLAN_FC_TYPE_MGMT               0
+
+#define WLAN_FC_STYPE_ACTION            13
+
 /* libnl 1.x compatibility code */
 #if !defined(CONFIG_LIBNL20) && !defined(CONFIG_LIBNL30)
 #  define nl_sock nl_handle
