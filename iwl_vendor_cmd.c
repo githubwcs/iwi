@@ -17,10 +17,6 @@ SECTION(iwl);
 static struct nla_policy iwl_vendor_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
 	[IWL_MVM_VENDOR_ATTR_LOW_LATENCY] = { .type = NLA_FLAG },
 	[IWL_MVM_VENDOR_ATTR_VIF_ADDR] = { .type = NLA_UNSPEC },
-	[IWL_MVM_VENDOR_ATTR_VIF_LL] = { .type = NLA_U8 },
-	[IWL_MVM_VENDOR_ATTR_LL] = { .type = NLA_U8 },
-	[IWL_MVM_VENDOR_ATTR_VIF_LOAD] = { .type = NLA_U8 },
-	[IWL_MVM_VENDOR_ATTR_LOAD] = { .type = NLA_U8 },
 	[IWL_MVM_VENDOR_ATTR_WIPHY_FREQ] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_CHANNEL_WIDTH] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ1] = { .type = NLA_U32 },
@@ -326,28 +322,6 @@ COMMAND(iwl, rxfilter, "<filter> <pass|drop>", NL80211_CMD_VENDOR, 0,
 
 static void parse_tcm_event(unsigned int id, unsigned int subcmd, struct nlattr *data)
 {
-	struct nlattr *attrs[NUM_IWL_MVM_VENDOR_ATTR];
-
-	if (nla_parse_nested(attrs, MAX_IWL_MVM_VENDOR_ATTR, data, iwl_vendor_policy) ||
-	    !attrs[IWL_MVM_VENDOR_ATTR_LL] || !attrs[IWL_MVM_VENDOR_ATTR_LOAD]) {
-		printf("Ignore invalid TCM data");
-		return;
-	}
-
-	printf(" ==> Intel TCM event: global (qos=%u, load=%u)",
-	       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_LL]),
-	       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_LOAD]));
-
-	if (attrs[IWL_MVM_VENDOR_ATTR_VIF_ADDR] &&
-	    attrs[IWL_MVM_VENDOR_ATTR_VIF_LL] &&
-	    attrs[IWL_MVM_VENDOR_ATTR_VIF_LOAD]) {
-		char addr[3 * ETH_ALEN];
-
-		mac_addr_n2a(addr, nla_data(attrs[IWL_MVM_VENDOR_ATTR_VIF_ADDR]));
-		printf(" vif(%s qos=%u, load=%u)", addr,
-		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_VIF_LL]),
-		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_VIF_LOAD]));
-	}
 }
 
 VENDOR_EVENT(INTEL_OUI, IWL_MVM_VENDOR_CMD_TCM_EVENT, parse_tcm_event);
@@ -966,6 +940,44 @@ nla_put_failure:
 
 COMMAND(iwl, remove_pasn_sta, "<mac address>", NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_remove_pasn_sta, "");
+
+static int handle_iwl_vendor_time_sync_config(struct nl80211_state *state,
+					      struct nl_msg *msg, int argc,
+					      char **argv, enum id_input id)
+{
+	struct nlattr *params;
+	unsigned char addr[ETH_ALEN];
+	int ret;
+
+	if (argc != 1)
+		return -EINVAL;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_TIME_SYNC_MEASUREMENT_CONFIG);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+	if (!params)
+		return -ENOBUFS;
+
+	ret = mac_addr_a2n(addr, argv[0]);
+	if (ret < 0)
+		return -EINVAL;
+
+	NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_ADDR, ETH_ALEN, addr);
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_TIME_SYNC_PROTOCOL_TYPE,
+		    IWL_MVM_VENDOR_TIME_SYNC_PROTOCOL_TM |
+		    IWL_MVM_VENDOR_TIME_SYNC_PROTOCOL_FTM);
+
+	nla_nest_end(msg, params);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, time_sync_start, "<mac address>", NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_time_sync_config, "");
 
 static const char * const phy2str[] =
 {
