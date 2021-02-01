@@ -461,6 +461,7 @@ static int handle_interface_info(struct nl80211_state *state,
 				 int argc, char **argv,
 				 enum id_input id)
 {
+	printf("KD:Ent of %s\n",__func__);
 	register_handler(print_iface_handler, NULL);
 	return 0;
 }
@@ -527,6 +528,7 @@ static int handle_dev_dump(struct nl80211_state *state,
 			   int argc, char **argv,
 			   enum id_input id)
 {
+	printf("KD:Ent of %s\n",__func__);
 	dev_dump_wiphy = -1;
 	register_handler(print_iface_handler, &dev_dump_wiphy);
 	return 0;

@@ -152,3 +152,45 @@ COMMAND(mgmt, dump, "frame <type as hex ab> <pattern as hex ab:cd:..> [frame <ty
 	"Frames are selected by their type and pattern containing\n"
 	"the first several bytes of the frame that should match.\n\n"
 	"Example: iw dev wlan0 mgmt dump frame 40 00 frame 40 01:02 count 10\n");
+
+static int register_action_frame(struct nl80211_state *state,
+			       struct nl_msg *msg, int argc, char **argv,
+			       enum id_input id)
+{
+	__u16 type;
+	size_t match_len;
+	int ret;
+
+	if(argc < 2) {
+	   printf("Invalid command\n");
+	   return -EINVAL;
+	}
+
+	type = (WLAN_FC_TYPE_MGMT << 2) | (WLAN_FC_STYPE_ACTION << 4);
+
+	printf("KD: match = %s\n",argv[0]);
+
+	match_len = atoi(argv[1]);	
+	printf("KD: len=%ld\n",match_len);
+
+	NLA_PUT_U16(msg, NL80211_ATTR_FRAME_TYPE, type);
+	NLA_PUT(msg, NL80211_ATTR_FRAME_MATCH, match_len, argv[0]);
+
+	printf("KD:Check here\n");
+
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+
+}
+
+static int handle_frame_mgmt_reg(struct nl80211_state *state,
+				    struct nl_msg *msg, int argc,
+				    char **argv, enum id_input id)
+{
+	return register_action_frame(state, msg, argc, argv, id);
+}
+
+COMMAND(mgmt, frame_reg, "<match pattern hex>" "<pattern_len>", NL80211_CMD_REGISTER_FRAME, 0,
+CIB_NETDEV, handle_frame_mgmt_reg, NULL);

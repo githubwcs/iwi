@@ -361,7 +361,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 
 	o_argc = argc;
 	o_argv = argv;
-
+	printf("KD: Ent of %s\n",__func__);
 	switch (idby) {
 	case II_PHY_IDX:
 		command_idby = CIB_PHY;
@@ -388,6 +388,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 	case II_WDEV:
 		command_idby = CIB_WDEV;
 		devidx = strtoll(*argv, &tmp, 0);
+		printf("KD: devidx=%lld\n",devidx);
 		if (*tmp != '\0')
 			return 1;
 		argc--;
@@ -396,6 +397,7 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 		break;
 	}
 
+	printf("KD: devidx1=%lld\n",devidx);
 	if (devidx < 0)
 		return -errno;
 
@@ -496,12 +498,15 @@ static int __handle_cmd(struct nl80211_state *state, enum id_input idby,
 
 	switch (command_idby) {
 	case CIB_PHY:
+		printf("KD:Check here \n");
 		NLA_PUT_U32(msg, NL80211_ATTR_WIPHY, devidx);
 		break;
 	case CIB_NETDEV:
+		printf("KD:Check metdev\n");
 		NLA_PUT_U32(msg, NL80211_ATTR_IFINDEX, devidx);
 		break;
 	case CIB_WDEV:
+		printf("KD:Check wdev\n");
 		NLA_PUT_U64(msg, NL80211_ATTR_WDEV, devidx);
 		break;
 	default:
@@ -568,6 +573,7 @@ int main(int argc, char **argv)
 	int err;
 	const struct cmd *cmd = NULL;
 
+	printf("KD:in Ent of %s\n",__func__);
 	/* calculate command size including padding */
 	cmd_size = labs((long)&sizer2 - (long)&sizer1);
 	/* strip off self */
@@ -598,11 +604,13 @@ int main(int argc, char **argv)
 	if (strcmp(*argv, "dev") == 0 && argc > 1) {
 		argc--;
 		argv++;
+		printf("KD:in dev of %s\n",__func__);
 		err = __handle_cmd(&nlstate, II_NETDEV, argc, argv, &cmd);
 	} else if (strncmp(*argv, "phy", 3) == 0 && argc > 1) {
 		if (strlen(*argv) == 3) {
 			argc--;
 			argv++;
+		printf("KD:in phy dev of %s\n",__func__);
 			err = __handle_cmd(&nlstate, II_PHY_NAME, argc, argv, &cmd);
 		} else if (*(*argv + 3) == '#')
 			err = __handle_cmd(&nlstate, II_PHY_IDX, argc, argv, &cmd);
@@ -611,6 +619,7 @@ int main(int argc, char **argv)
 	} else if (strcmp(*argv, "wdev") == 0 && argc > 1) {
 		argc--;
 		argv++;
+		printf("KD:in wdev dev of %s\n",__func__);
 		err = __handle_cmd(&nlstate, II_WDEV, argc, argv, &cmd);
 	} else {
 		int idx;
@@ -621,6 +630,8 @@ int main(int argc, char **argv)
 			idby = II_NETDEV;
 		else if ((idx = phy_lookup(argv[0])) >= 0)
 			idby = II_PHY_NAME;
+
+		printf("KD:in none dev of idby=%d %s\n",idby,__func__);
 		err = __handle_cmd(&nlstate, idby, argc, argv, &cmd);
 	}
 
