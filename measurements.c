@@ -155,6 +155,14 @@ static int parse_ftm_target(struct nl_msg *msg, char *str, int peer_index)
 		} else if (strncmp(pos, "lmr_feedback", 12) == 0) {
 			NLA_PUT_FLAG(msg,
 				     NL80211_PMSR_FTM_REQ_ATTR_LMR_FEEDBACK);
+		} else if (strncmp(pos, "bss_color=", 10) == 0) {
+			NLA_PUT_U8(msg,
+				   NL80211_PMSR_FTM_REQ_ATTR_BSS_COLOR,
+				   strtol(pos + 10, &tmp, 0));
+			if (*tmp) {
+				printf("Invalid bss_color value!\n");
+				return HANDLER_RET_USAGE;
+			}
 		} else {
 			printf("Unknown parameter %s\n", pos);
 			return HANDLER_RET_USAGE;
