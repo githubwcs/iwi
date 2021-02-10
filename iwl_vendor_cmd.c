@@ -17,10 +17,6 @@ SECTION(iwl);
 static struct nla_policy iwl_vendor_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
 	[IWL_MVM_VENDOR_ATTR_LOW_LATENCY] = { .type = NLA_FLAG },
 	[IWL_MVM_VENDOR_ATTR_VIF_ADDR] = { .type = NLA_UNSPEC },
-	[IWL_MVM_VENDOR_ATTR_VIF_LL] = { .type = NLA_U8 },
-	[IWL_MVM_VENDOR_ATTR_LL] = { .type = NLA_U8 },
-	[IWL_MVM_VENDOR_ATTR_VIF_LOAD] = { .type = NLA_U8 },
-	[IWL_MVM_VENDOR_ATTR_LOAD] = { .type = NLA_U8 },
 	[IWL_MVM_VENDOR_ATTR_WIPHY_FREQ] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_CHANNEL_WIDTH] = { .type = NLA_U32 },
 	[IWL_MVM_VENDOR_ATTR_CENTER_FREQ1] = { .type = NLA_U32 },
@@ -323,34 +319,6 @@ nla_put_failure:
 COMMAND(iwl, rxfilter, "<filter> <pass|drop>", NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_set_rxfilter,
 	"filter: 0=unicast, 1=broadcast, 2=IPv4 multicast, 3=IPv6 multicast");
-
-static void parse_tcm_event(unsigned int id, unsigned int subcmd, struct nlattr *data)
-{
-	struct nlattr *attrs[NUM_IWL_MVM_VENDOR_ATTR];
-
-	if (nla_parse_nested(attrs, MAX_IWL_MVM_VENDOR_ATTR, data, iwl_vendor_policy) ||
-	    !attrs[IWL_MVM_VENDOR_ATTR_LL] || !attrs[IWL_MVM_VENDOR_ATTR_LOAD]) {
-		printf("Ignore invalid TCM data");
-		return;
-	}
-
-	printf(" ==> Intel TCM event: global (qos=%u, load=%u)",
-	       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_LL]),
-	       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_LOAD]));
-
-	if (attrs[IWL_MVM_VENDOR_ATTR_VIF_ADDR] &&
-	    attrs[IWL_MVM_VENDOR_ATTR_VIF_LL] &&
-	    attrs[IWL_MVM_VENDOR_ATTR_VIF_LOAD]) {
-		char addr[3 * ETH_ALEN];
-
-		mac_addr_n2a(addr, nla_data(attrs[IWL_MVM_VENDOR_ATTR_VIF_ADDR]));
-		printf(" vif(%s qos=%u, load=%u)", addr,
-		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_VIF_LL]),
-		       nla_get_u8(attrs[IWL_MVM_VENDOR_ATTR_VIF_LOAD]));
-	}
-}
-
-VENDOR_EVENT(INTEL_OUI, IWL_MVM_VENDOR_CMD_TCM_EVENT, parse_tcm_event);
 
 static int handle_iwl_vendor_neighbor_request(struct nl80211_state *state,
 					      struct nl_msg *msg,
