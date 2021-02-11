@@ -1098,3 +1098,45 @@ nla_put_failure:
 COMMAND(iwl, get_csme_conn_info, "",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_get_csme_conn_info, "");
+
+static int handle_iwl_vendor_host_disassoc(struct nl80211_state *state,
+					  struct nl_msg *msg, int argc,
+					  char **argv, enum id_input id)
+{
+	struct nlattr *params;
+	unsigned int type;
+	char *type_str;
+
+	if (argc != 1)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_HOST_DISASSOC);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+	if (!params)
+		return -ENOBUFS;
+
+	type_str = argv[0];
+	if (strcmp(type_str, "unknown") == 0)
+		type = IWL_VENDOR_DISCONNECT_TYPE_UNKNOWN;
+	else if (strcmp(type_str, "temp") == 0)
+		type = IWL_VENDOR_DISCONNECT_TYPE_TEMPORARY;
+	else if (strcmp(type_str, "long") == 0)
+		type = IWL_VENDOR_DISCONNECT_TYPE_LONG;
+	else
+		return 1;
+
+	NLA_PUT_U8(msg, IWL_MVM_VENDOR_ATTR_HOST_DISASSOC_TYPE, type);
+	nla_nest_end(msg, params);
+
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, host_disassoc, "<unknown|temp|long>",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_host_disassoc,
+	"Notify on host disassociation");
