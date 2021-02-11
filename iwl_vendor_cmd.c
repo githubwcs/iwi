@@ -1140,3 +1140,111 @@ nla_put_failure:
 COMMAND(iwl, host_disassoc, "<unknown|temp|long>",
 	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_host_disassoc,
 	"Notify on host disassociation");
+
+static int handle_iwl_vendor_host_assoc(struct nl80211_state *state,
+					struct nl_msg *msg, int argc,
+					char **argv, enum id_input id)
+{
+	struct nlattr *params;
+	int ret, channel, band = 0, cipher, auth, index = 0;
+	char *ssid = NULL, *cipher_str = NULL, *auth_str = NULL;
+	unsigned char addr[ETH_ALEN];
+
+	if (argc < 4)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_HOST_ASSOC);
+
+	params = nla_nest_start(msg, NL80211_ATTR_VENDOR_DATA | NLA_F_NESTED);
+	if (!params)
+		return -ENOBUFS;
+
+	ssid = argv[index];
+	if (strlen(ssid) > 32)
+		return 1;
+
+		NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_SSID, strlen(ssid), ssid);
+
+	index++;
+	ret = mac_addr_a2n(addr, argv[index]);
+	if (ret < 0)
+		return 1;
+
+	NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_ADDR, ETH_ALEN, addr);
+	index++;
+
+	channel = atoi(argv[index]);
+	NLA_PUT_U8(msg, IWL_MVM_VENDOR_ATTR_CHANNEL_NUM, channel);
+	index++;
+
+	band = atoi(argv[index]);
+	NLA_PUT_U8(msg, IWL_MVM_VENDOR_ATTR_BAND, band);
+	index++;
+
+	auth_str = argv[index];
+	if (strcmp(auth_str, "open") == 0)
+		auth = IWL_VENDOR_AUTH_OPEN;
+	else if (strcmp(auth_str, "shared") == 0)
+		auth = IWL_VENDOR_AUTH_SHARED;
+	else if (strcmp(auth_str, "wpa") == 0)
+		auth = IWL_VENDOR_AUTH_WPA;
+	else if (strcmp(auth_str, "wpa_psk") == 0)
+		auth = IWL_VENDOR_AUTH_WPA_PSK;
+	else if (strcmp(auth_str, "rsna") == 0)
+		auth = IWL_VENDOR_AUTH_RSNA;
+	else if (strcmp(auth_str, "rsna_psk") == 0)
+		auth = IWL_VENDOR_AUTH_RSNA_PSK;
+	else if (strcmp(auth_str, "sae") == 0)
+		auth = IWL_VENDOR_AUTH_SAE;
+	else
+		return 1;
+
+	NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_AUTH_MODE, auth);
+	index++;
+
+	if (argc > 5) {
+		if (strncmp(argv[index], "cipher=", 7) == 0) {
+			cipher_str = argv[index] + 7;
+			if (strcmp(cipher_str, "wep") == 0)
+				cipher = WLAN_CIPHER_SUITE_WEP40;
+			else if (strcmp(cipher_str, "tkip") == 0)
+				cipher = WLAN_CIPHER_SUITE_TKIP;
+			else if (strcmp(cipher_str, "ccmp") == 0)
+				cipher = WLAN_CIPHER_SUITE_CCMP;
+			else if (strcmp(cipher_str, "gcmp") == 0)
+				cipher = WLAN_CIPHER_SUITE_GCMP;
+			else
+				return 1;
+
+			NLA_PUT_U32(msg, IWL_MVM_VENDOR_ATTR_STA_CIPHER, cipher);
+			index++;
+		}
+		if (argc > index && strncmp(argv[index], "colloc_info", 11) == 0) {
+			index++;
+			channel = atoi(argv[index]);
+			NLA_PUT_U8(msg, IWL_MVM_VENDOR_ATTR_COLLOC_CHANNEL, channel);
+			index++;
+			ret = mac_addr_a2n(addr, argv[index]);
+			if (ret < 0)
+				return 1;
+
+			NLA_PUT(msg, IWL_MVM_VENDOR_ATTR_COLLOC_ADDR, ETH_ALEN, addr);
+		}
+
+	}
+
+	nla_nest_end(msg, params);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, host_assoc, "<SSID> <bssid> <channel> <0|1|2> "
+	"<open|shared|wpa|wpa_psk|rsna|rsna_psk|sae> "
+	"[cipher=<wep|tkip|ccmp|gcmp>] "
+	"[colloc_info <channel> <colloc_bssid>]",
+	NL80211_CMD_VENDOR, 0, CIB_NETDEV, handle_iwl_vendor_host_assoc,
+	"Set host connection parameters");
