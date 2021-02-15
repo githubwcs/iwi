@@ -126,7 +126,8 @@ static int handle_IFTM_send_req(struct nl80211_state *state, struct nl_msg *msg,
 	            printf("Error in sending IFTMR");
 		    return -EINVAL;
 	 }
-
+	 else
+	            printf("Success in sending IFTMR");
 	return 0;
 }
 

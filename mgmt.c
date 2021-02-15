@@ -170,6 +170,9 @@ static int register_action_frame(struct nl80211_state *state,
 
 
 	match_len = atoi(argv[1]);
+	
+	printf("KD:match_len=%d\n",strlen(argv[0]));
+	printf("KD:%s\n",argv[0]);
 	printf("Register frame\n");
 	NLA_PUT_U16(msg, NL80211_ATTR_FRAME_TYPE, type);
 	NLA_PUT(msg, NL80211_ATTR_FRAME_MATCH, match_len, argv[0]);
