@@ -1247,6 +1247,9 @@ static int print_event(struct nl_msg *msg, void *arg)
 	case NL80211_CMD_CH_SWITCH_NOTIFY:
 		parse_ch_switch_notify(tb, gnlh->cmd);
 		break;
+	case NL80211_CMD_FRAME:
+		printf("KD: check at rx frame command in %s\n",__func__);
+		break;
 	default:
 		printf("unknown event %d (%s)\n",
 		       gnlh->cmd, command_name(gnlh->cmd));
