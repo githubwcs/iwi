@@ -1087,21 +1087,50 @@ static void parse_time_sync_msmt_event(unsigned int id,
 	}
 
 	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T1]) 
-		printf("\t time_sync_t1: %lu\n",
+		printf("\n\ttime_sync_t1: %lu\n",
                        nla_get_u64(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T1]));
 	
         if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T2])	
-		printf("\t time_sync_t2: %lu\n",
+		printf("\ttime_sync_t2: %lu\n",
                        nla_get_u64(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T2]));
 
 	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T3])	
-		printf("\t time_sync_t3: %lu\n",
+		printf("\ttime_sync_t3: %lu\n",
                        nla_get_u64(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T3]));
 
 	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T4])
-		printf("\t time_sync_t4: %lu\n",
+		printf("\ttime_sync_t4: %lu\n",
                        nla_get_u64(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T4]));
 
+	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_DIALOG_TOKEN])
+		printf("\tdialog_token: %d\n",
+		       nla_get_u32(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_DIALOG_TOKEN]));
+
+	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_FUP_DIALOG_TOKEN])
+		printf("\tfup_dialog_token: %d\n",
+		       nla_get_u32(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_FUP_DIALOG_TOKEN]));
+
+	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T1_MAX_ERROR])
+		printf("\tt1_error: %d\n",
+                       nla_get_u32(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T1_MAX_ERROR]));
+
+	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T2_MAX_ERROR])
+		printf("\tt2_error: %d\n",
+                       nla_get_u32(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T2_MAX_ERROR]));
+
+	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T3_MAX_ERROR])
+		printf("\tt3_error: %d\n",
+                       nla_get_u32(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T3_MAX_ERROR]));
+
+	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T4_MAX_ERROR])
+		printf("\tt4_error: %d\n",
+                       nla_get_u32(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_T4_MAX_ERROR]));
+
+	if (tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_VS_DATA]) {
+		iw_hexdump("\tVendor_data",
+			   nla_data(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_VS_DATA]),
+		           nla_len(tb[IWL_MVM_VENDOR_ATTR_TIME_SYNC_VS_DATA]));
+	}
 }
 
 VENDOR_EVENT(INTEL_OUI, IWL_MVM_VENDOR_CMD_TIME_SYNC_MSMT_EVENT,
