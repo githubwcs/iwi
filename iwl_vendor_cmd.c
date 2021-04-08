@@ -178,25 +178,16 @@ COMMAND(iwl, sar_get_profiles_info, "",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_sar_get_profile_info, "");
 
-static int print_geo_profile_handler(struct nl_msg *msg, void *arg)
+static int print_geo_profile(struct nlattr *profile_attr, int n_bands, int *prof_num)
 {
-	struct nlattr *data = parse_vendor_reply(msg);
-	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
 	struct nlattr *entry[MAX_IWL_MVM_VENDOR_ATTR], *entries;
-	char *bands[] = { "2.4", "5.2" };
+	char *bands[] = { "2.4", "5.2", "6-7" };
 	int profs;
 
-	if (!data)
-		return NL_SKIP;
+	nla_for_each_nested(entries, profile_attr, profs) {
+		if (nla_type(entries) > n_bands)
+			break;
 
-	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
-		printf("Failed to get SAR geographic profile info");
-		return NL_SKIP;
-	}
-	if (!attr[IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE])
-		return NL_SKIP;
-
-	nla_for_each_nested(entries, attr[IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE], profs) {
 		if (nla_parse_nested(entry, MAX_IWL_MVM_VENDOR_ATTR,
 				     entries, NULL)) {
 			printf("Failed to parse SAR geographic profile data\n");
@@ -212,6 +203,9 @@ static int print_geo_profile_handler(struct nl_msg *msg, void *arg)
 		    !entry[IWL_VENDOR_SAR_GEO_MAX_TXP]) {
 			printf("SAR geographic profile disabled\n");
 		} else {
+			if (prof_num)
+				printf("Profile #%d/n", *prof_num);
+
 			printf("%sGHz\n\tChain A offset: %hhd dBm\n\tChain B offset: %hhd dBm\n\tMax tx power: %hhd dBm\n",
 			       bands[nla_type(entries) - 1],
 			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_CHAIN_A_OFFSET]),
@@ -219,6 +213,33 @@ static int print_geo_profile_handler(struct nl_msg *msg, void *arg)
 			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_MAX_TXP]));
 		}
 	}
+	return 0;
+}
+
+#define GEO_SAR_NUM_BANDS_V1 5
+#define GEO_SAR_NUM_BANDS_V2 11
+
+static int print_geo_profile_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	int ret;
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get SAR geographic profile info");
+		return NL_SKIP;
+	}
+	if (!attr[IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE])
+		return NL_SKIP;
+
+	ret = print_geo_profile(attr[IWL_MVM_VENDOR_ATTR_SAR_GEO_PROFILE],
+				GEO_SAR_NUM_BANDS_V1, NULL);
+	if(ret)
+		return ret;
+
 	return NL_SKIP;
 }
 
@@ -1409,3 +1430,223 @@ static void parse_time_sync_msmt_event(unsigned int id,
 
 VENDOR_EVENT(INTEL_OUI, IWL_MVM_VENDOR_CMD_TIME_SYNC_MSMT_EVENT,
 	     parse_time_sync_msmt_event);
+
+static int print_ppag_table_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1], *chain;
+	int i, len, n_sub_bands;
+	char chains[] = { 'A', 'B' };
+
+	printf("in ppag printer\n");
+	if (!data)
+		return NL_SKIP;
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get PPAG table\n");
+		return NL_SKIP;
+	}
+
+	if (!attr[IWL_MVM_VENDOR_ATTR_PPAG_NUM_SUB_BANDS] ||
+	    !attr[IWL_MVM_VENDOR_ATTR_PPAG_TABLE]) {
+		fprintf(stderr, "PPAG missing info\n");
+		return NL_SKIP;
+	}
+
+	n_sub_bands = nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_PPAG_NUM_SUB_BANDS]);
+
+	nla_for_each_attr(chain,
+			  (struct nlattr *)nla_data(attr[IWL_MVM_VENDOR_ATTR_PPAG_TABLE]),
+			  nla_len(attr[IWL_MVM_VENDOR_ATTR_PPAG_TABLE]), len) {
+		__s8* values = nla_data(chain);
+
+		if (nla_type(chain) > (int)ARRAY_SIZE(chains)) {
+			printf("Too many attributes for SAR profile\n");
+			return -EINVAL;
+		}
+
+		if (n_sub_bands != nla_len(chain)) {
+		    printf("Too many or too few PPAG values\n");
+		    return -EINVAL;
+		}
+
+		printf("Chain %c: ", chains[nla_type(chain) - 1]);
+		for (i = 0; i < n_sub_bands; i++)
+			printf("%d ", values[i]);
+		printf("\n");
+	}
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_ppag_get_table(struct nl80211_state *state,
+					    struct nl_msg *msg,
+					    int argc, char **argv,
+					    enum id_input id)
+{
+	int num;
+  
+	if (argc != 0)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_PPAG_GET_TABLE);
+
+	register_handler(print_ppag_table_handler, &num);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+	printf("in nla_put_failure\n");
+}
+
+COMMAND(iwl, ppag_get_table, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV,
+	handle_iwl_vendor_ppag_get_table, "");
+
+#define SAR_NUM_PROFILES 4
+#define SAR_NUM_CHAINS_V1 2
+#define SAR_NUM_CHAINS_V2 4
+#define SAR_NUM_SUB_BANDS_V1 5
+#define SAR_NUM_SUB_BANDS_V2 11
+
+static int print_sar_table_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	struct nlattr *profile, *chain;
+	char *chains[] = { "A" , "B", "CDB-A", "CDB-B" };
+	int profs, i, len, n_chains, n_subbands;
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get the SAR table\n");
+		return NL_SKIP;
+	}
+
+	if (!attr[IWL_MVM_VENDOR_ATTR_SAR_TABLE] ||
+	    !attr[IWL_MVM_VENDOR_ATTR_SAR_VER])
+		return NL_SKIP;
+
+	/* determine num of chains and num of sub-bands */
+	if (nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_SAR_VER]) == 6) {
+		n_chains = SAR_NUM_CHAINS_V2;
+		n_subbands = SAR_NUM_SUB_BANDS_V2;
+	} else {
+		n_chains = SAR_NUM_CHAINS_V2;
+		n_subbands = SAR_NUM_SUB_BANDS_V2;
+	}
+
+	nla_for_each_nested(profile, attr[IWL_MVM_VENDOR_ATTR_SAR_TABLE], profs) {
+		if (nla_type(profile) > SAR_NUM_PROFILES) {
+			printf("Too many attributes for SAR table\n");
+			return -EINVAL;
+		}
+
+		printf("SAR profile #%d:\n", nla_type(profile));
+
+		nla_for_each_attr(chain, (struct nlattr *)nla_data(profile), nla_len(profile), len) {
+			__u8 *values = nla_data(chain);
+
+			if(nla_type(chain) > n_chains)
+				break;
+			if (nla_type(chain) > (int)ARRAY_SIZE(chains)) {
+				printf("Too many attributes for SAR profile\n");
+				return -EINVAL;
+			}
+
+			printf("Chain %s: ", chains[nla_type(chain) - 1]);
+			for(i = 0; i < nla_len(chain) && i < n_subbands; i++)
+				printf("%d ", values[i]);
+			printf("\n");
+		}
+	}
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_sar_get_table(struct nl80211_state *state,
+					   struct nl_msg *msg,
+					   int argc, char** argv,
+					   enum id_input id)
+{
+	if (argc != 0)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_SAR_GET_TABLE);
+
+	register_handler(print_sar_table_handler, NULL);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, sar_get_table, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_sar_get_table, "");
+
+#define GEO_SAR_NUM_PROFILES 3
+
+static int print_geo_table_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	struct nlattr *profile;
+	int profs, ret, prof_num, n_bands;
+
+	if (!data)
+		return NL_SKIP;
+
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		        printf("Failed to get SAR geographic table\n");
+			        return NL_SKIP;
+	}
+	if (!attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_TABLE] ||
+	    !attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_VER])
+			          return NL_SKIP;
+	/* determine num of bands*/
+	n_bands = (nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_VER]) == 3) ?
+		GEO_SAR_NUM_BANDS_V2 : GEO_SAR_NUM_BANDS_V1;
+
+	nla_for_each_nested(profile, attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_TABLE],
+			    profs) {
+		prof_num = nla_type(profile);
+		if (nla_type(profile) > GEO_SAR_NUM_PROFILES) {
+			printf("Too many nested attributes for SAR GEO table\n");
+			return -EINVAL;
+		}
+
+		ret = print_geo_profile(profile, n_bands, &prof_num);
+		if (ret)
+			return ret;
+	}
+
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_sar_get_geo_table(struct nl80211_state *state,
+					       struct nl_msg *msg,
+					       int argc, char** argv,
+					       enum id_input id)
+{
+	if (argc != 0)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_GEO_SAR_GET_TABLE);
+
+	register_handler(print_geo_table_handler, NULL);
+	return 0;
+
+nla_put_failure:
+	return -ENOBUFS;
+}
+
+COMMAND(iwl, sar_get_geo_table, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV, handle_iwl_vendor_sar_get_geo_table, "");
