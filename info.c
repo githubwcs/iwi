@@ -133,6 +133,9 @@ static int print_phy_handler(struct nl_msg *msg, void *arg)
 	if (print_name && tb_msg[NL80211_ATTR_WIPHY_NAME])
 		printf("Wiphy %s\n", nla_get_string(tb_msg[NL80211_ATTR_WIPHY_NAME]));
 
+	if (print_name && tb_msg[NL80211_ATTR_WIPHY])
+		printf("\twiphy index: %u\n", nla_get_u32(tb_msg[NL80211_ATTR_WIPHY]));
+
 	/* needed for split dump */
 	if (tb_msg[NL80211_ATTR_WIPHY_BANDS]) {
 		nla_for_each_nested(nl_band, tb_msg[NL80211_ATTR_WIPHY_BANDS], rem_band) {
@@ -695,10 +698,20 @@ broken_combination:
 			       "PMKSA caching supported in AP mode");
 		ext_feat_print(tb, SCHED_SCAN_BAND_SPECIFIC_RSSI_THOLD,
 			       "band specific RSSI thresholds for scheduled scan");
-		ext_feat_print(tb, EXT_KEY_ID, "extended key ID support");
+		ext_feat_print(tb, EXT_KEY_ID, "Extended Key ID support");
 		ext_feat_print(tb, STA_TX_PWR, "TX power control per station");
 		ext_feat_print(tb, SAE_OFFLOAD, "SAE offload support");
 		ext_feat_print(tb, VLAN_OFFLOAD, "VLAN offload support");
+		ext_feat_print(tb, BEACON_PROTECTION, "beacon protection support");
+		ext_feat_print(tb, CONTROL_PORT_NO_PREAUTH, "disable pre-auth over nl80211 control port support");
+		ext_feat_print(tb, PROTECTED_TWT, "protected Target Wake Time (TWT) support");
+		ext_feat_print(tb, DEL_IBSS_STA, "deletion of IBSS station support");
+		ext_feat_print(tb, MULTICAST_REGISTRATIONS, "mgmt frame registration for multicast");
+		ext_feat_print(tb, BEACON_PROTECTION_CLIENT, "beacon prot. for clients support");
+		ext_feat_print(tb, SCAN_FREQ_KHZ, "scan on kHz frequency support");
+		ext_feat_print(tb, CONTROL_PORT_OVER_NL80211_TX_STATUS, "tx status for nl80211 control port support");
+		ext_feat_print(tb, OPERATING_CHANNEL_VALIDATION, "Operating Channel Validation (OCV) support");
+		ext_feat_print(tb, 4WAY_HANDSHAKE_AP_PSK, "AP mode PSK offload support");
 	}
 
 	if (tb_msg[NL80211_ATTR_COALESCE_RULE]) {
@@ -715,6 +728,10 @@ broken_combination:
 			rule->max_rules, pat->max_patterns, pat->min_pattern_len,
 			pat->max_pattern_len, pat->max_pkt_offset, rule->max_delay);
 	}
+
+	if (tb_msg[NL80211_ATTR_MAX_AP_ASSOC_STA])
+		printf("\tMaximum associated stations in AP mode: %u\n",
+		       nla_get_u16(tb_msg[NL80211_ATTR_MAX_AP_ASSOC_STA]));
 
 	return NL_SKIP;
 }
