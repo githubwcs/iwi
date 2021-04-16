@@ -2272,6 +2272,44 @@ static void print_vendor(unsigned char len, unsigned char *data,
 	printf("\n");
 }
 
+static void print_he_capa(const uint8_t type, uint8_t len, const uint8_t *data,
+			  const struct print_ies_data *ie_buffer)
+{
+	printf("\n");
+	print_he_capability(data, len);
+}
+
+static const struct ie_print ext_printers[] = {
+	[35] = { "HE capabilities", print_he_capa, 21, 54, BIT(PRINT_SCAN), },
+};
+
+static void print_extension(unsigned char len, unsigned char *ie,
+			    bool unknown, enum print_ie_type ptype)
+{
+	unsigned char tag;
+
+	if (len < 1) {
+		printf("\tExtension IE: <empty>\n");
+		return;
+	}
+
+	tag = ie[0];
+	if (tag < ARRAY_SIZE(ext_printers) && ext_printers[tag].name &&
+	    ext_printers[tag].flags & BIT(ptype)) {
+		print_ie(&ext_printers[tag], tag, len - 1, ie + 1, NULL);
+		return;
+	}
+
+	if (unknown) {
+		int i;
+
+		printf("\tUnknown Extension ID (%d):", ie[0]);
+		for (i = 1; i < len; i++)
+			printf(" %.2x", ie[i]);
+		printf("\n");
+	}
+}
+
 void print_ies(unsigned char *ie, int ielen, bool unknown,
 	       enum print_ie_type ptype)
 {
@@ -2290,6 +2328,8 @@ void print_ies(unsigned char *ie, int ielen, bool unknown,
 				 ie[0], ie[1], ie + 2, &ie_buffer);
 		} else if (ie[0] == 221 /* vendor */) {
 			print_vendor(ie[1], ie + 2, unknown, ptype);
+		} else if (ie[0] == 255 /* extension */) {
+			print_extension(ie[1], ie + 2, unknown, ptype);
 		} else if (unknown) {
 			int i;
 

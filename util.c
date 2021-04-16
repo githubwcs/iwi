@@ -989,31 +989,26 @@ void print_vht_info(__u32 capa, const __u8 *mcs)
 	printf("\t\tVHT TX highest supported: %d Mbps\n", tmp & 0x1fff);
 }
 
-void print_he_info(struct nlattr *nl_iftype)
+static void __print_he_capa(const __u16 *mac_cap,
+			    const __u16 *phy_cap,
+			    const __u16 *mcs_set, size_t mcs_len,
+			    const __u8 *ppet, int ppet_len,
+			    bool indent)
 {
-	struct nlattr *tb[NL80211_BAND_IFTYPE_ATTR_MAX + 1];
-	struct nlattr *tb_flags[NL80211_IFTYPE_MAX + 1];
-	char *iftypes[NUM_NL80211_IFTYPES] = {
-		"Unspec", "Adhoc", "Station", "AP", "AP/VLAN", "WDS", "Monitor",
-		"Mesh", "P2P/Client", "P2P/Go", "P2P/Device", "OCB", "NAN",
-	};
-	__u16 mac_cap[3] = { 0 };
-	__u16 phy_cap[6] = { 0 };
-	__u16 mcs_set[6] = { 0 };
-	__u8 ppet[25] = { 0 };
-	size_t len;
+	size_t mcs_used;
 	int i;
+	const char *pre = indent ? "\t" : "";
 
 	#define PRINT_HE_CAP(_var, _idx, _bit, _str) \
 	do { \
 		if (_var[_idx] & BIT(_bit)) \
-			printf("\t\t\t\t" _str "\n"); \
+			printf("%s\t\t\t" _str "\n", pre); \
 	} while (0)
 
 	#define PRINT_HE_CAP_MASK(_var, _idx, _shift, _mask, _str) \
 	do { \
 		if ((_var[_idx] >> _shift) & _mask) \
-			printf("\t\t\t\t" _str ": %d\n", (_var[_idx] >> _shift) & _mask); \
+			printf("%s\t\t\t" _str ": %d\n", pre, (_var[_idx] >> _shift) & _mask); \
 	} while (0)
 
 	#define PRINT_HE_MAC_CAP(...) PRINT_HE_CAP(mac_cap, __VA_ARGS__)
@@ -1022,31 +1017,7 @@ void print_he_info(struct nlattr *nl_iftype)
 	#define PRINT_HE_PHY_CAP0(_idx, _bit, ...) PRINT_HE_CAP(phy_cap, _idx, _bit + 8, __VA_ARGS__)
 	#define PRINT_HE_PHY_CAP_MASK(...) PRINT_HE_CAP_MASK(phy_cap, __VA_ARGS__)
 
-	nla_parse(tb, NL80211_BAND_IFTYPE_ATTR_MAX,
-		  nla_data(nl_iftype), nla_len(nl_iftype), NULL);
-
-	if (!tb[NL80211_BAND_IFTYPE_ATTR_IFTYPES])
-		return;
-
-	if (nla_parse_nested(tb_flags, NL80211_IFTYPE_MAX,
-			     tb[NL80211_BAND_IFTYPE_ATTR_IFTYPES], NULL))
-		return;
-
-	printf("\t\tHE Iftypes:");
-	for (i = 0; i < NUM_NL80211_IFTYPES; i++)
-		if (nla_get_flag(tb_flags[i]) && iftypes[i])
-			printf(" %s", iftypes[i]);
-	printf("\n");
-
-	if (tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC]) {
-		len = nla_len(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC]);
-		if (len > sizeof(mac_cap))
-			len = sizeof(mac_cap);
-		memcpy(mac_cap,
-		       nla_data(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC]),
-		       len);
-	}
-	printf("\t\t\tHE MAC Capabilities (0x");
+	printf("%s\t\tHE MAC Capabilities (0x", pre);
 	for (i = 0; i < 3; i++)
 		printf("%04x", mac_cap[i]);
 	printf("):\n");
@@ -1086,16 +1057,7 @@ void print_he_info(struct nlattr *nl_iftype)
 	PRINT_HE_MAC_CAP(2, 11, "UL 2x996-Tone RU");
 	PRINT_HE_MAC_CAP(2, 12, "OM Control UL MU Data Disable RX");
 
-	if (tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PHY]) {
-		len = nla_len(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PHY]);
-
-		if (len > sizeof(phy_cap) - 1)
-			len = sizeof(phy_cap) - 1;
-		memcpy(&((__u8 *)phy_cap)[1],
-		       nla_data(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PHY]),
-		       len);
-	}
-	printf("\t\t\tHE PHY Capabilities: (0x");
+	printf("%s\t\tHE PHY Capabilities: (0x", pre);
 	for (i = 0; i < 11; i++)
 		printf("%02x", ((__u8 *)phy_cap)[i + 1]);
 	printf("):\n");
@@ -1165,15 +1127,7 @@ void print_he_info(struct nlattr *nl_iftype)
 	PRINT_HE_PHY_CAP(5, 4, "RX Full BW SU Using HE MU PPDU with Compression SIGB");
 	PRINT_HE_PHY_CAP(5, 5, "RX Full BW SU Using HE MU PPDU with Non-Compression SIGB");
 
-	if (tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MCS_SET]) {
-		len = nla_len(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MCS_SET]);
-		if (len > sizeof(mcs_set))
-			len = sizeof(mcs_set);
-		memcpy(mcs_set,
-		       nla_data(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MCS_SET]),
-		       len);
-	}
-
+	mcs_used = 0;
 	for (i = 0; i < 3; i++) {
 		__u8 phy_cap_support[] = { BIT(1) | BIT(2), BIT(3), BIT(4) };
 		char *bw[] = { "<= 80", "160", "80+80" };
@@ -1182,14 +1136,18 @@ void print_he_info(struct nlattr *nl_iftype)
 		if ((phy_cap[0] & (phy_cap_support[i] << 8)) == 0)
 			continue;
 
+		/* Supports more, but overflow? Abort. */
+		if ((i * 2 + 2) * sizeof(mcs_set[0]) >= mcs_len)
+			return;
+
 		for (j = 0; j < 2; j++) {
 			int k;
-			printf("\t\t\tHE %s MCS and NSS set %s MHz\n", j ? "TX" : "RX", bw[i]);
+			printf("%s\t\tHE %s MCS and NSS set %s MHz\n", pre, j ? "TX" : "RX", bw[i]);
 			for (k = 0; k < 8; k++) {
 				__u16 mcs = mcs_set[(i * 2) + j];
 				mcs >>= k * 2;
 				mcs &= 0x3;
-				printf("\t\t\t\t\t %d streams: ", k + 1);
+				printf("%s\t\t\t%d streams: ", pre, k + 1);
 				if (mcs == 3)
 					printf("not supported\n");
 				else
@@ -1197,9 +1155,88 @@ void print_he_info(struct nlattr *nl_iftype)
 			}
 
 		}
+		mcs_used += 2 * sizeof(mcs_set[0]);
 	}
 
-	len = 0;
+	/* Caller didn't provide ppet; infer it, if there's trailing space. */
+	if (!ppet) {
+		ppet = (const void *)((const __u8 *)mcs_set + mcs_used);
+		if (mcs_used < mcs_len)
+			ppet_len = mcs_len - mcs_used;
+		else
+			ppet_len = 0;
+	}
+
+	if (ppet_len && (phy_cap[3] & BIT(15))) {
+		printf("%s\t\tPPE Threshold ", pre);
+		for (i = 0; i < ppet_len; i++)
+			if (ppet[i])
+				printf("0x%02x ", ppet[i]);
+		printf("\n");
+	}
+}
+
+void print_he_info(struct nlattr *nl_iftype)
+{
+	struct nlattr *tb[NL80211_BAND_IFTYPE_ATTR_MAX + 1];
+	struct nlattr *tb_flags[NL80211_IFTYPE_MAX + 1];
+	char *iftypes[NUM_NL80211_IFTYPES] = {
+		"Unspec", "Adhoc", "Station", "AP", "AP/VLAN", "WDS", "Monitor",
+		"Mesh", "P2P/Client", "P2P/Go", "P2P/Device", "OCB", "NAN",
+	};
+	__u16 mac_cap[3] = { 0 };
+	__u16 phy_cap[6] = { 0 };
+	__u16 mcs_set[6] = { 0 };
+	__u8 ppet[25] = { 0 };
+	size_t len;
+	int i;
+	int mcs_len = 0, ppet_len = 0;
+
+	nla_parse(tb, NL80211_BAND_IFTYPE_ATTR_MAX,
+		  nla_data(nl_iftype), nla_len(nl_iftype), NULL);
+
+	if (!tb[NL80211_BAND_IFTYPE_ATTR_IFTYPES])
+		return;
+
+	if (nla_parse_nested(tb_flags, NL80211_IFTYPE_MAX,
+			     tb[NL80211_BAND_IFTYPE_ATTR_IFTYPES], NULL))
+		return;
+
+	printf("\t\tHE Iftypes:");
+	for (i = 0; i < NUM_NL80211_IFTYPES; i++)
+		if (nla_get_flag(tb_flags[i]) && iftypes[i])
+			printf(" %s", iftypes[i]);
+	printf("\n");
+
+	if (tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC]) {
+		len = nla_len(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC]);
+		if (len > sizeof(mac_cap))
+			len = sizeof(mac_cap);
+		memcpy(mac_cap,
+		       nla_data(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MAC]),
+		       len);
+	}
+
+	if (tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PHY]) {
+		len = nla_len(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PHY]);
+
+		if (len > sizeof(phy_cap) - 1)
+			len = sizeof(phy_cap) - 1;
+		memcpy(&((__u8 *)phy_cap)[1],
+		       nla_data(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PHY]),
+		       len);
+	}
+
+	if (tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MCS_SET]) {
+		len = nla_len(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MCS_SET]);
+		if (len > sizeof(mcs_set))
+			len = sizeof(mcs_set);
+		memcpy(mcs_set,
+		       nla_data(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_MCS_SET]),
+		       len);
+		mcs_len = len;
+	}
+
 	if (tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PPE]) {
 		len = nla_len(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PPE]);
 		if (len > sizeof(ppet))
@@ -1207,17 +1244,29 @@ void print_he_info(struct nlattr *nl_iftype)
 		memcpy(ppet,
 		       nla_data(tb[NL80211_BAND_IFTYPE_ATTR_HE_CAP_PPE]),
 		       len);
+		ppet_len = len;
 	}
 
-	if (len && (phy_cap[3] & BIT(15))) {
-		size_t i;
+	__print_he_capa(mac_cap, phy_cap, mcs_set, mcs_len, ppet, ppet_len,
+			true);
+}
 
-		printf("\t\t\tPPE Threshold ");
-		for (i = 0; i < len; i++)
-			if (ppet[i])
-				printf("0x%02x ", ppet[i]);
-		printf("\n");
-	}
+void print_he_capability(const uint8_t *ie, int len)
+{
+	const void *mac_cap, *phy_cap, *mcs_set;
+	int mcs_len;
+	int i = 0;
+
+	mac_cap = &ie[i];
+	i += 6;
+
+	phy_cap = &ie[i];
+	i += 11;
+
+	mcs_set = &ie[i];
+	mcs_len = len - i;
+
+	__print_he_capa(mac_cap, phy_cap - 1, mcs_set, mcs_len, NULL, 0, false);
 }
 
 void iw_hexdump(const char *prefix, const __u8 *buf, size_t size)
@@ -1236,21 +1285,24 @@ void iw_hexdump(const char *prefix, const __u8 *buf, size_t size)
 int get_cf1(const struct chanmode *chanmode, unsigned long freq)
 {
 	unsigned int cf1 = freq, j;
-	unsigned int vht80[] = { 5180, 5260, 5500, 5580, 5660, 5745 };
+	unsigned int bw80[] = { 5180, 5260, 5500, 5580, 5660, 5745,
+				5955, 6035, 6115, 6195, 6275, 6355,
+				6435, 6515, 6595, 6675, 6755, 6835,
+				6195, 6995 };
 	unsigned int vht160[] = { 5180, 5500 };
 
 	switch (chanmode->width) {
 	case NL80211_CHAN_WIDTH_80:
 	        /* setup center_freq1 */
-		for (j = 0; j < ARRAY_SIZE(vht80); j++) {
-			if (freq >= vht80[j] && freq < vht80[j] + 80)
+		for (j = 0; j < ARRAY_SIZE(bw80); j++) {
+			if (freq >= bw80[j] && freq < bw80[j] + 80)
 				break;
 		}
 
-		if (j == ARRAY_SIZE(vht80))
+		if (j == ARRAY_SIZE(bw80))
 			break;
 
-		cf1 = vht80[j] + 30;
+		cf1 = bw80[j] + 30;
 		break;
 	case NL80211_CHAN_WIDTH_160:
 		/* setup center_freq1 */

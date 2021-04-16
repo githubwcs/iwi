@@ -329,15 +329,15 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		[NL80211_STA_INFO_ACK_SIGNAL] = {.type = NLA_U8 },
 		[NL80211_STA_INFO_ACK_SIGNAL_AVG] = { .type = NLA_U8 },
 		[NL80211_STA_INFO_AIRTIME_LINK_METRIC] = { .type = NLA_U32 },
-		[NL80211_STA_INFO_CONNECTED_TO_AS] = { .type = NLA_FLAG },
-		[NL80211_STA_INFO_CONNECTED_TO_GATE] = { .type = NLA_FLAG },
+		[NL80211_STA_INFO_CONNECTED_TO_AS] = { .type = NLA_U8 },
+		[NL80211_STA_INFO_CONNECTED_TO_GATE] = { .type = NLA_U8 },
 	};
 	char *chain;
 	struct timeval now;
 	unsigned long long now_ms;
 
 	gettimeofday(&now, NULL);
-	now_ms = now.tv_sec * 1000;
+	now_ms = now.tv_sec * 1000ULL;
 	now_ms += (now.tv_usec / 1000);
 
 	nla_parse(tb, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
@@ -601,7 +601,7 @@ static int print_sta_handler(struct nl_msg *msg, void *arg)
 		unsigned long long assoc_at_ms;
 
 		clock_gettime(CLOCK_BOOTTIME, &now_ts);
-		boot_ns = now_ts.tv_sec * 1000000000;
+		boot_ns = now_ts.tv_sec * 1000000000ULL;
 		boot_ns += now_ts.tv_nsec;
 
 		bt = (unsigned long long)nla_get_u64(sinfo[NL80211_STA_INFO_ASSOC_AT_BOOTTIME]);

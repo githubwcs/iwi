@@ -181,7 +181,7 @@ int handle_cmd(struct nl80211_state *state, enum id_input idby,
 struct print_event_args {
 	struct timeval ts; /* internal */
 	bool have_ts; /* must be set false */
-	bool frame, time, reltime;
+	bool frame, time, reltime, ctime;
 };
 
 __u32 listen_events(struct nl80211_state *state,
@@ -213,6 +213,7 @@ void print_ampdu_length(__u8 exponent);
 void print_ampdu_spacing(__u8 spacing);
 void print_ht_capability(__u16 cap);
 void print_vht_info(__u32 capa, const __u8 *mcs);
+void print_he_capability(const uint8_t *ie, int len);
 void print_he_info(struct nlattr *nl_iftype);
 
 char *channel_width_name(enum nl80211_chan_width width);
