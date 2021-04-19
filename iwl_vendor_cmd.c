@@ -1483,7 +1483,7 @@ static int handle_iwl_vendor_ppag_get_table(struct nl80211_state *state,
 					    enum id_input id)
 {
 	int num;
-  
+
 	if (argc != 0)
 		return 1;
 
@@ -1552,14 +1552,10 @@ static int print_sar_table_handler(struct nl_msg *msg, void *arg)
 
 			if(nla_type(chain) > n_chains)
 				break;
-			if (nla_type(chain) > (int)ARRAY_SIZE(chains)) {
-				printf("Too many attributes for SAR profile\n");
-				return -EINVAL;
-			}
 
-			printf("Chain %s: ", chains[nla_type(chain) - 1]);
+			printf("Chain %s:", chains[nla_type(chain) - 1]);
 			for(i = 0; i < nla_len(chain) && i < n_subbands; i++)
-				printf("%d ", values[i]);
+				printf(" %d", values[i]);
 			printf("\n");
 		}
 	}
