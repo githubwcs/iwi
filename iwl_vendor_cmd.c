@@ -180,9 +180,12 @@ COMMAND(iwl, sar_get_profiles_info, "",
 
 static int print_geo_profile(struct nlattr *profile_attr, int n_bands, int *prof_num)
 {
-	struct nlattr *entry[MAX_IWL_MVM_VENDOR_ATTR], *entries;
+	struct nlattr *entry[MAX_IWL_MVM_VENDOR_ATTR + 1], *entries;
 	char *bands[] = { "2.4", "5.2", "6-7" };
 	int profs;
+
+	if (prof_num)
+		printf("Profile #%d\n", *prof_num);
 
 	nla_for_each_nested(entries, profile_attr, profs) {
 		if (nla_type(entries) > n_bands)
@@ -203,21 +206,24 @@ static int print_geo_profile(struct nlattr *profile_attr, int n_bands, int *prof
 		    !entry[IWL_VENDOR_SAR_GEO_MAX_TXP]) {
 			printf("SAR geographic profile disabled\n");
 		} else {
-			if (prof_num)
-				printf("Profile #%d/n", *prof_num);
+			int chain_a_offset, chain_b_offset, max;
 
-			printf("%sGHz\n\tChain A offset: %hhd dBm\n\tChain B offset: %hhd dBm\n\tMax tx power: %hhd dBm\n",
+			chain_a_offset = nla_get_u8(entry[IWL_VENDOR_SAR_GEO_CHAIN_A_OFFSET]);
+			chain_b_offset = nla_get_u8(entry[IWL_VENDOR_SAR_GEO_CHAIN_B_OFFSET]);
+			max = nla_get_u8(entry[IWL_VENDOR_SAR_GEO_MAX_TXP]);
+
+			printf("%sGHz\n\tChain A offset: %d.%03d dBm\n\tChain B offset: %d.%03d dBm\n\tMax tx power: %d.%03d dBm\n",
 			       bands[nla_type(entries) - 1],
-			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_CHAIN_A_OFFSET]),
-			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_CHAIN_B_OFFSET]),
-			       nla_get_u8(entry[IWL_VENDOR_SAR_GEO_MAX_TXP]));
+			       chain_a_offset / 8, 125*(chain_a_offset % 8),
+			       chain_b_offset / 8, 125*(chain_b_offset % 8),
+			       max / 8, 125 * (max % 8));
 		}
 	}
 	return 0;
 }
 
-#define GEO_SAR_NUM_BANDS_V1 5
-#define GEO_SAR_NUM_BANDS_V2 11
+#define GEO_SAR_NUM_BANDS_V1 2
+#define GEO_SAR_NUM_BANDS_V2 3
 
 static int print_geo_profile_handler(struct nl_msg *msg, void *arg)
 {
@@ -1605,7 +1611,7 @@ static int print_geo_table_handler(struct nl_msg *msg, void *arg)
 	    !attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_VER])
 			          return NL_SKIP;
 	/* determine num of bands*/
-	n_bands = (nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_VER]) == 3) ?
+	n_bands = (nla_get_u32(attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_VER]) == 2) ?
 		GEO_SAR_NUM_BANDS_V2 : GEO_SAR_NUM_BANDS_V1;
 
 	nla_for_each_nested(profile, attr[IWL_MVM_VENDOR_ATTR_GEO_SAR_TABLE],
