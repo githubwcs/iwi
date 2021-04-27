@@ -1444,7 +1444,6 @@ static int print_ppag_table_handler(struct nl_msg *msg, void *arg)
 	int i, len, n_sub_bands;
 	char chains[] = { 'A', 'B' };
 
-	printf("in ppag printer\n");
 	if (!data)
 		return NL_SKIP;
 	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
@@ -1541,8 +1540,8 @@ static int print_sar_table_handler(struct nl_msg *msg, void *arg)
 		n_chains = SAR_NUM_CHAINS_V2;
 		n_subbands = SAR_NUM_SUB_BANDS_V2;
 	} else {
-		n_chains = SAR_NUM_CHAINS_V2;
-		n_subbands = SAR_NUM_SUB_BANDS_V2;
+		n_chains = SAR_NUM_CHAINS_V1;
+		n_subbands = SAR_NUM_SUB_BANDS_V1;
 	}
 
 	nla_for_each_nested(profile, attr[IWL_MVM_VENDOR_ATTR_SAR_TABLE], profs) {
