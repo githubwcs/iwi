@@ -1463,3 +1463,76 @@ nla_put_failure:
 COMMAND(iwl, sar_get_geo_table, "",
 	NL80211_CMD_VENDOR, 0,
 	CIB_NETDEV, handle_iwl_vendor_sar_get_geo_table, "");
+
+#define SGOM_NUM_ROWS 26
+#define SGOM_NUM_COLS 13
+
+static int print_sgom_table_handler(struct nl_msg *msg, void *arg)
+{
+	struct nlattr *data = parse_vendor_reply(msg);
+	struct nlattr *attr[MAX_IWL_MVM_VENDOR_ATTR + 1];
+	uint8_t *table;
+	int i, j;
+
+	if (!data)
+		return NL_SKIP;
+	if (nla_parse_nested(attr, MAX_IWL_MVM_VENDOR_ATTR, data, NULL)) {
+		printf("Failed to get SGOM table\n");
+		return NL_SKIP;
+	}
+
+	if (!attr[IWL_MVM_VENDOR_ATTR_SGOM_TABLE]) {
+		fprintf(stderr, "missing SGOM table\n");
+		return NL_SKIP;
+	}
+
+	if (nla_len(attr[IWL_MVM_VENDOR_ATTR_SGOM_TABLE]) !=
+	    SGOM_NUM_ROWS * SGOM_NUM_COLS) {
+		printf("Got a wrong size of sgom table\n");
+		return NL_SKIP;
+	}
+	table = nla_data(attr[IWL_MVM_VENDOR_ATTR_SGOM_TABLE]);
+
+	/* print all letters horizontally */
+	printf(" ");
+	for (i = 'A'; i <= 'Z'; i++)
+		printf(" %c", i);
+
+	for (i = 0; i < SGOM_NUM_ROWS; i++) {
+		/* print the vertical letter */
+		printf("\n%c", i + 'A');
+
+		for (j = 0; j < SGOM_NUM_COLS; j++) {
+			int two_letter_val = table[i * SGOM_NUM_COLS + j];
+			printf(" %d %d", (two_letter_val >> 4) & 0x0f, two_letter_val & 0x0f);
+		}
+	}
+	printf("\n");
+	return NL_SKIP;
+}
+
+static int handle_iwl_vendor_sgom_get_table(struct nl80211_state *state,
+					    struct nl_msg *msg,
+					    int argc, char **argv,
+					    enum id_input id)
+{
+	int num;
+
+	if (argc != 0)
+		return 1;
+
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_ID, INTEL_OUI);
+	NLA_PUT_U32(msg, NL80211_ATTR_VENDOR_SUBCMD,
+		    IWL_MVM_VENDOR_CMD_SGOM_GET_TABLE);
+
+	register_handler(print_sgom_table_handler, &num);
+	return 0;
+nla_put_failure:
+	return -ENOBUFS;
+
+}
+
+COMMAND(iwl, sgom_get_table, "",
+	NL80211_CMD_VENDOR, 0,
+	CIB_NETDEV,
+	handle_iwl_vendor_sgom_get_table, "");
