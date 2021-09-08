@@ -12,6 +12,7 @@
 #include "iw.h"
 #include "iwl_vendor_cmd.h"
 
+DECLARE_SECTION(iwl);
 SECTION(iwl);
 
 static struct nla_policy iwl_vendor_policy[NUM_IWL_MVM_VENDOR_ATTR] = {
