@@ -1505,7 +1505,7 @@ static int print_sgom_table_handler(struct nl_msg *msg, void *arg)
 
 		for (j = 0; j < SGOM_NUM_COLS; j++) {
 			int two_letter_val = table[i * SGOM_NUM_COLS + j];
-			printf(" %d %d", (two_letter_val >> 4) & 0x0f, two_letter_val & 0x0f);
+			printf(" %d %d", two_letter_val & 0x0f, (two_letter_val >> 4) & 0x0f);
 		}
 	}
 	printf("\n");
