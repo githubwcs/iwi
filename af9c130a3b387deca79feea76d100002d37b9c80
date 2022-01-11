@@ -1,0 +1,607 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "Ifa227d8d08d1fe06b0ddb6531bdd968657c1778f",
+  "number": 55734,
+  "subject": "iw: Add support for start/stop AP",
+  "owner": {
+    "name": "Peer, Ilan",
+    "email": "ilan.peer@intel.com",
+    "username": "ipeer"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/55734",
+  "commitMessage": "iw: Add support for start/stop AP\n\nThe beacon head (mandatory) and tail should be provided as part of the\nAP start command.\n\nChange-Id: Ifa227d8d08d1fe06b0ddb6531bdd968657c1778f\nSigned-off-by: Ilan Peer <ilan.peer@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/55734\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1472998245,
+  "lastUpdated": 1476793024,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1472998245,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1472999745,
+      "reviewer": {
+        "name": "Triebitz, Shaul",
+        "email": "shaul.triebitz@intel.com",
+        "username": "striebit"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1473013826,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1473055098,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 1:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1473055226,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1473057422,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1473850744,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1474455532,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1475609741,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1475648765,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 4:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1475650386,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1475651633,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 4:\n\nok. So I'll leave this patch as is."
+    },
+    {
+      "timestamp": 1476792725,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/151/"
+    },
+    {
+      "timestamp": 1476792768,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/151/ : SUCCESS"
+    },
+    {
+      "timestamp": 1476793022,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4: Code-Review+2"
+    },
+    {
+      "timestamp": 1476793024,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as af9c130a3b387deca79feea76d100002d37b9c80 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "185ef31b4f53a2f08744c29a9e8475ca76b14890",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/34/55734/1",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1472998245,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "comments": [
+        {
+          "file": "ap.c",
+          "line": 39,
+          "reviewer": {
+            "name": "Triebitz, Shaul",
+            "email": "shaul.triebitz@intel.com",
+            "username": "striebit"
+          },
+          "message": "is this on purpose not using 'val'?"
+        },
+        {
+          "file": "ap.c",
+          "line": 39,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "no .. a bug"
+        },
+        {
+          "file": "ap.c",
+          "line": 55,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "that doesn't look like it should be &val regardless if it's ignored"
+        },
+        {
+          "file": "ap.c",
+          "line": 55,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "does it make sense to ignore this if the device supports WIPHY_FLAG_HAVE_AP_SME?"
+        },
+        {
+          "file": "ap.c",
+          "line": 90,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "what's the point in this indirection?"
+        },
+        {
+          "file": "ap.c",
+          "line": 90,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "not really needed ... I'll remove"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ap.c",
+          "type": "ADDED",
+          "insertions": 114,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 115,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "063bb2abe64c667bb83528cb760bf76815f957ae",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/34/55734/2",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1473055226,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ap.c",
+          "type": "ADDED",
+          "insertions": 86,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 87,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 3,
+      "revision": "f3a4e5de0e592354872f26f4894e7cd99af2619f",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/34/55734/3",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1473057422,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "comments": [
+        {
+          "file": "ap.c",
+          "line": 56,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "so I think we said we'd change nl80211 to not require that, if AP offload is supported, so we should remove it here?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ap.c",
+          "type": "ADDED",
+          "insertions": 86,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 87,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 4,
+      "revision": "3827b96f8c65fe0088cc9e92288ddbdcc26dee8d",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/34/55734/4",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1474455532,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1476793022,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1476793024,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1476792768,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "ap.c",
+          "line": 55,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I'm not convinced that asking users to provide the beacon head is really the best idea?\n\nWe should be able to generate much of it, at least the 802.11 header, directly here, after all, that mostly needs the BSSID."
+        },
+        {
+          "file": "ap.c",
+          "line": 55,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "I wanted to avoid the configurations needed for setting the head here, which for example require to also handle: setting of the SSID IE (support the 'hidden' options) and capabilities IE and supported rates etc. Assuming that this is only used for testing, I though that it would be ok to require this from the external caller. Based on this and since the beacon header is straightforward I thought we ask all from the external app.\n\nBTW, another option is to set a default header here, and allow the API to override it (override the entire header). Would you prefer that?"
+        },
+        {
+          "file": "ap.c",
+          "line": 55,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I guess it's fair enough to require it for testing scenarios - seems a bit strange, but not a big deal overall"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ap.c",
+          "type": "ADDED",
+          "insertions": 123,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 126,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 5,
+      "revision": "af9c130a3b387deca79feea76d100002d37b9c80",
+      "parents": [
+        "ecbfb6251edaa02226980df1ba6c9b24747bbb6b"
+      ],
+      "ref": "refs/changes/34/55734/5",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1476793024,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1476793022,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1476793024,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1476792768,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ap.c",
+          "type": "ADDED",
+          "insertions": 123,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 126,
+      "sizeDeletions": -2
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,433 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I4eb76564a1c179b5832e77d22e3caa2f2636f914",
+  "number": 79448,
+  "subject": "nl80211: update nl80211 header",
+  "owner": {
+    "name": "Zamir, Roee(deleted)",
+    "email": "roee.zamir@intel.com",
+    "username": "rzamir"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/79448",
+  "commitMessage": "nl80211: update nl80211 header\n\nUpdate nl80211 header, and update the name of NL80211_ATTR_PSK to\nNL80211_ATTR_PMK.\n\nChange-Id: I4eb76564a1c179b5832e77d22e3caa2f2636f914\nSigned-off-by: Roee Zamir <roee.zamir@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/79448\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n",
+  "createdOn": 1481451613,
+  "lastUpdated": 1485427669,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1481451613,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1481451678,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/24/"
+    },
+    {
+      "timestamp": 1481451698,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/24/ : SUCCESS"
+    },
+    {
+      "timestamp": 1483252543,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 1:\n\nup"
+    },
+    {
+      "timestamp": 1483629259,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1483629279,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/27/"
+    },
+    {
+      "timestamp": 1483629314,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/27/ : SUCCESS"
+    },
+    {
+      "timestamp": 1485425717,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3: Patch Set 2 was rebased"
+    },
+    {
+      "timestamp": 1485425728,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/41/"
+    },
+    {
+      "timestamp": 1485425735,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3: Code-Review+2"
+    },
+    {
+      "timestamp": 1485425762,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/41/ : SUCCESS"
+    },
+    {
+      "timestamp": 1485427669,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as d02ca4e4c3b5a2dc8cf310de58cafcd0f2f3a183 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "6c9c2aa48fe4c36c0d5c5cd88e5802cddfdea2c5",
+      "parents": [
+        "dc311faf7a615f02141fab795613f0e3c74aac1b"
+      ],
+      "ref": "refs/changes/48/79448/1",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1481451613,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1481451698,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 32,
+          "deletions": -23
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 33,
+      "sizeDeletions": -24
+    },
+    {
+      "number": 2,
+      "revision": "e80b11f476d5f98b363215bfcac1a64edfbc1520",
+      "parents": [
+        "dc311faf7a615f02141fab795613f0e3c74aac1b"
+      ],
+      "ref": "refs/changes/48/79448/2",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1483629259,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1483629314,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 23,
+          "deletions": -5
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 24,
+      "sizeDeletions": -6
+    },
+    {
+      "number": 3,
+      "revision": "e759c768267381d5e584f07cc40ef7b9752dd4bd",
+      "parents": [
+        "438374d9d0d8ff3e4d30b6c35394d7f69cf40990"
+      ],
+      "ref": "refs/changes/48/79448/3",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1485425717,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1485425735,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1485427669,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1485425762,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 23,
+          "deletions": -5
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 24,
+      "sizeDeletions": -6
+    },
+    {
+      "number": 4,
+      "revision": "d02ca4e4c3b5a2dc8cf310de58cafcd0f2f3a183",
+      "parents": [
+        "438374d9d0d8ff3e4d30b6c35394d7f69cf40990"
+      ],
+      "ref": "refs/changes/48/79448/4",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1485427669,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1485425735,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1485427669,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1485425762,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 23,
+          "deletions": -5
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 24,
+      "sizeDeletions": -6
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I0ca6c7324344ded40bde2c7d44d874897d2ba3db",
+      "number": 83462,
+      "revision": "438374d9d0d8ff3e4d30b6c35394d7f69cf40990",
+      "ref": "refs/changes/62/83462/3",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "release/core62",
+  "id": "I40d511069b406ef05279bf9057151e3e9bf56dbb",
+  "number": 314905,
+  "subject": "iw: Sync iwl_vendor_cmd.h with iwlwifi-stack-dev's version",
+  "owner": {
+    "name": "Luciano Coelho",
+    "email": "luciano.coelho@intel.com",
+    "username": "lcoelho"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/314905",
+  "commitMessage": "iw: Sync iwl_vendor_cmd.h with iwlwifi-stack-dev's version\n\ntype=feature\nticket=none\n\nChange-Id: I40d511069b406ef05279bf9057151e3e9bf56dbb\nSigned-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/314052\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Johannes Berg <johannes.berg@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/314905\nReviewed-by: Luciano Coelho <luciano.coelho@intel.com>\nTested-by: Luciano Coelho <luciano.coelho@intel.com>\n",
+  "createdOn": 1619010371,
+  "lastUpdated": 1619010736,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1619010371,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1619010385,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/244464/"
+    },
+    {
+      "timestamp": 1619010388,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/244464/ : SUCCESS"
+    },
+    {
+      "timestamp": 1619010703,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 1: Verified-1 Code-Review+2"
+    },
+    {
+      "timestamp": 1619010711,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 1: Verified+1"
+    },
+    {
+      "timestamp": 1619010736,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Change has been successfully rebased and submitted as 742d47186587fea508b17cebac79388eb3b745bc by Luciano Coelho"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "75e1e242d1f3113b89d2032c6deff220ed078466",
+      "parents": [
+        "7cb86f99151442be7ef1fcf80798eda33adcafcf"
+      ],
+      "ref": "refs/changes/05/314905/1",
+      "uploader": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "createdOn": 1619010371,
+      "author": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1619010703,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1619010736,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1619010711,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "type": "MODIFIED",
+          "insertions": 33,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 33,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 2,
+      "revision": "742d47186587fea508b17cebac79388eb3b745bc",
+      "parents": [
+        "7cb86f99151442be7ef1fcf80798eda33adcafcf"
+      ],
+      "ref": "refs/changes/05/314905/2",
+      "uploader": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "createdOn": 1619010736,
+      "author": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1619010703,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1619010736,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1619010711,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 19,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "type": "MODIFIED",
+          "insertions": 33,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 33,
+      "sizeDeletions": 0
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Id294368fa6dbf6d4a0d6fa54fe9be12174b9b948",
+      "number": 308076,
+      "revision": "7cb86f99151442be7ef1fcf80798eda33adcafcf",
+      "ref": "refs/changes/76/308076/9",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "neededBy": [
+    {
+      "id": "I0e8c86940b1b3a6325128b126e91dc30e1236a86",
+      "number": 314906,
+      "revision": "cfc5b7b99a93701948f64df5653f1cd0e725d76d",
+      "ref": "refs/changes/06/314906/2"
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

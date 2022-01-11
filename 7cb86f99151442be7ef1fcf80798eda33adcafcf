@@ -1,0 +1,1148 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "Id294368fa6dbf6d4a0d6fa54fe9be12174b9b948",
+  "number": 308076,
+  "subject": "iw: Add support to handle vendor event for time sync",
+  "owner": {
+    "name": "Karthik D A",
+    "email": "karthik.d.a@intel.com",
+    "username": "KDA"
+  },
+  "assignee": {
+    "name": "Johannes Berg",
+    "email": "johannes.berg@intel.com",
+    "username": "jberg1"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/308076",
+  "commitMessage": "iw: Add support to handle vendor event for time sync\n\nAdd support to handle time sync measurement vendor event\nfor FTM/TM\n\ntype=feature\nticket=jira:WIFI-83270\n\nChange-Id: Id294368fa6dbf6d4a0d6fa54fe9be12174b9b948\nSigned-off-by: Karthik D A <karthik.d.a@intel.com>\nSigned-off-by: Krishnanand Prabhu <krishnanand.prabhu@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/308076\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Johannes Berg <johannes.berg@intel.com>\n",
+  "createdOn": 1613637579,
+  "lastUpdated": 1616661893,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1613637579,
+      "reviewer": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1613637594,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7732/ (1/3)"
+    },
+    {
+      "timestamp": 1613637599,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228207/ (2/3)"
+    },
+    {
+      "timestamp": 1613637618,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/313/ (3/3)"
+    },
+    {
+      "timestamp": 1613638139,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified-1 Code-Review-1\n\nBuild Failed \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228207/ : Linked Jira verification: wrong commit message format or not valid linked Jira issue\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7732/ : FAILURE\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/313/ : SUCCESS"
+    },
+    {
+      "timestamp": 1613638187,
+      "reviewer": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1613638197,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/315/ (1/3)"
+    },
+    {
+      "timestamp": 1613638200,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228213/ (2/3)"
+    },
+    {
+      "timestamp": 1613638202,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7733/ (3/3)"
+    },
+    {
+      "timestamp": 1613638355,
+      "reviewer": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "message": "Uploaded patch set 3: Commit message was updated."
+    },
+    {
+      "timestamp": 1613638359,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified-1 Code-Review-1\n\nBuild Failed \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7733/ : ABORTED\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228213/ : Linked Jira verification: wrong commit message format or not valid linked Jira issue\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/315/ : SUCCESS"
+    },
+    {
+      "timestamp": 1613638363,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7735/ (1/3)"
+    },
+    {
+      "timestamp": 1613638366,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228214/ (2/3)"
+    },
+    {
+      "timestamp": 1613638368,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/316/ (3/3)"
+    },
+    {
+      "timestamp": 1613638547,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/316/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228214/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7735/ : SUCCESS"
+    },
+    {
+      "timestamp": 1613662155,
+      "reviewer": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "message": "Assignee added: Johannes Berg <johannes.berg@intel.com>"
+    },
+    {
+      "timestamp": 1613726627,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1614174565,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1614174575,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)\n\nThanks Johannes for the comments. Karthik has left intel and I am doing the code rework on his behalf and have addressed the given comments.\n\nPlease check and let me know if any further comments."
+    },
+    {
+      "timestamp": 1614174769,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Uploaded patch set 5: Patch Set 4 was rebased."
+    },
+    {
+      "timestamp": 1614174795,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/326/ (1/3)"
+    },
+    {
+      "timestamp": 1614174820,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/230230/ (2/3)"
+    },
+    {
+      "timestamp": 1614174823,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7876/ (3/3)"
+    },
+    {
+      "timestamp": 1614174828,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/327/ (1/3)"
+    },
+    {
+      "timestamp": 1614174847,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/230231/ (2/3)"
+    },
+    {
+      "timestamp": 1614174871,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7877/ (3/3)"
+    },
+    {
+      "timestamp": 1614174873,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified-1 Code-Review-1\n\nBuild Failed \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/326/ : ABORTED\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7876/ : ABORTED\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/230230/ : Linked Jira verification: wrong commit message format or not valid linked Jira issue"
+    },
+    {
+      "timestamp": 1614175079,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/327/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/230231/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7877/ : SUCCESS"
+    },
+    {
+      "timestamp": 1614363943,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Patch Set 5: Verified+1"
+    },
+    {
+      "timestamp": 1614612035,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 5: Code-Review+2"
+    },
+    {
+      "timestamp": 1614960751,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Uploaded patch set 6."
+    },
+    {
+      "timestamp": 1614960760,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8115/ (1/3)"
+    },
+    {
+      "timestamp": 1614960763,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/232575/ (2/3)"
+    },
+    {
+      "timestamp": 1614960765,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/330/ (3/3)"
+    },
+    {
+      "timestamp": 1614961010,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/330/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/232575/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8115/ : SUCCESS"
+    },
+    {
+      "timestamp": 1615186796,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Patch Set 6:\n\nHi Johannes,\n\nIf the review is completed, can you please merge these changes?"
+    },
+    {
+      "timestamp": 1615186915,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Patch Set 6: Verified+1"
+    },
+    {
+      "timestamp": 1616660328,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 6: Code-Review+2"
+    },
+    {
+      "timestamp": 1616660346,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 7: Published edit on patch set 6."
+    },
+    {
+      "timestamp": 1616660354,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8: Patch Set 7 was rebased"
+    },
+    {
+      "timestamp": 1616660360,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8494/ (1/3)"
+    },
+    {
+      "timestamp": 1616660362,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/331/ (2/3)"
+    },
+    {
+      "timestamp": 1616660365,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/237630/ (3/3)"
+    },
+    {
+      "timestamp": 1616660367,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7: Verified-1 Code-Review-1\n\nBuild Failed \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/237630/ : Linked Jira verification: wrong commit message format or not valid linked Jira issue\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/331/ : FAILURE\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8494/ : FAILURE"
+    },
+    {
+      "timestamp": 1616660369,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8495/ (1/3)"
+    },
+    {
+      "timestamp": 1616660372,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/237631/ (2/3)"
+    },
+    {
+      "timestamp": 1616660374,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/332/ (3/3)"
+    },
+    {
+      "timestamp": 1616661422,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/237631/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/332/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8495/ : SUCCESS"
+    },
+    {
+      "timestamp": 1616661748,
+      "reviewer": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "message": "Patch Set 8: Verified+1"
+    },
+    {
+      "timestamp": 1616661891,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8: Code-Review+2"
+    },
+    {
+      "timestamp": 1616661893,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as 7cb86f99151442be7ef1fcf80798eda33adcafcf by Johannes Berg"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "abc3c0709efca7918fac248923cf7a0302dab512",
+      "parents": [
+        "7540c36e79218325f59d39dbdff13487e2d504ca"
+      ],
+      "ref": "refs/changes/76/308076/1",
+      "uploader": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "createdOn": 1613637579,
+      "author": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1613638139,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "-1",
+          "grantedOn": 1613638139,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 63,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 63,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 2,
+      "revision": "f98ebf8079487f26faf6e826be8fb9928c5ff459",
+      "parents": [
+        "7540c36e79218325f59d39dbdff13487e2d504ca"
+      ],
+      "ref": "refs/changes/76/308076/2",
+      "uploader": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "createdOn": 1613638187,
+      "author": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1613638359,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "-1",
+          "grantedOn": 1613638359,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 63,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 63,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 3,
+      "revision": "30fa443b3a64fed6cd296db4d096813fea610f3e",
+      "parents": [
+        "7540c36e79218325f59d39dbdff13487e2d504ca"
+      ],
+      "ref": "refs/changes/76/308076/3",
+      "uploader": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "createdOn": 1613638355,
+      "author": {
+        "name": "Karthik D A",
+        "email": "karthik.d.a@intel.com",
+        "username": "KDA"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1613638547,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1128,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "don't need bradces"
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1128,
+          "reviewer": {
+            "name": "Prabhu, Krishnanand",
+            "email": "krishnanand.prabhu@intel.com",
+            "username": "prabhukr"
+          },
+          "message": "Done"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 63,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 63,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 4,
+      "revision": "35691dabeee8602b3bccf4dc9b25fa25775a3b1a",
+      "parents": [
+        "0abaca138bb54e0512f73fe302d3507de21043d0"
+      ],
+      "ref": "refs/changes/76/308076/4",
+      "uploader": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "createdOn": 1614174565,
+      "author": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1614174873,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "-1",
+          "grantedOn": 1614174873,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 62,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 62,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 5,
+      "revision": "0a27ecf8bd0b0e45d4276b07f7cdcf4010172426",
+      "parents": [
+        "0abaca138bb54e0512f73fe302d3507de21043d0"
+      ],
+      "ref": "refs/changes/76/308076/5",
+      "uploader": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "createdOn": 1614174769,
+      "author": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "isDraft": false,
+      "kind": "NO_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1614612035,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1614175079,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1614363943,
+          "by": {
+            "name": "Prabhu, Krishnanand",
+            "email": "krishnanand.prabhu@intel.com",
+            "username": "prabhukr"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 62,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 62,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 6,
+      "revision": "772793107f8dabad77e20ac2ceb7c992896d1980",
+      "parents": [
+        "b6a8d889c3980ef2bd101bfbd2df966466cdfef3"
+      ],
+      "ref": "refs/changes/76/308076/6",
+      "uploader": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "createdOn": 1614960751,
+      "author": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1616660328,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1614961010,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1615186915,
+          "by": {
+            "name": "Prabhu, Krishnanand",
+            "email": "krishnanand.prabhu@intel.com",
+            "username": "prabhukr"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 63,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 63,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 7,
+      "revision": "85b4e5705086a17e3d0ccc7a4926adc596b8b2b0",
+      "parents": [
+        "b6a8d889c3980ef2bd101bfbd2df966466cdfef3"
+      ],
+      "ref": "refs/changes/76/308076/7",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1616660346,
+      "author": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1616660367,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "-1",
+          "grantedOn": 1616660367,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 62,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 62,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 8,
+      "revision": "cfd3e35301df59ee37068a48aef34fb4a18475bd",
+      "parents": [
+        "b4943cc231c4eaf58dd738ee9cd06c86ca09cf54"
+      ],
+      "ref": "refs/changes/76/308076/8",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1616660354,
+      "author": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1616661891,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1616661893,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1616661422,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1616661748,
+          "by": {
+            "name": "Prabhu, Krishnanand",
+            "email": "krishnanand.prabhu@intel.com",
+            "username": "prabhukr"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 62,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 62,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 9,
+      "revision": "7cb86f99151442be7ef1fcf80798eda33adcafcf",
+      "parents": [
+        "b4943cc231c4eaf58dd738ee9cd06c86ca09cf54"
+      ],
+      "ref": "refs/changes/76/308076/9",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1616661893,
+      "author": {
+        "name": "Prabhu, Krishnanand",
+        "email": "krishnanand.prabhu@intel.com",
+        "username": "prabhukr"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1616661891,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1616661893,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1616661422,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1616661748,
+          "by": {
+            "name": "Prabhu, Krishnanand",
+            "email": "krishnanand.prabhu@intel.com",
+            "username": "prabhukr"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 20,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 62,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 62,
+      "sizeDeletions": 0
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I6c14ecbb70140abb669caf40fb2c2ee994a18b67",
+      "number": 291273,
+      "revision": "b4943cc231c4eaf58dd738ee9cd06c86ca09cf54",
+      "ref": "refs/changes/73/291273/11",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

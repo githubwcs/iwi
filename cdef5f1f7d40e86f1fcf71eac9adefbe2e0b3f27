@@ -1,0 +1,626 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "Ie9c531f1f657089ccb8052890ca6fbdfc270bba0",
+  "number": 177493,
+  "subject": "[BUGFIX] connect: fix parsing of WEP keys",
+  "owner": {
+    "name": "Grumbach, Emmanuel",
+    "email": "emmanuel.grumbach@intel.com",
+    "username": "egrumbac"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/177493",
+  "commitMessage": "[BUGFIX] connect: fix parsing of WEP keys\n\nThe introduction of MFP options added a bug that causes a\nsegmentation fault when parsing WEP keys.\nFix that.\n\ntype=bugfix\nfixes=Ia8af95edad3450caf6bb01f52ca64d66391b6cdb\nticket=none\n\nChange-Id: Ie9c531f1f657089ccb8052890ca6fbdfc270bba0\nSigned-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/177493\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n",
+  "createdOn": 1528783426,
+  "lastUpdated": 1528825197,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1528783426,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1528783435,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/150/"
+    },
+    {
+      "timestamp": 1528783471,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/150/ : SUCCESS"
+    },
+    {
+      "timestamp": 1528783642,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 1: Code-Review+1"
+    },
+    {
+      "timestamp": 1528808224,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1528809688,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1528810638,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1528811980,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1528811993,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/153/"
+    },
+    {
+      "timestamp": 1528812000,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 2: Code-Review-2\n\nNeed to test first... Did that before running out home"
+    },
+    {
+      "timestamp": 1528812017,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/153/ : SUCCESS"
+    },
+    {
+      "timestamp": 1528815186,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2: Code-Review+1\n\nlooks good I guess, but I'll wait for your test :)"
+    },
+    {
+      "timestamp": 1528825038,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1528825056,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/154/"
+    },
+    {
+      "timestamp": 1528825079,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/154/ : SUCCESS"
+    },
+    {
+      "timestamp": 1528825112,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 3: Code-Review+2"
+    },
+    {
+      "timestamp": 1528825197,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Change has been successfully rebased and submitted as cdef5f1f7d40e86f1fcf71eac9adefbe2e0b3f27 by Grumbach, Emmanuel"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "78b95b4fc3d22058e9c1e3643da14daddc2f46da",
+      "parents": [
+        "156f7d4a545a9b08173e05efb0e20d8ce68b23f1"
+      ],
+      "ref": "refs/changes/93/177493/1",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1528783426,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1528783642,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1528783471,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "ap.c",
+          "line": 143,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "you don't use this here, why not allow NULL?\n\nor actually, you should probably return an error if argc - parsed > 0?"
+        },
+        {
+          "file": "util.c",
+          "line": 417,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "come to think of it, why not do char ***argv, int *argc and actually update them?"
+        },
+        {
+          "file": "util.c",
+          "line": 417,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "I thought about\nbut *** was a bit too much for me....\nI guess I can do that.\n\nWant me to?"
+        },
+        {
+          "file": "util.c",
+          "line": 417,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I think I prefer it, that way we don't need the adjustment code\n\nyou could do \"char **argv[]\" instead I guess to avoid *** ;-)"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "connect.c",
+          "type": "MODIFIED",
+          "insertions": 6,
+          "deletions": -4
+        },
+        {
+          "file": "ibss.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 5,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 14,
+      "sizeDeletions": -8
+    },
+    {
+      "number": 2,
+      "revision": "92d23c7d9f86130ebb6f5c880aaea3263d0a7a6e",
+      "parents": [
+        "156f7d4a545a9b08173e05efb0e20d8ce68b23f1"
+      ],
+      "ref": "refs/changes/93/177493/2",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1528811980,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1528815186,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-2",
+          "grantedOn": 1528812000,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1528812017,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "connect.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -5
+        },
+        {
+          "file": "ibss.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 16,
+          "deletions": -16
+        }
+      ],
+      "sizeInsertions": 21,
+      "sizeDeletions": -24
+    },
+    {
+      "number": 3,
+      "revision": "d97e287ee280b49b7679fe26ad7d7be65f3e784f",
+      "parents": [
+        "156f7d4a545a9b08173e05efb0e20d8ce68b23f1"
+      ],
+      "ref": "refs/changes/93/177493/3",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1528825038,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1528825112,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1528825197,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1528825079,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "connect.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -5
+        },
+        {
+          "file": "ibss.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 18,
+          "deletions": -18
+        }
+      ],
+      "sizeInsertions": 23,
+      "sizeDeletions": -26
+    },
+    {
+      "number": 4,
+      "revision": "cdef5f1f7d40e86f1fcf71eac9adefbe2e0b3f27",
+      "parents": [
+        "3925ab86d2c7a2fa0eef5c901d537066f501e687"
+      ],
+      "ref": "refs/changes/93/177493/4",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1528825197,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1528825112,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1528825197,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1528825079,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 20,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "connect.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -5
+        },
+        {
+          "file": "ibss.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 18,
+          "deletions": -18
+        }
+      ],
+      "sizeInsertions": 23,
+      "sizeDeletions": -26
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I6c12337d4d4260b6ed80bf223c0ee697315d2baf",
+      "number": 177536,
+      "revision": "3925ab86d2c7a2fa0eef5c901d537066f501e687",
+      "ref": "refs/changes/36/177536/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

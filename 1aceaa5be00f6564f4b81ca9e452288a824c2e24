@@ -1,0 +1,273 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I40d511069b406ef05279bf9057151e3e9bf56dbb",
+  "number": 314052,
+  "subject": "iw: Sync iwl_vendor_cmd.h with iwlwifi-stack-dev's version",
+  "owner": {
+    "name": "Miri Korenblit",
+    "email": "miriam.rachel.korenblit@intel.com",
+    "username": "mkorenbl"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/314052",
+  "commitMessage": "iw: Sync iwl_vendor_cmd.h with iwlwifi-stack-dev's version\n\ntype=feature\nticket=none\n\nChange-Id: I40d511069b406ef05279bf9057151e3e9bf56dbb\nSigned-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/314052\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Johannes Berg <johannes.berg@intel.com>\n",
+  "createdOn": 1618401365,
+  "lastUpdated": 1618817237,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1618401365,
+      "reviewer": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1618401372,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/333/ (1/3)"
+    },
+    {
+      "timestamp": 1618401375,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/242600/ (2/3)"
+    },
+    {
+      "timestamp": 1618401377,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8743/ (3/3)"
+    },
+    {
+      "timestamp": 1618402198,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/242600/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/333/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/8743/ : SUCCESS"
+    },
+    {
+      "timestamp": 1618817175,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1618817237,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as 1aceaa5be00f6564f4b81ca9e452288a824c2e24 by Johannes Berg"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "1efa7670efd56457aa166a36d4c816809f3f2486",
+      "parents": [
+        "7cb86f99151442be7ef1fcf80798eda33adcafcf"
+      ],
+      "ref": "refs/changes/52/314052/1",
+      "uploader": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "createdOn": 1618401365,
+      "author": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1618817175,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1618817237,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1618402198,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "type": "MODIFIED",
+          "insertions": 33,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 33,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 2,
+      "revision": "1aceaa5be00f6564f4b81ca9e452288a824c2e24",
+      "parents": [
+        "b61eb6fbd5d9f7f834d8fff8e953b44b3455d6b3"
+      ],
+      "ref": "refs/changes/52/314052/2",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1618817237,
+      "author": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1618817175,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1618817237,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1618402198,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "type": "MODIFIED",
+          "insertions": 33,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 33,
+      "sizeDeletions": 0
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ic6f71ae5d8953b33b5afa90e599b17eb6d027104",
+      "number": 314304,
+      "revision": "b61eb6fbd5d9f7f834d8fff8e953b44b3455d6b3",
+      "ref": "refs/changes/04/314304/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "neededBy": [
+    {
+      "id": "I0e8c86940b1b3a6325128b126e91dc30e1236a86",
+      "number": 314053,
+      "revision": "7728a858cb5b7c86cf6ebec313da28d9f82dcc5d",
+      "ref": "refs/changes/53/314053/6"
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

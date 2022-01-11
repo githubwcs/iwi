@@ -1,0 +1,278 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "Id30f69cdc77d63fdab5f07e60f59b5db213d0fcf",
+  "number": 175665,
+  "subject": "iw: nan: Allow to use netdev identifier for NAN data path commands",
+  "owner": {
+    "name": "Otcheretianski, Andrei",
+    "email": "andrei.otcheretianski@intel.com",
+    "username": "aotchere"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/175665",
+  "commitMessage": "iw: nan: Allow to use netdev identifier for NAN data path commands\n\nThe commands that require __nan_data interface may be identified by name\nand not only be wdev id.\n\ntype=feature\nticket=none\n\nChange-Id: Id30f69cdc77d63fdab5f07e60f59b5db213d0fcf\nSigned-off-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/175665\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Peer, Ilan <ilan.peer@intel.com>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1527432874,
+  "lastUpdated": 1527491029,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1527432874,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1527432885,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/149/"
+    },
+    {
+      "timestamp": 1527432917,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/149/ : SUCCESS"
+    },
+    {
+      "timestamp": 1527486727,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 1: Code-Review+1"
+    },
+    {
+      "timestamp": 1527491028,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1527491029,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as 839844391e8e40dd4e7a54f54c06661a512528d9 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "7bcd6e00b81a67b4349e17d28f65e8a4c0e36ec3",
+      "parents": [
+        "7b8ca45473191d1a52a516fec94e681a90645411"
+      ],
+      "ref": "refs/changes/65/175665/1",
+      "uploader": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "createdOn": 1527432874,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1527486727,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1527491028,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1527491029,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1527432917,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 3,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 2,
+      "revision": "839844391e8e40dd4e7a54f54c06661a512528d9",
+      "parents": [
+        "7b8ca45473191d1a52a516fec94e681a90645411"
+      ],
+      "ref": "refs/changes/65/175665/2",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1527491029,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1527486727,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1527491028,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1527491029,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1527432917,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 20,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 3,
+      "sizeDeletions": -3
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I20e72b051f148db465691913d1306004b0b25612",
+      "number": 174545,
+      "revision": "7b8ca45473191d1a52a516fec94e681a90645411",
+      "ref": "refs/changes/45/174545/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

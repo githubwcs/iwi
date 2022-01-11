@@ -1,0 +1,277 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "Iabcb9ffe58bd5c32c0009d786fa8898cdda265cd",
+  "number": 47855,
+  "subject": "nl80211: refresh the nl80211 header file",
+  "owner": {
+    "name": "Grumbach, Emmanuel",
+    "email": "emmanuel.grumbach@intel.com",
+    "username": "egrumbac"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/47855",
+  "commitMessage": "nl80211: refresh the nl80211 header file\n\nChange-Id: Iabcb9ffe58bd5c32c0009d786fa8898cdda265cd\nSigned-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/47855\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Peer, Ilan <ilan.peer@intel.com>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1469644440,
+  "lastUpdated": 1470308180,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1469644440,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1469644460,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/125/"
+    },
+    {
+      "timestamp": 1469644489,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/125/ : SUCCESS"
+    },
+    {
+      "timestamp": 1469698749,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 1: Code-Review+1"
+    },
+    {
+      "timestamp": 1470308178,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1470308180,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 08be39b0d441683fa347e9fcf5c95ced4ff22cb2 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "f1509eb0826d1fa1e4d4ab50b551e68c3f914fa6",
+      "parents": [
+        "5db71847f5ffad474e8f6c958e6dececbeacb18c"
+      ],
+      "ref": "refs/changes/55/47855/1",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1469644440,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1469698749,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1470308178,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1470308180,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1469644489,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 206,
+          "deletions": -51
+        }
+      ],
+      "sizeInsertions": 206,
+      "sizeDeletions": -51
+    },
+    {
+      "number": 2,
+      "revision": "08be39b0d441683fa347e9fcf5c95ced4ff22cb2",
+      "parents": [
+        "2b12704286c2b8f848706317a2a682c32ebec3b5"
+      ],
+      "ref": "refs/changes/55/47855/2",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1470308180,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1469698749,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1470308178,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1470308180,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1469644489,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 206,
+          "deletions": -51
+        }
+      ],
+      "sizeInsertions": 206,
+      "sizeDeletions": -51
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I5a05395f75cb51e1364c021ebfecbd7bbfcc2511",
+      "number": 47857,
+      "revision": "2b12704286c2b8f848706317a2a682c32ebec3b5",
+      "ref": "refs/changes/57/47857/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

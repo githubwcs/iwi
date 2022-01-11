@@ -1,0 +1,246 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I65aaf44911af73a10bb1061c4fcef997d90a9683",
+  "number": 89520,
+  "subject": "iw: ap: support hidden/zeroed SSID",
+  "owner": {
+    "name": "Johannes Berg",
+    "email": "johannes.berg@intel.com",
+    "username": "jberg1"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/89520",
+  "commitMessage": "iw: ap: support hidden/zeroed SSID\n\ntype=feature\n\nChange-Id: I65aaf44911af73a10bb1061c4fcef997d90a9683\nSigned-off-by: Johannes Berg <johannes.berg@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/89520\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n",
+  "createdOn": 1485360978,
+  "lastUpdated": 1485422534,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1485360978,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1485361036,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/38/"
+    },
+    {
+      "timestamp": 1485361077,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/38/ : SUCCESS"
+    },
+    {
+      "timestamp": 1485422532,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1485422534,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 5874d3b084702b32a4319a5fcfcf8301c1b8d763 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "070401e6abeec399d109045170e5b57ea1d2d556",
+      "parents": [
+        "e60e082c95565cbe29c526ce596986808a31c773"
+      ],
+      "ref": "refs/changes/20/89520/1",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1485360978,
+      "author": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1485422532,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1485422534,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1485361077,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 13,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 13,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "5874d3b084702b32a4319a5fcfcf8301c1b8d763",
+      "parents": [
+        "0f86ea06554e64c67a3eaa0f31cb8906e4bbab55"
+      ],
+      "ref": "refs/changes/20/89520/2",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1485422534,
+      "author": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1485422532,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1485422534,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1485361077,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 13,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 13,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ie2cf63a3d86d6f5963c41aefbefec1a60bfa5404",
+      "number": 87868,
+      "revision": "0f86ea06554e64c67a3eaa0f31cb8906e4bbab55",
+      "ref": "refs/changes/68/87868/3",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

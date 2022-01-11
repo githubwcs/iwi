@@ -1,0 +1,677 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "Ia5a0b52ce3dcefe7c48929bd60048ba23c4f4f9c",
+  "number": 307158,
+  "subject": "iw: add support for host connection info vendor command",
+  "owner": {
+    "name": "Beker, Ayala",
+    "email": "ayala.beker@intel.com",
+    "username": "abeker"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/307158",
+  "commitMessage": "iw: add support for host connection info vendor command\n\nThis will be used to notify CSME about host connection info.\n\ntype=feature\nticket=jira:WIFI-81236\n\nChange-Id: Ia5a0b52ce3dcefe7c48929bd60048ba23c4f4f9c\nSigned-off-by: Ayala Beker <ayala.beker@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/307158\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Johannes Berg <johannes.berg@intel.com>\n",
+  "createdOn": 1612966550,
+  "lastUpdated": 1614064568,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1612966550,
+      "reviewer": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1612966573,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7550/ (1/3)"
+    },
+    {
+      "timestamp": 1612966589,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/225801/ (2/3)"
+    },
+    {
+      "timestamp": 1612966664,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/295/ (3/3)"
+    },
+    {
+      "timestamp": 1612966936,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/295/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/225801/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7550/ : SUCCESS"
+    },
+    {
+      "timestamp": 1613032361,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(5 comments)"
+    },
+    {
+      "timestamp": 1613033445,
+      "reviewer": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "message": "Patch Set 1:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1613033500,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1613033532,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1613033688,
+      "reviewer": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1613394178,
+      "reviewer": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1613394196,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/227101/ (1/3)"
+    },
+    {
+      "timestamp": 1613394198,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7633/ (2/3)"
+    },
+    {
+      "timestamp": 1613394249,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/307/ (3/3)"
+    },
+    {
+      "timestamp": 1613395067,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified-1\n\nBuild Failed \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7633/ : FAILURE\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/307/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/227101/ : SUCCESS"
+    },
+    {
+      "timestamp": 1613396388,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7639/ (3/3)"
+    },
+    {
+      "timestamp": 1613396512,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/307/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/227101/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7639/ : SUCCESS"
+    },
+    {
+      "timestamp": 1613514749,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 2:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1613724040,
+      "reviewer": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1613724063,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7756/ (1/3)"
+    },
+    {
+      "timestamp": 1613724075,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228563/ (2/3)"
+    },
+    {
+      "timestamp": 1613724138,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/320/ (3/3)"
+    },
+    {
+      "timestamp": 1613724483,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/320/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/228563/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/7756/ : SUCCESS"
+    },
+    {
+      "timestamp": 1613726373,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3: Code-Review+2\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1613726462,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as bb5aa84bb35909789c9f78662bc23b33c63c6798 by Johannes Berg"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "d64cf1e3d26b2fcc79aeb5c6404ce7878c5a100f",
+      "parents": [
+        "b55ba634699ab8c5c54a3dda4a2e87b09211c5c7"
+      ],
+      "ref": "refs/changes/58/307158/1",
+      "uploader": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "createdOn": 1612966550,
+      "author": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1612966936,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1157,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "same here"
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1170,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "dito\n\ngenerally, don't return something that looks like a kernel error for a user input error"
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1224,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "coding style"
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1261,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "again, what's the point in all those \"ssid=\" things when they're mostly required, *and* you can only parse them in this exact order"
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1261,
+          "reviewer": {
+            "name": "Beker, Ayala",
+            "email": "ayala.beker@intel.com",
+            "username": "abeker"
+          },
+          "message": "just to make the usage print more clear for users... but if you think it's redundant I can remove it"
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1261,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I guess I don't care too much, hoping I'll never use it anyway ;-)\n\nbut we don't do this anywhere else, so I'd drop it"
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "line": 665,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "same here"
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "line": 665,
+          "reviewer": {
+            "name": "Beker, Ayala",
+            "email": "ayala.beker@intel.com",
+            "username": "abeker"
+          },
+          "message": "I actually didnt add those defines in the driver as they were not needed there ( I pass the value as is to the driver), that's why it wasn't part of the synch"
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "line": 665,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "well, then it will break on the next sync ... we can't have two different versions of this file"
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "line": 665,
+          "reviewer": {
+            "name": "Beker, Ayala",
+            "email": "ayala.beker@intel.com",
+            "username": "abeker"
+          },
+          "message": "ok so I need to add them first in driver..."
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 121,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "type": "MODIFIED",
+          "insertions": 15,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 136,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 2,
+      "revision": "4fe1645e8a94bb6d0c3b5ee6e0d0384594e2b8c1",
+      "parents": [
+        "b4982a5bb43e75d8e79586cd89c458d6ebd52d97"
+      ],
+      "ref": "refs/changes/58/307158/2",
+      "uploader": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "createdOn": 1613394178,
+      "author": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1613396512,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1154,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "don't want to return 1 here?"
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1209,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "put on previous line"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 110,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 110,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 3,
+      "revision": "a427cc22b93d4fd08464b4018f98ee812c472b47",
+      "parents": [
+        "45912ba34ec0b13ef65560cd7805bfd79fb10475"
+      ],
+      "ref": "refs/changes/58/307158/3",
+      "uploader": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "createdOn": 1613724040,
+      "author": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1613726373,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1613726462,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1613724483,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "iwl_vendor_cmd.c",
+          "line": 1236,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "perhaps should reject here if there are *even more* arguments?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 108,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 108,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 4,
+      "revision": "bb5aa84bb35909789c9f78662bc23b33c63c6798",
+      "parents": [
+        "5bfb5b6fe71ba928675da8790c38985bc4fecedc"
+      ],
+      "ref": "refs/changes/58/307158/4",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1613726462,
+      "author": {
+        "name": "Beker, Ayala",
+        "email": "ayala.beker@intel.com",
+        "username": "abeker"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1613726373,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1613726462,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1613724483,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 108,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 108,
+      "sizeDeletions": 0
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ie827f552a7e9a46eb0ef8fde8035bf6bdb82d3e7",
+      "number": 307157,
+      "revision": "5bfb5b6fe71ba928675da8790c38985bc4fecedc",
+      "ref": "refs/changes/57/307157/4",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "neededBy": [
+    {
+      "id": "I09aa84e96bd82a29f832ffa4e618f4a45d1dadd4",
+      "number": 307159,
+      "revision": "4056b22bfc4c2f6d8e16a79bbbc28e355f6b8efd",
+      "ref": "refs/changes/59/307159/4"
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

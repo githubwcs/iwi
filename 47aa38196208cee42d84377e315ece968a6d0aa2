@@ -1,0 +1,228 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "common/nan2_pf5",
+  "id": "Iae35f8199f3d46fc92d8256f14fb9e3d15245c71",
+  "number": 106543,
+  "subject": "[BUGFIX] iw: nan2: Fix pmkid calculation",
+  "owner": {
+    "name": "Peer, Ilan",
+    "email": "ilan.peer@intel.com",
+    "username": "ipeer"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/106543",
+  "commitMessage": "[BUGFIX] iw: nan2: Fix pmkid calculation\n\nAn inner serv_id_c array was shadowing an external one, so when\nthe pmkid was computed it was using an uninitialized service_id.\n\nIn addition used unsigned char for pmkid buffer.\n\ntype=feature\nfixes=unknown\nbug=not-tracked\n\nChange-Id: Iae35f8199f3d46fc92d8256f14fb9e3d15245c71\nSigned-off-by: Ilan Peer <ilan.peer@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/106543\n",
+  "createdOn": 1490724814,
+  "lastUpdated": 1490724895,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1490724814,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1490724892,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 1: Code-Review+2 Verified+1"
+    },
+    {
+      "timestamp": 1490724895,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 47aa38196208cee42d84377e315ece968a6d0aa2 by Peer, Ilan"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "0e7a69aee6e7fd1366ff790fe4de5cb1140678ee",
+      "parents": [
+        "53e74d9b21c5b49ff7b908f69d226cbc33a75e5c"
+      ],
+      "ref": "refs/changes/43/106543/1",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1490724814,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1490724892,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1490724894,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1490724892,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 19,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 2,
+      "revision": "47aa38196208cee42d84377e315ece968a6d0aa2",
+      "parents": [
+        "53e74d9b21c5b49ff7b908f69d226cbc33a75e5c"
+      ],
+      "ref": "refs/changes/43/106543/2",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1490724894,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1490724892,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1490724894,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1490724892,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 20,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -3
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Id46c8db3b00774b639ade9b36d376736787550b0",
+      "number": 106041,
+      "revision": "53e74d9b21c5b49ff7b908f69d226cbc33a75e5c",
+      "ref": "refs/changes/41/106041/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2931 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I44af239a9e885a04b1008d67d005a0ad281d88f7",
+  "number": 69218,
+  "subject": "iw: nan: Add NAN Commands",
+  "owner": {
+    "name": "Zamir, Roee(deleted)",
+    "email": "roee.zamir@intel.com",
+    "username": "rzamir"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/69218",
+  "commitMessage": "iw: nan: Add NAN Commands\n\nImplement nan commands for NAN interface.\nThe commands allow to start/stop the interface, subscribe/publish\nand change current configuration.\n\ntype=feature\n\nChange-Id: I44af239a9e885a04b1008d67d005a0ad281d88f7\nSigned-off-by: Roee Zamir <roee.zamir@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/69218\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1477923502,
+  "lastUpdated": 1488799087,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1477923502,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1477923523,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/159/"
+    },
+    {
+      "timestamp": 1477923542,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/159/ : SUCCESS"
+    },
+    {
+      "timestamp": 1479992678,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(5 comments)"
+    },
+    {
+      "timestamp": 1479998953,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1479998972,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/169/"
+    },
+    {
+      "timestamp": 1479998997,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/169/ : SUCCESS"
+    },
+    {
+      "timestamp": 1479999140,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1479999711,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1480241034,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1480241054,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/172/"
+    },
+    {
+      "timestamp": 1480241081,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/172/ : SUCCESS"
+    },
+    {
+      "timestamp": 1480336879,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1480340823,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 3:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1481448521,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 4: Patch Set 3 was rebased."
+    },
+    {
+      "timestamp": 1481448532,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/20/"
+    },
+    {
+      "timestamp": 1481448565,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/20/ : SUCCESS"
+    },
+    {
+      "timestamp": 1481449074,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 4: Code-Review-1"
+    },
+    {
+      "timestamp": 1481451613,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 5."
+    },
+    {
+      "timestamp": 1481451622,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started http://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/22/"
+    },
+    {
+      "timestamp": 1481451646,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/22/ : SUCCESS"
+    },
+    {
+      "timestamp": 1483252510,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 5:\n\nup"
+    },
+    {
+      "timestamp": 1483629259,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 6."
+    },
+    {
+      "timestamp": 1483629317,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6:\n\nBuild Started http://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/28/"
+    },
+    {
+      "timestamp": 1483629342,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/28/ : SUCCESS"
+    },
+    {
+      "timestamp": 1483629453,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 7."
+    },
+    {
+      "timestamp": 1483629474,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7:\n\nBuild Started http://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/30/"
+    },
+    {
+      "timestamp": 1483629528,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com:8083/jenkins/job/iw-per-ci_219/30/ : SUCCESS"
+    },
+    {
+      "timestamp": 1485425761,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 7:\n\nneed to rebase"
+    },
+    {
+      "timestamp": 1485425965,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 7:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1486035269,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 8."
+    },
+    {
+      "timestamp": 1486035281,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/42/"
+    },
+    {
+      "timestamp": 1486035310,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 8: Code-Review-1"
+    },
+    {
+      "timestamp": 1486035348,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/42/ : SUCCESS"
+    },
+    {
+      "timestamp": 1486884118,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 9: Patch Set 8 was rebased"
+    },
+    {
+      "timestamp": 1486884129,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 9:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/51/"
+    },
+    {
+      "timestamp": 1486884145,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 9: Code-Review-1"
+    },
+    {
+      "timestamp": 1486884152,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 9: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/51/ : SUCCESS"
+    },
+    {
+      "timestamp": 1486906936,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 10."
+    },
+    {
+      "timestamp": 1486906946,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 10:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/57/"
+    },
+    {
+      "timestamp": 1486906973,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 10: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/57/ : SUCCESS"
+    },
+    {
+      "timestamp": 1486977062,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 10: Code-Review-1\n\nneed to implement sha256"
+    },
+    {
+      "timestamp": 1487058766,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 11."
+    },
+    {
+      "timestamp": 1487058779,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 11:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/59/"
+    },
+    {
+      "timestamp": 1487058804,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 11: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/59/ : SUCCESS"
+    },
+    {
+      "timestamp": 1487245255,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 11:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1487245276,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 11:\n\nI suspect that Jouni would be OK with using the code here under MIT license, but I'd want that \"in writing\" :)"
+    },
+    {
+      "timestamp": 1487251638,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 11: Code-Review-1\n\nJouni says that was based on libtomcrypt's implementation, so I guess we can take that instead"
+    },
+    {
+      "timestamp": 1487691792,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 12."
+    },
+    {
+      "timestamp": 1487691802,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 12:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/61/"
+    },
+    {
+      "timestamp": 1487691837,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 12: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/61/ : SUCCESS"
+    },
+    {
+      "timestamp": 1487692299,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 12:\n\ni used the public domain of sha256-internal from wpa which taken from libtomcrypt"
+    },
+    {
+      "timestamp": 1487752151,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 12:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1487768844,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 13: Patch Set 12 was rebased."
+    },
+    {
+      "timestamp": 1487768852,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 13:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/65/"
+    },
+    {
+      "timestamp": 1487768875,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 13: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/65/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488185429,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 14."
+    },
+    {
+      "timestamp": 1488185440,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 14:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/67/"
+    },
+    {
+      "timestamp": 1488185475,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 14: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/67/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488188497,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 15: Commit message was updated."
+    },
+    {
+      "timestamp": 1488188505,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 15:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/68/"
+    },
+    {
+      "timestamp": 1488188532,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 15: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/68/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488369021,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 15:\n\nup"
+    },
+    {
+      "timestamp": 1488445397,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 16."
+    },
+    {
+      "timestamp": 1488445412,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 16:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/69/"
+    },
+    {
+      "timestamp": 1488445432,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 16: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/69/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488445544,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 17."
+    },
+    {
+      "timestamp": 1488445551,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 17:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/70/"
+    },
+    {
+      "timestamp": 1488445573,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 17: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/70/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488447944,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 17: Code-Review-1"
+    },
+    {
+      "timestamp": 1488467038,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 18."
+    },
+    {
+      "timestamp": 1488467050,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 18:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/71/"
+    },
+    {
+      "timestamp": 1488467074,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 18: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/71/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488471733,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 19: Commit message was updated."
+    },
+    {
+      "timestamp": 1488471744,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 19:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/72/"
+    },
+    {
+      "timestamp": 1488471762,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 19: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/72/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488699231,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 20."
+    },
+    {
+      "timestamp": 1488699242,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 20:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/73/"
+    },
+    {
+      "timestamp": 1488699285,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 20: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/73/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488794171,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 20:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1488796116,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 21."
+    },
+    {
+      "timestamp": 1488796126,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 21:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/74/"
+    },
+    {
+      "timestamp": 1488796173,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 21: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/74/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488796313,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 21:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1488798874,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 21:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1488798883,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 22."
+    },
+    {
+      "timestamp": 1488798895,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 22:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/75/"
+    },
+    {
+      "timestamp": 1488798919,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 22: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/75/ : SUCCESS"
+    },
+    {
+      "timestamp": 1488799085,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 22: Code-Review+2"
+    },
+    {
+      "timestamp": 1488799087,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as ce217401cf70018392bca2e741babed1b9980fde by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "c01de0b3f93fd6c9faba2171eb5ecd7649789fc9",
+      "parents": [
+        "db96bec8475ecbdff7a8c90fc63e6bbe2e42cb3b"
+      ],
+      "ref": "refs/changes/18/69218/1",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1477923502,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1477923542,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "Makefile",
+          "line": 82,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "ugh, not a big fan of that - I'll need to think about this, making it optional, or supporting more libraries, or something"
+        },
+        {
+          "file": "bf.c",
+          "line": 1,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I think this file should get a nicer name - \"BF\" can also mean beamforming, and probably various other things\n\nbloom.c perhaps?"
+        },
+        {
+          "file": "bf.c",
+          "line": 12,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "what happened here?"
+        },
+        {
+          "file": "bf.c",
+          "line": 15,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "etc."
+        },
+        {
+          "file": "nan.c",
+          "line": 56,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "where did the \"id\" go?"
+        },
+        {
+          "file": "nan.c",
+          "line": 56,
+          "reviewer": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          },
+          "message": "what do you mean?"
+        },
+        {
+          "file": "nan.c",
+          "line": 56,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I don't see you parsing any id above, you're parsing \"pref\" and \"dual\", but not \"id\"?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bf.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 591,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 2,
+      "revision": "0590c6f8753fa5f609dcbec0be684816889fccea",
+      "parents": [
+        "db96bec8475ecbdff7a8c90fc63e6bbe2e42cb3b"
+      ],
+      "ref": "refs/changes/18/69218/2",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1479998953,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1479998997,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 591,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 3,
+      "revision": "264a451111bcc96dca3398f4010117721fb44a5e",
+      "parents": [
+        "db96bec8475ecbdff7a8c90fc63e6bbe2e42cb3b"
+      ],
+      "ref": "refs/changes/18/69218/3",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1480241034,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1480241081,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "/COMMIT_MSG",
+          "line": 9,
+          "reviewer": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          },
+          "message": "Choose one, nan or NAN."
+        },
+        {
+          "file": "/COMMIT_MSG",
+          "line": 11,
+          "reviewer": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          },
+          "message": "current"
+        },
+        {
+          "file": "bloom.c",
+          "line": 15,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "you still have all the weird tabs in here"
+        },
+        {
+          "file": "nan.c",
+          "line": 47,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I think Luca is changing this, perhaps we should wait?"
+        },
+        {
+          "file": "nan.c",
+          "line": 47,
+          "reviewer": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          },
+          "message": "Yes, I'm \"changing\" this.  I should probably get back to it ASAP.\n\nhttp://git-amr-3.devtools.intel.com/gerrit/#/c/65699/"
+        },
+        {
+          "file": "nan.c",
+          "line": 87,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "seems like some of this code could use a refactoring?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 591,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 4,
+      "revision": "bfae85cfd864c970dd64e0e648d9f2c45876f968",
+      "parents": [
+        "dc311faf7a615f02141fab795613f0e3c74aac1b"
+      ],
+      "ref": "refs/changes/18/69218/4",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1481448521,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1481448565,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1481449074,
+          "by": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 591,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 5,
+      "revision": "90a6ec9609628574ee9352eeb82cd297fb30966e",
+      "parents": [
+        "6c9c2aa48fe4c36c0d5c5cd88e5802cddfdea2c5"
+      ],
+      "ref": "refs/changes/18/69218/5",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1481451613,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1481451646,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 591,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 6,
+      "revision": "3a701b1605f6d9dc339716075e6433d040042a4d",
+      "parents": [
+        "e80b11f476d5f98b363215bfcac1a64edfbc1520"
+      ],
+      "ref": "refs/changes/18/69218/6",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1483629259,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1483629342,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 512,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 598,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 7,
+      "revision": "22da63e5b1bbf6df77a9d0f970f0e5e066f08eb3",
+      "parents": [
+        "e80b11f476d5f98b363215bfcac1a64edfbc1520"
+      ],
+      "ref": "refs/changes/18/69218/7",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1483629453,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1483629528,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "Makefile",
+          "line": 82,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I'm still not super happy with this - can we at least make it optional or something?"
+        },
+        {
+          "file": "nan.c",
+          "line": 150,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "and actually, sha256 is so simple - perhaps just add an implementation here?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 513,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 599,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 8,
+      "revision": "542a83f8b45f973419f2ecc0ccbf8690e01a2d8d",
+      "parents": [
+        "d02ca4e4c3b5a2dc8cf310de58cafcd0f2f3a183"
+      ],
+      "ref": "refs/changes/18/69218/8",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1486035269,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1486035348,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1486035310,
+          "by": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 513,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 598,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 9,
+      "revision": "0cb8c3d2eb129dd271e6118e3cfd91b9343a6ca1",
+      "parents": [
+        "90102b7675ec4c0527787d2f3de39fd5d9d1adc2"
+      ],
+      "ref": "refs/changes/18/69218/9",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1486884118,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1486884152,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1486884145,
+          "by": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 513,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 598,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 10,
+      "revision": "38c906a749a50fee8f58e367db29a01d91967f9b",
+      "parents": [
+        "2f48c0c9c113792372b8c534b0319439572b0302"
+      ],
+      "ref": "refs/changes/18/69218/10",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1486906936,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1486906973,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1486977062,
+          "by": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 531,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 616,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 11,
+      "revision": "f7a490779a6195eb90a27107412b631951f21664",
+      "parents": [
+        "ef16651796faece5a16c04e270de40bf845a56fc"
+      ],
+      "ref": "refs/changes/18/69218/11",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1487058766,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1487251638,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1487058804,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "sha256.h",
+          "line": 8,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "sorry, I can't let you do this - this is more restrictive than the MIT license that iw uses, and the README reference is wrong anyway"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 508,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 218,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 76,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 886,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 12,
+      "revision": "0f89fe62f4dbb6b0c1c0ec21c9f6f2dd523f8ac9",
+      "parents": [
+        "ef16651796faece5a16c04e270de40bf845a56fc"
+      ],
+      "ref": "refs/changes/18/69218/12",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1487691792,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1487691837,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "nan.c",
+          "line": 68,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "\"dual 0/1/2\" doesn't really make any sense IMHO\n\ncan we just list the bands or something?\n\n \"bands [2GHz] [5GHz]\"\n\n(yes, giving no bands would be invalid, but the kernel will reject that)"
+        },
+        {
+          "file": "nan.c",
+          "line": 124,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "ditto\n\nalso should have a common utility parser for this"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 508,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 858,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 13,
+      "revision": "f61baa4fe88b55c0a989af0ed42a8b63008c59b7",
+      "parents": [
+        "3dbe7d8bb126dbcaf436c773f4d0c8e723ed1f48"
+      ],
+      "ref": "refs/changes/18/69218/13",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1487768844,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1487768875,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 508,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 858,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 14,
+      "revision": "05c1722d5da84d72f73cc73ae594cdb5a3019d27",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/14",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488185429,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488185475,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 855,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 15,
+      "revision": "01f185097a8ccaf0f553cef17239eeb28d3f7876",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/15",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488188497,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488188532,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 855,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 16,
+      "revision": "aadade1feee88b1089bcdf4ff79ddd0c87f12e35",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/16",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488445397,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488445432,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 855,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 17,
+      "revision": "bd36c24df0d6c54a4789d92978be0fc24b2ee296",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/17",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488445544,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488445573,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1488447944,
+          "by": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 505,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 855,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 18,
+      "revision": "2c9f561a4b9479cb49fdd2cbc627cc77d7a9720c",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/18",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488467038,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488467074,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 503,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 853,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 19,
+      "revision": "d0826368e875551a234dc738b1e6734fc236151c",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/19",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488471733,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488471762,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 503,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 853,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 20,
+      "revision": "9a5307dbe1affb1e3d60c6a19c7b0ba314714b9c",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/20",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488699231,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488699285,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "nan.c",
+          "line": 25,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "might be nice to accept lowercase, strcasecmp(), but not so important"
+        },
+        {
+          "file": "nan.c",
+          "line": 60,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I see no good reason to put the assignment into the if condition"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 500,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 850,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 21,
+      "revision": "509834c3ce9dcae354bb0a3800464ded913c26f6",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/21",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488796116,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488796173,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "nan.c",
+          "line": 27,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "huh, this is strange - why not just use strcasecmp() instead of strcmp()?"
+        },
+        {
+          "file": "nan.c",
+          "line": 27,
+          "reviewer": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          },
+          "message": "I should have guessed that such a function exists :)"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 506,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 856,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 22,
+      "revision": "9baaacb5b62d89e1dc0a4098d26868b2f858d7b2",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/22",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1488798883,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1488799085,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1488799086,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488798919,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 502,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 852,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 23,
+      "revision": "ce217401cf70018392bca2e741babed1b9980fde",
+      "parents": [
+        "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e"
+      ],
+      "ref": "refs/changes/18/69218/23",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1488799087,
+      "author": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1488799085,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1488799086,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1488798919,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 19,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bloom.c",
+          "type": "ADDED",
+          "insertions": 80,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "ADDED",
+          "insertions": 502,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.c",
+          "type": "ADDED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "sha256.h",
+          "type": "ADDED",
+          "insertions": 61,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 852,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I7af778c012328e5875adab5e7497bfbd3fbd9cdb",
+      "number": 69223,
+      "revision": "5b39816846f85720d56c3ba73bc1b6e05bd4ea7e",
+      "ref": "refs/changes/23/69223/17",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

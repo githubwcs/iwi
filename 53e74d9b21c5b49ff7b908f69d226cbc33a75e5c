@@ -1,0 +1,228 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "common/nan2_pf5",
+  "id": "Id46c8db3b00774b639ade9b36d376736787550b0",
+  "number": 106041,
+  "subject": "iw: nan2: Further modify the security prints",
+  "owner": {
+    "name": "Peer, Ilan",
+    "email": "ilan.peer@intel.com",
+    "username": "ipeer"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/106041",
+  "commitMessage": "iw: nan2: Further modify the security prints\n\nSimplifies things for WTS automation.\n\ntype=feature\n\nChange-Id: Id46c8db3b00774b639ade9b36d376736787550b0\nSigned-off-by: Ilan Peer <ilan.peer@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/106041\n",
+  "createdOn": 1490506973,
+  "lastUpdated": 1490537721,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1490506973,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1490537719,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 1: Code-Review+2 Verified+1"
+    },
+    {
+      "timestamp": 1490537721,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 53e74d9b21c5b49ff7b908f69d226cbc33a75e5c by Peer, Ilan"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "42e9bb2bae0e8625332b6797d3c6e43d01fc8047",
+      "parents": [
+        "a22294e72e5982d3fc7261a3f35f96e9671ce5f2"
+      ],
+      "ref": "refs/changes/41/106041/1",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1490506973,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1490537719,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1490537721,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1490537719,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 2,
+      "revision": "53e74d9b21c5b49ff7b908f69d226cbc33a75e5c",
+      "parents": [
+        "a22294e72e5982d3fc7261a3f35f96e9671ce5f2"
+      ],
+      "ref": "refs/changes/41/106041/2",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1490537721,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1490537719,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1490537721,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1490537719,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -2
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ied64b5ae0c9977eae22a5cfee95fdb8acd9589c3",
+      "number": 105641,
+      "revision": "a22294e72e5982d3fc7261a3f35f96e9671ce5f2",
+      "ref": "refs/changes/41/105641/3",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

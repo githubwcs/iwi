@@ -1,0 +1,590 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "topic": "ieee80211be",
+  "id": "Id11d6c10a6334fd82c8b64cbf57e9ff8b77c10c1",
+  "number": 322972,
+  "subject": "iw: update nl80211.h",
+  "owner": {
+    "name": "Peer, Ilan",
+    "email": "ilan.peer@intel.com",
+    "username": "ipeer"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/322972",
+  "commitMessage": "iw: update nl80211.h\n\ntype=feature\nticket=jira:WIFI-131550\n\nChange-Id: Id11d6c10a6334fd82c8b64cbf57e9ff8b77c10c1\nSigned-off-by: Ilan Peer <ilan.peer@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/322972\nReviewed-by: Johannes Berg <johannes.berg@intel.com>\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n",
+  "createdOn": 1626165701,
+  "lastUpdated": 1629373902,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1626165701,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1626165712,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/262673/ (1/3)"
+    },
+    {
+      "timestamp": 1626165715,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/358/ (2/3)"
+    },
+    {
+      "timestamp": 1626165720,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/11675/ (3/3)"
+    },
+    {
+      "timestamp": 1626166628,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 2: Commit message was updated."
+    },
+    {
+      "timestamp": 1626166644,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified-1 Code-Review-1\n\nBuild Failed \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/11675/ : ABORTED\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/262673/ : Linked Jira verification: wrong commit message format or not valid linked Jira issue\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/358/ : SUCCESS"
+    },
+    {
+      "timestamp": 1626166688,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/360/ (1/3)"
+    },
+    {
+      "timestamp": 1626166721,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/262682/ (2/3)"
+    },
+    {
+      "timestamp": 1626166724,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/11676/ (3/3)"
+    },
+    {
+      "timestamp": 1626167089,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/262682/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/360/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/11676/ : SUCCESS"
+    },
+    {
+      "timestamp": 1628594523,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1628594546,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/268290/ (1/3)"
+    },
+    {
+      "timestamp": 1628594548,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/362/ (2/3)"
+    },
+    {
+      "timestamp": 1628594553,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/12615/ (3/3)"
+    },
+    {
+      "timestamp": 1628594802,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/362/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/268290/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/12615/ : SUCCESS"
+    },
+    {
+      "timestamp": 1629287552,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3: Code-Review+2"
+    },
+    {
+      "timestamp": 1629370972,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1629370980,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/270187/ (1/3)"
+    },
+    {
+      "timestamp": 1629370982,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/369/ (2/3)"
+    },
+    {
+      "timestamp": 1629370987,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/12894/ (3/3)"
+    },
+    {
+      "timestamp": 1629371177,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4: Code-Review+2"
+    },
+    {
+      "timestamp": 1629371227,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/369/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/270187/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/12894/ : SUCCESS"
+    },
+    {
+      "timestamp": 1629373902,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as 6439d0de2a3613f646414d33c39e98a8f86e80cb by Johannes Berg"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "3c0f46ab965de3cffe9fc2aabea2d2736b7d7506",
+      "parents": [
+        "a8aade7f8bc226f306aa4e7ba61e51c6074d97de"
+      ],
+      "ref": "refs/changes/72/322972/1",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1626165701,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1626166644,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "-1",
+          "grantedOn": 1626166644,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 28,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 28,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 2,
+      "revision": "1dcd4ec9b057966e648c9dd305a806d8a863c5b7",
+      "parents": [
+        "a8aade7f8bc226f306aa4e7ba61e51c6074d97de"
+      ],
+      "ref": "refs/changes/72/322972/2",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1626166628,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1626167089,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 28,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 28,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 3,
+      "revision": "60d41fabb5de59c18a13ef83f2b8a01d84802cb2",
+      "parents": [
+        "a8aade7f8bc226f306aa4e7ba61e51c6074d97de"
+      ],
+      "ref": "refs/changes/72/322972/3",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1628594523,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1629287552,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1628594802,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 50,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 50,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 4,
+      "revision": "22386c99854a16fa0d0ff3a613f07c5cf0851cc3",
+      "parents": [
+        "60d419a054b29de46147f2e7c7610672d8d2a839"
+      ],
+      "ref": "refs/changes/72/322972/4",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1629370972,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1629371177,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1629373902,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1629371227,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 50,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 50,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 5,
+      "revision": "6439d0de2a3613f646414d33c39e98a8f86e80cb",
+      "parents": [
+        "60d419a054b29de46147f2e7c7610672d8d2a839"
+      ],
+      "ref": "refs/changes/72/322972/5",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1629373902,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1629371177,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1629373902,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1629371227,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 50,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 50,
+      "sizeDeletions": -2
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I844f8e382b0ecee00c21886342d0bfd70e246a9f",
+      "number": 326793,
+      "revision": "60d419a054b29de46147f2e7c7610672d8d2a839",
+      "ref": "refs/changes/93/326793/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "neededBy": [
+    {
+      "id": "I0c17f6064713e70c79b4b16201ea823602e6b059",
+      "number": 322973,
+      "revision": "5401aaade547e689fb1fe19e41bc1331035b37da",
+      "ref": "refs/changes/73/322973/6"
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,782 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I42a54edf9b6ca37a66d841836119bab9b96302d6",
+  "number": 8032,
+  "subject": "iw: add scheduled scan plans configuration",
+  "owner": {
+    "name": "Stern, Avraham",
+    "email": "avraham.stern@intel.com",
+    "username": "avrahams"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/8032",
+  "commitMessage": "iw: add scheduled scan plans configuration\n\nScheduled scan now supports configuring multiple 'scan plans'.\nEach scan plan specifies the interval between scans and the number\nof iterations to scan. So add an option to configure scan plans\nfor scheduled scan\nAt least one scan plan must be configured. Note that all scan plans\nbut the last one must specify the scan interval and the number of\niterations. The last scan plan must specify only the interval and\nwill be run infinitely.\nThe option to set only an interval is kept for backwards\ncompatibility. However, the new scan plans option and the old interval\noptoin are mutually exclusive.\n\ntype=feature\n\nChange-Id: I42a54edf9b6ca37a66d841836119bab9b96302d6\nSigned-off-by: Avraham Stern <avraham.stern@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/8032\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1446559034,
+  "lastUpdated": 1460024116,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1446559034,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1446559055,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/52/"
+    },
+    {
+      "timestamp": 1446559081,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/52/ : SUCCESS"
+    },
+    {
+      "timestamp": 1446656037,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1: Code-Review-1\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1446985654,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1446985675,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/53/"
+    },
+    {
+      "timestamp": 1446985698,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/53/ : SUCCESS"
+    },
+    {
+      "timestamp": 1448447575,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Patch Set 2:\n\nping..."
+    },
+    {
+      "timestamp": 1448447884,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1448466429,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1448466450,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/54/"
+    },
+    {
+      "timestamp": 1448466473,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/54/ : SUCCESS"
+    },
+    {
+      "timestamp": 1452783284,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Patch Set 3:\n\nplease review"
+    },
+    {
+      "timestamp": 1453195196,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1453196201,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1453196377,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1456926839,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3: Code-Review-1"
+    },
+    {
+      "timestamp": 1458133395,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1458201603,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1458205829,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1458207297,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1458207320,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/113/"
+    },
+    {
+      "timestamp": 1458207338,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/113/ : SUCCESS"
+    },
+    {
+      "timestamp": 1460024113,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4: Code-Review+2"
+    },
+    {
+      "timestamp": 1460024116,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 708f570a404b9c9c282b4284728570552ff50197 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "378562232f8476534fbdacb45a2f7f8578bb9b5e",
+      "parents": [
+        "93d7a203795066f71bcaf56e0ba1568f07db93fe"
+      ],
+      "ref": "refs/changes/32/8032/1",
+      "uploader": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "createdOn": 1446559034,
+      "author": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1446656037,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1446559081,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "scan.c",
+          "line": 158,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "this breaks iw compatibility with older kernels that don't have scan plans, afaict"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 21,
+          "deletions": 0
+        },
+        {
+          "file": "info.c",
+          "type": "MODIFIED",
+          "insertions": 9,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 52,
+          "deletions": -1
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 58,
+          "deletions": -18
+        }
+      ],
+      "sizeInsertions": 120,
+      "sizeDeletions": -20
+    },
+    {
+      "number": 2,
+      "revision": "0e54bd6b74a983948ce59529fd68a957317fe0e6",
+      "parents": [
+        "93d7a203795066f71bcaf56e0ba1568f07db93fe"
+      ],
+      "ref": "refs/changes/32/8032/2",
+      "uploader": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "createdOn": 1446985654,
+      "author": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1446985698,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "scan.c",
+          "line": 339,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "don't you need a break here to parse this v[0] token again as a toplevel token?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 24,
+          "deletions": 0
+        },
+        {
+          "file": "info.c",
+          "type": "MODIFIED",
+          "insertions": 9,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": -2
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 52,
+          "deletions": -1
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 63,
+          "deletions": -4
+        }
+      ],
+      "sizeInsertions": 127,
+      "sizeDeletions": -7
+    },
+    {
+      "number": 3,
+      "revision": "53c0f8f87dd41752cfdfbcf5b11db9deab3bd3db",
+      "parents": [
+        "c4460cdf60760861969eee6aafa0b89ee421a1d9"
+      ],
+      "ref": "refs/changes/32/8032/3",
+      "uploader": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "createdOn": 1448466429,
+      "author": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1456926839,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1448466473,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "iw.h",
+          "line": 178,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "based on the parser implementation, I'd argue this is wrong:\n\n interval N\n\nis always parsed as msecs, not secs.\n\nI think perhaps the better language here would be\n\n scan_plans [<interval_secs:iterations>*] <interval_secs>\n\ninstead of relying on the extra \"interval\" keyword on the ND_TOPLEVEL scope\n\nThat way you'd specify\n\n scan_plans 10:10 30\n\nto get 10 iterations with 10 seconds and continue with 30 seconds afterwards, rather than having to specify\n\n scan_plans 10:10 interval 30000"
+        },
+        {
+          "file": "iw.h",
+          "line": 178,
+          "reviewer": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          },
+          "message": "in current semantics, specifying : scan_plans 10:10 30\nwill result in the desired behavior you described too (no need to specify the interval in msecs for the last plan).\njust keeping the option to use the old \"interval <in_msecs>\" API for backward compatibility.\n\nwhen using the scan_plans settings, interval keyword must not be used (which is forced by the parser too)."
+        },
+        {
+          "file": "iw.h",
+          "line": 178,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "huh, then I misunderstood how the parser returns to the top-level - I'll comment there\n\nbut yeah, this is actually described the way it should be, sorry."
+        },
+        {
+          "file": "scan.c",
+          "line": 339,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "so here you return to the toplevel, shouldn't that parse the number first and add it as a plan with infinite repetitions?"
+        },
+        {
+          "file": "scan.c",
+          "line": 339,
+          "reviewer": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          },
+          "message": "the correct form is : \"10:3 30\" or just \"30\", so either way parsing the interval of the last plan should set end to NULL and go to else. getting to this if means we could not parse a number, i.e. the scan plans are over.\n\nhowever, I don't force the last plan here to have only interval, i.e. \"10:3 30:1\" will also be accepted (and rejected by the driver).   is that a problem?"
+        },
+        {
+          "file": "scan.c",
+          "line": 339,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I don't understand. the condition here is\n\n end && *end != ':'\n\nThe first part of the condition is actually useless, since '*endptr' can never be set to NULL according to the manpage.\n\nI think in place of all the \"if (end)\" you meant \"if (end != v[0])\" then?\n\nBut continuing with the code as is, you're checking here only that \"*end != ':'\", which means that there was a pure number given, not a \"10:3\" type thing.\n\nBUT!! Then you discard that number entirely.\n\nPerhaps you meant *end?"
+        },
+        {
+          "file": "scan.c",
+          "line": 339,
+          "reviewer": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          },
+          "message": "yeah, should be *end.\n\nwill fix."
+        },
+        {
+          "file": "scan.c",
+          "line": 345,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "and here too?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 24,
+          "deletions": 0
+        },
+        {
+          "file": "info.c",
+          "type": "MODIFIED",
+          "insertions": 9,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": -2
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 52,
+          "deletions": -1
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 68,
+          "deletions": -4
+        }
+      ],
+      "sizeInsertions": 132,
+      "sizeDeletions": -7
+    },
+    {
+      "number": 4,
+      "revision": "ebb8624e73bc37fb7c4dd9f56cc4f38ca0d3dfa3",
+      "parents": [
+        "82f55b605b488b05c4af9597cf8a0b610f4f2b0b"
+      ],
+      "ref": "refs/changes/32/8032/4",
+      "uploader": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "createdOn": 1458207297,
+      "author": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1460024113,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1460024116,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1458207338,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 24,
+          "deletions": 0
+        },
+        {
+          "file": "info.c",
+          "type": "MODIFIED",
+          "insertions": 9,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": -2
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 65,
+          "deletions": -4
+        }
+      ],
+      "sizeInsertions": 77,
+      "sizeDeletions": -6
+    },
+    {
+      "number": 5,
+      "revision": "708f570a404b9c9c282b4284728570552ff50197",
+      "parents": [
+        "7f2f32bc828cf53bc990d6769686d994aa8a58c3"
+      ],
+      "ref": "refs/changes/32/8032/5",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1460024116,
+      "author": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1460024113,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1460024116,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1458207338,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 27,
+          "deletions": 0
+        },
+        {
+          "file": "info.c",
+          "type": "MODIFIED",
+          "insertions": 9,
+          "deletions": 0
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": -2
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 65,
+          "deletions": -4
+        }
+      ],
+      "sizeInsertions": 77,
+      "sizeDeletions": -6
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I28764874dcff26dcae3df67b412b2ef075f8ea71",
+      "number": 25134,
+      "revision": "7f2f32bc828cf53bc990d6769686d994aa8a58c3",
+      "ref": "refs/changes/34/25134/3",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

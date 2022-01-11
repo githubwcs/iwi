@@ -1,0 +1,442 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I8977a77a27a9f1cf4c9f388e8e942cf654569e86",
+  "number": 283245,
+  "subject": "[BUGFIX] Revert \"Merge branch 'master' into intel\"",
+  "owner": {
+    "name": "Peer, Ilan",
+    "email": "ilan.peer@intel.com",
+    "username": "ipeer"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/283245",
+  "commitMessage": "[BUGFIX] Revert \"Merge branch 'master' into intel\"\n\nAs this breaks compilation. Seems that nl80211.h are missing.\n\ntype=bugfix\nticket=none\n\nThis reverts commit 96cb9fa4bb9105fe05ea25cf39d155e9929438fe, reversing\nchanges made to 088507c92faac8e927a05dc28b2f078bb2c366f4.\n\nChange-Id: I8977a77a27a9f1cf4c9f388e8e942cf654569e86\nSigned-off-by: Ilan Peer <ilan.peer@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/283245\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Zbit, Benzi <benzi.zbit@intel.com>\n",
+  "createdOn": 1604837861,
+  "lastUpdated": 1604838834,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1604837861,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1604837870,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/5786/ (1/3)"
+    },
+    {
+      "timestamp": 1604837873,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/198976/ (2/3)"
+    },
+    {
+      "timestamp": 1604837875,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/264/ (3/3)"
+    },
+    {
+      "timestamp": 1604838087,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified-1\n\nBuild Failed \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/5786/ : FAILURE\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/264/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/198976/ : SUCCESS"
+    },
+    {
+      "timestamp": 1604838356,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/5787/ (3/3)"
+    },
+    {
+      "timestamp": 1604838514,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/264/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/198976/ : SUCCESS\n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/iwlwifi-vlab/5787/ : SUCCESS"
+    },
+    {
+      "timestamp": 1604838831,
+      "reviewer": {
+        "name": "Zbit, Benzi",
+        "email": "benzi.zbit@intel.com",
+        "username": "bzbit"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1604838834,
+      "reviewer": {
+        "name": "Zbit, Benzi",
+        "email": "benzi.zbit@intel.com",
+        "username": "bzbit"
+      },
+      "message": "Change has been successfully rebased and submitted as 112d4842e5a3fb77e67518b3cd6ff40d2ccfe037 by Zbit, Benzi"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "b60e8f9fd3595fc1feda38bbc5bbde875ba48bbc",
+      "parents": [
+        "96cb9fa4bb9105fe05ea25cf39d155e9929438fe"
+      ],
+      "ref": "refs/changes/45/283245/1",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1604837861,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1604838514,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1604838831,
+          "by": {
+            "name": "Zbit, Benzi",
+            "email": "benzi.zbit@intel.com",
+            "username": "bzbit"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1604838834,
+          "by": {
+            "name": "Zbit, Benzi",
+            "email": "benzi.zbit@intel.com",
+            "username": "bzbit"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "README",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bitrate.c",
+          "type": "MODIFIED",
+          "insertions": 25,
+          "deletions": -222
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": -11
+        },
+        {
+          "file": "info.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -18
+        },
+        {
+          "file": "interface.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -263
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -3
+        },
+        {
+          "file": "measurements.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -2
+        },
+        {
+          "file": "mesh.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -6
+        },
+        {
+          "file": "mpath.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -9
+        },
+        {
+          "file": "phy.c",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": -4
+        },
+        {
+          "file": "reg.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -3
+        },
+        {
+          "file": "station.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -15
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 6,
+          "deletions": -36
+        },
+        {
+          "file": "version.sh",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 45,
+      "sizeDeletions": -595
+    },
+    {
+      "number": 2,
+      "revision": "112d4842e5a3fb77e67518b3cd6ff40d2ccfe037",
+      "parents": [
+        "96cb9fa4bb9105fe05ea25cf39d155e9929438fe"
+      ],
+      "ref": "refs/changes/45/283245/2",
+      "uploader": {
+        "name": "Zbit, Benzi",
+        "email": "benzi.zbit@intel.com",
+        "username": "bzbit"
+      },
+      "createdOn": 1604838834,
+      "author": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1604838514,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1604838831,
+          "by": {
+            "name": "Zbit, Benzi",
+            "email": "benzi.zbit@intel.com",
+            "username": "bzbit"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1604838834,
+          "by": {
+            "name": "Zbit, Benzi",
+            "email": "benzi.zbit@intel.com",
+            "username": "bzbit"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 21,
+          "deletions": 0
+        },
+        {
+          "file": "README",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "bitrate.c",
+          "type": "MODIFIED",
+          "insertions": 25,
+          "deletions": -222
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": -11
+        },
+        {
+          "file": "info.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -18
+        },
+        {
+          "file": "interface.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -263
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -3
+        },
+        {
+          "file": "measurements.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -2
+        },
+        {
+          "file": "mesh.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -6
+        },
+        {
+          "file": "mpath.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -9
+        },
+        {
+          "file": "phy.c",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": -4
+        },
+        {
+          "file": "reg.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -3
+        },
+        {
+          "file": "station.c",
+          "type": "MODIFIED",
+          "insertions": 0,
+          "deletions": -15
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 6,
+          "deletions": -36
+        },
+        {
+          "file": "version.sh",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 45,
+      "sizeDeletions": -595
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Zbit, Benzi",
+            "email": "benzi.zbit@intel.com",
+            "username": "bzbit"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,505 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "topic": "NAN",
+  "id": "I868f9188c5e67387ad4b839e9b75f0f011808619",
+  "number": 14118,
+  "subject": "iw: nan: Add NAN interface type",
+  "owner": {
+    "name": "Otcheretianski, Andrei",
+    "email": "andrei.otcheretianski@intel.com",
+    "username": "aotchere"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/14118",
+  "commitMessage": "iw: nan: Add NAN interface type\n\ntype=feature\n\nChange-Id: I868f9188c5e67387ad4b839e9b75f0f011808619\nSigned-off-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/14118\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Grumbach, Emmanuel <emmanuel.grumbach@intel.com>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1450972460,
+  "lastUpdated": 1460024137,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1450972460,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1450972516,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/57/"
+    },
+    {
+      "timestamp": 1450972553,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/57/ : SUCCESS"
+    },
+    {
+      "timestamp": 1450972628,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Topic set to NAN"
+    },
+    {
+      "timestamp": 1451818161,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1451818228,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/65/"
+    },
+    {
+      "timestamp": 1451818248,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/65/ : SUCCESS"
+    },
+    {
+      "timestamp": 1457262579,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1457262649,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/93/"
+    },
+    {
+      "timestamp": 1457262677,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/93/ : SUCCESS"
+    },
+    {
+      "timestamp": 1457330892,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 3: Code-Review+1"
+    },
+    {
+      "timestamp": 1458201683,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1458208339,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1460024135,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3: Code-Review+2"
+    },
+    {
+      "timestamp": 1460024137,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 5db71847f5ffad474e8f6c958e6dececbeacb18c by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "507e3b84e836932eb0f643bf5b52a254cd8ad3ba",
+      "parents": [
+        "75ea3792debc90b70099c81fd40c9beb75be5dba"
+      ],
+      "ref": "refs/changes/18/14118/1",
+      "uploader": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "createdOn": 1450972460,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1450972553,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "interface.c",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 4,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 2,
+      "revision": "989a4b4b65ccf57a758dbfe41ea327d93b7a0948",
+      "parents": [
+        "c72989526d814f11fa54c30bff652cf36fd2bffb"
+      ],
+      "ref": "refs/changes/18/14118/2",
+      "uploader": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "createdOn": 1451818161,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1451818248,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "interface.c",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 4,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 3,
+      "revision": "96f46d7f8505bcc7f9302a90e6b042d50d3308f9",
+      "parents": [
+        "a040fbfe9602c68e1e7035070aaa3f53a9d30f82"
+      ],
+      "ref": "refs/changes/18/14118/3",
+      "uploader": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "createdOn": 1457262579,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1460024135,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1460024137,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1457330892,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1457262677,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "interface.c",
+          "line": 146,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "so .. you don't expect people to use it at all?"
+        },
+        {
+          "file": "interface.c",
+          "line": 146,
+          "reviewer": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          },
+          "message": "I add it for testing purposes only. Do you think we should change it?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "interface.c",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 4,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 4,
+      "revision": "5db71847f5ffad474e8f6c958e6dececbeacb18c",
+      "parents": [
+        "708f570a404b9c9c282b4284728570552ff50197"
+      ],
+      "ref": "refs/changes/18/14118/4",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1460024137,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1460024135,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1460024137,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1457330892,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1457262677,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "interface.c",
+          "type": "MODIFIED",
+          "insertions": 3,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 4,
+      "sizeDeletions": 0
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I42a54edf9b6ca37a66d841836119bab9b96302d6",
+      "number": 8032,
+      "revision": "708f570a404b9c9c282b4284728570552ff50197",
+      "ref": "refs/changes/32/8032/5",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

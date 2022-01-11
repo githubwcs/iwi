@@ -1,0 +1,640 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "topic": "11w",
+  "id": "Ia8af95edad3450caf6bb01f52ca64d66391b6cdb",
+  "number": 132123,
+  "subject": "iw: add support for mfp",
+  "owner": {
+    "name": "Grumbach, Emmanuel",
+    "email": "emmanuel.grumbach@intel.com",
+    "username": "egrumbac"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/132123",
+  "commitMessage": "iw: add support for mfp\n\nAllow to add a paramater to require MFP in the connect command.\n\nticket=jira:WLWG-3679\ntype=feature\n\nChange-Id: Ia8af95edad3450caf6bb01f52ca64d66391b6cdb\nSigned-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/132123\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Coelho, Luciano <luciano.coelho@intel.com>\n",
+  "createdOn": 1502352617,
+  "lastUpdated": 1502740484,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1502352617,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1502352628,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/93/"
+    },
+    {
+      "timestamp": 1502352666,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 2: Commit message was updated."
+    },
+    {
+      "timestamp": 1502352668,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified-1\n\nBuild Failed \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/93/ : ABORTED"
+    },
+    {
+      "timestamp": 1502352677,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/94/"
+    },
+    {
+      "timestamp": 1502352740,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/94/ : SUCCESS"
+    },
+    {
+      "timestamp": 1502355995,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 2: Code-Review-1\n\n(5 comments)"
+    },
+    {
+      "timestamp": 1502358789,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 2:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1502360955,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1502711088,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1502711099,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/95/"
+    },
+    {
+      "timestamp": 1502711155,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/95/ : SUCCESS"
+    },
+    {
+      "timestamp": 1502716595,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1502716605,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/97/"
+    },
+    {
+      "timestamp": 1502716676,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/97/ : SUCCESS"
+    },
+    {
+      "timestamp": 1502723088,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 4:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1502723322,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 4:\n\nBTW, apparently only Johannes, Assaf and Dor have the rights to merge here."
+    },
+    {
+      "timestamp": 1502740468,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 4: Code-Review+2"
+    },
+    {
+      "timestamp": 1502740484,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as ca3a09905f5db8e5b1bc3ab9136db7962e40f520 by Coelho, Luciano"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "59b3aaa18164cafbafdfe9913cb44ee8d43ec144",
+      "parents": [
+        "ac5764ea38a3ddb2f2b8bd187b4c3f56e8df8b55"
+      ],
+      "ref": "refs/changes/23/132123/1",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1502352617,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "-1",
+          "grantedOn": 1502352668,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 11,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 11,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 2,
+      "revision": "fd9a76ab56b34e8dce3d8a9d2bcbad3345f28b05",
+      "parents": [
+        "ac5764ea38a3ddb2f2b8bd187b4c3f56e8df8b55"
+      ],
+      "ref": "refs/changes/23/132123/2",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1502352666,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1502355995,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1502352740,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "/COMMIT_MSG",
+          "line": 9,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "in practice this would also add support for AP mode etc."
+        },
+        {
+          "file": "/COMMIT_MSG",
+          "line": 9,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "yeah, you're right."
+        },
+        {
+          "file": "util.c",
+          "line": 430,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "I think that we should not allow this for cases other the 'connect' as it is not really supported for AP etc."
+        },
+        {
+          "file": "util.c",
+          "line": 430,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "well... I think that support for 11w AP mode is planned"
+        },
+        {
+          "file": "util.c",
+          "line": 430,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "if so this need to first be supported in cfg80211 before this is added to iw"
+        },
+        {
+          "file": "util.c",
+          "line": 480,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "better not reference argv unless argc > 0"
+        },
+        {
+          "file": "util.c",
+          "line": 563,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "[<mfp>]"
+        },
+        {
+          "file": "util.c",
+          "line": 565,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "why not use 'mfp'?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 11,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 11,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 3,
+      "revision": "b3bf66591faf74818331dcb021b9341df769fba7",
+      "parents": [
+        "928ff2fdffcc39382a683ca10e9f2d1a023d28c1"
+      ],
+      "ref": "refs/changes/23/132123/3",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1502711088,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1502711155,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "connect.c",
+          "type": "MODIFIED",
+          "insertions": 19,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 19,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 4,
+      "revision": "223160cb641dd6c613fb2f4cd5990f116d101538",
+      "parents": [
+        "928ff2fdffcc39382a683ca10e9f2d1a023d28c1"
+      ],
+      "ref": "refs/changes/23/132123/4",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1502716595,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1502740468,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1502740484,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1502716676,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "connect.c",
+          "line": 71,
+          "reviewer": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          },
+          "message": "What is the difference between mfp:no and not passing any mfp value? Shouldn't no be the default if not specified?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "connect.c",
+          "type": "MODIFIED",
+          "insertions": 23,
+          "deletions": -2
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 24,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 5,
+      "revision": "ca3a09905f5db8e5b1bc3ab9136db7962e40f520",
+      "parents": [
+        "c88bcda1dc1e763fe48ec1fa4ec29acfe4d0beb8"
+      ],
+      "ref": "refs/changes/23/132123/5",
+      "uploader": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "createdOn": 1502740484,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1502740468,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1502740484,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1502716676,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "connect.c",
+          "type": "MODIFIED",
+          "insertions": 23,
+          "deletions": -2
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 24,
+      "sizeDeletions": -3
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I655fca3866650ef5e3f4c3f827c16da99be7b636",
+      "number": 132651,
+      "revision": "c88bcda1dc1e763fe48ec1fa4ec29acfe4d0beb8",
+      "ref": "refs/changes/51/132651/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

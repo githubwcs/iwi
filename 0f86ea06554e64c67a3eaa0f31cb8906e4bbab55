@@ -1,0 +1,332 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "Ie2cf63a3d86d6f5963c41aefbefec1a60bfa5404",
+  "number": 87868,
+  "subject": "iw: ap: add support for passing a proper chandef",
+  "owner": {
+    "name": "Triebitz, Shaul",
+    "email": "shaul.triebitz@intel.com",
+    "username": "striebit"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/87868",
+  "commitMessage": "iw: ap: add support for passing a proper chandef\n\nWhile at it, also fix some minor things in the help.\n\ntype=feature\n\nChange-Id: Ie2cf63a3d86d6f5963c41aefbefec1a60bfa5404\nSigned-off-by: Shaul Triebitz <shaul.triebitz@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/87868\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1484819751,
+  "lastUpdated": 1485422528,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1484819751,
+      "reviewer": {
+        "name": "Triebitz, Shaul",
+        "email": "shaul.triebitz@intel.com",
+        "username": "striebit"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1484819763,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/35/"
+    },
+    {
+      "timestamp": 1484819795,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/35/ : SUCCESS"
+    },
+    {
+      "timestamp": 1484836316,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\nnote to self: also add hidden SSID type"
+    },
+    {
+      "timestamp": 1485360978,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1485360988,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/37/"
+    },
+    {
+      "timestamp": 1485361011,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2:\n\nturns out I had the chandef parsing stuff from my brother upstream, but not merged yet, so you couldn't have seen it :)"
+    },
+    {
+      "timestamp": 1485361031,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/37/ : SUCCESS"
+    },
+    {
+      "timestamp": 1485422525,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2: Code-Review+2"
+    },
+    {
+      "timestamp": 1485422528,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 0f86ea06554e64c67a3eaa0f31cb8906e4bbab55 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "c2881d4605abfd74a686848d1879e1bd34004193",
+      "parents": [
+        "dc311faf7a615f02141fab795613f0e3c74aac1b"
+      ],
+      "ref": "refs/changes/68/87868/1",
+      "uploader": {
+        "name": "Triebitz, Shaul",
+        "email": "shaul.triebitz@intel.com",
+        "username": "striebit"
+      },
+      "createdOn": 1484819751,
+      "author": {
+        "name": "Triebitz, Shaul",
+        "email": "shaul.triebitz@intel.com",
+        "username": "striebit"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1484819795,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 11,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 11,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "e60e082c95565cbe29c526ce596986808a31c773",
+      "parents": [
+        "ed4e330a93320053bc56c304d69cf3d4a3350b97"
+      ],
+      "ref": "refs/changes/68/87868/2",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1485360978,
+      "author": {
+        "name": "Triebitz, Shaul",
+        "email": "shaul.triebitz@intel.com",
+        "username": "striebit"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1485422525,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1485422528,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1485361031,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 14,
+          "deletions": -10
+        }
+      ],
+      "sizeInsertions": 14,
+      "sizeDeletions": -10
+    },
+    {
+      "number": 3,
+      "revision": "0f86ea06554e64c67a3eaa0f31cb8906e4bbab55",
+      "parents": [
+        "ed4e330a93320053bc56c304d69cf3d4a3350b97"
+      ],
+      "ref": "refs/changes/68/87868/3",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1485422528,
+      "author": {
+        "name": "Triebitz, Shaul",
+        "email": "shaul.triebitz@intel.com",
+        "username": "striebit"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1485422525,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1485422528,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1485361031,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 14,
+          "deletions": -10
+        }
+      ],
+      "sizeInsertions": 14,
+      "sizeDeletions": -10
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

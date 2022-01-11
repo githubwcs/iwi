@@ -1,0 +1,306 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I87694c30b25dcacb170262cd23bef366dc449a2b",
+  "number": 192824,
+  "subject": "[BUGFIX] iw: fix the beacon average signal parsing",
+  "owner": {
+    "name": "Grumbach, Emmanuel",
+    "email": "emmanuel.grumbach@intel.com",
+    "username": "egrumbac"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/192824",
+  "commitMessage": "[BUGFIX] iw: fix the beacon average signal parsing\n\nNL80211_STA_INFO_BEACON_SIGNAL_AVG is parsed as a u8, but\nit should be cast to a int8_t before being printed.\n\ntype=bugfix\nfixes=I530f312bb6ed3c82b3346e6050302186a21a5edc\nticket=chrome-os-partner:117182901\n\nChange-Id: I87694c30b25dcacb170262cd23bef366dc449a2b\nSigned-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/192824\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1538645557,
+  "lastUpdated": 1538984250,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1538645557,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1538983628,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 1: Verified+1"
+    },
+    {
+      "timestamp": 1538983656,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 2: Commit message was updated."
+    },
+    {
+      "timestamp": 1538983661,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 2: Verified+1"
+    },
+    {
+      "timestamp": 1538984246,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2: Code-Review+2"
+    },
+    {
+      "timestamp": 1538984250,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as 188c70f94f69fb982166a51e893a65a5c5a4f4a8 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "4d1e4ad961d1ab1508a519e3e41b335378bb5a96",
+      "parents": [
+        "9c7f4bb52d5fe96554d63805864e654c8dc846e5"
+      ],
+      "ref": "refs/changes/24/192824/1",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1538645557,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1538983628,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "station.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 1,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "e0958869f01736823d233f55c1ed7234a09f0455",
+      "parents": [
+        "9c7f4bb52d5fe96554d63805864e654c8dc846e5"
+      ],
+      "ref": "refs/changes/24/192824/2",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1538983656,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1538984246,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1538984250,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1538983661,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "station.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 1,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 3,
+      "revision": "188c70f94f69fb982166a51e893a65a5c5a4f4a8",
+      "parents": [
+        "9c7f4bb52d5fe96554d63805864e654c8dc846e5"
+      ],
+      "ref": "refs/changes/24/192824/3",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1538984250,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1538984246,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1538984250,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1538983661,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 19,
+          "deletions": 0
+        },
+        {
+          "file": "station.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 1,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I39602bd74a44f1512c8620f6d7b299f4ca8c62e7",
+      "number": 183401,
+      "revision": "9c7f4bb52d5fe96554d63805864e654c8dc846e5",
+      "ref": "refs/changes/01/183401/4",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

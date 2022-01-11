@@ -1,0 +1,327 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I9b2e5e972ac4ef8b95379c66db66aac175b65c45",
+  "number": 184794,
+  "subject": "iw: fix vendor commands enumerations",
+  "owner": {
+    "name": "Chen, Matt",
+    "email": "matt.chen@intel.com",
+    "username": "chenmatt"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/184794",
+  "commitMessage": "iw: fix vendor commands enumerations\n\nFollow by:\nAuthor: Luca Coelho <luciano.coelho@intel.com>\nDate:   Thu Jun 21 12:47:57 2018 +0300\n\n    [BUGFIX][NOUPSTREAM] iwlwifi: fix vendor commands enumerations\n\n    I accidentally removed values from the iwl_mvm_vendor_cmd and\n    iwl_mvm_vendor_attr enumerations and this broke the UAPI.\n\n    Fix that by jumping the deprecated values instead of removing them\n    and, while at it, assign values to each of the symbols manually so the\n    issue will be less likely to occur in the future.\n\nSo fix it accordingly to comply with the change.\n\ntype=bugfix\nfixes=Icf501aab01f223bea57192c7b84d111f6ae4a66f\nticket=chrome-os-partner:110236767\n\nChange-Id: I9b2e5e972ac4ef8b95379c66db66aac175b65c45\nSigned-off-by: Matt Chen <matt.chen@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/184794\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Coelho, Luciano <luciano.coelho@intel.com>\n",
+  "createdOn": 1533719564,
+  "lastUpdated": 1534238879,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1533719564,
+      "reviewer": {
+        "name": "Chen, Matt",
+        "email": "matt.chen@intel.com",
+        "username": "chenmatt"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1533719572,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/169/"
+    },
+    {
+      "timestamp": 1533719593,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/169/ : SUCCESS"
+    },
+    {
+      "timestamp": 1533722051,
+      "reviewer": {
+        "name": "Chen, Matt",
+        "email": "matt.chen@intel.com",
+        "username": "chenmatt"
+      },
+      "message": "Patch Set 1: Verified+1 Code-Review+1"
+    },
+    {
+      "timestamp": 1534227698,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 1: Code-Review+1\n\nLooks good.  Did you sync the entire iwl_vendor_cmd.h file from the driver or did you just add my changes?"
+    },
+    {
+      "timestamp": 1534227958,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 1: Code-Review+2\n\nI just checked and there is a new FMAC command that was not included in this, but it's backwards compatible, so it's not a problem."
+    },
+    {
+      "timestamp": 1534234231,
+      "reviewer": {
+        "name": "Chen, Matt",
+        "email": "matt.chen@intel.com",
+        "username": "chenmatt"
+      },
+      "message": "Patch Set 1:\n\n> Looks good.  Did you sync the entire iwl_vendor_cmd.h file from the\n > driver or did you just add my changes?\n\nI sync the entire iwl_vendor_cmd.h. :)"
+    },
+    {
+      "timestamp": 1534238874,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 1:\n\n> > Looks good.  Did you sync the entire iwl_vendor_cmd.h file from\n > the\n > > driver or did you just add my changes?\n > \n > I sync the entire iwl_vendor_cmd.h. :)\n\nOkay, it's not the latest version, but that's fine. :)"
+    },
+    {
+      "timestamp": 1534238879,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Change has been successfully rebased and submitted as 1164f76ef7e468caa16a4abc941b740ee89dc70e by Coelho, Luciano"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "8a7dc031b929c3a796ec8d3e5c447ce18fc73ab5",
+      "parents": [
+        "06716994fc1a7b8a1093d7c2e996dd74f5c8a7fd"
+      ],
+      "ref": "refs/changes/94/184794/1",
+      "uploader": {
+        "name": "Chen, Matt",
+        "email": "matt.chen@intel.com",
+        "username": "chenmatt"
+      },
+      "createdOn": 1533719564,
+      "author": {
+        "name": "Chen, Matt",
+        "email": "matt.chen@intel.com",
+        "username": "chenmatt"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1534227958,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1534238879,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1533719593,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1533722051,
+          "by": {
+            "name": "Chen, Matt",
+            "email": "matt.chen@intel.com",
+            "username": "chenmatt"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1533722051,
+          "by": {
+            "name": "Chen, Matt",
+            "email": "matt.chen@intel.com",
+            "username": "chenmatt"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 29,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "type": "MODIFIED",
+          "insertions": 111,
+          "deletions": -107
+        }
+      ],
+      "sizeInsertions": 111,
+      "sizeDeletions": -107
+    },
+    {
+      "number": 2,
+      "revision": "1164f76ef7e468caa16a4abc941b740ee89dc70e",
+      "parents": [
+        "06716994fc1a7b8a1093d7c2e996dd74f5c8a7fd"
+      ],
+      "ref": "refs/changes/94/184794/2",
+      "uploader": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "createdOn": 1534238879,
+      "author": {
+        "name": "Chen, Matt",
+        "email": "matt.chen@intel.com",
+        "username": "chenmatt"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1534227958,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1534238879,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1533719593,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1533722051,
+          "by": {
+            "name": "Chen, Matt",
+            "email": "matt.chen@intel.com",
+            "username": "chenmatt"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1533722051,
+          "by": {
+            "name": "Chen, Matt",
+            "email": "matt.chen@intel.com",
+            "username": "chenmatt"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 32,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.h",
+          "type": "MODIFIED",
+          "insertions": 111,
+          "deletions": -107
+        }
+      ],
+      "sizeInsertions": 111,
+      "sizeDeletions": -107
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I0274f251d61e888e2ed7df225c51a0e3f5550216",
+      "number": 179516,
+      "revision": "06716994fc1a7b8a1093d7c2e996dd74f5c8a7fd",
+      "ref": "refs/changes/16/179516/4",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

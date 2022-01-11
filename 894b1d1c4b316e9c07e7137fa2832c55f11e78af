@@ -1,0 +1,706 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I4f32d0e36b9043afd51abd0755b233352cbc2a66",
+  "number": 126242,
+  "subject": "iw: add FTM start responder command",
+  "owner": {
+    "name": "Lev, Beni",
+    "email": "beni.lev@intel.com",
+    "username": "benilev"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/126242",
+  "commitMessage": "iw: add FTM start responder command\n\nAdd support to start an FTM responder on a running soft AP.\nSupport passing LCI and CIVIC buffers.\n\ntype=feature\n\nChange-Id: I4f32d0e36b9043afd51abd0755b233352cbc2a66\nSigned-off-by: Beni Lev <beni.lev@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/126242\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1499612110,
+  "lastUpdated": 1505386474,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1499612110,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1499612121,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/89/"
+    },
+    {
+      "timestamp": 1499612188,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/89/ : SUCCESS"
+    },
+    {
+      "timestamp": 1499668047,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Patch Set 1:\n\n(4 comments)"
+    },
+    {
+      "timestamp": 1499672631,
+      "reviewer": {
+        "name": "Stern, Avraham",
+        "email": "avraham.stern@intel.com",
+        "username": "avrahams"
+      },
+      "message": "Patch Set 1: Code-Review-1"
+    },
+    {
+      "timestamp": 1499676217,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 1:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1499676512,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1499676517,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1499676520,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/90/"
+    },
+    {
+      "timestamp": 1499676591,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/90/ : SUCCESS"
+    },
+    {
+      "timestamp": 1499694051,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 2: Verified+1"
+    },
+    {
+      "timestamp": 1504517169,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1504601672,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1504601683,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/105/"
+    },
+    {
+      "timestamp": 1504601748,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/105/ : SUCCESS"
+    },
+    {
+      "timestamp": 1504709048,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1504718431,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1505219159,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Patch Set 3:\n\nso to put the handler?\nwe need this patch for pytm tests :)"
+    },
+    {
+      "timestamp": 1505383459,
+      "reviewer": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1505383468,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/118/"
+    },
+    {
+      "timestamp": 1505383569,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/118/ : SUCCESS"
+    },
+    {
+      "timestamp": 1505386472,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4: Code-Review+2"
+    },
+    {
+      "timestamp": 1505386474,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 894b1d1c4b316e9c07e7137fa2832c55f11e78af by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "7a73dc7c56a17728f28b0cf9afe64dd813919f3c",
+      "parents": [
+        "ac5764ea38a3ddb2f2b8bd187b4c3f56e8df8b55"
+      ],
+      "ref": "refs/changes/42/126242/1",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1499612110,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1499612188,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1499672631,
+          "by": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "/COMMIT_MSG",
+          "line": 10,
+          "reviewer": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          },
+          "message": "."
+        },
+        {
+          "file": "/COMMIT_MSG",
+          "line": 10,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        },
+        {
+          "file": "ftm.c",
+          "line": 107,
+          "reviewer": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          },
+          "message": "setting lci or civic twice is ok?"
+        },
+        {
+          "file": "ftm.c",
+          "line": 107,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Had this question in mind, but since this is iw, i relaxed the checks"
+        },
+        {
+          "file": "ftm.c",
+          "line": 117,
+          "reviewer": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          },
+          "message": "redundant &"
+        },
+        {
+          "file": "ftm.c",
+          "line": 117,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        },
+        {
+          "file": "ftm.c",
+          "line": 127,
+          "reviewer": {
+            "name": "Stern, Avraham",
+            "email": "avraham.stern@intel.com",
+            "username": "avrahams"
+          },
+          "message": "same"
+        },
+        {
+          "file": "ftm.c",
+          "line": 127,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "ftm.c",
+          "type": "MODIFIED",
+          "insertions": 46,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 46,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 2,
+      "revision": "87b9c3507d9c4d2ab05602b2ccd73aff9258afbe",
+      "parents": [
+        "ac5764ea38a3ddb2f2b8bd187b4c3f56e8df8b55"
+      ],
+      "ref": "refs/changes/42/126242/2",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1499676512,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1499676591,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1499694051,
+          "by": {
+            "name": "Zamir, Roee(deleted)",
+            "email": "roee.zamir@intel.com",
+            "username": "rzamir"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "ftm.c",
+          "line": 133,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "shouldn't that \"return 1\" (or is it 2?) to print the help?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "ftm.c",
+          "type": "MODIFIED",
+          "insertions": 49,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 49,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 3,
+      "revision": "798f958004d90d90a498002f324689b09496b30d",
+      "parents": [
+        "38a664504c093b2555e1cc895c172c425b7df1ac"
+      ],
+      "ref": "refs/changes/42/126242/3",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1504601672,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1504601748,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "ftm.c",
+          "line": 115,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "maybe the same (HANDLER_RET_USAGE) applies here too?"
+        },
+        {
+          "file": "ftm.c",
+          "line": 115,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Well, i thought about it, but i think that here the value is illegal, not the syntax, so the usage message isnt needed. Telling the user that the lci buffer is illegal is sufficient IMO. But if you want ill put the handler. Let me know"
+        },
+        {
+          "file": "ftm.c",
+          "line": 126,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "and here"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "ftm.c",
+          "type": "MODIFIED",
+          "insertions": 49,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 49,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 4,
+      "revision": "9c1518157d3cfd99fa1d6f9e85e08298814ec59a",
+      "parents": [
+        "38a664504c093b2555e1cc895c172c425b7df1ac"
+      ],
+      "ref": "refs/changes/42/126242/4",
+      "uploader": {
+        "name": "Zamir, Roee(deleted)",
+        "email": "roee.zamir@intel.com",
+        "username": "rzamir"
+      },
+      "createdOn": 1505383459,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1505386472,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1505386474,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1505383569,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "ftm.c",
+          "type": "MODIFIED",
+          "insertions": 49,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 49,
+      "sizeDeletions": 0
+    },
+    {
+      "number": 5,
+      "revision": "894b1d1c4b316e9c07e7137fa2832c55f11e78af",
+      "parents": [
+        "a1caedf9deded57e4dc7471f2b1fcb7a187ac04f"
+      ],
+      "ref": "refs/changes/42/126242/5",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1505386474,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1505386472,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1505386474,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1505383569,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "ftm.c",
+          "type": "MODIFIED",
+          "insertions": 49,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 49,
+      "sizeDeletions": 0
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ia28e8fbba2e2aad5a09f557f3d0fce6524729d46",
+      "number": 136954,
+      "revision": "a1caedf9deded57e4dc7471f2b1fcb7a187ac04f",
+      "ref": "refs/changes/54/136954/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

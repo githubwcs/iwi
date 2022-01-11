@@ -1,0 +1,255 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "If51dac5e5243a4b62c96f9d608b9e5eeb3ab59a2",
+  "number": 187167,
+  "subject": "[NOUPSTREAM] iw: sync nl80211.h with the latest from stack-dev",
+  "owner": {
+    "name": "Luciano Coelho",
+    "email": "luciano.coelho@intel.com",
+    "username": "lcoelho"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/187167",
+  "commitMessage": "[NOUPSTREAM] iw: sync nl80211.h with the latest from stack-dev\n\nI have merged back from upstream, so we have a new nl80211.h file in\nstack-dev.  Update it here to keep things working.\n\ntype=maint\nticket=jira:WLWG-6296\n\nChange-Id: If51dac5e5243a4b62c96f9d608b9e5eeb3ab59a2\nSigned-off-by: Luca Coelho <luciano.coelho@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/187167\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n",
+  "createdOn": 1535440241,
+  "lastUpdated": 1535440301,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1535440241,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1535440251,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/172/"
+    },
+    {
+      "timestamp": 1535440272,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/172/ : SUCCESS"
+    },
+    {
+      "timestamp": 1535440299,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1535440301,
+      "reviewer": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "message": "Change has been successfully rebased and submitted as d9765de18a6f6f99dcca7dde8812ac26f63ab0fe by Coelho, Luciano"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "72d0147513972a912212aa3df2993dde071ef482",
+      "parents": [
+        "1164f76ef7e468caa16a4abc941b740ee89dc70e"
+      ],
+      "ref": "refs/changes/67/187167/1",
+      "uploader": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "createdOn": 1535440241,
+      "author": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1535440299,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1535440301,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1535440272,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 255,
+          "deletions": -39
+        }
+      ],
+      "sizeInsertions": 255,
+      "sizeDeletions": -39
+    },
+    {
+      "number": 2,
+      "revision": "d9765de18a6f6f99dcca7dde8812ac26f63ab0fe",
+      "parents": [
+        "1164f76ef7e468caa16a4abc941b740ee89dc70e"
+      ],
+      "ref": "refs/changes/67/187167/2",
+      "uploader": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "createdOn": 1535440301,
+      "author": {
+        "name": "Luciano Coelho",
+        "email": "luciano.coelho@intel.com",
+        "username": "lcoelho"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1535440299,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1535440301,
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1535440272,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 255,
+          "deletions": -39
+        }
+      ],
+      "sizeInsertions": 255,
+      "sizeDeletions": -39
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I9b2e5e972ac4ef8b95379c66db66aac175b65c45",
+      "number": 184794,
+      "revision": "1164f76ef7e468caa16a4abc941b740ee89dc70e",
+      "ref": "refs/changes/94/184794/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "neededBy": [
+    {
+      "id": "I5fcd62caa2427b2674ef71cd45b621ad3e3d359e",
+      "number": 187009,
+      "revision": "fdc3fa8c7144e07a8e27bbfa7e4ec6f1042dafb0",
+      "ref": "refs/changes/09/187009/2"
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Luciano Coelho",
+            "email": "luciano.coelho@intel.com",
+            "username": "lcoelho"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

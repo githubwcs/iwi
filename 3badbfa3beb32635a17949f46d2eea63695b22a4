@@ -1,0 +1,247 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "release/core66",
+  "id": "Ic324d62866c981f6cc4899df62f10a59edfb8380",
+  "number": 330308,
+  "subject": "[BUGFIX] Fix sgom_get_table command",
+  "owner": {
+    "name": "Ben Ami, Golan",
+    "email": "golan.ben.ami@intel.com",
+    "username": "gbenami"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/330308",
+  "commitMessage": "[BUGFIX] Fix sgom_get_table command\n\nAccording to DCR-1128 each byte in the sgom table contains 2 values\nfor 2 letters such that the 4 MSB are for the odd indices,\nand the 4 LSB are for the even indices.\nWe're printing the values in the opposite way. Fix it.\n\ntype=bugfix\nticket=none\nfixes=I8a90e8832b75ca62e1057b847f499c449d86b6fd\n\nChange-Id: Ic324d62866c981f6cc4899df62f10a59edfb8380\nSigned-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/330260\nReviewed-by: Johannes Berg <johannes.berg@intel.com>\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n(cherry picked from commit 1bfbfee85efcbf630678fe32fb039e06c440ced4)\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/330308\nReviewed-by: Ben Ami, Golan <golan.ben.ami@intel.com>\nTested-by: Ben Ami, Golan <golan.ben.ami@intel.com>\n",
+  "createdOn": 1633623823,
+  "lastUpdated": 1633627196,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1633623823,
+      "reviewer": {
+        "name": "Ben Ami, Golan",
+        "email": "golan.ben.ami@intel.com",
+        "username": "gbenami"
+      },
+      "message": "Patch Set 1: Cherry Picked from branch master."
+    },
+    {
+      "timestamp": 1633623989,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started https://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/277030/"
+    },
+    {
+      "timestamp": 1633623991,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Successful \n\nhttps://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/277030/ : SUCCESS"
+    },
+    {
+      "timestamp": 1633627192,
+      "reviewer": {
+        "name": "Ben Ami, Golan",
+        "email": "golan.ben.ami@intel.com",
+        "username": "gbenami"
+      },
+      "message": "Patch Set 1: Verified+1 Code-Review+2"
+    },
+    {
+      "timestamp": 1633627196,
+      "reviewer": {
+        "name": "Ben Ami, Golan",
+        "email": "golan.ben.ami@intel.com",
+        "username": "gbenami"
+      },
+      "message": "Change has been successfully rebased and submitted as 3badbfa3beb32635a17949f46d2eea63695b22a4 by Ben Ami, Golan"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "3d28c6a9c4773cda68ac1866d6bed7c686efb165",
+      "parents": [
+        "40d5021a72c70d5fc71edb68b81b73d659ce4751"
+      ],
+      "ref": "refs/changes/08/330308/1",
+      "uploader": {
+        "name": "Ben Ami, Golan",
+        "email": "golan.ben.ami@intel.com",
+        "username": "gbenami"
+      },
+      "createdOn": 1633623823,
+      "author": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1633627192,
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1633627196,
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1633627192,
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 23,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 1,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "3badbfa3beb32635a17949f46d2eea63695b22a4",
+      "parents": [
+        "40d5021a72c70d5fc71edb68b81b73d659ce4751"
+      ],
+      "ref": "refs/changes/08/330308/2",
+      "uploader": {
+        "name": "Ben Ami, Golan",
+        "email": "golan.ben.ami@intel.com",
+        "username": "gbenami"
+      },
+      "createdOn": 1633627196,
+      "author": {
+        "name": "Miri Korenblit",
+        "email": "miriam.rachel.korenblit@intel.com",
+        "username": "mkorenbl"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1633627192,
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1633627196,
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1633627192,
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 26,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 1,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I0e3488346e327c1da4e06d648c88b2e43d1a7693",
+      "number": 328186,
+      "revision": "40d5021a72c70d5fc71edb68b81b73d659ce4751",
+      "ref": "refs/changes/86/328186/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Ben Ami, Golan",
+            "email": "golan.ben.ami@intel.com",
+            "username": "gbenami"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,482 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I4444b776bf0a79e57306984ac097eb91b8279cd1",
+  "number": 180119,
+  "subject": "wowlan: Use MAX_NL80211_ATTR instead of NUM in nla_parse",
+  "owner": {
+    "name": "Spinadel, David",
+    "email": "david.spinadel@intel.com",
+    "username": "dspinade"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/180119",
+  "commitMessage": "wowlan: Use MAX_NL80211_ATTR instead of NUM in nla_parse\n\nnla_parse expects max type and not the num of the attributes.\nThe previous code could cause stack smashing.\n\nWhile at that use nla_parse_nested instead of nla_parse.\n\ntype=bugfix\nticket=jira:WIFI-9494\nfixes=unknown\n\nChange-Id: I4444b776bf0a79e57306984ac097eb91b8279cd1\nSigned-off-by: David Spinadel <david.spinadel@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/180119\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Otcheretianski, Andrei <andrei.otcheretianski@intel.com>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1530545427,
+  "lastUpdated": 1530693641,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1530545427,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1530545439,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/163/"
+    },
+    {
+      "timestamp": 1530545463,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/163/ : SUCCESS"
+    },
+    {
+      "timestamp": 1530545580,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1530547324,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1530547334,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/164/"
+    },
+    {
+      "timestamp": 1530547358,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/164/ : SUCCESS"
+    },
+    {
+      "timestamp": 1530601849,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Patch Set 2:\n\nthere is another one in parse_wowlan_wake_event() in event.c"
+    },
+    {
+      "timestamp": 1530602563,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1530602572,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/166/"
+    },
+    {
+      "timestamp": 1530602598,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/166/ : SUCCESS"
+    },
+    {
+      "timestamp": 1530602636,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Patch Set 3: Code-Review+1"
+    },
+    {
+      "timestamp": 1530693637,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3: Code-Review+2"
+    },
+    {
+      "timestamp": 1530693641,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as bea7306ae4ebf4a7fa5a29a1fdaa119b1eef9ccb by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "0ae1a9e5e08e8307a94afe3c8d866735a00b7bdc",
+      "parents": [
+        "c343e930dc9d2116d16e9535e7ce2354dbbd30e8"
+      ],
+      "ref": "refs/changes/19/180119/1",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1530545427,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1530545463,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "wowlan.c",
+          "line": 398,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "let's change them to nla_parse_nested() while at it?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "wowlan.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 2,
+      "revision": "a3bbea51769499b1b42ec798f75d480ba2557bb0",
+      "parents": [
+        "c343e930dc9d2116d16e9535e7ce2354dbbd30e8"
+      ],
+      "ref": "refs/changes/19/180119/2",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1530547324,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1530547358,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 18,
+          "deletions": 0
+        },
+        {
+          "file": "wowlan.c",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": -6
+        }
+      ],
+      "sizeInsertions": 4,
+      "sizeDeletions": -6
+    },
+    {
+      "number": 3,
+      "revision": "0b5469dbf12a3e61c43bc841e6212ad60d458684",
+      "parents": [
+        "c343e930dc9d2116d16e9535e7ce2354dbbd30e8"
+      ],
+      "ref": "refs/changes/19/180119/3",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1530602563,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1530693637,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1530693641,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1530602598,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1530602636,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 19,
+          "deletions": 0
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -3
+        },
+        {
+          "file": "wowlan.c",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": -6
+        }
+      ],
+      "sizeInsertions": 6,
+      "sizeDeletions": -9
+    },
+    {
+      "number": 4,
+      "revision": "bea7306ae4ebf4a7fa5a29a1fdaa119b1eef9ccb",
+      "parents": [
+        "bd98ccb62a05bc97852e7d5fad001e5448dee8b9"
+      ],
+      "ref": "refs/changes/19/180119/4",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1530693641,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1530693637,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1530693641,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1530602598,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1530602636,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 23,
+          "deletions": 0
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -3
+        },
+        {
+          "file": "wowlan.c",
+          "type": "MODIFIED",
+          "insertions": 4,
+          "deletions": -6
+        }
+      ],
+      "sizeInsertions": 6,
+      "sizeDeletions": -9
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I7a162acbac113f58e29bee18315606f1f975f74b",
+      "number": 179515,
+      "revision": "bd98ccb62a05bc97852e7d5fad001e5448dee8b9",
+      "ref": "refs/changes/15/179515/3",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "neededBy": [
+    {
+      "id": "I0274f251d61e888e2ed7df225c51a0e3f5550216",
+      "number": 179516,
+      "revision": "06716994fc1a7b8a1093d7c2e996dd74f5c8a7fd",
+      "ref": "refs/changes/16/179516/4"
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

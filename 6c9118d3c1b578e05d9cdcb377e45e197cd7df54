@@ -1,0 +1,237 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "common/nan2_pf4",
+  "id": "Ic652a818ac70cf2c2723e64b67c6373d71b8e3b6",
+  "number": 90294,
+  "subject": "iw: nan2: print data indication status",
+  "owner": {
+    "name": "Otcheretianski, Andrei",
+    "email": "andrei.otcheretianski@intel.com",
+    "username": "aotchere"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/90294",
+  "commitMessage": "iw: nan2: print data indication status\n\nChange-Id: Ic652a818ac70cf2c2723e64b67c6373d71b8e3b6\nSigned-off-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/90294\n",
+  "createdOn": 1485696211,
+  "lastUpdated": 1486464356,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1485696211,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1486464339,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1486464350,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Patch Set 1: Verified+1"
+    },
+    {
+      "timestamp": 1486464356,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 6c9118d3c1b578e05d9cdcb377e45e197cd7df54 by Otcheretianski, Andrei"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "1969d634d1c63c2dcb2d165f543cff18f401ed75",
+      "parents": [
+        "f69199ea20c7ad0b728d96c6df27890982da7fe2"
+      ],
+      "ref": "refs/changes/94/90294/1",
+      "uploader": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "createdOn": 1485696211,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1486464339,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1486464355,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1486464350,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "6c9118d3c1b578e05d9cdcb377e45e197cd7df54",
+      "parents": [
+        "76ff980ce49c91af6cc94e43646856de25978693"
+      ],
+      "ref": "refs/changes/94/90294/2",
+      "uploader": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "createdOn": 1486464356,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1486464339,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1486464355,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1486464350,
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 11,
+          "deletions": 0
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I7cec9f8c1651da0c35cd9a43be08dc7153de3693",
+      "number": 92271,
+      "revision": "76ff980ce49c91af6cc94e43646856de25978693",
+      "ref": "refs/changes/71/92271/3",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Otcheretianski, Andrei",
+            "email": "andrei.otcheretianski@intel.com",
+            "username": "aotchere"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

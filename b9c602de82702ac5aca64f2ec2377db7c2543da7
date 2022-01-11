@@ -1,0 +1,299 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I644e72b26f83fbd953f33b44df889ce2f573ac79",
+  "number": 157056,
+  "subject": "iw: Add inactivity timeout configuration support",
+  "owner": {
+    "name": "Bachner, Netanel",
+    "email": "netanel.bachner@intel.com",
+    "username": "nbachner"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/157056",
+  "commitMessage": "iw: Add inactivity timeout configuration support\n\nAdd inactivity time as an optional parameter, so that the time it takes\nfor the AP to free up a connected inactive station could be configured.\n\ntype=feature\nticket=none\n\nChange-Id: I644e72b26f83fbd953f33b44df889ce2f573ac79\nSigned-off-by: Netanel Bachner <netanel.bachner@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/157056\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Triebitz, Shaul <shaul.triebitz@intel.com>\nReviewed-by: Grumbach, Emmanuel <emmanuel.grumbach@intel.com>\n",
+  "createdOn": 1516303203,
+  "lastUpdated": 1517912975,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1516303203,
+      "reviewer": {
+        "name": "Bachner, Netanel",
+        "email": "netanel.bachner@intel.com",
+        "username": "nbachner"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1516303265,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/141/ : SUCCESS"
+    },
+    {
+      "timestamp": 1517314240,
+      "reviewer": {
+        "name": "Bachner, Netanel",
+        "email": "netanel.bachner@intel.com",
+        "username": "nbachner"
+      },
+      "message": "Patch Set 1: Verified+1"
+    },
+    {
+      "timestamp": 1517314892,
+      "reviewer": {
+        "name": "Triebitz, Shaul",
+        "email": "shaul.triebitz@intel.com",
+        "username": "striebit"
+      },
+      "message": "Patch Set 1: Code-Review+1"
+    },
+    {
+      "timestamp": 1517853615,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1517912975,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as b9c602de82702ac5aca64f2ec2377db7c2543da7 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "1efe9a3f2034de16db156c78a0104ede1b2e4526",
+      "parents": [
+        "b23c0f81d5bb0280976d06353db1a9096b875439"
+      ],
+      "ref": "refs/changes/56/157056/1",
+      "uploader": {
+        "name": "Bachner, Netanel",
+        "email": "netanel.bachner@intel.com",
+        "username": "nbachner"
+      },
+      "createdOn": 1516303203,
+      "author": {
+        "name": "Bachner, Netanel",
+        "email": "netanel.bachner@intel.com",
+        "username": "nbachner"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1517912975,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1517853615,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1516303265,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1517314892,
+          "by": {
+            "name": "Triebitz, Shaul",
+            "email": "shaul.triebitz@intel.com",
+            "username": "striebit"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1517314240,
+          "by": {
+            "name": "Bachner, Netanel",
+            "email": "netanel.bachner@intel.com",
+            "username": "nbachner"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 25,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 25,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "b9c602de82702ac5aca64f2ec2377db7c2543da7",
+      "parents": [
+        "b23c0f81d5bb0280976d06353db1a9096b875439"
+      ],
+      "ref": "refs/changes/56/157056/2",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1517912975,
+      "author": {
+        "name": "Bachner, Netanel",
+        "email": "netanel.bachner@intel.com",
+        "username": "nbachner"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1517912975,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1517853615,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1516303265,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1517314892,
+          "by": {
+            "name": "Triebitz, Shaul",
+            "email": "shaul.triebitz@intel.com",
+            "username": "striebit"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1517314240,
+          "by": {
+            "name": "Bachner, Netanel",
+            "email": "netanel.bachner@intel.com",
+            "username": "nbachner"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 20,
+          "deletions": 0
+        },
+        {
+          "file": "ap.c",
+          "type": "MODIFIED",
+          "insertions": 25,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 25,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I48edb7f5ae7a65c123073fe756a994a039a3aa16",
+      "number": 145195,
+      "revision": "b23c0f81d5bb0280976d06353db1a9096b875439",
+      "ref": "refs/changes/95/145195/4",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

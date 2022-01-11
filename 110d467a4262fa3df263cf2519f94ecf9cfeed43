@@ -1,0 +1,963 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I7e656fbf37dceaea2acbbff889ef5273808071a2",
+  "number": 47858,
+  "subject": "iw: add support for WPA2 PSK CCMP / GCMP association",
+  "owner": {
+    "name": "Grumbach, Emmanuel",
+    "email": "emmanuel.grumbach@intel.com",
+    "username": "egrumbac"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/47858",
+  "commitMessage": "iw: add support for WPA2 PSK CCMP / GCMP association\n\nIf the driver advertises\nNL80211_EXT_FEATURE_4WAY_HANDSHAKE_OFFLOAD_STA, we can\npass the PMK and let it do the 4way.\n\nChange-Id: I7e656fbf37dceaea2acbbff889ef5273808071a2\nSigned-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/47858\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1469644440,
+  "lastUpdated": 1471422381,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1469644440,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1469644544,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/128/"
+    },
+    {
+      "timestamp": 1469644567,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/128/ : SUCCESS"
+    },
+    {
+      "timestamp": 1469686659,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1469686679,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/130/"
+    },
+    {
+      "timestamp": 1469686705,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/130/ : SUCCESS"
+    },
+    {
+      "timestamp": 1469693651,
+      "reviewer": {
+        "name": "Peller, EliadX",
+        "email": "eliadx.peller@intel.com",
+        "username": "epellerx"
+      },
+      "message": "Patch Set 2:\n\n(4 comments)"
+    },
+    {
+      "timestamp": 1469700161,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)\n\nFWIW, you can just pass the PSK in the command line, and have all the supported AKM suites and cipher suites passed to the kernel (and let the driver/fw handle the match logic)"
+    },
+    {
+      "timestamp": 1469700594,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1469700609,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1469700630,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/131/"
+    },
+    {
+      "timestamp": 1469700653,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/131/ : SUCCESS"
+    },
+    {
+      "timestamp": 1469701457,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 3:\n\nwhat do you mean?\nthe kernel needs the cipher suites etc...\nAt least I think that cfg80211 needs it."
+    },
+    {
+      "timestamp": 1469701476,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1469701771,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 3:\n\nI think that you can pass all of the supported ones. The kernel knows to handle it"
+    },
+    {
+      "timestamp": 1469702486,
+      "reviewer": {
+        "name": "Peller, EliadX",
+        "email": "eliadx.peller@intel.com",
+        "username": "epellerx"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1469708945,
+      "reviewer": {
+        "name": "Nemtsov, ArikX",
+        "email": "arikx.nemtsov@intel.com",
+        "username": "anemtsox"
+      },
+      "message": "Patch Set 3:\n\nemmanuel - why not allow the passphrase as well?\njust copy some code from wpa_s..\n\nbut good job. i was just talking to eliad about this yesterday :)"
+    },
+    {
+      "timestamp": 1469709666,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 3:\n\nit is not some code ... you need to port some of the crypto blocks for the KDF ... seems pointless."
+    },
+    {
+      "timestamp": 1470133133,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1470218557,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1470218579,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/132/"
+    },
+    {
+      "timestamp": 1470218608,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/132/ : SUCCESS"
+    },
+    {
+      "timestamp": 1470308209,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4: Code-Review-1\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1470308628,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 4:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1470308653,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 5: Published edit on patch set 4"
+    },
+    {
+      "timestamp": 1470308672,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/134/"
+    },
+    {
+      "timestamp": 1470308704,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/134/ : SUCCESS"
+    },
+    {
+      "timestamp": 1470309062,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 5:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1470309137,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 5:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1470309165,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1470309713,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 5:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1470309803,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Uploaded patch set 6."
+    },
+    {
+      "timestamp": 1470309822,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/135/"
+    },
+    {
+      "timestamp": 1470309868,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/135/ : SUCCESS"
+    },
+    {
+      "timestamp": 1470310254,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 6:\n\nit's not there because I haven't merged upstream, but I can't merge easily because the FTM crap isn't going upstream .."
+    },
+    {
+      "timestamp": 1471422378,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 6: Code-Review+2"
+    },
+    {
+      "timestamp": 1471422381,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 110d467a4262fa3df263cf2519f94ecf9cfeed43 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "73d94d2136babf9ce287be06dd3e94919feef3a2",
+      "parents": [
+        "071a6ce060331c09fea96f7e8a2e616c2c654ade"
+      ],
+      "ref": "refs/changes/58/47858/1",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1469644440,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1469644567,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 52,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 52,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 2,
+      "revision": "5794aab8a62d279f09b97ac8885b0cbba1ef3351",
+      "parents": [
+        "071a6ce060331c09fea96f7e8a2e616c2c654ade"
+      ],
+      "ref": "refs/changes/58/47858/2",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1469686659,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1469686705,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "util.c",
+          "line": 391,
+          "reviewer": {
+            "name": "Peller, EliadX",
+            "email": "eliadx.peller@intel.com",
+            "username": "epellerx"
+          },
+          "message": "memcmp?"
+        },
+        {
+          "file": "util.c",
+          "line": 405,
+          "reviewer": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          },
+          "message": "BTW, you can also add PSK SHA256 ..."
+        },
+        {
+          "file": "util.c",
+          "line": 405,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "yeah\nnot urgent...\nI prefer to simplify the command line for now.."
+        },
+        {
+          "file": "util.c",
+          "line": 406,
+          "reviewer": {
+            "name": "Peller, EliadX",
+            "email": "eliadx.peller@intel.com",
+            "username": "epellerx"
+          },
+          "message": "check length before writing to the buffer"
+        },
+        {
+          "file": "util.c",
+          "line": 421,
+          "reviewer": {
+            "name": "Peller, EliadX",
+            "email": "eliadx.peller@intel.com",
+            "username": "epellerx"
+          },
+          "message": "use some cipher_suite_to_code function (and use it also for the group ciphers)"
+        },
+        {
+          "file": "util.c",
+          "line": 421,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "can't find it?\nNote that it is also hard coded for WEP below..."
+        },
+        {
+          "file": "util.c",
+          "line": 421,
+          "reviewer": {
+            "name": "Peller, EliadX",
+            "email": "eliadx.peller@intel.com",
+            "username": "epellerx"
+          },
+          "message": "yeah, i meant adding such function :)"
+        },
+        {
+          "file": "util.c",
+          "line": 513,
+          "reviewer": {
+            "name": "Peller, EliadX",
+            "email": "eliadx.peller@intel.com",
+            "username": "epellerx"
+          },
+          "message": "better be consistent and use PSK (although they are the same in this case)"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 56,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 56,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 3,
+      "revision": "fb56ed60496feb3aaf0ec108baa2cb3fb31a1b04",
+      "parents": [
+        "071a6ce060331c09fea96f7e8a2e616c2c654ade"
+      ],
+      "ref": "refs/changes/58/47858/3",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1469700609,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1469700653,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "util.c",
+          "line": 405,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "what about FT-PSK, which is 000fac04? or PSK-SHA256 (06)?\n\nseems those should be selectable?\n\nperhaps even allow selection (an) AKM suite(s) manually by number?"
+        },
+        {
+          "file": "util.c",
+          "line": 431,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "this is duplicate, and it seems it should have a function that's inverse to cipher_name() to handle more ciphers too\n\n(and perhaps allow a way to specify a cipher suite manually?)"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 56,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 56,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 4,
+      "revision": "740f1c6780bc179ddd20b9be0ed4d0fc5db6ce75",
+      "parents": [
+        "071a6ce060331c09fea96f7e8a2e616c2c654ade"
+      ],
+      "ref": "refs/changes/58/47858/4",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1470218557,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1470308209,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1470218608,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "util.c",
+          "line": 400,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "please use GCMP-256 (and CCMP-256) so it matches the info that's printed when we show what cipher suitse are supported"
+        },
+        {
+          "file": "util.c",
+          "line": 400,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "?\nthe print below says: CCMP256.\n\nbut I'll change in both place."
+        },
+        {
+          "file": "util.c",
+          "line": 400,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I meant info.c"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 95,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 95,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 5,
+      "revision": "774fcb27381fa2efaf53ad6180e4479b71892379",
+      "parents": [
+        "071a6ce060331c09fea96f7e8a2e616c2c654ade"
+      ],
+      "ref": "refs/changes/58/47858/5",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1470308653,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1470308704,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "util.c",
+          "line": 386,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "how about this too then, for consistency?"
+        },
+        {
+          "file": "util.c",
+          "line": 386,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "ugh, this is ... confusing\n\nscan results prints\n\nFT/PSK, PSK/SHA-256"
+        },
+        {
+          "file": "util.c",
+          "line": 386,
+          "reviewer": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          },
+          "message": "I can't find any CCMP-256 in info.c...\nI can change to this here if you want."
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 95,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 95,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 6,
+      "revision": "e4c1b46d3f420010ea0d28148b3b6ab80b01ec23",
+      "parents": [
+        "071a6ce060331c09fea96f7e8a2e616c2c654ade"
+      ],
+      "ref": "refs/changes/58/47858/6",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1470309803,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1471422378,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1471422380,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1470309868,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 95,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 95,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 7,
+      "revision": "110d467a4262fa3df263cf2519f94ecf9cfeed43",
+      "parents": [
+        "15b9321c6515c43fef68ea7c3e26c2fb4dc95fd7"
+      ],
+      "ref": "refs/changes/58/47858/7",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1471422381,
+      "author": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1471422378,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1471422380,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1470309868,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 95,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 95,
+      "sizeDeletions": -3
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I2ca118123c678033e67bd6e70fad7d09e90e6a42",
+      "number": 49519,
+      "revision": "15b9321c6515c43fef68ea7c3e26c2fb4dc95fd7",
+      "ref": "refs/changes/19/49519/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

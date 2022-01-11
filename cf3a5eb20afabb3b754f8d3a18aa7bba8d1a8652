@@ -1,0 +1,2494 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I185a532f4ffea2bc4c8e7359243117f4f8f090ee",
+  "number": 21871,
+  "subject": "Implement FTM measurement request",
+  "owner": {
+    "name": "Lev, Beni",
+    "email": "beni.lev@intel.com",
+    "username": "benilev"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/21871",
+  "commitMessage": "Implement FTM measurement request\n\nFor now, the implementation is basic and doesnt include all\npossible parameters\nAlso add a new section for measurements commands\n\nChange-Id: I185a532f4ffea2bc4c8e7359243117f4f8f090ee\nSigned-off-by: Beni Lev <beni.lev@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/21871\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1456742629,
+  "lastUpdated": 1471602486,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1456742629,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1456742675,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/83/"
+    },
+    {
+      "timestamp": 1456742698,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified-1\n\nBuild Failed \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/83/ : FAILURE"
+    },
+    {
+      "timestamp": 1456742825,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 1: Code-Review-1\n\nDont merge till FTM API is finalized\nAlso, this will not compile, since the NL80211_FTM_RESP_ENTRY_ATTR_DISTANCE attr isnt introduced yet"
+    },
+    {
+      "timestamp": 1456999154,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1456999173,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/85/"
+    },
+    {
+      "timestamp": 1456999192,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/85/ : SUCCESS"
+    },
+    {
+      "timestamp": 1456999706,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1456999724,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/88/"
+    },
+    {
+      "timestamp": 1456999740,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/88/ : SUCCESS"
+    },
+    {
+      "timestamp": 1457356691,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1457356713,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/104/"
+    },
+    {
+      "timestamp": 1457356733,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/104/ : SUCCESS"
+    },
+    {
+      "timestamp": 1457427483,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4: Code-Review-1\n\n(7 comments)"
+    },
+    {
+      "timestamp": 1457950625,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 4:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1457952051,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 4:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1458030569,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 5."
+    },
+    {
+      "timestamp": 1458030587,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/109/"
+    },
+    {
+      "timestamp": 1458030613,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/109/ : SUCCESS"
+    },
+    {
+      "timestamp": 1458045190,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 5:\n\n(4 comments)"
+    },
+    {
+      "timestamp": 1458054952,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 5:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1458055044,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 5:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1458123526,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 6."
+    },
+    {
+      "timestamp": 1458123549,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/110/"
+    },
+    {
+      "timestamp": 1458123575,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/110/ : SUCCESS"
+    },
+    {
+      "timestamp": 1458202517,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 6: Code-Review-1\n\nplease do dynamically."
+    },
+    {
+      "timestamp": 1458209648,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 7."
+    },
+    {
+      "timestamp": 1458209665,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/114/"
+    },
+    {
+      "timestamp": 1458209689,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/114/ : SUCCESS"
+    },
+    {
+      "timestamp": 1459329439,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 7:\n\nping"
+    },
+    {
+      "timestamp": 1460024069,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 7:\n\nping yourself"
+    },
+    {
+      "timestamp": 1460024080,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 7: Code-Review-1"
+    },
+    {
+      "timestamp": 1460271207,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 7:\n\nHmmmmmm,\nCan you please give a hint about the -1?\nPatchset 7 fixes what you asked in patchset 6..."
+    },
+    {
+      "timestamp": 1460449518,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 7:\n\nplease size things dynamically, don't hardcode 5"
+    },
+    {
+      "timestamp": 1460451498,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 8."
+    },
+    {
+      "timestamp": 1460451517,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/120/"
+    },
+    {
+      "timestamp": 1460451556,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/120/ : SUCCESS"
+    },
+    {
+      "timestamp": 1460537514,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8:\n\n(7 comments)"
+    },
+    {
+      "timestamp": 1460628537,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 8:\n\n(6 comments)"
+    },
+    {
+      "timestamp": 1460628725,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1460628914,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1460629421,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1460632176,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1460632560,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1460633122,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1460634554,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1461147162,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8: Code-Review-1\n\n(just to mark the open comments)"
+    },
+    {
+      "timestamp": 1465308333,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 9."
+    },
+    {
+      "timestamp": 1465308353,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 9:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/123/"
+    },
+    {
+      "timestamp": 1465308382,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 9: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/123/ : SUCCESS"
+    },
+    {
+      "timestamp": 1466670463,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 9:\n\n(4 comments)"
+    },
+    {
+      "timestamp": 1466670655,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 9: Code-Review-1"
+    },
+    {
+      "timestamp": 1466672138,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 9:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1466672369,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 9:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1466673062,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 9:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1466673221,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 9:\n\n(2 comments)"
+    },
+    {
+      "timestamp": 1466674880,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 9:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1466677672,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 9:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1466681187,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 10."
+    },
+    {
+      "timestamp": 1466681209,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 10:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/124/"
+    },
+    {
+      "timestamp": 1466681248,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 10: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/124/ : SUCCESS"
+    },
+    {
+      "timestamp": 1471354569,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 10:\n\nping"
+    },
+    {
+      "timestamp": 1471354980,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 11: Patch Set 10 was rebased"
+    },
+    {
+      "timestamp": 1471355002,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 11:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/138/"
+    },
+    {
+      "timestamp": 1471355036,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 11: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/138/ : SUCCESS"
+    },
+    {
+      "timestamp": 1471421733,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 11:\n\n(6 comments)"
+    },
+    {
+      "timestamp": 1471427971,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 11:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1471427999,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 12."
+    },
+    {
+      "timestamp": 1471428354,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 11:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1471428421,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 12:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1471428528,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 12:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1471428551,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Patch Set 11:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1471431764,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 13."
+    },
+    {
+      "timestamp": 1471431786,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 13:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/139/"
+    },
+    {
+      "timestamp": 1471431822,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 13: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/139/ : SUCCESS"
+    },
+    {
+      "timestamp": 1471602485,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 13: Code-Review+2"
+    },
+    {
+      "timestamp": 1471602486,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "e4105780a7504cee6ae35f742c0d2019693a39f4",
+      "parents": [
+        "0a696fac0b9a098044f399e46062ed0da8bf9225"
+      ],
+      "ref": "refs/changes/71/21871/1",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1456742629,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1456742825,
+          "by": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "-1",
+          "grantedOn": 1456742698,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 92,
+          "deletions": -1
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 182,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 275,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 2,
+      "revision": "8b465e3cf6900719545b038468613c2cb1b74553",
+      "parents": [
+        "1432e5a3a264b3fc20093c3437f89c12935ff96b"
+      ],
+      "ref": "refs/changes/71/21871/2",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1456999154,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1456999192,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 92,
+          "deletions": -1
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 182,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 275,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 3,
+      "revision": "83a54275fd92c14051aaa78dd3c0880ee3b587a8",
+      "parents": [
+        "e37b1d7c2f98ac35b552a55bd709b7dfbb2b7292"
+      ],
+      "ref": "refs/changes/71/21871/3",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1456999706,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "NO_CHANGE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1456999740,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 92,
+          "deletions": -1
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 182,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 275,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 4,
+      "revision": "691623999c0a68912d923ad8acf7542df3279009",
+      "parents": [
+        "82f55b605b488b05c4af9597cf8a0b610f4f2b0b"
+      ],
+      "ref": "refs/changes/71/21871/4",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1457356691,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1457427483,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1457356733,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "event.c",
+          "line": 7,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "you should put this into struct print_event_args instead of using a global variable"
+        },
+        {
+          "file": "event.c",
+          "line": 7,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Ok"
+        },
+        {
+          "file": "measurements.c",
+          "line": 9,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "how did you come up with that??"
+        },
+        {
+          "file": "measurements.c",
+          "line": 9,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Well, i didnt see any place in iw that we check for capabilities.\nDo you want me to remove this and just get rejected by the driver if we request to much targets?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 9,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "I need some number anyway in order to allocate the targets array size(tough i can do it dynamically, but i dont see a reason why not limit it to 5).\nAh, and i got the number from our driver implementation"
+        },
+        {
+          "file": "measurements.c",
+          "line": 84,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "that's an awful configuration file format, if you ask me\n\ncan't you at parse something like\n\n <bssid> bw=80 freq=5180 cf1=5210 cf2=0 spb=27 [one_sided] [asap]\n\nor something like that?\n\nThat makes the cf1/cf2 optional (depending on bandwidth) and you could have default values and it's extensible..."
+        },
+        {
+          "file": "measurements.c",
+          "line": 112,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "don't need these blank lines (this and 5 lines up)"
+        },
+        {
+          "file": "measurements.c",
+          "line": 117,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "return 1 (or is that 2?) to get the help printed instead of the message"
+        },
+        {
+          "file": "measurements.c",
+          "line": 117,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Ok, didnt knew that"
+        },
+        {
+          "file": "measurements.c",
+          "line": 139,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "likewise"
+        },
+        {
+          "file": "measurements.c",
+          "line": 182,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "no, please parse the strings"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 92,
+          "deletions": -1
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 187,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 281,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 5,
+      "revision": "82b0690ef42f3948b3ad21fce1f53e6222f90646",
+      "parents": [
+        "82f55b605b488b05c4af9597cf8a0b610f4f2b0b"
+      ],
+      "ref": "refs/changes/71/21871/5",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1458030569,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1458030613,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "event.c",
+          "line": 388,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "typo: measurements"
+        },
+        {
+          "file": "event.c",
+          "line": 388,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        },
+        {
+          "file": "event.c",
+          "line": 399,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "same here"
+        },
+        {
+          "file": "event.c",
+          "line": 399,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        },
+        {
+          "file": "event.c",
+          "line": 400,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "perhaps the LAST_MSG treatment should be common?"
+        },
+        {
+          "file": "event.c",
+          "line": 400,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Not sure. You might have a measurement that will not use LAST_MSG"
+        },
+        {
+          "file": "measurements.c",
+          "line": 9,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "it doesn't seem problematic to use realloc()?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 9,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Well, of courses that i can alloc it dynamically\n(I can count the lines and alloc accordingly)\nBut, i think that this is good enough.\nAnyway - its your call"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 96,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 238,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 337,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 6,
+      "revision": "0e2c6fdda36f61ef8da4eb08c3a4e566725db222",
+      "parents": [
+        "82f55b605b488b05c4af9597cf8a0b610f4f2b0b"
+      ],
+      "ref": "refs/changes/71/21871/6",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1458123526,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1458202517,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1458123575,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 96,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 238,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 337,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 7,
+      "revision": "56bc934610d276c7805238101affa40dda81a805",
+      "parents": [
+        "82f55b605b488b05c4af9597cf8a0b610f4f2b0b"
+      ],
+      "ref": "refs/changes/71/21871/7",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1458209648,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1460024080,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1458209689,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 96,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 253,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 352,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 8,
+      "revision": "f39eee7477fb4c0d007296aea9f1c07c88a3d9b2",
+      "parents": [
+        "5db71847f5ffad474e8f6c958e6dececbeacb18c"
+      ],
+      "ref": "refs/changes/71/21871/8",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1460451498,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1461147162,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1460451556,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I'd prefer you use strtoull() or similar, so you have some error checking\n\nas it is, you could specify \"cf1=2432Hz\" and have it be accepted as MHz :)"
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Hmmm, not sure how strtoull helps here.\nMaybe you mean sscanf?\nAlso, i dont think that the user should ever give the unit type for these parameters anyway, i mean, the user should just give cf1=2432 whithout \"Mhz\" at the end"
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "my point wasn't really the unit - perhaps that was a bad example\n\nmy point was that right now you can write cf1=xy and have it come out as 0 rather than an error"
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "But the same will happen with strtol..."
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "no, strtol allows you to check how much was consumed, that's kinda the point of it"
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Well, this indeed can be done with strtol by comparing the pointers.\nBut, do you have any objection to do it with sscanf(as i can just check the output of it in order to validate)?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I think strtol is easier to understand, using sscanf requires using %n and checking that everything was consumed, etc., no?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "No, you dont need %n.\nThe return value is the number of successfully filled args\nSo, you can just chak that the return value != 0"
+        },
+        {
+          "file": "measurements.c",
+          "line": 104,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "no, that doesn't reject trailing invalid characters, like \"1234xyz\""
+        },
+        {
+          "file": "measurements.c",
+          "line": 109,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "shouldn't that just be strcmp?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 109,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Hmm, well, yes."
+        },
+        {
+          "file": "measurements.c",
+          "line": 111,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "likewise"
+        },
+        {
+          "file": "measurements.c",
+          "line": 127,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "initializing is pointless, no?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 127,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "You're right, fgets handles this"
+        },
+        {
+          "file": "measurements.c",
+          "line": 137,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "better to use sizeof(line)-1 I think"
+        },
+        {
+          "file": "measurements.c",
+          "line": 137,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Yes, also, we dont need the -1 since fgets read num-1 chars and puts the \\0 in the last(num) one"
+        },
+        {
+          "file": "measurements.c",
+          "line": 140,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "if (line[0] == '#') would be easier? :)"
+        },
+        {
+          "file": "measurements.c",
+          "line": 140,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": ":)"
+        },
+        {
+          "file": "measurements.c",
+          "line": 206,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "no need for braces"
+        },
+        {
+          "file": "measurements.c",
+          "line": 206,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Sure"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 96,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 251,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 350,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 9,
+      "revision": "a0f0ead6f819475debab7a86267f635ba0831049",
+      "parents": [
+        "5db71847f5ffad474e8f6c958e6dececbeacb18c"
+      ],
+      "ref": "refs/changes/71/21871/9",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1465308333,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1466670655,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1465308382,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "measurements.c",
+          "line": 87,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "maybe you shouldn't require a space here before the %n?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 87,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Hmmm, we could, though this is not needed, since a whitespace indicates any number of whitespaces, including none, but yea, might be clearer"
+        },
+        {
+          "file": "measurements.c",
+          "line": 100,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "I think you should use strtok_r() like all other iw code"
+        },
+        {
+          "file": "measurements.c",
+          "line": 100,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "i think that strtok_r is used when you want to parse several strings concurrently. but, if you want it ill change it"
+        },
+        {
+          "file": "measurements.c",
+          "line": 100,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "that's kinda true, of course, but using strtok() also makes the code thread-unsafe. I generally think that strtok() should never be used"
+        },
+        {
+          "file": "measurements.c",
+          "line": 105,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "this is a bit odd? you're assuming all frequencies use exactly 4 digits?\n\nI don't know if anyone really wants to do it, but it's not completely impossible to think that it could be used on 60GHz, no?\n\nwhy not check \"if (*tmp)\" instead?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 105,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "I think its pretty sure to check for a 4 digit channel.\nI dont think that 60Ghz can be used for ranging, as 60Ghz works only for small/direct(no obstacles) ranges.\nAlso, why to check *tmp, it'll be 0 in the end of the string..."
+        },
+        {
+          "file": "measurements.c",
+          "line": 105,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "exactly, if *tmp is not 0 then you have an error, otherwise you parsed the whole number"
+        },
+        {
+          "file": "measurements.c",
+          "line": 105,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Ok. \\n might be at the end of a number, ill add it to strtok as a delimiter"
+        },
+        {
+          "file": "measurements.c",
+          "line": 105,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "you should probably add it to the strtok instead"
+        },
+        {
+          "file": "measurements.c",
+          "line": 105,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Instead?"
+        },
+        {
+          "file": "measurements.c",
+          "line": 105,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "instead of checking for it here"
+        },
+        {
+          "file": "measurements.c",
+          "line": 111,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "likewise"
+        },
+        {
+          "file": "measurements.c",
+          "line": 111,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        },
+        {
+          "file": "measurements.c",
+          "line": 194,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "no need for braces"
+        },
+        {
+          "file": "measurements.c",
+          "line": 194,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 96,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 262,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 361,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 10,
+      "revision": "982eb1662516eb4d1348611e70c8df62d1b30da9",
+      "parents": [
+        "5db71847f5ffad474e8f6c958e6dececbeacb18c"
+      ],
+      "ref": "refs/changes/71/21871/10",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1466681187,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1466681248,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 96,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 261,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 360,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 11,
+      "revision": "2a3470494650410db1b7dbb00d0554ded7b19613",
+      "parents": [
+        "a37e604031b21fa3f9d9ee4c45a686a245f52b81"
+      ],
+      "ref": "refs/changes/71/21871/11",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1471354980,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1471355036,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "event.c",
+          "line": 315,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "should have a blank line before this, I guess"
+        },
+        {
+          "file": "event.c",
+          "line": 315,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        },
+        {
+          "file": "event.c",
+          "line": 374,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "is it really necessarily a BSSID, rather than just some STA address?\n\nI think you should just say \"target\" here and in the variable (\"bssid[ETH_ALEN]\") as well, no?"
+        },
+        {
+          "file": "event.c",
+          "line": 374,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "Done"
+        },
+        {
+          "file": "measurements.c",
+          "line": 27,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "same here, imho"
+        },
+        {
+          "file": "measurements.c",
+          "line": 67,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "please don't use atoi(), use functions that can do error handling\n\nalso, handle_freqs() in phy.c has a function for this already, I think you should split that out"
+        },
+        {
+          "file": "measurements.c",
+          "line": 231,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "this does more than what you wrote in the comment, are you sure you don't want |=1"
+        },
+        {
+          "file": "measurements.c",
+          "line": 232,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "but this makes no sense anyway, the mask should just be all-ones, no? ff:ff:ff:ff:ff:ff:ff, otherwise you still randomize any bit that was 0..."
+        },
+        {
+          "file": "measurements.c",
+          "line": 232,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "I use full randomization(except MC bit)"
+        },
+        {
+          "file": "measurements.c",
+          "line": 232,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "oh, I see\n\nmaybe it'd make sense to make it static const?\n\n static const u8 macaddr[ETH_ALEN] = {0};\n static const u8 macaddr_mask[ETH_ALEN] = { 0x01, };"
+        },
+        {
+          "file": "measurements.c",
+          "line": 232,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "ok"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 96,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 261,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 360,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 12,
+      "revision": "e71c3a68165fbf878121d44994319ce6ceeff2a1",
+      "parents": [
+        "1cfc0ad16b4de290f137b0fbb5b817c5f9c44f24"
+      ],
+      "ref": "refs/changes/71/21871/12",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1471427999,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "comments": [
+        {
+          "file": "util.c",
+          "line": 869,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "uh, ok. but maybe document that this is the error case?"
+        },
+        {
+          "file": "util.c",
+          "line": 869,
+          "reviewer": {
+            "name": "Lev, Beni",
+            "email": "beni.lev@intel.com",
+            "username": "benilev"
+          },
+          "message": "I could return -1, but then i need to introduce a new value for 20 no ht."
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 97,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 238,
+          "deletions": 0
+        },
+        {
+          "file": "phy.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -17
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 22,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 363,
+      "sizeDeletions": -19
+    },
+    {
+      "number": 13,
+      "revision": "74d0968694dec283b8778b6a1f9e5ff2117b9f8c",
+      "parents": [
+        "1cfc0ad16b4de290f137b0fbb5b817c5f9c44f24"
+      ],
+      "ref": "refs/changes/71/21871/13",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1471431764,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1471602485,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1471602486,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1471431822,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 97,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 237,
+          "deletions": 0
+        },
+        {
+          "file": "phy.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -17
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 22,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 362,
+      "sizeDeletions": -19
+    },
+    {
+      "number": 14,
+      "revision": "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652",
+      "parents": [
+        "d325dd8f6475ef14e88e5c971f2346ef4ffa0fd4"
+      ],
+      "ref": "refs/changes/71/21871/14",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1471602486,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1471602485,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1471602486,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1471431822,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 97,
+          "deletions": -1
+        },
+        {
+          "file": "iw.h",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 237,
+          "deletions": 0
+        },
+        {
+          "file": "phy.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -17
+        },
+        {
+          "file": "util.c",
+          "type": "MODIFIED",
+          "insertions": 22,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 362,
+      "sizeDeletions": -19
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

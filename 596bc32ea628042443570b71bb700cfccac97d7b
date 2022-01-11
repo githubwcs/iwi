@@ -1,0 +1,292 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "common/nan2_pf4",
+  "id": "Ic7427b18ac10cfdc2724e64b77c6873d70b8e3b2",
+  "number": 89774,
+  "subject": "iw: nan2: Add QoS support to NDP",
+  "owner": {
+    "name": "Otcheretianski, Andrei",
+    "email": "andrei.otcheretianski@intel.com",
+    "username": "aotchere"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/89774",
+  "commitMessage": "iw: nan2: Add QoS support to NDP\n\nSigned-off-by: Andrei Otcheretianski <andrei.otcheretianski@intel.com>\nChange-Id: Ic7427b18ac10cfdc2724e64b77c6873d70b8e3b2\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/89774\nReviewed-by: Peer, Ilan <ilan.peer@intel.com>\nTested-by: Peer, Ilan <ilan.peer@intel.com>\n",
+  "createdOn": 1485446233,
+  "lastUpdated": 1486667734,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1485446233,
+      "reviewer": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1486667668,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1486667729,
+      "reviewer": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "message": "Patch Set 2: Code-Review+2 Verified+1"
+    },
+    {
+      "timestamp": 1486667734,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 596bc32ea628042443570b71bb700cfccac97d7b by Peer, Ilan"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "f69199ea20c7ad0b728d96c6df27890982da7fe2",
+      "parents": [
+        "a2e1a977858c25d159466f7252c4acf1c9b679f2"
+      ],
+      "ref": "refs/changes/74/89774/1",
+      "uploader": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "createdOn": 1485446233,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "MODIFIED",
+          "insertions": 34,
+          "deletions": -2
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 11,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 45,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 2,
+      "revision": "587d31521dd40efedbec2304df6119831ae2a63e",
+      "parents": [
+        "6c9118d3c1b578e05d9cdcb377e45e197cd7df54"
+      ],
+      "ref": "refs/changes/74/89774/2",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1486667668,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1486667729,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1486667734,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1486667729,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "MODIFIED",
+          "insertions": 33,
+          "deletions": -2
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 11,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 44,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 3,
+      "revision": "596bc32ea628042443570b71bb700cfccac97d7b",
+      "parents": [
+        "6c9118d3c1b578e05d9cdcb377e45e197cd7df54"
+      ],
+      "ref": "refs/changes/74/89774/3",
+      "uploader": {
+        "name": "Peer, Ilan",
+        "email": "ilan.peer@intel.com",
+        "username": "ipeer"
+      },
+      "createdOn": 1486667734,
+      "author": {
+        "name": "Otcheretianski, Andrei",
+        "email": "andrei.otcheretianski@intel.com",
+        "username": "aotchere"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1486667729,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1486667734,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1486667729,
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "nan.c",
+          "type": "MODIFIED",
+          "insertions": 33,
+          "deletions": -2
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 11,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 44,
+      "sizeDeletions": -2
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ic652a818ac70cf2c2723e64b67c6373d71b8e3b6",
+      "number": 90294,
+      "revision": "6c9118d3c1b578e05d9cdcb377e45e197cd7df54",
+      "ref": "refs/changes/94/90294/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Peer, Ilan",
+            "email": "ilan.peer@intel.com",
+            "username": "ipeer"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

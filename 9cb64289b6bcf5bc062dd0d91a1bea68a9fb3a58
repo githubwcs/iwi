@@ -1,0 +1,977 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I9d96a0c8566a2e85b28b2efa6b6c9ea2e0e8d353",
+  "number": 15769,
+  "subject": "Add ftm get_stats command",
+  "owner": {
+    "name": "Spinadel, David",
+    "email": "david.spinadel@intel.com",
+    "username": "dspinade"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/15769",
+  "commitMessage": "Add ftm get_stats command\n\nAdd a command that retrieves FTM responder statistics.\n\ntype=feature\n\nChange-Id: I9d96a0c8566a2e85b28b2efa6b6c9ea2e0e8d353\nSigned-off-by: David Spinadel <david.spinadel@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/15769\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1452593573,
+  "lastUpdated": 1457008457,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1452593573,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1452593619,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/70/"
+    },
+    {
+      "timestamp": 1452593648,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/70/ : SUCCESS"
+    },
+    {
+      "timestamp": 1452762212,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1452762237,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/71/"
+    },
+    {
+      "timestamp": 1452762276,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/71/ : SUCCESS"
+    },
+    {
+      "timestamp": 1453333432,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1453361546,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2:\n\n(3 comments)"
+    },
+    {
+      "timestamp": 1453402902,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1454309268,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1454309285,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/73/"
+    },
+    {
+      "timestamp": 1454309304,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/73/ : SUCCESS"
+    },
+    {
+      "timestamp": 1454419459,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 4: Commit message was updated"
+    },
+    {
+      "timestamp": 1454419479,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/74/"
+    },
+    {
+      "timestamp": 1454419501,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/74/ : SUCCESS"
+    },
+    {
+      "timestamp": 1454603395,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 5."
+    },
+    {
+      "timestamp": 1454603414,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/76/"
+    },
+    {
+      "timestamp": 1454603438,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/76/ : SUCCESS"
+    },
+    {
+      "timestamp": 1455809197,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 6."
+    },
+    {
+      "timestamp": 1455809217,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/78/"
+    },
+    {
+      "timestamp": 1455809245,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 6: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/78/ : SUCCESS"
+    },
+    {
+      "timestamp": 1456670450,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Patch Set 6:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1456671793,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 7."
+    },
+    {
+      "timestamp": 1456671812,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/80/"
+    },
+    {
+      "timestamp": 1456671833,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 7: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/80/ : SUCCESS"
+    },
+    {
+      "timestamp": 1456926815,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 7:\n\n(2 comments)\n\nhm. there are a number of things here (in the previous patch) that didn't make it upstream yet, which means resyncing and everything\n\nhow long can we wait with this?"
+    },
+    {
+      "timestamp": 1456990302,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Patch Set 7:\n\nIDK, FW are nagging me about that. Can't we keep it only in our local repo?"
+    },
+    {
+      "timestamp": 1456990333,
+      "reviewer": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "message": "Uploaded patch set 8."
+    },
+    {
+      "timestamp": 1456990352,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/84/"
+    },
+    {
+      "timestamp": 1456990374,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 8: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/84/ : SUCCESS"
+    },
+    {
+      "timestamp": 1457008449,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 8: Code-Review+2"
+    },
+    {
+      "timestamp": 1457008457,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully cherry-picked as 9cb64289b6bcf5bc062dd0d91a1bea68a9fb3a58"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "fe53caeb54b56a5acb5b0370a18e6a1b30312e85",
+      "parents": [
+        "1007871e9c15d263ecbc0e2bef293efec238f4a9"
+      ],
+      "ref": "refs/changes/69/15769/1",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1452593573,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1452593648,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 103,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 104,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "0cfac232f3738be5241f8f40e7b1d93f13ac8fc4",
+      "parents": [
+        "1007871e9c15d263ecbc0e2bef293efec238f4a9"
+      ],
+      "ref": "refs/changes/69/15769/2",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1452762212,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1452762276,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "/COMMIT_MSG",
+          "line": 7,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "command"
+        },
+        {
+          "file": "/COMMIT_MSG",
+          "line": 9,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "retrieves"
+        },
+        {
+          "file": "ftm.c",
+          "line": 70,
+          "reviewer": {
+            "name": "Spinadel, David",
+            "email": "david.spinadel@intel.com",
+            "username": "dspinade"
+          },
+          "message": "Duration"
+        },
+        {
+          "file": "nl80211.h",
+          "line": 5108,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "all of this belongs to the other patch I guess?"
+        },
+        {
+          "file": "nl80211.h",
+          "line": 5108,
+          "reviewer": {
+            "name": "Spinadel, David",
+            "email": "david.spinadel@intel.com",
+            "username": "dspinade"
+          },
+          "message": "Yup, sorry."
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -5
+        }
+      ],
+      "sizeInsertions": 101,
+      "sizeDeletions": -6
+    },
+    {
+      "number": 3,
+      "revision": "6203632cac37b5b6633e46d429b2623f107572d3",
+      "parents": [
+        "c259ce2e807f3c1c714d9cf5e329ad3be029a226"
+      ],
+      "ref": "refs/changes/69/15769/3",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1454309268,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1454309304,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 99,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 4,
+      "revision": "1ef98dbc97d4c57490a627b3917c802551077c8a",
+      "parents": [
+        "c259ce2e807f3c1c714d9cf5e329ad3be029a226"
+      ],
+      "ref": "refs/changes/69/15769/4",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1454419459,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1454419501,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 99,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 5,
+      "revision": "ea78016befde0cad008d2751a5a86f7f450073ed",
+      "parents": [
+        "d0c8b5d213dc06688db04cfa87a325a74ab31936"
+      ],
+      "ref": "refs/changes/69/15769/5",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1454603395,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1454603438,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 99,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 6,
+      "revision": "face2bd1915bbb7debaa86a6e1c4b5444fe19f5a",
+      "parents": [
+        "6defa7f0aa2a7ded26fd85017c26d0ebe3e0b4ab"
+      ],
+      "ref": "refs/changes/69/15769/6",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1455809197,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1455809245,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "ftm.c",
+          "line": 38,
+          "reviewer": {
+            "name": "Spinadel, David",
+            "email": "david.spinadel@intel.com",
+            "username": "dspinade"
+          },
+          "message": "\\n"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 99,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 7,
+      "revision": "29ed173ceffbb9d09015d1c1d4f7a46263687d60",
+      "parents": [
+        "d74dd66d6797032f681dfdc1fee3e4aa5967e09c"
+      ],
+      "ref": "refs/changes/69/15769/7",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1456671793,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "TRIVIAL_REBASE",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1456671833,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "/COMMIT_MSG",
+          "line": 7,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "command? :)"
+        },
+        {
+          "file": "/COMMIT_MSG",
+          "line": 9,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "retrieves"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 99,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 8,
+      "revision": "8213cdf257ddef552d4d4921216cea4bb2c81909",
+      "parents": [
+        "d74dd66d6797032f681dfdc1fee3e4aa5967e09c"
+      ],
+      "ref": "refs/changes/69/15769/8",
+      "uploader": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "createdOn": 1456990333,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1457008449,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1457008457,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1456990374,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 99,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 9,
+      "revision": "9cb64289b6bcf5bc062dd0d91a1bea68a9fb3a58",
+      "parents": [
+        "ea38104a65acc4c0d3922ea9bd81e6d8f4cce6a2"
+      ],
+      "ref": "refs/changes/69/15769/9",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1457008457,
+      "author": {
+        "name": "Spinadel, David",
+        "email": "david.spinadel@intel.com",
+        "username": "dspinade"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1457008449,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1457008457,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1456990374,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "ftm.c",
+          "type": "ADDED",
+          "insertions": 98,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 99,
+      "sizeDeletions": -1
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

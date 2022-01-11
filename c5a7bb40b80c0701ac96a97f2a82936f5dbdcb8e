@@ -1,0 +1,262 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "release/core42",
+  "id": "Idfb619fd4e66a39698039a000bed638555822153",
+  "number": 203717,
+  "subject": "iw: add FTM initiator support",
+  "owner": {
+    "name": "Grumbach, Emmanuel",
+    "email": "emmanuel.grumbach@intel.com",
+    "username": "egrumbac"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/203717",
+  "commitMessage": "iw: add FTM initiator support\n\ntype=feature\nticket=jira:WLWG-7880\n\nChange-Id: Idfb619fd4e66a39698039a000bed638555822153\nSigned-off-by: Johannes Berg <johannes.berg@intel.com>\nSigned-off-by: Avraham Stern <avraham.stern@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/199109\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n(cherry picked from commit c0a8e4c08ffc9cbeb2d0b659a4552dc650e23058)\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/203717\nReviewed-by: Grumbach, Emmanuel <emmanuel.grumbach@intel.com>\nTested-by: Grumbach, Emmanuel <emmanuel.grumbach@intel.com>\n",
+  "createdOn": 1546106725,
+  "lastUpdated": 1546106734,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1546106725,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 1: Cherry Picked from branch master."
+    },
+    {
+      "timestamp": 1546106732,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Patch Set 1: Verified+1 Code-Review+2"
+    },
+    {
+      "timestamp": 1546106734,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/64831/"
+    },
+    {
+      "timestamp": 1546106734,
+      "reviewer": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "message": "Change has been successfully rebased and submitted as c5a7bb40b80c0701ac96a97f2a82936f5dbdcb8e by Grumbach, Emmanuel"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "79caaea0b75ecb0b0ef12fe7781f948a9915fed9",
+      "parents": [
+        "5742d22db317653062b32077d81a691a9faaaaf7"
+      ],
+      "ref": "refs/changes/17/203717/1",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1546106725,
+      "author": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1546106732,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1546106734,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1546106732,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 320,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 526,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "c5a7bb40b80c0701ac96a97f2a82936f5dbdcb8e",
+      "parents": [
+        "5742d22db317653062b32077d81a691a9faaaaf7"
+      ],
+      "ref": "refs/changes/17/203717/2",
+      "uploader": {
+        "name": "Grumbach, Emmanuel",
+        "email": "emmanuel.grumbach@intel.com",
+        "username": "egrumbac"
+      },
+      "createdOn": 1546106734,
+      "author": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1546106732,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1546106734,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1546106732,
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 20,
+          "deletions": 0
+        },
+        {
+          "file": "Makefile",
+          "type": "MODIFIED",
+          "insertions": 1,
+          "deletions": -1
+        },
+        {
+          "file": "event.c",
+          "type": "MODIFIED",
+          "insertions": 205,
+          "deletions": 0
+        },
+        {
+          "file": "measurements.c",
+          "type": "ADDED",
+          "insertions": 320,
+          "deletions": 0
+        }
+      ],
+      "sizeInsertions": 526,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ieda1ce2199fa6091869ccd507cfc3ee49981cc57",
+      "number": 199544,
+      "revision": "5742d22db317653062b32077d81a691a9faaaaf7",
+      "ref": "refs/changes/44/199544/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Grumbach, Emmanuel",
+            "email": "emmanuel.grumbach@intel.com",
+            "username": "egrumbac"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

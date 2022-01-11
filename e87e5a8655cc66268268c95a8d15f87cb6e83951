@@ -1,0 +1,635 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I2f1f42b073977dd5edcd702290e269fca0ee31d7",
+  "number": 55777,
+  "subject": "iw: print missing extended capabilities",
+  "owner": {
+    "name": "Matityahu, Shahar S",
+    "email": "shahar.s.matityahu@intel.com",
+    "username": "ssmatity"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/55777",
+  "commitMessage": "iw: print missing extended capabilities\n\nThe extended capabilities IE needs to know if the ap is a VHT STA\nand because of that a 'struct print_ies_data' was added to contain\nthe original ie buffer.\n\nChange-Id: I2f1f42b073977dd5edcd702290e269fca0ee31d7\nSigned-off-by: Shahar S Matityahu <shahar.s.matityahu@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/55777\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\n",
+  "createdOn": 1473061576,
+  "lastUpdated": 1475238071,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1473061576,
+      "reviewer": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1473062788,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1473173071,
+      "reviewer": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "message": "Uploaded patch set 2."
+    },
+    {
+      "timestamp": 1473173092,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/142/"
+    },
+    {
+      "timestamp": 1473173121,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/142/ : SUCCESS"
+    },
+    {
+      "timestamp": 1473677389,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2:\n\n(4 comments)"
+    },
+    {
+      "timestamp": 1473747454,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1473751459,
+      "reviewer": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "message": "Uploaded patch set 3."
+    },
+    {
+      "timestamp": 1473751479,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/145/"
+    },
+    {
+      "timestamp": 1473751497,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 3: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/145/ : SUCCESS"
+    },
+    {
+      "timestamp": 1473850685,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 3:\n\n(1 comment)"
+    },
+    {
+      "timestamp": 1473924805,
+      "reviewer": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "message": "Uploaded patch set 4."
+    },
+    {
+      "timestamp": 1473924827,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/147/"
+    },
+    {
+      "timestamp": 1473924850,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 4: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/147/ : SUCCESS"
+    },
+    {
+      "timestamp": 1475237992,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 5: Published edit on patch set 4"
+    },
+    {
+      "timestamp": 1475238010,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 5: Code-Review+2"
+    },
+    {
+      "timestamp": 1475238031,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/148/"
+    },
+    {
+      "timestamp": 1475238065,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 5: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/148/ : SUCCESS"
+    },
+    {
+      "timestamp": 1475238071,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as e87e5a8655cc66268268c95a8d15f87cb6e83951 by Berg, Johannes"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "d8cb96a45b46a3219e406140f07c5ba9e90f01de",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/77/55777/1",
+      "uploader": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "createdOn": 1473061576,
+      "author": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "comments": [
+        {
+          "file": "scan.c",
+          "line": 977,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "you shouldn't really use global variables like that"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 10,
+          "deletions": 0
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 78,
+          "deletions": -3
+        }
+      ],
+      "sizeInsertions": 78,
+      "sizeDeletions": -3
+    },
+    {
+      "number": 2,
+      "revision": "5f754e29a1cc942d21e69945b3f377f84f2787f5",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/77/55777/2",
+      "uploader": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "createdOn": 1473173071,
+      "author": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1473173121,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "/COMMIT_MSG",
+          "line": 7,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "that should probably be\n\n iw: print missing extended capabilities\n\nor so - at least with the \"iw\" prefix, and \"add of ...\" makes no sense in English afaict"
+        },
+        {
+          "file": "scan.c",
+          "line": 557,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "this isn't used"
+        },
+        {
+          "file": "scan.c",
+          "line": 558,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "and the use of this seems strange - see below though"
+        },
+        {
+          "file": "scan.c",
+          "line": 562,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "calling this \"ie_buffer\" is somewhat misleading, no?"
+        },
+        {
+          "file": "scan.c",
+          "line": 1268,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "?? why do you care about ieprinters here at all?"
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 249,
+          "deletions": -73
+        }
+      ],
+      "sizeInsertions": 249,
+      "sizeDeletions": -73
+    },
+    {
+      "number": 3,
+      "revision": "f9b8146582f53f69b08e588c74eb9fdd9e769989",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/77/55777/3",
+      "uploader": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "createdOn": 1473751459,
+      "author": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1473751497,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "comments": [
+        {
+          "file": "scan.c",
+          "line": 1328,
+          "reviewer": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          },
+          "message": "wow, err, I think we need to find a different output format that doesn't put everything on a single line ..."
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 175,
+          "deletions": -38
+        }
+      ],
+      "sizeInsertions": 175,
+      "sizeDeletions": -38
+    },
+    {
+      "number": 4,
+      "revision": "0a23f2c891187edefe962868e076b37125cd363e",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/77/55777/4",
+      "uploader": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "createdOn": 1473924805,
+      "author": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1473924850,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 176,
+          "deletions": -42
+        }
+      ],
+      "sizeInsertions": 176,
+      "sizeDeletions": -42
+    },
+    {
+      "number": 5,
+      "revision": "7c2c3a31847e1b876d3a6c04c0e26a9792c064d9",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/77/55777/5",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1475237992,
+      "author": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1475238010,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1475238071,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1475238065,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 14,
+          "deletions": 0
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 175,
+          "deletions": -42
+        }
+      ],
+      "sizeInsertions": 175,
+      "sizeDeletions": -42
+    },
+    {
+      "number": 6,
+      "revision": "e87e5a8655cc66268268c95a8d15f87cb6e83951",
+      "parents": [
+        "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652"
+      ],
+      "ref": "refs/changes/77/55777/6",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1475238071,
+      "author": {
+        "name": "Matityahu, Shahar S",
+        "email": "shahar.s.matityahu@intel.com",
+        "username": "ssmatity"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1475238010,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1475238071,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1475238065,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 17,
+          "deletions": 0
+        },
+        {
+          "file": "scan.c",
+          "type": "MODIFIED",
+          "insertions": 175,
+          "deletions": -42
+        }
+      ],
+      "sizeInsertions": 175,
+      "sizeDeletions": -42
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I185a532f4ffea2bc4c8e7359243117f4f8f090ee",
+      "number": 21871,
+      "revision": "cf3a5eb20afabb3b754f8d3a18aa7bba8d1a8652",
+      "ref": "refs/changes/71/21871/14",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

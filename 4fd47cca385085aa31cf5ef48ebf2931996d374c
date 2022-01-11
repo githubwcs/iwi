@@ -1,0 +1,414 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I29b96aecb030b769cb2ab91c8a7469fa1ced4369",
+  "number": 262637,
+  "subject": "[BUGFIX]iw: fix iwl_vendor_sar_get_geo_profile handler",
+  "owner": {
+    "name": "Dreyfuss, Haim",
+    "email": "haim.dreyfuss@intel.com",
+    "username": "hdreyfus"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/262637",
+  "commitMessage": "[BUGFIX]iw: fix iwl_vendor_sar_get_geo_profile handler\n\ncall nla_type() instead of entries->nla_type.\nNot sure if this ever worked.\n\ntype=bugfux\nticket=none\n\nChange-Id: I29b96aecb030b769cb2ab91c8a7469fa1ced4369\nSigned-off-by: Dreyfuss Haim <haim.dreyfuss@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/262637\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Johannes Berg <johannes.berg@intel.com>\n",
+  "createdOn": 1589449682,
+  "lastUpdated": 1590410476,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1589449682,
+      "reviewer": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1589449694,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/245/ (1/2)"
+    },
+    {
+      "timestamp": 1589449697,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/156302/ (2/2)"
+    },
+    {
+      "timestamp": 1589449720,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1 Code-Review-1\n\nBuild Failed \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/156302/ : Linked Jira verification: wrong commit message format or not valid linked Jira issue\n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/245/ : SUCCESS"
+    },
+    {
+      "timestamp": 1589460345,
+      "reviewer": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "message": "Uploaded patch set 2: Commit message was updated."
+    },
+    {
+      "timestamp": 1589460382,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/247/ (1/2)"
+    },
+    {
+      "timestamp": 1589460785,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2:\n\nBuild Started http://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/156446/ (2/2)"
+    },
+    {
+      "timestamp": 1589460797,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 2: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/247/ : SUCCESS\n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/commit_msg_review/156446/ : SUCCESS"
+    },
+    {
+      "timestamp": 1589704330,
+      "reviewer": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "message": "Patch Set 2: Verified+1 Code-Review+1"
+    },
+    {
+      "timestamp": 1590410474,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 2: Code-Review+2"
+    },
+    {
+      "timestamp": 1590410476,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Change has been successfully rebased and submitted as 4fd47cca385085aa31cf5ef48ebf2931996d374c by Johannes Berg"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "8cea23a5424211990027f5f7aa5643b5990301a2",
+      "parents": [
+        "e486dbe562f208cf8390f995df3f9059e01764ce"
+      ],
+      "ref": "refs/changes/37/262637/1",
+      "uploader": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "createdOn": 1589449682,
+      "author": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "-1",
+          "grantedOn": 1589449720,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1589449720,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 13,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 2,
+      "revision": "045078ad607cfb8d0a6640798c3be1dd1fa89bc4",
+      "parents": [
+        "e486dbe562f208cf8390f995df3f9059e01764ce"
+      ],
+      "ref": "refs/changes/37/262637/2",
+      "uploader": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "createdOn": 1589460345,
+      "author": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1590410474,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1590410476,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1589460797,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1589704330,
+          "by": {
+            "name": "Dreyfuss, Haim",
+            "email": "haim.dreyfuss@intel.com",
+            "username": "hdreyfus"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1589704330,
+          "by": {
+            "name": "Dreyfuss, Haim",
+            "email": "haim.dreyfuss@intel.com",
+            "username": "hdreyfus"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 16,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -2
+    },
+    {
+      "number": 3,
+      "revision": "4fd47cca385085aa31cf5ef48ebf2931996d374c",
+      "parents": [
+        "e486dbe562f208cf8390f995df3f9059e01764ce"
+      ],
+      "ref": "refs/changes/37/262637/3",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1590410476,
+      "author": {
+        "name": "Dreyfuss, Haim",
+        "email": "haim.dreyfuss@intel.com",
+        "username": "hdreyfus"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1590410474,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1590410476,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1589460797,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "1",
+          "grantedOn": 1589704330,
+          "by": {
+            "name": "Dreyfuss, Haim",
+            "email": "haim.dreyfuss@intel.com",
+            "username": "hdreyfus"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1589704330,
+          "by": {
+            "name": "Dreyfuss, Haim",
+            "email": "haim.dreyfuss@intel.com",
+            "username": "hdreyfus"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 19,
+          "deletions": 0
+        },
+        {
+          "file": "iwl_vendor_cmd.c",
+          "type": "MODIFIED",
+          "insertions": 2,
+          "deletions": -2
+        }
+      ],
+      "sizeInsertions": 2,
+      "sizeDeletions": -2
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "Ic5d4802330312348d1dcd90ba21b0e4412eebc6a",
+      "number": 260545,
+      "revision": "e486dbe562f208cf8390f995df3f9059e01764ce",
+      "ref": "refs/changes/45/260545/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "neededBy": [
+    {
+      "id": "I34b1f954fb58bae346adad96da2b34806afba3d8",
+      "number": 262694,
+      "revision": "69932aafc08029440a18b2d65860c56629447f80",
+      "ref": "refs/changes/94/262694/3"
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}

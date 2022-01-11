@@ -1,0 +1,246 @@
+{
+  "project": "iwlwifi-iw",
+  "branch": "master",
+  "id": "I6aa9d9361657988a300c633ed5c0b2cd5870ff2c",
+  "number": 160344,
+  "subject": "iw: update nl80211.h",
+  "owner": {
+    "name": "Lev, Beni",
+    "email": "beni.lev@intel.com",
+    "username": "benilev"
+  },
+  "url": "https://git-amr-3.devtools.intel.com/gerrit/160344",
+  "commitMessage": "iw: update nl80211.h\n\nThe unsynchronized nl80211.h broke FTM measurements\n\nChange-Id: I6aa9d9361657988a300c633ed5c0b2cd5870ff2c\nSigned-off-by: Beni Lev <beni.lev@intel.com>\nReviewed-on: https://git-amr-3.devtools.intel.com/gerrit/160344\nTested-by: ec ger unix iil jenkins <EC.GER.UNIX.IIL.JENKINS@INTEL.COM>\nReviewed-by: Berg, Johannes <johannes.berg@intel.com>\n",
+  "createdOn": 1518345397,
+  "lastUpdated": 1518451873,
+  "open": false,
+  "status": "MERGED",
+  "comments": [
+    {
+      "timestamp": 1518345397,
+      "reviewer": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "message": "Uploaded patch set 1."
+    },
+    {
+      "timestamp": 1518345453,
+      "reviewer": {
+        "name": "ec ger unix iil jenkins",
+        "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+        "username": "iil_jenkins"
+      },
+      "message": "Patch Set 1: Verified+1\n\nBuild Successful \n\nhttp://iwl-jenkins.iil.intel.com/jenkins/job/iw-per-ci/144/ : SUCCESS"
+    },
+    {
+      "timestamp": 1518451870,
+      "reviewer": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "message": "Patch Set 1: Code-Review+2"
+    },
+    {
+      "timestamp": 1518451873,
+      "reviewer": {
+        "name": "Gerrit Code Review",
+        "email": "gerrit@localhost"
+      },
+      "message": "Change has been successfully cherry-picked as 5fa1d78fafefc9362bcd55fa6c086e385ff3b418 by Berg, Johannes"
+    },
+    {
+      "timestamp": 1518697961,
+      "reviewer": {
+        "name": "Shaish, Dor",
+        "email": "dor.shaish@intel.com",
+        "username": "dshaish"
+      },
+      "message": "Patch Set 2: Cherry Picked\n\nThis patchset was cherry picked to branch release/core35 as commit c16080f6dd8bd2ddf8dfff4ed07114e1f652e40b"
+    }
+  ],
+  "patchSets": [
+    {
+      "number": 1,
+      "revision": "61df5fc6fb5434ba3c4114939ab8f18bba799f35",
+      "parents": [
+        "b9c602de82702ac5aca64f2ec2377db7c2543da7"
+      ],
+      "ref": "refs/changes/44/160344/1",
+      "uploader": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "createdOn": 1518345397,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "REWORK",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1518451870,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1518451873,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1518345453,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 12,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 10,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 10,
+      "sizeDeletions": -1
+    },
+    {
+      "number": 2,
+      "revision": "5fa1d78fafefc9362bcd55fa6c086e385ff3b418",
+      "parents": [
+        "b9c602de82702ac5aca64f2ec2377db7c2543da7"
+      ],
+      "ref": "refs/changes/44/160344/2",
+      "uploader": {
+        "name": "Johannes Berg",
+        "email": "johannes.berg@intel.com",
+        "username": "jberg1"
+      },
+      "createdOn": 1518451873,
+      "author": {
+        "name": "Lev, Beni",
+        "email": "beni.lev@intel.com",
+        "username": "benilev"
+      },
+      "isDraft": false,
+      "kind": "NO_CODE_CHANGE",
+      "approvals": [
+        {
+          "type": "Code-Review",
+          "description": "Code-Review",
+          "value": "2",
+          "grantedOn": 1518451870,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "SUBM",
+          "value": "1",
+          "grantedOn": 1518451873,
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "type": "Verified",
+          "description": "Verified",
+          "value": "1",
+          "grantedOn": 1518345453,
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        }
+      ],
+      "files": [
+        {
+          "file": "/COMMIT_MSG",
+          "type": "ADDED",
+          "insertions": 15,
+          "deletions": 0
+        },
+        {
+          "file": "nl80211.h",
+          "type": "MODIFIED",
+          "insertions": 10,
+          "deletions": -1
+        }
+      ],
+      "sizeInsertions": 10,
+      "sizeDeletions": -1
+    }
+  ],
+  "dependsOn": [
+    {
+      "id": "I644e72b26f83fbd953f33b44df889ce2f573ac79",
+      "number": 157056,
+      "revision": "b9c602de82702ac5aca64f2ec2377db7c2543da7",
+      "ref": "refs/changes/56/157056/2",
+      "isCurrentPatchSet": true
+    }
+  ],
+  "submitRecords": [
+    {
+      "status": "OK",
+      "labels": [
+        {
+          "label": "Verified",
+          "status": "OK",
+          "by": {
+            "name": "ec ger unix iil jenkins",
+            "email": "EC.GER.UNIX.IIL.JENKINS@INTEL.COM",
+            "username": "iil_jenkins"
+          }
+        },
+        {
+          "label": "Code-Review",
+          "status": "OK",
+          "by": {
+            "name": "Johannes Berg",
+            "email": "johannes.berg@intel.com",
+            "username": "jberg1"
+          }
+        },
+        {
+          "label": "automatic-review",
+          "status": "MAY"
+        }
+      ]
+    }
+  ]
+}
