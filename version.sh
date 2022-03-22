@@ -2,7 +2,7 @@
 
 VERSION="5.9"
 OUT="$1"
-
+# PERCI Test
 # get the absolute path for the OUT file
 OUT_NAME=$(basename ${OUT})
 OUT_DIR=$(cd $(dirname ${OUT}); pwd)
