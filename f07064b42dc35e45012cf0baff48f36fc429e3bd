@@ -16,6 +16,29 @@
       "message": "So looks like we do have LDAP groups ready to use already - so we can create all the necessary things in AGS and use that 😊",
       "revId": "f07064b42dc35e45012cf0baff48f36fc429e3bd",
       "serverId": "54ddbe2a-acf5-4087-bd25-56d38f72e83d"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b61777e_21db48be",
+        "filename": "groups",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000003
+      },
+      "writtenOn": "2022-03-24T17:11:04Z",
+      "side": 1,
+      "message": "I guess that\u0027s a little bit annoying, but ...",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 76
+      },
+      "revId": "f07064b42dc35e45012cf0baff48f36fc429e3bd",
+      "serverId": "54ddbe2a-acf5-4087-bd25-56d38f72e83d"
     }
   ]
 }
