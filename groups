@@ -1,4 +1,5 @@
-# UUID                                  	Group Name
+# UUID                                                                      	Group Name
 #
-33c064c1d005d449853e44d2031636e3b6ac7dff	maint-iw
-user:jberg1                             	user/Berg, Johannes (jberg1)
+33c064c1d005d449853e44d2031636e3b6ac7dff                                    	maint-iw
+ldap:CN=WCD FW Fireman,OU=Delegated,OU=Groups,DC=ger,DC=corp,DC=intel,DC=com	ldap/WCD FW Fireman
+user:jberg1                                                                 	user/Berg, Johannes (jberg1)
