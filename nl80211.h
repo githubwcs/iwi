@@ -753,6 +753,9 @@
  *	%NL80211_ATTR_CSA_C_OFFSETS_TX is an array of offsets to CSA
  *	counters which will be updated to the current value. This attribute
  *	is used during CSA period.
+ *	For RX notification, %NL80211_ATTR_RX_HW_TIMESTAMP may be included to
+ *	indicate the frame RX timestamp and %NL80211_ATTR_TX_HW_TIMESTAMP may
+ *	be included to indicate the ack TX timestamp.
  * @NL80211_CMD_FRAME_WAIT_CANCEL: When an off-channel TX was requested, this
  *	command may be used with the corresponding cookie to cancel the wait
  *	time if it is known that it is no longer necessary.  This command is
@@ -763,7 +766,9 @@
  *	transmitted with %NL80211_CMD_FRAME. %NL80211_ATTR_COOKIE identifies
  *	the TX command and %NL80211_ATTR_FRAME includes the contents of the
  *	frame. %NL80211_ATTR_ACK flag is included if the recipient acknowledged
- *	the frame.
+ *	the frame. %NL80211_ATTR_TX_HW_TIMESTAMP may be included to indicate the
+ *	tx timestamp and %NL80211_ATTR_RX_HW_TIMESTAMP may be included to
+ *	indicate the ack RX timestamp.
  * @NL80211_CMD_ACTION_TX_STATUS: Alias for @NL80211_CMD_FRAME_TX_STATUS for
  *	backward compatibility.
  *
@@ -2481,7 +2486,9 @@ enum nl80211_commands {
  *	space supports external authentication. This attribute shall be used
  *	with %NL80211_CMD_CONNECT and %NL80211_CMD_START_AP request. The driver
  *	may offload authentication processing to user space if this capability
- *	is indicated in the respective requests from the user space.
+ *	is indicated in the respective requests from the user space. (This flag
+ *	attribute deprecated for %NL80211_CMD_START_AP, use
+ *	%NL80211_ATTR_AP_SETTINGS_FLAGS)
  *
  * @NL80211_ATTR_NSS: Station's New/updated  RX_NSS value notified using this
  *	u8 attribute. This is used with %NL80211_CMD_STA_OPMODE_CHANGED.
@@ -2650,10 +2657,33 @@ enum nl80211_commands {
  *	Mandatory parameter for the transmitting interface to enable MBSSID.
  *	Optional for the non-transmitting interfaces.
  *
+ * @NL80211_ATTR_RADAR_BACKGROUND: Configure dedicated offchannel chain
+ *	available for radar/CAC detection on some hw. This chain can't be used
+ *	to transmit or receive frames and it is bounded to a running wdev.
+ *	Background radar/CAC detection allows to avoid the CAC downtime
+ *	switching on a different channel during CAC detection on the selected
+ *	radar channel.
+ *
+ * @NL80211_ATTR_AP_SETTINGS_FLAGS: u32 attribute contains ap settings flags,
+ *	enumerated in &enum nl80211_ap_settings_flags. This attribute shall be
+ *	used with %NL80211_CMD_START_AP request.
+ *
  * @NL80211_ATTR_EHT_CAPABILITY: EHT Capability information element (from
  *	association request when used with NL80211_CMD_NEW_STATION). Can be set
  *	only if %NL80211_STA_FLAG_WME is set.
  *
+ * @NL80211_ATTR_TX_HW_TIMESTAMP: Hardware timestamp for TX operation in
+ *	nanoseconds (u64). This is the device clock timestamp so it will
+ *	probably reset when the device is stopped or the firmware is reset.
+ *	When used with %NL80211_CMD_FRAME_TX_STATUS, indicates the frame TX
+ *	timestamp. When used with %NL80211_CMD_FRAME RX notification, indicates
+ *	the ack TX timestamp.
+ * @NL80211_ATTR_RX_HW_TIMESTAMP: Hardware timestamp for RX operation in
+ *	nanoseconds (u64). This is the device clock timestamp so it will
+ *	probably reset when the device is stopped or the firmware is reset.
+ *	When used with %NL80211_CMD_FRAME_TX_STATUS, indicates the ack RX
+ *	timestamp. When used with %NL80211_CMD_FRAME RX notification, indicates
+ *	the incoming frame RX timestamp.
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
  * @__NL80211_ATTR_AFTER_LAST: internal use
@@ -3160,7 +3190,14 @@ enum nl80211_attrs {
 	NL80211_ATTR_MBSSID_CONFIG,
 	NL80211_ATTR_MBSSID_ELEMS,
 
+	NL80211_ATTR_RADAR_BACKGROUND,
+
+	NL80211_ATTR_AP_SETTINGS_FLAGS,
+
 	NL80211_ATTR_EHT_CAPABILITY,
+
+	NL80211_ATTR_TX_HW_TIMESTAMP,
+	NL80211_ATTR_RX_HW_TIMESTAMP,
 
 	/* add attributes here, update the policy in nl80211.c */
 
@@ -3217,7 +3254,7 @@ enum nl80211_attrs {
 #define NL80211_HE_MAX_CAPABILITY_LEN           54
 #define NL80211_MAX_NR_CIPHER_SUITES		5
 #define NL80211_MAX_NR_AKM_SUITES		2
-#define NL80211_EHT_MIN_CAPABILITY_LEN          10
+#define NL80211_EHT_MIN_CAPABILITY_LEN          13
 #define NL80211_EHT_MAX_CAPABILITY_LEN          51
 
 #define NL80211_MIN_REMAIN_ON_CHANNEL_TIME	10
@@ -3476,7 +3513,7 @@ enum nl80211_eht_ru_alloc {
  * @NL80211_RATE_INFO_HE_DCM: HE DCM value (u8, 0/1)
  * @NL80211_RATE_INFO_RU_ALLOC: HE RU allocation, if not present then
  *	non-OFDMA was used (u8, see &enum nl80211_he_ru_alloc)
- * @NL80211_RATE_INFO_320_MHZ_WIDTH: 320 MHz rate
+ * @NL80211_RATE_INFO_320_MHZ_WIDTH: 320 MHz bitrate
  * @NL80211_RATE_INFO_EHT_MCS: EHT MCS index (u8, 0-15)
  * @NL80211_RATE_INFO_EHT_NSS: EHT NSS value (u8, 1-8)
  * @NL80211_RATE_INFO_EHT_GI: EHT guard interval identifier
@@ -3824,13 +3861,13 @@ enum nl80211_mpath_info {
  * @NL80211_BAND_IFTYPE_ATTR_VENDOR_ELEMS: vendor element capabilities that are
  *	advertised on this band/for this iftype (binary)
  * @NL80211_BAND_IFTYPE_ATTR_EHT_CAP_MAC: EHT MAC capabilities as in EHT
- *     capabilities IE
+ *	capabilities element
  * @NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PHY: EHT PHY capabilities as in EHT
- *     capabilities IE
+ *	capabilities element
  * @NL80211_BAND_IFTYPE_ATTR_EHT_CAP_MCS_SET: EHT supported NSS/MCS as in EHT
- *     capabilities IE
+ *	capabilities element
  * @NL80211_BAND_IFTYPE_ATTR_EHT_CAP_PPE: EHT PPE thresholds information as
- *     defined in EHT capabilities IE
+ *	defined in EHT capabilities element
  * @__NL80211_BAND_IFTYPE_ATTR_AFTER_LAST: internal use
  * @NL80211_BAND_IFTYPE_ATTR_MAX: highest band attribute currently defined
  */
@@ -3992,9 +4029,8 @@ enum nl80211_wmm_rule {
  *	on this channel in current regulatory domain.
  * @NL80211_FREQUENCY_ATTR_16MHZ: 16 MHz operation is allowed
  *	on this channel in current regulatory domain.
- * @NL80211_FREQUENCY_ATTR_NO_320MHZ: any 320 MHz channel
- *	using this channel as the primary or any of the secondary channels
- *	isn't possible
+ * @NL80211_FREQUENCY_ATTR_NO_320MHZ: any 320 MHz channel using this channel
+ *	as the primary or any of the secondary channels isn't possible
  * @NL80211_FREQUENCY_ATTR_NO_EHT: EHT operation is not allowed on this channel
  *	in current regulatory domain.
  * @NL80211_FREQUENCY_ATTR_MAX: highest frequency attribute number
@@ -5659,7 +5695,7 @@ enum nl80211_iface_limit_attrs {
  *	=> allows 8 of AP/GO that can have BI gcd >= min gcd
  *
  *	numbers = [ #{STA} <= 2 ], channels = 2, max = 2
- *	=> allows two STAs on different channels
+ *	=> allows two STAs on the same or on different channels
  *
  *	numbers = [ #{STA} <= 1, #{P2P-client,P2P-GO} <= 3 ], max = 4
  *	=> allows a STA plus three P2P interfaces
@@ -5704,7 +5740,7 @@ enum nl80211_if_combination_attrs {
  * @NL80211_PLINK_ESTAB: mesh peer link is established
  * @NL80211_PLINK_HOLDING: mesh peer link is being closed or cancelled
  * @NL80211_PLINK_BLOCKED: all frames transmitted from this mesh
- *	plink are discarded
+ *	plink are discarded, except for authentication frames
  * @NUM_NL80211_PLINK_STATES: number of peer link states
  * @MAX_NL80211_PLINK_STATES: highest numerical value of plink states
  */
@@ -5841,13 +5877,15 @@ enum nl80211_tdls_operation {
 	NL80211_TDLS_DISABLE_LINK,
 };
 
-/*
+/**
  * enum nl80211_ap_sme_features - device-integrated AP features
- * Reserved for future use, no bits are defined in
- * NL80211_ATTR_DEVICE_AP_SME yet.
-enum nl80211_ap_sme_features {
-};
+ * @NL80211_AP_SME_SA_QUERY_OFFLOAD: SA Query procedures offloaded to driver
+ *	when user space indicates support for SA Query procedures offload during
+ *	"start ap" with %NL80211_AP_SETTINGS_SA_QUERY_OFFLOAD_SUPPORT.
  */
+enum nl80211_ap_sme_features {
+	NL80211_AP_SME_SA_QUERY_OFFLOAD		= 1 << 0,
+};
 
 /**
  * enum nl80211_feature_flags - device/driver features
@@ -6155,6 +6193,13 @@ enum nl80211_feature_flags {
  *	frames. Userspace has to share FILS AAD details to the driver by using
  *	@NL80211_CMD_SET_FILS_AAD.
  *
+ * @NL80211_EXT_FEATURE_RADAR_BACKGROUND: Device supports background radar/CAC
+ *	detection.
+ *
+ * @NL80211_EXT_FEATURE_HW_TIMESTAMP: Device supports timestamping timing
+ *	measurement and fine timing measurement action frames and their acks
+ *	on TX and RX.
+ *
  * @NUM_NL80211_EXT_FEATURES: number of extended features.
  * @MAX_NL80211_EXT_FEATURES: highest extended feature index.
  */
@@ -6221,6 +6266,8 @@ enum nl80211_ext_feature_index {
 	NL80211_EXT_FEATURE_PROT_RANGE_NEGO_AND_MEASURE,
 	NL80211_EXT_FEATURE_BSS_COLOR,
 	NL80211_EXT_FEATURE_FILS_CRYPTO_OFFLOAD,
+	NL80211_EXT_FEATURE_RADAR_BACKGROUND,
+	NL80211_EXT_FEATURE_HW_TIMESTAMP,
 
 	/* add new features before the definition below */
 	NUM_NL80211_EXT_FEATURES,
@@ -7564,6 +7611,22 @@ enum nl80211_mbssid_config_attributes {
 	/* keep last */
 	__NL80211_MBSSID_CONFIG_ATTR_LAST,
 	NL80211_MBSSID_CONFIG_ATTR_MAX = __NL80211_MBSSID_CONFIG_ATTR_LAST - 1,
+};
+
+/**
+ * enum nl80211_ap_settings_flags - AP settings flags
+ *
+ * @NL80211_AP_SETTINGS_EXTERNAL_AUTH_SUPPORT: AP supports external
+ *	authentication.
+ * @NL80211_AP_SETTINGS_SA_QUERY_OFFLOAD_SUPPORT: Userspace supports SA Query
+ *	procedures offload to driver. If driver advertises
+ *	%NL80211_AP_SME_SA_QUERY_OFFLOAD in AP SME features, userspace shall
+ *	ignore SA Query procedures and validations when this flag is set by
+ *	userspace.
+ */
+enum nl80211_ap_settings_flags {
+	NL80211_AP_SETTINGS_EXTERNAL_AUTH_SUPPORT	= 1 << 0,
+	NL80211_AP_SETTINGS_SA_QUERY_OFFLOAD_SUPPORT	= 1 << 1,
 };
 
 #endif /* __LINUX_NL80211_H */
