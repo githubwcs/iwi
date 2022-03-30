@@ -6,3 +6,5 @@ global:Anonymous-Users                                                          
 global:Registered-Users                                                                  	Registered Users
 ldap:CN=WCS_GERRIT_MAINT_LINUX_DRIVER,OU=Managed,OU=Groups,DC=amr,DC=corp,DC=intel,DC=com	ldap/WCS_GERRIT_MAINT_LINUX_DRIVER
 ldap:CN=WCS_GERRIT_MAINT_HOSTAP,OU=Managed,OU=Groups,DC=amr,DC=corp,DC=intel,DC=com     	ldap/WCS_GERRIT_MAINT_HOSTAP
+ldap:CN=WCS_GERRIT_MAINT_FW_LINUX_DEVOPS,OU=Managed,OU=Groups,DC=amr,DC=corp,DC=intel,DC=com	ldap/WCS_GERRIT_MAINT_FW_LINUX_DEVOPS
+ldap:CN=WCS_GERRIT_MAINT_XVT,OU=Managed,OU=Groups,DC=amr,DC=corp,DC=intel,DC=com		ldap/WCS_GERRIT_MAINT_XVT
