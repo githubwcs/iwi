@@ -1,4 +1,8 @@
-# UUID                                  	Group Name
+# UUID                                                                                   	Group Name
 #
-33c064c1d005d449853e44d2031636e3b6ac7dff	maint-iw
-user:jberg1                             	user/Berg, Johannes (jberg1)
+263afd6b79cff17ea3ec2e5c145fb8c5986b3e22                                                 	Administrators
+6b9204d2f9f5a80ea6abbbecb31da4fe54a02847                                                 	iwlwifi-automation
+global:Anonymous-Users                                                                   	Anonymous Users
+global:Registered-Users                                                                  	Registered Users
+ldap:CN=WCS_GERRIT_MAINT_LINUX_DRIVER,OU=Managed,OU=Groups,DC=amr,DC=corp,DC=intel,DC=com	ldap/WCS_GERRIT_MAINT_LINUX_DRIVER
+ldap:CN=WCS_GERRIT_MAINT_HOSTAP,OU=Managed,OU=Groups,DC=amr,DC=corp,DC=intel,DC=com     	ldap/WCS_GERRIT_MAINT_HOSTAP
